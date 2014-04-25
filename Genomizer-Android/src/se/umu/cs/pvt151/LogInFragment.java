@@ -1,7 +1,9 @@
 package se.umu.cs.pvt151;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,21 +25,15 @@ public class LogInFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);
 		
-		Button button = (Button) v.findViewById(R.id.logInButton);
-		
-		addLogInButton(button);
-		
 		return v;
 	}
 	
 	
-	private void addLogInButton(Button button) {
-		button.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(v.getContext(), "hejhej", Toast.LENGTH_SHORT);
-			}
-		});
+	protected void login(View v) {
+		Log.d("DEBUG", "debug");
+		Toast.makeText(getActivity().getApplicationContext(), "hejhej", Toast.LENGTH_SHORT).show();
+		
+		Intent intent = new Intent(getActivity(), SearchActivity.class);
+		startActivity(intent);
 	}
 }

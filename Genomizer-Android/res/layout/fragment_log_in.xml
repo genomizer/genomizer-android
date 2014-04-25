@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/logInButton"
         android:text="@string/sign_in"
-        android:layout_margin="15dp" />
+        android:layout_margin="15dp"
+        android:onClick="login" />
 
 </LinearLayout>

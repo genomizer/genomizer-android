@@ -60,5 +60,10 @@ public class MainActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+	
+	
+	public void testMetod() {
+		
+	}
 
 }

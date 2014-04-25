@@ -8,12 +8,37 @@
     <TextView 
 		android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/logInButton"
-        android:text="hejhej" />
+        android:text="@string/username" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/enter_username" />
+    
+    <TextView 
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password" />
+    
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="**********"
+        android:inputType="textPassword" >
+
+        <requestFocus />
+    </EditText>
     
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/logInButton" />
+        android:id="@+id/logInButton"
+        android:text="@string/sign_in"
+        android:layout_margin="15dp" />
 
 </LinearLayout>

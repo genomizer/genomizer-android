@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class LogInFragment extends Fragment {
 	
@@ -26,5 +28,16 @@ public class LogInFragment extends Fragment {
 		
 		
 		return v;
+	}
+	
+	
+	private void addLogInButton(Button button) {
+		button.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(v.getContext(), "hejhej", Toast.LENGTH_SHORT);
+			}
+		});
 	}
 }

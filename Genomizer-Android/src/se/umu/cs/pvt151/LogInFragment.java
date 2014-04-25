@@ -25,7 +25,7 @@ public class LogInFragment extends Fragment {
 		
 		Button button = (Button) v.findViewById(R.id.logInButton);
 		
-		
+		addLogInButton(button);
 		
 		return v;
 	}

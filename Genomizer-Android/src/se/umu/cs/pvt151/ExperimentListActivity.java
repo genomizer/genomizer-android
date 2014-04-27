@@ -1,5 +1,11 @@
 package se.umu.cs.pvt151;
 
+/**
+ * ExmperimentListActivity
+ * Used to present search results 
+ * for user, using a fragment with
+ * a listview. 
+ */
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;

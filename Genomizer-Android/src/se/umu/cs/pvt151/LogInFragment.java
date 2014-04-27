@@ -32,7 +32,6 @@ public class LogInFragment extends Fragment {
 	protected void login(View v) {
 		Log.d("DEBUG", "debug");
 		Toast.makeText(getActivity().getApplicationContext(), "hejhej", Toast.LENGTH_SHORT).show();
-		
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 	}

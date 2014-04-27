@@ -26,6 +26,10 @@
             android:name="se.umu.cs.pvt151.SearchActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="se.umu.cs.pvt151.ExperimentListActivity"
+            android:label="@string/title_activity_experiment_list" >
+        </activity>
     </application>
 
 </manifest>

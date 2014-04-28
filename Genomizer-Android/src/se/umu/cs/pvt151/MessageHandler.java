@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class MessageHandler {
 	
 	
-	public static JSONObject getLoginRequest(String userName, String password) throws JSONException {
+	public static JSONObject createLoginRequest(String userName, String password) throws JSONException {
 		JSONObject object = new JSONObject();
 		
 		object.put("username", userName);
@@ -14,4 +14,10 @@ public class MessageHandler {
 		
 		return object;
 	}
+	
+	
+//	public static JSONObject createExperimentRequest(String id) throws JSONException {
+//		JSONObject object = new JSONObject();
+//		return object;
+//	}
 }

@@ -1,13 +1,21 @@
 package se.umu.cs.pvt151;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.Socket;
+import java.net.URL;
+
+import org.json.JSONObject;
 
 public class CommunicationHandler implements Runnable {
 	
 	Socket socket;
 	
-	public CommunicationHandler() {
-		
+	HttpURLConnection connection;
+	
+	public CommunicationHandler() throws IOException {
+		URL url = new URL("http://www.google.com/");
+		connection = (HttpURLConnection) url.openConnection();
 	}
 
 	@Override
@@ -16,5 +24,7 @@ public class CommunicationHandler implements Runnable {
 	}
 	
 	
-	
+	public void logIn(JSONObject logInPackage) {
+		
+	}
 }

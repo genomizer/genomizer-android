@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class ExperimentListFragment extends Fragment {
 	
 	private ListView list;
 	private ArrayList<String> experiments = new ArrayList<String>();
+	private ArrayList<String> species = new ArrayList<String>();
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
@@ -34,14 +36,19 @@ public class ExperimentListFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_experiment_list, parent, false);
 		//Temp array used to fill listview with values
 		for(int i = 0; i < 5; i++) {
-			experiments.add("Experiment " + i);
+			experiments.add("Experiment " + i + "\n" +"Species " + i + "\n" 
+					+ "Sex " + i + "\n" + "Genomic Release " + i);
+		}
+		
+		for(int j=0; j<5; j++) {
+			species.add("Species " + j);
 		}
 		//Creating listview from xml view
 		list = (ListView) v.findViewById(R.id.listView1);
 		//Creating adapter used to set values to listview
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				getActivity().getApplicationContext(), R.layout.list_view_textbox,
-				R.id.listText, experiments);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
+				R.layout.list_view_textbox, R.id.listText11, experiments);
+				
 		//Setting adapter to view
 		list.setAdapter(adapter);
 		//Set onitemclicklistener to listview, used to detect clicks
@@ -64,5 +71,4 @@ public class ExperimentListFragment extends Fragment {
 		}
 		
 	}
-	
 }

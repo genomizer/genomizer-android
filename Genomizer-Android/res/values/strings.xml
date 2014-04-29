@@ -18,6 +18,10 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
+    <string name="exp_info">EXPERIMENT INFO</string>
+    <string name="raw_data">RAW DATA</string>
+    <string name="profile_data">PROFILE DATA</string>
+    <string name="region_data">REGION DATA</string>
     <string name="enter_username">Enter username</string>
     <string name="password_dots">••••••</string>
     <string name="results">SEARCH RESULTS</string>

@@ -15,45 +15,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="72dp"
-        android:text="Medium Text"
+        android:text="@string/exp_info"
+        android:textStyle="bold"
+        android:background="#0000FF"
+        android:textColor="#FFFFFF"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textRaw"
-        android:layout_width="wrap_content"
+        android:layout_width="284dp"
         android:layout_height="wrap_content"
-        android:text="Small Text"
+        android:text="@string/raw_data"
+        android:textColor="#000000"
+        android:background="#A9A9A9"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
+        android:background="#F5F5F5"
         android:layout_height="97dp" >
     </ListView>
 
     <TextView
         android:id="@+id/textProfile"
-        android:layout_width="wrap_content"
+        android:layout_width="283dp"
         android:layout_height="wrap_content"
-        android:text="Small Text"
+        android:text="@string/profile_data"
+        android:textColor="#000000"
+        android:background="#A9A9A9"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ListView
         android:id="@+id/listView2"
         android:layout_width="match_parent"
+        android:background="#F5F5F5"
         android:layout_height="96dp" >
     </ListView>
 
     <TextView
         android:id="@+id/textRegion"
-        android:layout_width="wrap_content"
+        android:layout_width="287dp"
         android:layout_height="wrap_content"
-        android:text="Small Text"
+        android:text="@string/region_data"
+        android:textColor="#000000"
+        android:background="#A9A9A9"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ListView
         android:id="@+id/listView3"
         android:layout_width="match_parent"
+        android:background="#F5F5F5"
         android:layout_height="114dp" >
     </ListView>
 

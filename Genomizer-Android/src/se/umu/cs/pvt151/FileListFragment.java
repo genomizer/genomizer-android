@@ -1,5 +1,12 @@
 package se.umu.cs.pvt151;
 
+/**
+ * FileListFragment
+ * Fragment for FileListActivity.
+ * Displays all files that belongs
+ * to a certain experiment, displays
+ * by data type.
+ */
 import java.util.ArrayList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,6 +36,7 @@ public class FileListFragment extends Fragment {
 		listProfile = (ListView) v.findViewById(R.id.listView2);
 		listRegion = (ListView) v.findViewById(R.id.listView3);
 		
+		//Filling of temp arraylists to display data
 		for(int i=0; i<5; i++) {
 			String temp = "DataFile" + i + ".wig " + "2014-04-29" + "Yuri";
 			rawData.add(temp);
@@ -36,6 +44,7 @@ public class FileListFragment extends Fragment {
 			regionData.add(temp);
 		}
 		
+		//Creating adapters for each datatype
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, rawData);
 		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
@@ -43,20 +52,17 @@ public class FileListFragment extends Fragment {
 		ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, regionData);
 		
+		//Set adapter, onitemclicklistener, selector to listview for rawdata
 		listRaw.setAdapter(adapter);
-		//Set onitemclicklistener to listview, used to detect clicks
 		listRaw.setOnItemClickListener(new ListHandler());
-		//Set selector to view to change looks on view when item is clicked
 		listRaw.setSelector(R.drawable.explist_selector);
-		listProfile.setAdapter(adapter);
-		//Set onitemclicklistener to listview, used to detect clicks
+		//Set adapter, onitemclicklistener, selector to listview for rawdata
+		listProfile.setAdapter(adapter2);
 		listProfile.setOnItemClickListener(new ListHandler());
-		//Set selector to view to change looks on view when item is clicked
 		listProfile.setSelector(R.drawable.explist_selector);
-		listRegion.setAdapter(adapter);
-		//Set onitemclicklistener to listview, used to detect clicks
+		//Set adapter, onitemclicklistener, selector to listview for rawdata
+		listRegion.setAdapter(adapter3);
 		listRegion.setOnItemClickListener(new ListHandler());
-		//Set selector to view to change looks on view when item is clicked
 		listRegion.setSelector(R.drawable.explist_selector);
 		return v;
 	}

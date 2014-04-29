@@ -1,15 +1,12 @@
 package se.umu.cs.pvt151.com;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.umu.cs.pvt151.CommunicationHandler;
 import android.util.Log;
 
 public class ComHandler {

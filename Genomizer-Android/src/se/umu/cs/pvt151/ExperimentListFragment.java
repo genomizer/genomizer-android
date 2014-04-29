@@ -23,6 +23,7 @@ import android.widget.Toast;
 public class ExperimentListFragment extends Fragment {
 	
 	private ListView list;
+	private String hello;
 	private ArrayList<String> experiments = new ArrayList<String>();
 	private ArrayList<String> species = new ArrayList<String>();
 	@Override

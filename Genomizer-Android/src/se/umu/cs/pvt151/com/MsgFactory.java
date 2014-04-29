@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MsgFactory {
-
+/*
 	private static MsgFactory factoryReference = null;	
 	
 	private MsgFactory() {
@@ -17,14 +17,13 @@ public class MsgFactory {
 		} 
 		return factoryReference;
 	}
-
-	public static String createLogin(String username, String password) throws JSONException {
+*/
+	public static JSONObject createLogin(String username, String password) throws JSONException {
 		JSONObject obj = new JSONObject();
 		obj.put("username", username);
 		obj.put("password", password);
 		
-				
-		return null;
+		return obj;
 	}
 	
 	

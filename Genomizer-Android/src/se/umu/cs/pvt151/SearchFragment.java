@@ -16,7 +16,9 @@ public class SearchFragment extends Fragment {
 	private EditText speciesText;
 	private EditText sexText;
 	private EditText genRelText;
-
+	
+	//jlskdjfs
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		

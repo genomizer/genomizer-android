@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class LogInFragment extends Fragment {
@@ -31,7 +33,18 @@ public class LogInFragment extends Fragment {
 	
 	protected void login(View v) {
 		Log.d("DEBUG", "debug");
-		Toast.makeText(getActivity().getApplicationContext(), "hejhej", Toast.LENGTH_SHORT).show();
+		
+		EditText userName =  (EditText) v.findViewById(R.id.editTextUser);
+		EditText userPwd =  (EditText) v.findViewById(R.id.editTextPwd);
+		
+		String uname = userName.getText().toString();
+		String password = userPwd.getText().toString();
+		
+		//Use uname and password to verify access to server.
+		
+		Toast.makeText(getActivity().getApplicationContext(), "Hello, " + uname + ".", Toast.LENGTH_SHORT).show();
+		
+		
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 	}

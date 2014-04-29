@@ -5,13 +5,13 @@
     android:orientation="vertical"
     android:gravity="center" >
 
-    <TextView 
-		android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/username" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -24,11 +24,11 @@
         android:text="@string/password" />
     
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editTextPwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="**********"
+        android:hint="@string/password_dots"
         android:inputType="textPassword" >
 
         <requestFocus />

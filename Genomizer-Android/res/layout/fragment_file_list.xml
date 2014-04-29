@@ -35,6 +35,7 @@
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="97dp"
+        android:choiceMode="multipleChoice"
         android:background="#F5F5F5" >
     </ListView>
 
@@ -51,6 +52,7 @@
         android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="96dp"
+        android:choiceMode="multipleChoice"
         android:background="#F5F5F5" >
     </ListView>
 
@@ -67,6 +69,7 @@
         android:id="@+id/listView3"
         android:layout_width="match_parent"
         android:layout_height="114dp"
+        android:choiceMode="multipleChoice"
         android:background="#F5F5F5" >
     </ListView>
 

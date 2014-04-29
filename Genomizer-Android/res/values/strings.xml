@@ -11,5 +11,6 @@
     <string name="password_dots">••••••</string>
     <string name="results">SEARCH RESULTS</string>
     <string name="title_activity_experiment_list">ExperimentListActivity</string>
+    <string name="title_activity_file_list">FileListActivity</string>
 
 </resources>

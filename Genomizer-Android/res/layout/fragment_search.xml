@@ -46,11 +46,35 @@
 
         <CheckBox
             android:id="@+id/check_search_pubmed"
-           android:layout_width="wrap_content"
+           	android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginRight="8dp"
              />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_typedata"
+            android:hint="@string/hint_search_typedata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_typedata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            />
 
     </LinearLayout>
 
@@ -80,6 +104,76 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" >
+
+        <EditText
+            android:id="@+id/textf_search_genrel"
+            android:hint="@string/hint_search_genrel" 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="6"
+            android:ems="10"
+            />
+
+        <CheckBox
+            android:id="@+id/check_search_genrel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_cell"
+            android:hint="@string/hint_search_cell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+    </LinearLayout>
+
+  	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_devstage"
+            android:hint="@string/hint_search_devstage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_devstage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+   
+    </LinearLayout>
+        
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:layout_marginTop="16dp">
 
@@ -101,15 +195,15 @@
              />
 
     </LinearLayout>
-
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:layout_marginTop="16dp">
 
         <EditText
-            android:id="@+id/textf_search_genrel"
-            android:hint="@string/hint_search_genrel"
+            android:id="@+id/textf_search_tissue"
+            android:hint="@string/hint_search_tissue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="6"
@@ -117,7 +211,31 @@
             android:layout_marginLeft="8dp" />
 
         <CheckBox
-            android:id="@+id/check_search_genrel"
+            android:id="@+id/check_search_tissue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_antname"
+            android:hint="@string/hint_search_antname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_antname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -132,20 +250,17 @@
         android:layout_marginTop="16dp">
 
         <EditText
-            android:id="@+id/textf_search_lorem"
-            android:hint="@string/hint_search_lorem"
+            android:id="@+id/textf_search_antsymb"
+            android:hint="@string/hint_search_antsymb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
             android:layout_marginLeft="8dp" >
-
-            <requestFocus android:layout_width="wrap_content" />
-
         </EditText>
 
         <CheckBox
-            android:id="@+id/check_search_lorem"
+            android:id="@+id/check_search_antsymb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -159,8 +274,8 @@
         android:layout_marginTop="16dp">
 
         <EditText
-            android:id="@+id/textf_search_meta"
-            android:hint="@string/hint_search_meta"
+            android:id="@+id/textf_search_antibody"
+            android:hint="@string/hint_search_antibody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="6"

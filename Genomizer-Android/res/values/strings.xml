@@ -6,11 +6,16 @@
     <string name="btnsearch_search_menu">Search</string>
 	<string name="hint_search_expid">Experiment ID</string>
 	<string name="hint_search_pubmed">Pubmed ID</string>
+	<string name="hint_search_typedata">Type of data</string>
 	<string name="hint_search_species">Species</string>
-	<string name="hint_search_sex">Sex</string>
 	<string name="hint_search_genrel">Genome Release</string>
-	<string name="hint_search_lorem">Lorem</string>
-	<string name="hint_search_meta">Meta</string>
+	<string name="hint_search_cell">Cell line</string>
+	<string name="hint_search_devstage">Development stage</string>
+	<string name="hint_search_sex">Sex</string>
+	<string name="hint_search_tissue">Tissue</string>
+	<string name="hint_search_antname">Antigen name</string>
+	<string name="hint_search_antsymb">Antigen symbol</string>
+	<string name="hint_search_antibody">Antibody</string>
     
 	<string name="app_name">Genomizer-Android</string>
     <string name="hello_world">Hello world!</string>

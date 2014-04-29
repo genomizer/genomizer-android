@@ -38,7 +38,7 @@ public class FileListFragment extends Fragment {
 		
 		//Filling of temp arraylists to display data
 		for(int i=0; i<5; i++) {
-			String temp = "DataFile" + i + ".wig " + "2014-04-29" + "Yuri";
+			String temp = "DataFile" + i + ".wig " + "2014-04-29 " + "Yuri";
 			rawData.add(temp);
 			profileData.add(temp);
 			regionData.add(temp);

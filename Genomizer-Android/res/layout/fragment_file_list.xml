@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/textRaw"
-        android:layout_width="290dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#A9A9A9"
         android:text="@string/raw_data"
@@ -35,13 +35,13 @@
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="97dp"
-        android:choiceMode="multipleChoice"
-        android:background="#F5F5F5" >
+        android:background="#F5F5F5"
+        android:choiceMode="multipleChoice" >
     </ListView>
 
     <TextView
         android:id="@+id/textProfile"
-        android:layout_width="289dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#A9A9A9"
         android:text="@string/profile_data"
@@ -52,13 +52,13 @@
         android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="96dp"
-        android:choiceMode="multipleChoice"
-        android:background="#F5F5F5" >
+        android:background="#F5F5F5"
+        android:choiceMode="multipleChoice" >
     </ListView>
 
     <TextView
         android:id="@+id/textRegion"
-        android:layout_width="288dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#A9A9A9"
         android:text="@string/region_data"
@@ -69,8 +69,8 @@
         android:id="@+id/listView3"
         android:layout_width="match_parent"
         android:layout_height="114dp"
-        android:choiceMode="multipleChoice"
-        android:background="#F5F5F5" >
+        android:background="#F5F5F5"
+        android:choiceMode="multipleChoice" >
     </ListView>
 
 </LinearLayout>

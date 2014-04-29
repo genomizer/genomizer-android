@@ -44,7 +44,7 @@ public class CommunicationHandler {
 	}
 	
 	
-	private int sendPackage(JSONObject jsonPackage, String messageType) throws IOException {
+	private String sendPackage(JSONObject jsonPackage, String messageType) throws IOException {
 		byte[] pack = jsonPackage.toString().getBytes("UTF-8");
 		
 		out.write(pack);
@@ -65,7 +65,7 @@ public class CommunicationHandler {
 		
 		out.close();
 		
-		return responseCode;
+		return new String(bytes, 0, i, "UTF-8");
 	}
 	
 	
@@ -73,8 +73,8 @@ public class CommunicationHandler {
 		JSONObject loginPackage = MessageHandler.createLoginRequest(userName, password);
 		
 		setupConnection("login");
-		int result =  sendPackage(loginPackage, "login");
-		
-		return result == 200;
+		String result =  sendPackage(loginPackage, "login");
+		//TODO: Extract token from result
+		return true;
 	}
 }

@@ -1,24 +1,19 @@
 package se.umu.cs.pvt151;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.Socket;
 import java.net.URL;
 
+import org.apache.http.impl.io.ChunkedInputStream;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Base64;
 import android.util.Log;
 
 public class CommunicationHandler {
-	
-	Socket socket;
 	
 	HttpURLConnection connection;
 	
@@ -29,7 +24,7 @@ public class CommunicationHandler {
 		
 	}
 	
-	public void setupConnection(String messageType) throws IOException {
+	private void setupConnection(String messageType) throws IOException {
 		URL url = new URL("http://genomizer.apiary-mock.com/"+messageType);
 		
 		connection = (HttpURLConnection) url.openConnection();
@@ -41,30 +36,45 @@ public class CommunicationHandler {
 		connection.setRequestProperty("Accept", "application/json");
 		connection.setChunkedStreamingMode(100);
 		
-		out = connection.getOutputStream();
-		in = connection.getInputStream();
+		connection.setConnectTimeout(3000);
+		connection.setReadTimeout(3000);
 		
-		connection.connect();
+		out = connection.getOutputStream();
+//		in = connection.getInputStream();
 	}
 	
-	public void sendPackage(JSONObject jsonPackage, String messageType) throws IOException {
-		setupConnection(messageType);
+	
+	private int sendPackage(JSONObject jsonPackage, String messageType) throws IOException {
 		byte[] pack = jsonPackage.toString().getBytes("UTF-8");
-		
-		Log.d("DEBUG", pack.length+"");
 		
 		out.write(pack);
 		out.flush();
+		
+		int responseCode = connection.getResponseCode();
+		in = (InputStream) connection.getContent();
+		
+		byte[] bytes = new byte[1024];
+		
+		int readByte = -1;
+		int i = 0;
+		
+		while ((readByte = in.read()) != -1) {
+			bytes[i] = (byte) readByte;
+			i++;
+		}
+		
 		out.close();
+		
+		return responseCode;
 	}
 	
 	
-	private void connect() {
+	public boolean logIn(String userName, String password) throws IOException, JSONException {
+		JSONObject loginPackage = MessageHandler.createLoginRequest(userName, password);
 		
-	}
-	
-	
-	private void disconnect() {
+		setupConnection("login");
+		int result =  sendPackage(loginPackage, "login");
 		
+		return result == 200;
 	}
 }

@@ -1,12 +1,190 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    tools:context="com.example.searchview.SearchActivity$PlaceholderFragment" >
 
-    <Spinner
-        android:id="@+id/spinner1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="32dp">
+
+        <EditText
+            android:id="@+id/textf_search_expid"
+            android:hint="@string/hint_search_expid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_expid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_pubmed"
+            android:hint="@string/hint_search_pubmed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_pubmed"
+           android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_species"
+            android:hint="@string/hint_search_species"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_species"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_sex"
+            android:hint="@string/hint_search_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_genrel"
+            android:hint="@string/hint_search_genrel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" />
+
+        <CheckBox
+            android:id="@+id/check_search_genrel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_lorem"
+            android:hint="@string/hint_search_lorem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp" >
+
+            <requestFocus android:layout_width="wrap_content" />
+
+        </EditText>
+
+        <CheckBox
+            android:id="@+id/check_search_lorem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/textf_search_meta"
+            android:hint="@string/hint_search_meta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:ems="10" 
+            android:layout_marginLeft="8dp"/>
+
+        <CheckBox
+            android:id="@+id/check_search_meta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+             />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
 </LinearLayout>

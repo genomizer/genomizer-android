@@ -11,5 +11,14 @@
     <string name="password_dots">••••••</string>
     <string name="results">SEARCH RESULTS</string>
     <string name="title_activity_experiment_list">ExperimentListActivity</string>
-
+	
+    <string name="btnhelp_search_menu">Help</string>
+    <string name="btnsearch_search_menu">Search</string>
+	<string name="hint_search_expid">Experiment ID</string>
+	<string name="hint_search_pubmed">Pubmed ID</string>
+	<string name="hint_search_species">Species</string>
+	<string name="hint_search_sex">Sex</string>
+	<string name="hint_search_genrel">Genome Release</string>
+	<string name="hint_search_lorem">Lorem</string>
+	<string name="hint_search_meta">Meta</string>
 </resources>

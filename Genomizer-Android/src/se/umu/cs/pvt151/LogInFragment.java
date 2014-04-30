@@ -3,6 +3,7 @@ package se.umu.cs.pvt151;
 import java.io.IOException;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.com.ConnectionException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -56,6 +57,9 @@ public class LogInFragment extends Fragment {
 				try {
 					ComHandler.login(uname, password);
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ConnectionException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

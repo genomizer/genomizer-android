@@ -16,16 +16,24 @@ public class Communicator {
 	
 	private HttpURLConnection connection;
 	private DataOutputStream out;
-	private String token="";
+	private static String token="";
 	
-	public Communicator(String urlString) throws IOException {
+	public void setToken(String token) {
+		Log.d("DEBUG", "Token set to: " + token);
+		Communicator.token = token;
+	}
+
+	public Communicator(String urlString) throws ConnectionException {
 		setupConnection(urlString);
 	}
 
-	public void setupConnection(String urlString) throws IOException {
-		URL url = new URL(urlString);
-		Log.d("DEBUG", urlString);
-		connection = (HttpURLConnection) url.openConnection();
+	public void setupConnection(String urlString) throws ConnectionException  {
+		try {
+			URL url = new URL(urlString);
+			connection = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			throw new ConnectionException("Could not connect to the server");
+		}
 		connection.setDoOutput(true);
 		connection.setDoInput (true);
 		
@@ -70,7 +78,10 @@ public class Communicator {
 
 		System.out.println(response.toString());
 		Log.d("DEBUG", "Communicator response: "+ response.toString());
-			
-		return response.toString();
+		if (responseCode == 200) {
+			return response.toString();
+		} else {
+			return null;
+		}
 	}
 }

@@ -20,10 +20,9 @@ public class ComHandler {
 	 * @return True on accepted login, otherwise false.
 	 * @throws IOException Is thrown when the application can't communicate 
 	 * with the server.
+	 * @throws ConnectionException 
 	 */
-	public static boolean login(String username, String password) throws IOException {
-		
-		
+	public static boolean login(String username, String password) throws IOException, ConnectionException {
 		try {
 			Log.d("DEBUG", "Creating communicator");
 			Communicator communicator = new Communicator(serverURL + "login");
@@ -32,7 +31,14 @@ public class ComHandler {
 			JSONObject msg = MsgFactory.createLogin(username, password);
 			
 			Log.d("DEBUG", "Sending msg");
-			communicator.sendRequest(msg);
+			String jsonString = communicator.sendRequest(msg);
+			if (jsonString != null) {
+				JSONObject jsonPackage = new JSONObject(jsonString);
+				communicator.setToken(jsonPackage.get("token").toString());
+				return true;
+			} else {
+				return false;
+			}
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

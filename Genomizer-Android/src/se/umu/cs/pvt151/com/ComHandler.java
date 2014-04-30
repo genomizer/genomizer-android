@@ -24,14 +24,11 @@ public class ComHandler {
 	 */
 	public static boolean login(String username, String password) throws IOException, ConnectionException {
 		try {
-			Log.d("DEBUG", "Creating communicator");
 			Communicator communicator = new Communicator(serverURL + "login");
 
-			Log.d("DEBUG", "Creating msg");
 			JSONObject msg = MsgFactory.createLogin(username, password);
-
-			Log.d("DEBUG", "Sending msg");
 			String jsonString = communicator.sendRequest(msg, "POST");
+			
 			if (jsonString != null) {
 				JSONObject jsonPackage = new JSONObject(jsonString);
 				communicator.setToken(jsonPackage.get("token").toString());
@@ -41,11 +38,9 @@ public class ComHandler {
 			}
 
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			Log.d("DEBUG", e.getMessage());
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			Log.d("DEBUG", e.getMessage());
 			e.printStackTrace();
 		}
@@ -54,27 +49,19 @@ public class ComHandler {
 
 	public static JSONObject search(List<String[]> annotations) throws IOException, ConnectionException {
 		try {
-			Log.d("DEBUG", "Creating communicator");
 			Communicator communicator = new Communicator(serverURL + "search/?");//TODO FIX THIS LINE - NEEDS ANNOTATIONS
-
-			Log.d("DEBUG", "Creating msg");
-			JSONObject msg;
-			
-			msg = MsgFactory.createRegularPackage();
-			
-			Log.d("DEBUG", "Sending msg");
+	
+			JSONObject msg = MsgFactory.createRegularPackage();
 			String jsonString = communicator.sendRequest(msg, "GET");
 			
 			if (jsonString != null) {
 				JSONObject jsonPackage = new JSONObject(jsonString);
-				communicator.setToken(jsonPackage.get("token").toString());
 				return jsonPackage;
 			} else {
 				return null;
 			}
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}

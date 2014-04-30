@@ -16,18 +16,18 @@ public class Communicator {
 	
 	private HttpURLConnection connection;
 	private DataOutputStream out;
-	private static String token="";
+	private String urlString;
+	private static String token = "";
+	
+	public Communicator(String urlString) {
+		this.urlString = urlString;
+	}
 	
 	public void setToken(String token) {
-		Log.d("DEBUG", "Token set to: " + token);
 		Communicator.token = token;
 	}
 
-	public Communicator(String urlString) throws ConnectionException {
-		setupConnection(urlString);
-	}
-
-	public void setupConnection(String urlString) throws ConnectionException  {
+	public void setupConnection() throws ConnectionException  {
 		try {
 			URL url = new URL(urlString);
 			connection = (HttpURLConnection) url.openConnection();
@@ -47,9 +47,6 @@ public class Communicator {
 		
 		connection.setConnectTimeout(3000);
 		connection.setReadTimeout(3000);
-		
-		
-
 	}
 	
 	public String sendRequest(JSONObject jsonPackage, String packageType) throws IOException {
@@ -78,6 +75,7 @@ public class Communicator {
 
 		System.out.println(response.toString());
 		Log.d("DEBUG", "Communicator response: "+ response.toString());
+		
 		if (responseCode == 200) {
 			return response.toString();
 		} else {

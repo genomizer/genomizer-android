@@ -1,5 +1,7 @@
 package se.umu.cs.pvt151;
 
+import java.io.IOException;
+
 import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +36,7 @@ public class LogInFragment extends Fragment {
 	}
 		
 	protected void login(View v) {
-		Log.d("DEBUG", "Login fragment:");
+		Log.d("DEBUG", "Login button pressed:");
 		
 		new Thread(new Runnable() {
 			@Override
@@ -44,19 +46,35 @@ public class LogInFragment extends Fragment {
 				String password = userPwd.getText().toString();
 				Log.d("DEBUG", "Username: " + uname);
 				Log.d("DEBUG", "Password: " + password);
-				ComHandler.login(uname, password);
+				
+				if(uname == null || password == null) {
+					makeToast("Please enter both username and password.", false);
+					return;
+				}
+				
+				try {
+					ComHandler.login(uname, password);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
 		}).start();
 		
-		makeToast("Welcome!");
+		makeToast("Welcome!", false);
 				
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 	}
 	
-	protected void makeToast(String msg) {
-		Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+	protected void makeToast(String msg, boolean longToast) {
+		if(longToast) {
+			Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+		}
+		
 	}
 	
 	

@@ -28,7 +28,7 @@ public class LogInActivity extends SingleFragmentActivity {
 		if(isOnline()) {
 			fragment.login(v);
 		} else {
-			fragment.makeToast("Internet access unavailable.");
+			fragment.makeToast("Internet access unavailable.", true);
 		}
 		
 	}

@@ -1,5 +1,7 @@
 package se.umu.cs.pvt151;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
@@ -10,11 +12,24 @@ public class LogInActivity extends SingleFragmentActivity {
 
 	protected Fragment createFragment() {
 		fragment = new LogInFragment();
+		
 		return fragment;
 	}
 	
+	private boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+	    return cm.getActiveNetworkInfo() != null && 
+	       cm.getActiveNetworkInfo().isConnected();
+	}
 	
 	public void login(View v) {
-		fragment.login(v);
+		if(isOnline()) {
+			fragment.login(v);
+		} else {
+			fragment.makeToast("Internet access unavailable.");
+		}
+		
 	}
 }

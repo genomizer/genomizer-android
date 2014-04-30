@@ -3,9 +3,7 @@ package se.umu.cs.pvt151.com;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -18,6 +16,7 @@ public class Communicator {
 	
 	private HttpURLConnection connection;
 	private DataOutputStream out;
+	private String token="";
 	
 	public Communicator(String urlString) throws IOException {
 		setupConnection(urlString);
@@ -29,20 +28,26 @@ public class Communicator {
 		connection = (HttpURLConnection) url.openConnection();
 		connection.setDoOutput(true);
 		connection.setDoInput (true);
-		connection.setRequestMethod("POST");
+		
 		connection.setUseCaches(false);
 		connection.setRequestProperty("Content-Type", "application/json");
-		connection.setRequestProperty("Accept", "application/json");
+		if (token.length()>0) {
+			connection.setRequestProperty("Authorization", token);
+		}
+		//connection.setRequestProperty("Accept", "application/json");
 		connection.setChunkedStreamingMode(100);
 		
 		connection.setConnectTimeout(3000);
 		connection.setReadTimeout(3000);
 		
-		out = new DataOutputStream(connection.getOutputStream());
+		
 
 	}
 	
-	public int sendRequest(JSONObject jsonPackage) throws IOException {
+	public String sendRequest(JSONObject jsonPackage) throws IOException {
+		
+		connection.setRequestMethod("POST");
+		out = new DataOutputStream(connection.getOutputStream());
 		
 		byte[] pack = jsonPackage.toString().getBytes("UTF-8");
 		
@@ -66,6 +71,6 @@ public class Communicator {
 		System.out.println(response.toString());
 		Log.d("DEBUG", "Communicator response: "+ response.toString());
 			
-		return responseCode;
+		return response.toString();
 	}
 }

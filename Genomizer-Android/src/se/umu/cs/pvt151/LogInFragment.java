@@ -16,15 +16,12 @@ import android.widget.Toast;
 
 public class LogInFragment extends Fragment {
 	
-	
 	private EditText userName;
 	private EditText userPwd;
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 	}
 	
 	
@@ -35,8 +32,7 @@ public class LogInFragment extends Fragment {
 		userPwd =  (EditText) v.findViewById(R.id.editTextPwd);
 		return v;
 	}
-	
-	
+		
 	protected void login(View v) {
 		Log.d("DEBUG", "Login fragment:");
 		
@@ -53,9 +49,15 @@ public class LogInFragment extends Fragment {
 			}
 		}).start();
 		
-		Toast.makeText(getActivity().getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT).show();
-		
+		makeToast("Welcome!");
+				
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 	}
+	
+	protected void makeToast(String msg) {
+		Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+	}
+	
+	
 }

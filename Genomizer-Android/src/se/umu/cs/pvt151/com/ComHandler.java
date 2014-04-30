@@ -13,15 +13,20 @@ public class ComHandler {
 
 	private static String serverURL = "http://genomizer.apiary-mock.com/";
 
-	
-	public static boolean login(String username, String password) {
+	/**
+	 * Sends a login request to the server.
+	 * @param username The username in the login request.
+	 * @param password The password in the login request.
+	 * @return True on accepted login, otherwise false.
+	 * @throws IOException Is thrown when the application can't communicate 
+	 * with the server.
+	 */
+	public static boolean login(String username, String password) throws IOException {
 		
 		
 		try {
 			Log.d("DEBUG", "Creating communicator");
 			Communicator communicator = new Communicator(serverURL + "login");
-			
-			Log.d("DEBUG", "Communicator created");
 			
 			Log.d("DEBUG", "Creating msg");
 			JSONObject msg = MsgFactory.createLogin(username, password);
@@ -34,10 +39,6 @@ public class ComHandler {
 			Log.d("DEBUG", e.getMessage());
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			Log.d("DEBUG", e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.d("DEBUG", e.getMessage());
 			e.printStackTrace();

@@ -9,7 +9,7 @@ public class SearchActivity extends SingleFragmentActivity {
 	@Override
 	protected Fragment createFragment() {
 		
-		return new SearchFragment();
+		return new SearchListFragment();
 	}
 	
 	@Override

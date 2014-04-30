@@ -49,38 +49,52 @@ public class LogInFragment extends Fragment {
 				Log.d("DEBUG", "Username: " + uname);
 				Log.d("DEBUG", "Password: " + password);
 				
-				if(uname == null || password == null) {
+				if(uname.length() == 0 || password.length() == 0) {
 					makeToast("Please enter both username and password.", false);
 					return;
 				}
 				
 				try {
-					ComHandler.login(uname, password);
+					boolean loginOk = ComHandler.login(uname, password);
+					
+					if(loginOk) {
+						startSearchActivity();
+					}
+					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					makeToast("Error. Your device isn't running the application as intended.", false);
 				} catch (ConnectionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					makeToast("Error. The server could not be reached.", false);
 				}
-				
 			}
 		}).start();
 		
-		makeToast("Welcome!", false);
-				
-		Intent intent = new Intent(getActivity(), SearchActivity.class);
-		startActivity(intent);
+		
+		
 	}
 	
-	protected void makeToast(String msg, boolean longToast) {
-		if(longToast) {
-			Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-		} else {
-			Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-		}
+	protected void makeToast(final String msg, final boolean longToast) {
+		getActivity().runOnUiThread(new Thread() {
+			public void run() {
+				if(longToast) {
+					Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 		
 	}
 	
 	
+	private void startSearchActivity() {
+		getActivity().runOnUiThread(new Thread() {
+			public void run() {
+				makeToast("Welcome!", false);
+				
+				Intent intent = new Intent(getActivity(), SearchActivity.class);
+				startActivity(intent);
+			}
+		});
+	}
 }

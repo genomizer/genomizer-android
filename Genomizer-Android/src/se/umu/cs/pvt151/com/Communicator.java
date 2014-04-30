@@ -52,9 +52,9 @@ public class Communicator {
 
 	}
 	
-	public String sendRequest(JSONObject jsonPackage) throws IOException {
+	public String sendRequest(JSONObject jsonPackage, String packageType) throws IOException {
 		
-		connection.setRequestMethod("POST");
+		connection.setRequestMethod(packageType);
 		out = new DataOutputStream(connection.getOutputStream());
 		
 		byte[] pack = jsonPackage.toString().getBytes("UTF-8");

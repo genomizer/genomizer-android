@@ -26,11 +26,9 @@ public class MsgFactory {
 		return obj;
 	}
 
-	public static JSONObject createSearch() throws JSONException {
+	public static JSONObject createRegularPackage() throws JSONException {
 		JSONObject obj = new JSONObject();
 		
 		return obj;
 	}
-	
-	
 }

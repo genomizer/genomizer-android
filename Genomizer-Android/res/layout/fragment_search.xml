@@ -18,6 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+          	android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -42,6 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -66,6 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -90,6 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -115,6 +123,9 @@
             android:layout_marginLeft="8dp"
             android:layout_weight="6"
             android:ems="10"
+            android:maxLength="70"
+        	android:singleLine="true"
+            
             />
 
         <CheckBox
@@ -137,6 +148,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -160,6 +173,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -184,6 +199,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -208,6 +225,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -232,6 +251,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" />
 
         <CheckBox
@@ -256,6 +277,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp" >
         </EditText>
 
@@ -280,6 +303,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:ems="10" 
+            android:maxLength="70"
+        	android:singleLine="true"
             android:layout_marginLeft="8dp"/>
 
         <CheckBox

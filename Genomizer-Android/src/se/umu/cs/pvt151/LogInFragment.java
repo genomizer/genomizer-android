@@ -32,6 +32,7 @@ public class LogInFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);
 		userName =  (EditText) v.findViewById(R.id.editTextUser);
 		userPwd =  (EditText) v.findViewById(R.id.editTextPwd);
+		
 		return v;
 	}
 		

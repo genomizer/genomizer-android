@@ -8,6 +8,7 @@ package se.umu.cs.pvt151;
  */
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -129,9 +130,10 @@ public class ExperimentListFragment extends Fragment {
 		public void onItemClick(AdapterView<?> Adapter, View view, int position,
 				long arg3) {
 			//Placeholder for what happens when a listitem is clicked
-			Toast.makeText(getActivity().getApplicationContext(), 
-					experiments.get(position), Toast.LENGTH_SHORT).show();
-			
+			/*Toast.makeText(getActivity().getApplicationContext(), 
+					experiments.get(position), Toast.LENGTH_SHORT).show();*/
+			Intent intent = new Intent(getActivity(), FileListActivity.class);
+			startActivity(intent);
 		}
 	}
 }

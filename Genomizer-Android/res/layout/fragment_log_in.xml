@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_marginBottom="10dp"
+        android:maxLength="20"
+        android:singleLine="true"
         android:hint="@string/enter_username" />
     
     <TextView 
@@ -29,11 +31,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password_dots"
-        android:inputType="textPassword" >
+        android:maxLength="20"
+        android:singleLine="true"
+        android:inputType="textPassword" />
 
-        
-    </EditText>
-    
+          
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

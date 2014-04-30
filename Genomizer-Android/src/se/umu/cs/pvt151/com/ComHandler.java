@@ -21,8 +21,6 @@ public class ComHandler {
 			Log.d("DEBUG", "Creating communicator");
 			Communicator communicator = new Communicator(serverURL + "login");
 			
-			Log.d("DEBUG", "Communicator created");
-			
 			Log.d("DEBUG", "Creating msg");
 			JSONObject msg = MsgFactory.createLogin(username, password);
 			

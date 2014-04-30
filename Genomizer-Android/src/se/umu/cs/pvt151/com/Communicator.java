@@ -29,20 +29,23 @@ public class Communicator {
 		connection = (HttpURLConnection) url.openConnection();
 		connection.setDoOutput(true);
 		connection.setDoInput (true);
-		connection.setRequestMethod("POST");
+		
 		connection.setUseCaches(false);
 		connection.setRequestProperty("Content-Type", "application/json");
-		connection.setRequestProperty("Accept", "application/json");
+		//connection.setRequestProperty("Accept", "application/json");
 		connection.setChunkedStreamingMode(100);
 		
 		connection.setConnectTimeout(3000);
 		connection.setReadTimeout(3000);
 		
-		out = new DataOutputStream(connection.getOutputStream());
+		
 
 	}
 	
 	public int sendRequest(JSONObject jsonPackage) throws IOException {
+		
+		connection.setRequestMethod("POST");
+		out = new DataOutputStream(connection.getOutputStream());
 		
 		byte[] pack = jsonPackage.toString().getBytes("UTF-8");
 		

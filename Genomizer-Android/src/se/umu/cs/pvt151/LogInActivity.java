@@ -12,7 +12,6 @@ public class LogInActivity extends SingleFragmentActivity {
 
 	protected Fragment createFragment() {
 		fragment = new LogInFragment();
-		
 		return fragment;
 	}
 	

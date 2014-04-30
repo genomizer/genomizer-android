@@ -27,6 +27,7 @@ public class ComHandler {
 			Communicator communicator = new Communicator(serverURL + "login");
 
 			JSONObject msg = MsgFactory.createLogin(username, password);
+			communicator.setupConnection();
 			String jsonString = communicator.sendRequest(msg, "POST");
 			
 			if (jsonString != null) {
@@ -50,7 +51,7 @@ public class ComHandler {
 	public static JSONObject search(List<String[]> annotations) throws IOException, ConnectionException {
 		try {
 			Communicator communicator = new Communicator(serverURL + "search/?");//TODO FIX THIS LINE - NEEDS ANNOTATIONS
-	
+			communicator.setupConnection();
 			JSONObject msg = MsgFactory.createRegularPackage();
 			String jsonString = communicator.sendRequest(msg, "GET");
 			

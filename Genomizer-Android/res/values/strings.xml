@@ -17,7 +17,7 @@
 	<string name="hint_search_antsymb">Antigen symbol</string>
 	<string name="hint_search_antibody">Antibody</string>
     
-	<string name="app_name">Genomizer-Android</string>
+	<string name="app_name">Genomizer</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="username">Username</string>

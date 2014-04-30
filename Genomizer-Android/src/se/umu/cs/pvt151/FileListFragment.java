@@ -8,13 +8,16 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,6 +30,7 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> rawData = new ArrayList<String>();
 	private ArrayList<String> profileData = new ArrayList<String>();
 	private ArrayList<String> regionData = new ArrayList<String>();
+	private CheckBox box;
 	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
@@ -35,6 +39,7 @@ public class FileListFragment extends Fragment {
 		listRaw = (ListView) v.findViewById(R.id.listView1);
 		listProfile = (ListView) v.findViewById(R.id.listView2);
 		listRegion = (ListView) v.findViewById(R.id.listView3);
+		box = (CheckBox) v.findViewById(R.id.checkBox1);
 		
 		//Filling of temp arraylists to display data
 		for(int i=0; i<5; i++) {
@@ -46,11 +51,11 @@ public class FileListFragment extends Fragment {
 		
 		//Creating adapters for each datatype
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, rawData);
+				R.layout.list_view_checkbox, R.id.checkBox1, rawData);
 		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, profileData);
+				R.layout.list_view_checkbox, R.id.checkBox1, profileData);
 		ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, regionData);
+				R.layout.list_view_checkbox, R.id.checkBox1, regionData);
 		
 		//Set adapter, onitemclicklistener, selector to listview for rawdata
 		listRaw.setAdapter(adapter);
@@ -75,6 +80,17 @@ public class FileListFragment extends Fragment {
 			//Placeholder for what happens when a listitem is clicked
 			Toast.makeText(getActivity().getApplicationContext(), 
 					rawData.get(position), Toast.LENGTH_SHORT).show();
+			
+		}
+		
+	}
+	
+	private class clickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(getActivity().getApplicationContext(), 
+					v.getId(), Toast.LENGTH_SHORT).show();
 			
 		}
 		

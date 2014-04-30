@@ -26,9 +26,8 @@ public class MsgFactory {
 		return obj;
 	}
 
-	public static JSONObject createSearch(String token) throws JSONException {
+	public static JSONObject createSearch() throws JSONException {
 		JSONObject obj = new JSONObject();
-		obj.put("token", token);
 		
 		return obj;
 	}

@@ -26,10 +26,10 @@ public class ComHandler {
 		try {
 			Log.d("DEBUG", "Creating communicator");
 			Communicator communicator = new Communicator(serverURL + "login");
-			
+
 			Log.d("DEBUG", "Creating msg");
 			JSONObject msg = MsgFactory.createLogin(username, password);
-			
+
 			Log.d("DEBUG", "Sending msg");
 			String jsonString = communicator.sendRequest(msg);
 			if (jsonString != null) {
@@ -39,7 +39,7 @@ public class ComHandler {
 			} else {
 				return false;
 			}
-			
+
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			Log.d("DEBUG", e.getMessage());
@@ -51,12 +51,23 @@ public class ComHandler {
 		}
 		return false;
 	}
-	
-	public static List<String[]> search(List<String[]> annotations) {
-		
-		
-		return null;
+
+	public static List<String[]> search(List<String[]> annotations) throws IOException, ConnectionException {
+		try {
+			Log.d("DEBUG", "Creating communicator");
+			Communicator communicator = new Communicator(serverURL + "search/?");
+
+			Log.d("DEBUG", "Creating msg");
+			JSONObject msg;
+			
+			msg = MsgFactory.createSearch();
+			
+			Log.d("DEBUG", "Sending msg");
+			String jsonString = communicator.sendRequest(msg);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return annotations;
 	}
-	
-	
 }

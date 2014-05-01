@@ -8,17 +8,18 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -30,8 +31,8 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> rawData = new ArrayList<String>();
 	private ArrayList<String> profileData = new ArrayList<String>();
 	private ArrayList<String> regionData = new ArrayList<String>();
-	private CheckBox box;
-	
+	static ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
+
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
@@ -39,7 +40,6 @@ public class FileListFragment extends Fragment {
 		listRaw = (ListView) v.findViewById(R.id.listView1);
 		listProfile = (ListView) v.findViewById(R.id.listView2);
 		listRegion = (ListView) v.findViewById(R.id.listView3);
-		box = (CheckBox) v.findViewById(R.id.checkBox1);
 		
 		//Filling of temp arraylists to display data
 		for(int i=0; i<5; i++) {
@@ -49,29 +49,24 @@ public class FileListFragment extends Fragment {
 			regionData.add(temp);
 		}
 		
-		//Creating adapters for each datatype
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_checkbox, R.id.checkBox1, rawData);
-		ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_checkbox, R.id.checkBox1, profileData);
-		ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_checkbox, R.id.checkBox1, regionData);
+		//Used to set tempdata to array for checked values
+		fillData();
 		
 		//Set adapter, onitemclicklistener, selector to listview for rawdata
-		listRaw.setAdapter(adapter);
-		listRaw.setOnItemClickListener(new ListHandler());
-		listRaw.setSelector(R.drawable.explist_selector);
-		//Set adapter, onitemclicklistener, selector to listview for rawdata
-		listProfile.setAdapter(adapter2);
-		listProfile.setOnItemClickListener(new ListHandler());
-		listProfile.setSelector(R.drawable.explist_selector);
-		//Set adapter, onitemclicklistener, selector to listview for rawdata
-		listRegion.setAdapter(adapter3);
-		listRegion.setOnItemClickListener(new ListHandler());
-		listRegion.setSelector(R.drawable.explist_selector);
+		listRaw.setAdapter(new FileListAdapter(rawData));
+		//TODO: Is listener for listview an idea or just for checkboxes enough?
+		//listRaw.setOnItemClickListener(new ListHandler());
+		//Set adapter to listview for profiledata
+		listProfile.setAdapter(new FileListAdapter(profileData));
+		//listProfile.setOnItemClickListener(new ListHandler());
+		//Set adapter for regiondata
+		listRegion.setAdapter(new FileListAdapter(regionData));
+		//listRegion.setOnItemClickListener(new ListHandler());
+		
 		return v;
 	}
 	
+	//TODO: Needed to get right values?
 	private class ListHandler implements OnItemClickListener {
 
 		@Override
@@ -80,19 +75,91 @@ public class FileListFragment extends Fragment {
 			//Placeholder for what happens when a listitem is clicked
 			Toast.makeText(getActivity().getApplicationContext(), 
 					rawData.get(position), Toast.LENGTH_SHORT).show();
-			
 		}
-		
 	}
 	
-	private class clickListener implements OnClickListener {
-
-		@Override
-		public void onClick(View v) {
-			Toast.makeText(getActivity().getApplicationContext(), 
-					v.getId(), Toast.LENGTH_SHORT).show();
-			
+	/**
+	 * Temp method to fill array with values
+	 */
+	private void fillData() {
+		for(int i = 0; i < rawData.size(); i++) {
+			forChecks.add(false);
 		}
+	}
+	
+	/**
+	 * Used to create holder for
+	 * values used in getview
+	 *
+	 */
+	static class listViewHolder {
+		protected TextView fileInfo;
+		protected CheckBox fileCheckBox;
+		protected ArrayList<String> forChecks;
+	}
+	
+	/**
+	 * Adapter used for listviews
+	 *
+	 */
+	private class FileListAdapter extends ArrayAdapter<String> {
+		//TODO: Use same adapter for all three listviews, or need to make 3 differents ones?
+		ArrayList<String> forShow = new ArrayList<String>();
+		boolean[] selectedItem;
+
+		public FileListAdapter(ArrayList<String> fileInfo) {
+				super(getActivity(), 0, fileInfo);
+				forShow = fileInfo;
+				selectedItem = new boolean[fileInfo.size()];
+				for(int i = 0; i<selectedItem.length; i++) {
+					selectedItem[i] = false;
+				}
+		}
+	
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			listViewHolder viewHolder = null;
 		
+			if (convertView == null) {
+				convertView = getActivity().getLayoutInflater().inflate(
+						R.layout.list_view_checkbox, null);
+				viewHolder = new listViewHolder();
+				viewHolder.fileInfo = (TextView) convertView.findViewById(R.id.textView1);
+				viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(R.id.textForBox);
+				viewHolder.fileCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						//Handling show right checks when scrolled
+						if(buttonView.isShown()) {
+							int getPosition = (Integer) buttonView.getTag();
+							
+							if(!forChecks.isEmpty()) {
+								//Adding values if checkbox is checked
+								forChecks.set(getPosition,buttonView.isChecked());
+								selectedItem[getPosition] = buttonView.isChecked();
+							} else {
+								forChecks.add(getPosition, buttonView.isChecked());
+								selectedItem[getPosition] = buttonView.isChecked();
+							} 
+						} 
+					}
+				});
+				convertView.setTag(viewHolder);
+				convertView.setTag(R.id.textView1, viewHolder.fileInfo);
+				convertView.setTag(R.id.textForBox, viewHolder.fileCheckBox);
+			} else {
+				viewHolder = (listViewHolder) convertView.getTag();
+			}
+			
+			
+			viewHolder.fileCheckBox.setTag(position);
+			if(!forChecks.isEmpty()) {
+				viewHolder.fileCheckBox.setChecked(forChecks.get(position));
+			}
+			viewHolder.fileInfo.setText(forShow.get(position));
+		
+			return convertView;
+		}
 	}
 }

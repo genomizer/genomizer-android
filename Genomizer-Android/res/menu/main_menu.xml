@@ -10,12 +10,12 @@
         app:showAsAction="never"/>
     
     <item 
-        android:id="@+id/btnhelp_search_menu"
+        android:id="@+id/btnhelp_main_menu"
         android:title="@string/btnhelp_search_menu"
         />
     
     <item 
-        android:id="@+id/btnsearch_search_menu"
+        android:id="@+id/btnsearch_main_menu"
         android:title="@string/btnsearch_search_menu"
         />
 

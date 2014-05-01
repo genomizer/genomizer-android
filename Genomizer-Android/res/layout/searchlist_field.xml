@@ -13,7 +13,8 @@
             android:layout_weight="6"
             android:ems="10" 
             android:layout_marginLeft="8dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+            style="?android:listSeparatorTextViewStyle" />
 
         <CheckBox
             android:id="@+id/check_search_hint"

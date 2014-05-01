@@ -7,7 +7,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -19,19 +18,45 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
 
+/**
+ * Fragment which will display search options for the Genomizer app, displays
+ * the current annotations used by the Genomizer database and presents them to 
+ * the user for searching.
+ * 
+ * @author Anders Lundberg, dv12alg
+ *
+ */
 public class SearchListFragment extends ListFragment {
 
 	private ArrayList<String> mAnnotationList;
 	private CopyOnWriteArrayList<String[]> mSearchList;
 	private HashMap<Integer, EditText> mTextFields;
 
+	/**
+	 * Defines search and textfield lists.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mSearchList = new CopyOnWriteArrayList<String[]>();
 		mTextFields = new HashMap<Integer, EditText>();
 		populateAnnotation();
-
+	}
+	
+	/**
+	 * Attaches an ArrayAdapter implementation on the current listview
+	 * and a footer with a search button to conclude the search.
+	 */
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		SearchListAdapter adapter;
+		View footer = generateFooter();
+		
+		generateSearchButton(footer);
+		adapter = new SearchListAdapter(mAnnotationList);
+		adapter.setNotifyOnChange(true);
+		setListAdapter(adapter);
 	}
 
 	/**
@@ -50,12 +75,12 @@ public class SearchListFragment extends ListFragment {
 		}
 	}
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		ListView listView = getListView();
-		View footer = getActivity().getLayoutInflater().inflate(
-				R.layout.searchlist_footer, null);
+	/**
+	 * Generates a search button with a onClickListener attached to it.
+	 * 
+	 * @param footer the view where the button is placed
+	 */
+	private void generateSearchButton(View footer) {
 		Button searchButton = (Button) footer
 				.findViewById(R.id.btn_search_footer);
 		searchButton.setOnClickListener(new OnClickListener() {
@@ -80,26 +105,42 @@ public class SearchListFragment extends ListFragment {
 
 			}
 		});
+	}
 
+	/**
+	 * Generates footer view for the searchList Fragment.
+	 * 
+	 * @return the View of the generated footer
+	 */
+	private View generateFooter() {
+		ListView listView = getListView();
+		View footer = getActivity().getLayoutInflater().inflate(
+				R.layout.searchlist_footer, null);
 		listView.addFooterView(footer);
-		Log.d("smurf", "added footer");
-
-		SearchListAdapter adapter = new SearchListAdapter(mAnnotationList);
-		adapter.setNotifyOnChange(true);
-		setListAdapter(adapter);
-
+		return footer;
 	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-
+	
+	/**
+	 * Static searchViewHolder class for keeping items in the searchList in 
+	 * memory when scrolled out of the screen.
+	 * 
+	 * @author Anders Lundberg, dv12alg
+	 *
+	 */
 	static class searchViewHolder {
 		protected EditText annotation;
 		protected CheckBox markCheckBox;
 	}
-
+	
+	/**
+	 * Implementation of ArrayAdapter made for the genomizer app.
+	 * Will use the searchViewHolder as memory of the list scrolled out of view, 
+	 * also attaches onCheckedChangedListener on each of the checkboxes used 
+	 * for the search-fields.
+	 * 
+	 * @author Anders Lundberg, dv12alg
+	 *
+	 */
 	private class SearchListAdapter extends ArrayAdapter<String> {
 
 		public SearchListAdapter(ArrayList<String> storeList) {
@@ -137,8 +178,8 @@ public class SearchListFragment extends ListFragment {
 							}
 						});
 				convertView.setTag(viewHolder);
-				convertView
-						.setTag(R.id.txtf_search_hint, viewHolder.annotation);
+				convertView.setTag(R.id.txtf_search_hint, 
+						viewHolder.annotation);
 				convertView.setTag(R.id.check_search_hint,
 						viewHolder.markCheckBox);
 			} else {
@@ -153,7 +194,13 @@ public class SearchListFragment extends ListFragment {
 		}
 
 	}
-
+	
+	/**
+	 * Add the selected search to searchList, with both annotation and the
+	 * string input by user.
+	 * 
+	 * @param pos , position of the marked annotationField
+	 */
 	private void addToSearchList(int pos) {
 		String text = mTextFields.get(pos).getText().toString();
 		String[] search = null;
@@ -162,19 +209,19 @@ public class SearchListFragment extends ListFragment {
 			search[0] = mAnnotationList.get(pos);
 			search[1] = text;
 			mSearchList.add(search);
-			Log.d("smurf", "Annotation: " + search[0] + "\nText: " + search[1]
-					+ "\n----------------------------");
 		}
-		Log.d("smurf", mSearchList.toString());
 	}
-
-	private void removeFromSearchList(int position) {
+	
+	/**
+	 * Removes the selected search from the searchList.
+	 * 
+	 * @param pos , position of the unchecked annotationField
+	 */
+	private void removeFromSearchList(int pos) {
 		for (String[] s : mSearchList) {
-			if (s[0].equals(mAnnotationList.get(position))) {
+			if (s[0].equals(mAnnotationList.get(pos))) {
 				mSearchList.remove(s);
 			}
 		}
-
-		Log.d("smurf", mSearchList.toString());
 	}
 }

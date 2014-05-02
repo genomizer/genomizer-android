@@ -71,4 +71,28 @@ public class ComHandler {
 			return null;
 		}
 	}
+	
+	
+	public static JSONArray annotations() throws IOException, ConnectionException {
+		try {
+			Communicator communicator = new Communicator(serverURL + "annotation");
+			communicator.setupConnection("GET");
+			JSONObject msg = MsgFactory.createRegularPackage();
+			Log.d("DEBUG", "Innan request");
+			String jsonString = communicator.sendRequest(msg);
+			Log.d("DEBUG", "Efter request");
+			if (jsonString != null) {
+				JSONArray jsonPackage = new JSONArray(jsonString);
+				Log.d("DEBUG", jsonPackage.toString());
+				return jsonPackage;
+			} else {
+				Log.d("DEBUG", "KONSTIGT");
+				return null;
+			}
+			
+		} catch (JSONException e) {
+			Log.d("DEBUG", "OCKSÅ KONSTIGT");
+			return null;
+		}
+	}
 }

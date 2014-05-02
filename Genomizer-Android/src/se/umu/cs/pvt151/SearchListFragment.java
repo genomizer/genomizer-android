@@ -1,12 +1,19 @@
 package se.umu.cs.pvt151;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.json.JSONArray;
+
+import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.com.ConnectionException;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -28,9 +35,13 @@ import android.widget.ListView;
  */
 public class SearchListFragment extends ListFragment {
 
+	protected static final String ANNOTATION = "Annotation";
+	protected static final String VALUE = "Value";
 	private ArrayList<String> mAnnotationList;
 	private CopyOnWriteArrayList<String[]> mSearchList;
 	private HashMap<Integer, EditText> mTextFields;
+	private Button searchButton;
+	private boolean mMarkedForSearch;
 
 	/**
 	 * Defines search and textfield lists.
@@ -81,27 +92,50 @@ public class SearchListFragment extends ListFragment {
 	 * @param footer the view where the button is placed
 	 */
 	private void generateSearchButton(View footer) {
-		Button searchButton = (Button) footer
+		searchButton = (Button) footer
 				.findViewById(R.id.btn_search_footer);
+		searchButton.setEnabled(false);
 		searchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-
-				// TODO should work with connection
-				// try {
-				// ComHandler.search(searchList);
-				// } catch (IOException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
-				// } catch (ConnectionException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
-				// }
-
-				Intent i = new Intent(getActivity(),
+				int i = 0;
+				HashMap<Integer, String> annotations = new HashMap<Integer, String>();
+				HashMap<Integer, String> value = new HashMap<Integer, String>();
+				
+//				new Thread(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						// TODO Auto-generated method stub
+//						//TODO should work with connection
+//						try {
+//							JSONArray result = ComHandler.search(mSearchList);
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (ConnectionException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//						
+//						
+//					}
+//				}).start();
+				
+				Intent intent = new Intent(getActivity(),
 						ExperimentListActivity.class);
-				startActivity(i);
+				for (String[] s : mSearchList) {
+					annotations.put(i, s[0]);
+					value.put(i, s[1]);
+					i++;
+				}
+				
+				intent.putExtra(ANNOTATION, annotations);
+				intent.putExtra(VALUE, value);
+				Log.d("Experiment", "Search annotations: " + annotations.toString());
+				Log.d("Experiment", "Search value: " + value.toString());
+				startActivity(intent);
 
 			}
 		});
@@ -175,6 +209,7 @@ public class SearchListFragment extends ListFragment {
 								} else {
 									removeFromSearchList(pos);
 								}
+								searchButton.setEnabled(mSearchList.size() > 0);
 							}
 						});
 				convertView.setTag(viewHolder);

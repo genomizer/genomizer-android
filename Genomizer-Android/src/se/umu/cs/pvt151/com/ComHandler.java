@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,8 +28,8 @@ public class ComHandler {
 			Communicator communicator = new Communicator(serverURL + "login");
 
 			JSONObject msg = MsgFactory.createLogin(username, password);
-			communicator.setupConnection();
-			String jsonString = communicator.sendRequest(msg, "POST");
+			communicator.setupConnection("POST");
+			String jsonString = communicator.sendRequest(msg);
 			
 			if (jsonString != null) {
 				JSONObject jsonPackage = new JSONObject(jsonString);
@@ -48,22 +49,25 @@ public class ComHandler {
 		return false;
 	}
 
-	public static JSONObject search(List<String[]> annotations) throws IOException, ConnectionException {
+	public static JSONArray search(List<String[]> annotations) throws IOException, ConnectionException {
 		try {
-			Communicator communicator = new Communicator(serverURL + "search/?");//TODO FIX THIS LINE - NEEDS ANNOTATIONS
-			communicator.setupConnection();
+			Communicator communicator = new Communicator(serverURL + "search/annotations=?");//TODO FIX THIS LINE - NEEDS ANNOTATIONS
+			communicator.setupConnection("GET");
 			JSONObject msg = MsgFactory.createRegularPackage();
-			String jsonString = communicator.sendRequest(msg, "GET");
-			
+			Log.d("DEBUG", "Innan request");
+			String jsonString = communicator.sendRequest(msg);
+			Log.d("DEBUG", "Efter request");
 			if (jsonString != null) {
-				JSONObject jsonPackage = new JSONObject(jsonString);
+				JSONArray jsonPackage = new JSONArray(jsonString);
+				Log.d("DEBUG", jsonPackage.toString());
 				return jsonPackage;
 			} else {
+				Log.d("DEBUG", "KONSTIGT");
 				return null;
 			}
 			
 		} catch (JSONException e) {
-			e.printStackTrace();
+			Log.d("DEBUG", "OCKSÅ KONSTIGT");
 			return null;
 		}
 	}

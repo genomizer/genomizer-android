@@ -31,7 +31,7 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> rawData = new ArrayList<String>();
 	private ArrayList<String> profileData = new ArrayList<String>();
 	private ArrayList<String> regionData = new ArrayList<String>();
-	static ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
+	private ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
 
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 

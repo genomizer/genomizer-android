@@ -66,6 +66,10 @@ public class Annotation {
 		
 	}
 	
+	public boolean isFreeText() {
+		return value.size() == 0;
+	}
+	
 	
 	public void setForced(boolean forced) {
 		this.forced = forced;

@@ -29,6 +29,7 @@ public class ComHandler {
 
 			JSONObject msg = MsgFactory.createLogin(username, password);
 			communicator.setupConnection("POST");
+			
 			String jsonString = communicator.sendRequest(msg);
 			
 			if (jsonString != null) {
@@ -51,23 +52,25 @@ public class ComHandler {
 
 	public static JSONArray search(List<String[]> annotations) throws IOException, ConnectionException {
 		try {
-			Communicator communicator = new Communicator(serverURL + "search/annotations=?");//TODO FIX THIS LINE - NEEDS ANNOTATIONS
+			//TODO FIX THIS LINE - NEEDS ANNOTATIONS
+			Communicator communicator = new Communicator(serverURL + "search/annotations=?");
 			communicator.setupConnection("GET");
+			
 			JSONObject msg = MsgFactory.createRegularPackage();
-			Log.d("DEBUG", "Innan request");
+			
 			String jsonString = communicator.sendRequest(msg);
-			Log.d("DEBUG", "Efter request");
+			
 			if (jsonString != null) {
 				JSONArray jsonPackage = new JSONArray(jsonString);
 				Log.d("DEBUG", jsonPackage.toString());
 				return jsonPackage;
 			} else {
-				Log.d("DEBUG", "KONSTIGT");
+				Log.d("DEBUG", "ComHandler - NULL json paket response");
 				return null;
 			}
 			
 		} catch (JSONException e) {
-			Log.d("DEBUG", "OCKSÅ KONSTIGT");
+			Log.d("DEBUG", "ComHandler(search) JSONException: " + e.getMessage());
 			return null;
 		}
 	}
@@ -78,20 +81,21 @@ public class ComHandler {
 			Communicator communicator = new Communicator(serverURL + "annotation");
 			communicator.setupConnection("GET");
 			JSONObject msg = MsgFactory.createRegularPackage();
-			Log.d("DEBUG", "Innan request");
+			
 			String jsonString = communicator.sendRequest(msg);
-			Log.d("DEBUG", "Efter request");
+			
 			if (jsonString != null) {
 				JSONArray jsonPackage = new JSONArray(jsonString);
+				
 				Log.d("DEBUG", jsonPackage.toString());
 				return jsonPackage;
 			} else {
-				Log.d("DEBUG", "KONSTIGT");
+				Log.d("DEBUG", "ComHandler - NULL json paket response");
 				return null;
 			}
 			
 		} catch (JSONException e) {
-			Log.d("DEBUG", "OCKSÅ KONSTIGT");
+			Log.d("DEBUG", "ComHandler(annotations) JSONException: " + e.getMessage());
 			return null;
 		}
 	}

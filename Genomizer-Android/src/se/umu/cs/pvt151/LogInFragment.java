@@ -55,8 +55,9 @@ public class LogInFragment extends Fragment {
 				}
 				
 				try {
-					boolean loginOk = ComHandler.login(uname, password);
 					
+					boolean loginOk = ComHandler.login(uname, password);
+										
 					if(loginOk) {
 						startSearchActivity();
 					}

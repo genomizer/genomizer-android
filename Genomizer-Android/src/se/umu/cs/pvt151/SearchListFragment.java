@@ -9,7 +9,7 @@ import org.json.JSONArray;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.com.ConnectionException;
-
+import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -17,13 +17,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 /**
  * Fragment which will display search options for the Genomizer app, displays
@@ -38,10 +42,10 @@ public class SearchListFragment extends ListFragment {
 	protected static final String ANNOTATION = "Annotation";
 	protected static final String VALUE = "Value";
 	private ArrayList<String> mAnnotationList;
-	private CopyOnWriteArrayList<String[]> mSearchList;
-	private HashMap<Integer, EditText> mTextFields;
 	private Button searchButton;
-	private boolean mMarkedForSearch;
+	private ArrayList<String> mSpinnerList;
+	private HashMap<String, String> mSearchList;
+	
 
 	/**
 	 * Defines search and textfield lists.
@@ -49,9 +53,9 @@ public class SearchListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mSearchList = new CopyOnWriteArrayList<String[]>();
-		mTextFields = new HashMap<Integer, EditText>();
+		mSearchList = new HashMap<String, String>();
 		populateAnnotation();
+		
 	}
 	
 	/**
@@ -61,7 +65,7 @@ public class SearchListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		SearchListAdapter adapter;
+		ArrayAdapter<String> adapter;
 		View footer = generateFooter();
 		
 		generateSearchButton(footer);
@@ -84,6 +88,17 @@ public class SearchListFragment extends ListFragment {
 		for (String s : values) {
 			mAnnotationList.add(s);
 		}
+		
+		String[] Spinvalues = new String[] { "", "2",
+				"Type of data", "Species", "Genome release", "Cell-line",
+				"Development stage", "Sex", "Tissue", "Antigen name",
+				"Antigen symbol", "Antibody" };
+		mSpinnerList = new ArrayList<String>();
+		for (String s : Spinvalues) {
+			mSpinnerList.add(s);
+		}
+		
+		
 	}
 
 	/**
@@ -94,7 +109,6 @@ public class SearchListFragment extends ListFragment {
 	private void generateSearchButton(View footer) {
 		searchButton = (Button) footer
 				.findViewById(R.id.btn_search_footer);
-		searchButton.setEnabled(false);
 		searchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -103,39 +117,13 @@ public class SearchListFragment extends ListFragment {
 				HashMap<Integer, String> annotations = new HashMap<Integer, String>();
 				HashMap<Integer, String> value = new HashMap<Integer, String>();
 				
-//				new Thread(new Runnable() {
-//					
-//					@Override
-//					public void run() {
-//						// TODO Auto-generated method stub
-//						//TODO should work with connection
-//						try {
-//							JSONArray result = ComHandler.search(mSearchList);
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (ConnectionException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//						
-//						
-//					}
-//				}).start();
+//				intent.putExtra(ANNOTATION, annotations);
+//				intent.putExtra(VALUE, value);
+//				Log.d("Experiment", "Search annotations: " + annotations.toString());
+//				Log.d("Experiment", "Search value: " + value.toString());
+//				startActivity(intent);
 				
-				Intent intent = new Intent(getActivity(),
-						ExperimentListActivity.class);
-				for (String[] s : mSearchList) {
-					annotations.put(i, s[0]);
-					value.put(i, s[1]);
-					i++;
-				}
-				
-				intent.putExtra(ANNOTATION, annotations);
-				intent.putExtra(VALUE, value);
-				Log.d("Experiment", "Search annotations: " + annotations.toString());
-				Log.d("Experiment", "Search value: " + value.toString());
-				startActivity(intent);
+				Log.d("smurf", "Search: " + mSearchList.toString());
 
 			}
 		});
@@ -162,8 +150,8 @@ public class SearchListFragment extends ListFragment {
 	 *
 	 */
 	static class searchViewHolder {
-		protected EditText annotation;
-		protected CheckBox markCheckBox;
+		protected TextView annotation;
+		protected Spinner annotationValue;
 	}
 	
 	/**
@@ -184,47 +172,74 @@ public class SearchListFragment extends ListFragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			searchViewHolder viewHolder = null;
+			ArrayAdapter<String> spinAdapter;
+			Spinner spinner;
+			TextView text;
 
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(
-						R.layout.searchlist_field, null);
+						R.layout.searchlist_dropdown_field, null);
+				
+				spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_item, mSpinnerList);
+				text = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
+				spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
+				spinner.setAdapter(spinAdapter);
 
 				viewHolder = new searchViewHolder();
-				viewHolder.annotation = (EditText) convertView
-						.findViewById(R.id.txtf_search_hint);
-				mTextFields.put(position, viewHolder.annotation);
-				viewHolder.markCheckBox = (CheckBox) convertView
-						.findViewById(R.id.check_search_hint);
-
-				viewHolder.markCheckBox
-						.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-							@Override
-							public void onCheckedChanged(
-									CompoundButton buttonView, boolean isChecked) {
-								int pos = (Integer) buttonView.getTag();
-
-								if (isChecked) {
-									addToSearchList(pos);
-								} else {
-									removeFromSearchList(pos);
-								}
-								searchButton.setEnabled(mSearchList.size() > 0);
-							}
-						});
+				viewHolder.annotation = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
+				viewHolder.annotationValue = (Spinner) convertView.findViewById(R.id.spinner_search);
+				
 				convertView.setTag(viewHolder);
-				convertView.setTag(R.id.txtf_search_hint, 
-						viewHolder.annotation);
-				convertView.setTag(R.id.check_search_hint,
-						viewHolder.markCheckBox);
+								
+				spinner.setTag(position);
+				spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						int annotationPosition = (Integer) parent.getTag();
+						String annotation = mAnnotationList.get(annotationPosition);
+						String value = mSpinnerList.get(position);
+						
+						Log.d("smurf", "Annotation: " + annotation + "\nValue: " + value + "\n-----------------");
+						mSearchList.put(annotation, value);
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						// TODO Auto-generated method stub
+					}
+				});
+				
+//				viewHolder = new searchViewHolder();
+//				viewHolder.annotation = (TextView) convertView
+//						.findViewById(R.id.lbl_spinner_search);
+//				viewHolder.annotationValue = (Spinner) convertView
+//						.findViewById(R.id.spinner_search);
+
+
+//				convertView.setTag(R.id.lbl_spinner_search, 
+//						viewHolder.annotation);
+//				convertView.setTag(R.id.spinner_search,
+//						viewHolder.annotationValue);
 			} else {
 				viewHolder = (searchViewHolder) convertView.getTag();
 			}
-
-			viewHolder.markCheckBox.setTag(position);
-			viewHolder.annotation.setHint(mAnnotationList.get(position)
-					.toString());
-
+			
+			String annotationText = mAnnotationList.get(position);
+			String selection = mSearchList.get(annotationText);
+			int selectionPos = mSpinnerList.indexOf(selection);
+			
+			viewHolder.annotation.setText(annotationText);
+			viewHolder.annotationValue.setSelection(selectionPos);
+			
+//			viewHolder.annotationValue.setTag(position);
+//			viewHolder.annotation.setHint(mAnnotationList.get(position)
+//					.toString());
+			
+//			int annotationValuePos = mAnnotationList.indexOf()
+//			viewHolder.annotationValue.setSelection(mSearchList.get(mAnnotationList.get(position)));
+			
+			
 			return convertView;
 		}
 
@@ -237,14 +252,14 @@ public class SearchListFragment extends ListFragment {
 	 * @param pos , position of the marked annotationField
 	 */
 	private void addToSearchList(int pos) {
-		String text = mTextFields.get(pos).getText().toString();
-		String[] search = null;
-		if (text.length() > 0) {
-			search = new String[2];
-			search[0] = mAnnotationList.get(pos);
-			search[1] = text;
-			mSearchList.add(search);
-		}
+//		String text = mTextFields.get(pos).getText().toString();
+//		String[] search = null;
+//		if (text.length() > 0) {
+//			search = new String[2];
+//			search[0] = mAnnotationList.get(pos);
+//			search[1] = text;
+//			mSearchList.add(search);
+//		}
 	}
 	
 	/**
@@ -253,10 +268,10 @@ public class SearchListFragment extends ListFragment {
 	 * @param pos , position of the unchecked annotationField
 	 */
 	private void removeFromSearchList(int pos) {
-		for (String[] s : mSearchList) {
-			if (s[0].equals(mAnnotationList.get(pos))) {
-				mSearchList.remove(s);
-			}
-		}
+//		for (String[] s : mSearchList) {
+//			if (s[0].equals(mAnnotationList.get(pos))) {
+//				mSearchList.remove(s);
+//			}
+//		}
 	}
 }

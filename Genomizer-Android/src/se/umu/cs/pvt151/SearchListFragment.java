@@ -152,6 +152,7 @@ public class SearchListFragment extends ListFragment {
 	static class searchViewHolder {
 		protected TextView annotation;
 		protected Spinner annotationValue;
+		protected int selectedPosition;
 	}
 	
 	/**
@@ -188,18 +189,20 @@ public class SearchListFragment extends ListFragment {
 				viewHolder = new searchViewHolder();
 				viewHolder.annotation = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
 				viewHolder.annotationValue = (Spinner) convertView.findViewById(R.id.spinner_search);
+				viewHolder.selectedPosition = 0;
 				
 				convertView.setTag(viewHolder);
 								
-				spinner.setTag(position);
+				spinner.setTag(viewHolder);
 				spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						int annotationPosition = (Integer) parent.getTag();
-						String annotation = mAnnotationList.get(annotationPosition);
+						searchViewHolder viewHolder = (searchViewHolder) parent.getTag();
+//						int annotationPosition = (Integer) parent.getTag();
+						String annotation = viewHolder.annotation.getText().toString();
 						String value = mSpinnerList.get(position);
-						
+						viewHolder.selectedPosition = position;
 						Log.d("smurf", "Annotation: " + annotation + "\nValue: " + value + "\n-----------------");
 						mSearchList.put(annotation, value);
 					}
@@ -226,8 +229,7 @@ public class SearchListFragment extends ListFragment {
 			}
 			
 			String annotationText = mAnnotationList.get(position);
-			String selection = mSearchList.get(annotationText);
-			int selectionPos = mSpinnerList.indexOf(selection);
+			int selectionPos = viewHolder.selectedPosition;
 			
 			viewHolder.annotation.setText(annotationText);
 			viewHolder.annotationValue.setSelection(selectionPos);

@@ -12,12 +12,15 @@ import org.json.JSONObject;
 
 import se.umu.cs.pvt151.Annotation;
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.ConnectionException;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
 import android.util.Log;
 import junit.framework.TestCase;
 
 public class ComHandlerTest extends TestCase {
+	
+	public void setUp() {
+		ComHandler.setServerURL("http://genomizer.apiary-mock.com/");
+	}
 	
 	public void testLoginPackage() {
 		try {
@@ -27,9 +30,7 @@ public class ComHandlerTest extends TestCase {
 				Log.d("DEBUG", "connected");
 			}
 		} catch (IOException e) {
-			Log.d("DEBUG", "Something's wrong");
-		} catch (ConnectionException e) {
-			Log.d("DEBUG", "Could not connect to server");
+			Log.d("DEBUG", "Could not communicate with the server");
 		}
 	}
 	
@@ -39,15 +40,13 @@ public class ComHandlerTest extends TestCase {
 		searchValues.put("Species", "Human");
 		searchValues.put("Sex", "Male");
 		try {
-			ComHandler.login("John", "password");
+			ComHandler.login("John", "SearchTest");
 			JSONArray experiments = ComHandler.search(searchValues);
 			Log.d("DEBUG", experiments.toString());
 			assertEquals("experimentName", ((JSONObject) experiments.get(0)).get("name"));
 		} catch (IOException e) {
 			fail("IOException!");
 			e.printStackTrace();
-		} catch (ConnectionException e) {
-			fail("Can't reach server!");
 		} catch (JSONException e) {
 			fail("JSONException thrown!");
 		}
@@ -65,8 +64,6 @@ public class ComHandlerTest extends TestCase {
 		} catch (IOException e) {
 			fail("IOException!");
 			e.printStackTrace();
-		} catch (ConnectionException e) {
-			fail("Can't reach server!");
 		}
 		
 	}
@@ -80,11 +77,18 @@ public class ComHandlerTest extends TestCase {
 		} catch (IOException e) {
 			fail("IOException!");
 			e.printStackTrace();
-		} catch (ConnectionException e) {
-			fail("Can't reach server!");
 		}
 	}
 	
+	public void testCannotConnect() {
+		ComHandler.setServerURL("http://www.thisurldefinitelydoesnotexistordoesit.com/");
+		try {
+			ComHandler.login("Hej", "worrd");
+			fail("Login didn't throw IOException");
+		} catch (IOException e) {
+			//Expected outcome
+		}
+	}
 	
 	/**
 	 * Can't fail.

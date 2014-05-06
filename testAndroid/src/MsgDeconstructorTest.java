@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import se.umu.cs.pvt151.Experiment;
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.ConnectionException;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
 import android.util.Log;
 import junit.framework.TestCase;
@@ -47,12 +46,10 @@ public class MsgDeconstructorTest extends TestCase {
 			
 			assertEquals("experimentName", experimentsArray.get(0).getName());
 		} catch (IOException e) {
-			fail("IOException!");
 			e.printStackTrace();
-		} catch (ConnectionException e) {
-			fail("Can't reach server!");
+			fail("IOException!");
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			fail("JSONException!");
 			e.printStackTrace();
 		}
 	}

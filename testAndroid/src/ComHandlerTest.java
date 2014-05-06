@@ -31,6 +31,7 @@ public class ComHandlerTest extends TestCase {
 			}
 		} catch (IOException e) {
 			Log.d("DEBUG", "Could not communicate with the server");
+			fail("Could not communicate with the server.");
 		}
 	}
 	
@@ -83,9 +84,9 @@ public class ComHandlerTest extends TestCase {
 	public void testCannotConnect() {
 		ComHandler.setServerURL("http://www.thisurldefinitelydoesnotexistordoesit.com/");
 		try {
-			ComHandler.login("Hej", "worrd");
+			ComHandler.login("ConnectFail", "worrd");
 			fail("Login didn't throw IOException");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			//Expected outcome
 		}
 	}
@@ -102,6 +103,19 @@ public class ComHandlerTest extends TestCase {
 			Log.d("DEBUG", result);
 		} catch (UnsupportedEncodingException e) {
 			fail("Can't use UTF-8!?");
+		}
+	}
+	
+	
+	public void testRawToProfile() {
+		try {
+			ComHandler.login("rawtoprofile", "password");
+			String result = ComHandler.rawToProfile("file1.exe");
+			Log.d("RAW", result);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

@@ -129,4 +129,21 @@ public class ComHandler {
 		return URLEncoder.encode(pubmedQuery, "UTF-8");
 		
 	}
+	
+	
+	public static String rawToProfile(String fileID) throws IOException {
+		
+		try {
+			Communicator communicator = new Communicator(serverURL + "rawtoprofile/" + fileID);
+			communicator.setupConnection("PUT");
+			JSONObject msg = MsgFactory.createRegularPackage();
+			
+			String jsonString = communicator.sendRequest(msg);
+			
+			return jsonString;
+			
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 }

@@ -74,8 +74,7 @@ public class Communicator {
 			response.append(inputLine);
 		}
 		in.close();
-		System.out.println(response.toString());
-		Log.d("DEBUG", "Communicator response: "+ response.toString());
+		
 		
 		if (responseCode == 200) {
 			return response.toString();

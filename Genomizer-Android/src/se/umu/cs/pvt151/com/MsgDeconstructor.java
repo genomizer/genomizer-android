@@ -35,8 +35,10 @@ public class MsgDeconstructor {
 				for(int k = 0; k < valueArray.length(); k++) {
 					annotation.appendValue(valueArray.getString(k));
 				}
-			}									
+			}
+			annotations.add(annotation);
 		}
+		
 		return annotations;
 	}
 	

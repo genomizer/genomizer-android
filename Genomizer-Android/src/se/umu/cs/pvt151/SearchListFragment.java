@@ -1,8 +1,11 @@
 package se.umu.cs.pvt151;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.com.ConnectionException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -34,7 +37,7 @@ public class SearchListFragment extends ListFragment {
 	private Button searchButton;
 	private ArrayList<String> mSpinnerList;
 	private HashMap<String, String> mSearchList;
-	
+	private ArrayList<Annotation> mAnnotations;
 
 	/**
 	 * Defines search and textfield lists.
@@ -69,24 +72,29 @@ public class SearchListFragment extends ListFragment {
 	 * actual annotations.
 	 */
 	private void populateAnnotation() {
-		String[] values = new String[] { "Experiment Id", "Pubmed Id",
-				"Type of data", "Species", "Genome release", "Cell-line",
-				"Development stage", "Sex", "Tissue", "Antigen name",
-				"Antigen symbol", "Antibody" };
-		mAnnotationList = new ArrayList<String>();
-		for (String s : values) {
-			mAnnotationList.add(s);
-		}
 		
-		String[] Spinvalues = new String[] { "", "2",
-				"Type of data", "Species", "Genome release", "Cell-line",
-				"Development stage", "Sex", "Tissue", "Antigen name",
-				"Antigen symbol", "Antibody" };
-		mSpinnerList = new ArrayList<String>();
-		for (String s : Spinvalues) {
-			mSpinnerList.add(s);
-		}
-		
+			new Thread(new Runnable() {
+				@Override
+			
+				public void run() {
+					try {
+						mAnnotations = ComHandler.getServerAnnotations();
+						mAnnotationList = new ArrayList<String>();
+						
+						for(Annotation annotation : mAnnotations) {
+							mAnnotationList.add(annotation.getName());	
+						}
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ConnectionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}).start();
+
 		
 	}
 
@@ -157,8 +165,8 @@ public class SearchListFragment extends ListFragment {
 	 */
 	private class SearchListAdapter extends ArrayAdapter<String> {
 
-		public SearchListAdapter(ArrayList<String> storeList) {
-			super(getActivity(), 0, storeList);
+		public SearchListAdapter(ArrayList<String> annotationNames) {
+			super(getActivity(), 0, annotationNames);
 		}
 
 		@Override
@@ -170,6 +178,8 @@ public class SearchListFragment extends ListFragment {
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(
 						R.layout.searchlist_dropdown_field, null);
+				final ArrayList<String> mSpinnerList = mAnnotations.get(position).getValue();
+				
 				
 				spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_item, mSpinnerList);
 				spinner = (Spinner) convertView.findViewById(R.id.spinner_search);

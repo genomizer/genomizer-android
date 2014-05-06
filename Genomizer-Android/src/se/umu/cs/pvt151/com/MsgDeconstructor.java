@@ -13,12 +13,11 @@ import se.umu.cs.pvt151.Annotation;
 public class MsgDeconstructor {
 	
 	
-	public static ArrayList<Annotation> annotationJSON(JSONArray jsonPackage) throws JSONException {
+	public static ArrayList<Annotation> annotationJSON(JSONArray json) throws JSONException {
 		ArrayList<Annotation> annotations = new ArrayList<Annotation>();
 		
-		
-		for (int i = 0; i < jsonPackage.length(); i++) {
-			JSONObject obj = (JSONObject) jsonPackage.get(i);
+		for (int i = 0; i < json.length(); i++) {
+			JSONObject obj = (JSONObject) json.get(i);
 			Annotation annotation = new Annotation();
 			
 			annotation.setId(obj.getInt("id"));
@@ -34,14 +33,21 @@ public class MsgDeconstructor {
 				for(int k = 0; k < valueArray.length(); k++) {
 					annotation.appendValue(valueArray.getString(k));
 				}
-			}
-						
-									
+			}									
 		}
-		
 		return annotations;
 	}
 	
+	public static void searchJSON(JSONArray json) {
+		
+	}
+	
+	
+	/**
+	 * Om det skulle vara mšjligt att gšra en generell deconstruct metod fšr alla typer av json objekt.
+	 * @deprecated
+	 * @param json
+	 */
 	public static void deconstruct(JSONArray json) {
 		for(int i = 0; i < json.length(); i++) {
 			JSONObject o = json.optJSONObject(i);

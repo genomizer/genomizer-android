@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import se.umu.cs.pvt151.Annotation;
 import android.util.Log;
 
 public class ComHandler {
@@ -81,8 +83,9 @@ public class ComHandler {
 	}
 	
 	
-	public static JSONArray getServerAnnotations() throws IOException, ConnectionException {
+	public static ArrayList<Annotation> getServerAnnotations() throws IOException, ConnectionException {
 		try {
+		
 			Communicator communicator = new Communicator(serverURL + "annotation");
 			communicator.setupConnection("GET");
 			JSONObject msg = MsgFactory.createRegularPackage();
@@ -93,7 +96,7 @@ public class ComHandler {
 				JSONArray jsonPackage = new JSONArray(jsonString);
 				
 				Log.d("DEBUG", jsonPackage.toString());
-				return jsonPackage;
+				return MsgDeconstructor.annotationJSON(jsonPackage);
 			} else {
 				Log.d("DEBUG", "ComHandler - NULL json paket response");
 				return null;

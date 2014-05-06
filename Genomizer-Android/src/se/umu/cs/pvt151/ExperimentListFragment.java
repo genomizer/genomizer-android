@@ -161,6 +161,7 @@ public class ExperimentListFragment extends Fragment {
 	 * information received from comhandler.
 	 * @param info
 	 */
+	//TODO: get right information from annotations to display
 	/*private void infoAnnotations(ArrayList<Annotation> info) {
 		for(int i=0; i<info.size(); i++) {
 			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName() 
@@ -207,10 +208,10 @@ public class ExperimentListFragment extends Fragment {
 				//Getting JSONarray with search results
 				results = ComHandler.getServerAnnotations();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				// TODO Write better error handling
 				e.printStackTrace();
 			} catch (ConnectionException e) {
-				// TODO Auto-generated catch block
+				// TODO Write better error handling
 				e.printStackTrace();
 			}
 			// TODO Send request to ComHandler, need to know what to send and receive...
@@ -220,13 +221,13 @@ public class ExperimentListFragment extends Fragment {
 		protected void onPostExecute(Void params) {
 		
 			//TODO: Needed to fetch results?
-			try {
-				//Unpack the array to a list of annotation object used to display search results
-				forExperiments = MsgDeconstructor.annotationJSON(results);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//try {
+				//TODO: get right unpackinformation from msgdeconstructo
+				//forExperiments = MsgDeconstructor.annotationJSON(results);
+			//} catch (JSONException e) {
+				// TODO Write better error handling
+				//e.printStackTrace();
+			//}
 		}
 	}
 }

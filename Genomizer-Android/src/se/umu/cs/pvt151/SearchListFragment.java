@@ -61,6 +61,7 @@ public class SearchListFragment extends ListFragment {
 		ArrayAdapter<String> adapter;
 		View footer = generateFooter();
 		populateAnnotation();
+		while(fulingWait);
 		generateSearchButton(footer);
 		adapter = new SearchListAdapter(mAnnotationList);
 		adapter.setNotifyOnChange(true);
@@ -83,6 +84,7 @@ public class SearchListFragment extends ListFragment {
 						mAnnotationList = new ArrayList<String>();
 						
 						for(Annotation annotation : mAnnotations) {
+							Log.d("SEARCH", annotation.getName());
 							mAnnotationList.add(annotation.getName());	
 						}
 						fulingWait = false;

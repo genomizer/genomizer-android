@@ -38,6 +38,7 @@ public class SearchListFragment extends ListFragment {
 	private ArrayList<String> mSpinnerList;
 	private HashMap<String, String> mSearchList;
 	private ArrayList<Annotation> mAnnotations;
+	private boolean fulingWait = true;
 
 	/**
 	 * Defines search and textfield lists.
@@ -46,7 +47,7 @@ public class SearchListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mSearchList = new HashMap<String, String>();
-		populateAnnotation();
+		
 		
 	}
 	
@@ -59,7 +60,7 @@ public class SearchListFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		ArrayAdapter<String> adapter;
 		View footer = generateFooter();
-		
+		populateAnnotation();
 		generateSearchButton(footer);
 		adapter = new SearchListAdapter(mAnnotationList);
 		adapter.setNotifyOnChange(true);
@@ -84,7 +85,7 @@ public class SearchListFragment extends ListFragment {
 						for(Annotation annotation : mAnnotations) {
 							mAnnotationList.add(annotation.getName());	
 						}
-						
+						fulingWait = false;
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -202,7 +202,7 @@ public class ExperimentListFragment extends Fragment {
 		@Override
 		protected JSONArray doInBackground(Void... args0) {
 			//Remove comment for search until fixed
-			try {
+		/*	try {
 				//Sending hashmap with annotation, value for search to comhandler
 				ComHandler.search(searchInfo);
 				//Getting JSONarray with search results
@@ -213,7 +213,7 @@ public class ExperimentListFragment extends Fragment {
 			} catch (ConnectionException e) {
 				// TODO Write better error handling
 				e.printStackTrace();
-			}
+			}*/
 			// TODO Send request to ComHandler, need to know what to send and receive...
 			return results;
 		}

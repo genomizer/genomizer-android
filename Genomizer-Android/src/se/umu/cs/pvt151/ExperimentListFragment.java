@@ -44,6 +44,7 @@ public class ExperimentListFragment extends Fragment {
 	private HashMap<String, String> searchInfo = new HashMap<String, String>();
 	private JSONArray results;
 	private ArrayList<Annotation> forExperiments = new ArrayList<Annotation>();
+	private SearchHandler startSearch = new SearchHandler();
 	
 	
 	@SuppressWarnings("unchecked")
@@ -56,6 +57,9 @@ public class ExperimentListFragment extends Fragment {
 				.getIntent().getExtras().getSerializable("Value");
 		Log.d("Experiment", "ExpList annotations: " + annotations.toString());
 		Log.d("Experiment", "ExpList value: " + value.toString());
+		
+		//Try to run the Asynctask when all code for handling search info is done.
+		//startSearch.execute();
 	}
 	
 	
@@ -197,8 +201,10 @@ public class ExperimentListFragment extends Fragment {
 		@Override
 		protected JSONArray doInBackground(Void... args0) {
 			//Remove comment for search until fixed
-			//ComHandler.search(annotations);
 			try {
+				//Sending hashmap with annotation, value for search to comhandler
+				ComHandler.search(searchInfo);
+				//Getting JSONarray with search results
 				results = ComHandler.getServerAnnotations();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -215,6 +221,7 @@ public class ExperimentListFragment extends Fragment {
 		
 			//TODO: Needed to fetch results?
 			try {
+				//Unpack the array to a list of annotation object used to display search results
 				forExperiments = MsgDeconstructor.annotationJSON(results);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

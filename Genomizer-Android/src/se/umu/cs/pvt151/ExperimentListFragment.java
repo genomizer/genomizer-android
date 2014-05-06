@@ -6,9 +6,15 @@ package se.umu.cs.pvt151;
  * Presents a list over available
  * experiments to the user
  */
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.com.ConnectionException;
+import se.umu.cs.pvt151.com.MsgDeconstructor;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,9 +38,13 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> speciesSexInfo = new ArrayList<String>();
 	private ArrayList<String> genomeInfo = new ArrayList<String>();
 	private ArrayList<String> displaySearchResults = new ArrayList<String>();
+	@SuppressLint("UseSparseArrays")
 	private HashMap<Integer, String> annotations = new HashMap<Integer, String>();
 	private HashMap<Integer, String> value;
 	private HashMap<String, String> searchInfo = new HashMap<String, String>();
+	private JSONArray results;
+	private ArrayList<Annotation> forExperiments = new ArrayList<Annotation>();
+	
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -149,7 +159,7 @@ public class ExperimentListFragment extends Fragment {
 	 */
 	/*private void infoAnnotations(ArrayList<Annotation> info) {
 		for(int i=0; i<info.size(); i++) {
-			displaySearchResults.add("Experiment:  " + info.get(i).getId() 
+			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName() 
 					+ "\n" +"Species: " + info.get(i).getValue() + "\n" 
 					+ "Sex: " + speciesSexInfo.get(i) + "\n" + "Genomic Release: " 
 					+ genomeInfo.get(i));
@@ -182,16 +192,34 @@ public class ExperimentListFragment extends Fragment {
 	 * @author Cecilia Lindmark
 	 *
 	 */
-	public class SearchHandler extends AsyncTask<Void, Void, Void> {
+	public class SearchHandler extends AsyncTask<Void, Void, JSONArray> {
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
+		protected JSONArray doInBackground(Void... args0) {
+			//Remove comment for search until fixed
+			//ComHandler.search(annotations);
+			try {
+				results = ComHandler.getServerAnnotations();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// TODO Send request to ComHandler, need to know what to send and receive...
-			return null;
+			return results;
 		}
-		@Override
+		
 		protected void onPostExecute(Void params) {
+		
 			//TODO: Needed to fetch results?
+			try {
+				forExperiments = MsgDeconstructor.annotationJSON(results);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

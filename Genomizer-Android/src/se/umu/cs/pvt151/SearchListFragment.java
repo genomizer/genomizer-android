@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.ConnectionException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -17,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -33,12 +34,12 @@ public class SearchListFragment extends ListFragment {
 
 	protected static final String ANNOTATION = "Annotation";
 	protected static final String VALUE = "Value";
-	private ArrayList<String> mAnnotationList;
+	private ArrayList<String> mAnnotationNamesList;
 	private Button searchButton;
 	private ArrayList<String> mSpinnerList;
 	private HashMap<String, String> mSearchList;
 	private ArrayList<Annotation> mAnnotations;
-	private boolean fulingWait = true;
+	private boolean waitServerAnnotations = true;
 
 	/**
 	 * Defines search and textfield lists.
@@ -61,9 +62,10 @@ public class SearchListFragment extends ListFragment {
 		ArrayAdapter<String> adapter;
 		View footer = generateFooter();
 		populateAnnotation();
-		while(fulingWait);
+		while(waitServerAnnotations);
+		waitServerAnnotations = true;
 		generateSearchButton(footer);
-		adapter = new SearchListAdapter(mAnnotationList);
+		adapter = new SearchListAdapter(mAnnotationNamesList);
 		adapter.setNotifyOnChange(true);
 		setListAdapter(adapter);
 	}
@@ -81,20 +83,16 @@ public class SearchListFragment extends ListFragment {
 				public void run() {
 					try {
 						mAnnotations = ComHandler.getServerAnnotations();
-						mAnnotationList = new ArrayList<String>();
+						mAnnotationNamesList = new ArrayList<String>();
 						
 						for(Annotation annotation : mAnnotations) {
-							Log.d("SEARCH", annotation.getName());
-							mAnnotationList.add(annotation.getName());	
+							mAnnotationNamesList.add(annotation.getName());	
 						}
-						fulingWait = false;
+						waitServerAnnotations = false;
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} catch (ConnectionException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					} 
 				}
 			}).start();
 
@@ -151,10 +149,16 @@ public class SearchListFragment extends ListFragment {
 	 * @author Anders Lundberg, dv12alg
 	 *
 	 */
-	static class searchViewHolder {
-		protected TextView annotation;
-		protected Spinner annotationValue;
+	static class SearchViewHolder {
+		protected EditText editText;
+		protected TextView textView;
+		protected Spinner spinner;
+		protected int position;
 		protected int selectedPosition;
+		protected String freetext;
+		protected boolean isDropDown;
+		protected CheckBox checkBox;
+		protected boolean isChecked;
 	}
 	
 	/**
@@ -174,59 +178,65 @@ public class SearchListFragment extends ListFragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			searchViewHolder viewHolder = null;
+			SearchViewHolder viewHolder = null;
 			ArrayAdapter<String> spinAdapter;
 			Spinner spinner;
 
 			if (convertView == null) {
-				convertView = getActivity().getLayoutInflater().inflate(
-						R.layout.searchlist_dropdown_field, null);
 				final ArrayList<String> mSpinnerList = mAnnotations.get(position).getValue();
-				
-				
-				spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_item, mSpinnerList);
-				spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
-				spinner.setAdapter(spinAdapter);
-
-				viewHolder = new searchViewHolder();
-				viewHolder.annotation = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
-				viewHolder.annotationValue = (Spinner) convertView.findViewById(R.id.spinner_search);
-				viewHolder.selectedPosition = 0;
-				
-				convertView.setTag(viewHolder);
-								
-				spinner.setTag(viewHolder);
-				spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-					@Override
-					public void onItemSelected(AdapterView<?> parent,
-							View view, int position, long id) {
-						searchViewHolder viewHolder = (searchViewHolder) parent.getTag();
-//						int annotationPosition = (Integer) parent.getTag();
-						String annotation = viewHolder.annotation.getText().toString();
-						String value = mSpinnerList.get(position);
-						viewHolder.selectedPosition = position;
-						Log.d("smurf", "Annotation: " + annotation + "\nValue: " + value + "\n-----------------");
-						mSearchList.put(annotation, value);
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> parent) {
-						// TODO Auto-generated method stub
-						
-					}
-
+				if(mSpinnerList.size() == 1 && mSpinnerList.get(0).compareTo("freetext") == 0) {
+					convertView = getActivity().getLayoutInflater().inflate(
+							R.layout.searchlist_field, null);
+					viewHolder = new SearchViewHolder();
+					viewHolder.editText = (EditText) convertView.findViewById(R.id.txtf_search_hint);
+					viewHolder.editText.setHint(mAnnotations.get(position).getName());
+					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_search_hint);
+					viewHolder.isDropDown = false;
+					viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_field_search);
+					viewHolder.textView.setText(mAnnotations.get(position).getName());
+					viewHolder.position = position;
 					
-				});
+				} else {
+					convertView = getActivity().getLayoutInflater().inflate(
+							R.layout.searchlist_dropdown_field, null);
+					
+					spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_dropdown_item, mSpinnerList);
+					spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
+					
+					spinner.setAdapter(spinAdapter);
+					
+					spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+						@Override
+						public void onItemSelected(AdapterView<?> parent,
+								View view, int position, long id) {
+						}
+
+						@Override
+						public void onNothingSelected(AdapterView<?> parent) {							
+						}
+						
+					});
+					
+					viewHolder = new SearchViewHolder();
+					viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
+					viewHolder.textView.setText(mAnnotations.get(position).getName());
+					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_dropdown_search);
+					viewHolder.spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
+					viewHolder.isDropDown = true;
+					viewHolder.position = position;
+				}
+				
+				convertView.setTag(viewHolder);							
 				
 			} else {
-				viewHolder = (searchViewHolder) convertView.getTag();
+				viewHolder = (SearchViewHolder) convertView.getTag();
 			}
 			
-			String annotationText = mAnnotationList.get(position);
-			int selectionPos = viewHolder.selectedPosition;
-			
-			viewHolder.annotation.setText(annotationText);
-			viewHolder.annotationValue.setSelection(selectionPos);
+			if(viewHolder.isDropDown) {
+				
+			} else {
+				
+			}
 			
 			return convertView;
 		}

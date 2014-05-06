@@ -3,7 +3,6 @@ package se.umu.cs.pvt151;
 import java.io.IOException;
 
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.ConnectionException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -63,9 +62,7 @@ public class LogInFragment extends Fragment {
 					}
 					
 				} catch (IOException e) {
-					makeToast("Error. Your device isn't running the application as intended.", false);
-				} catch (ConnectionException e) {
-					makeToast("Error. The server could not be reached.", false);
+					makeToast("Error. Could not connect to the server.", false);
 				}
 			}
 		}).start();

@@ -21,6 +21,10 @@ public class ComHandler {
 
 	private static String serverURL = "http://genomizer.apiary-mock.com/";
 
+	public static void setServerURL(String serverURL) {
+		ComHandler.serverURL = serverURL;
+	}
+
 	/**
 	 * Sends a login request to the server.
 	 * @param username The username in the login request.
@@ -30,7 +34,7 @@ public class ComHandler {
 	 * with the server.
 	 * @throws ConnectionException 
 	 */
-	public static boolean login(String username, String password) throws IOException, ConnectionException {
+	public static boolean login(String username, String password) throws IOException {
 		try {
 			Communicator communicator = new Communicator(serverURL + "login");
 
@@ -57,7 +61,7 @@ public class ComHandler {
 		return false;
 	}
 
-	public static JSONArray search(HashMap<String, String> annotations) throws IOException, ConnectionException {
+	public static JSONArray search(HashMap<String, String> annotations) throws IOException {
 		try {
 			//TODO FIX THIS LINE - NEEDS ANNOTATIONS
 			Communicator communicator = new Communicator(serverURL + "search/annotations=?"+generatePubmedQuery(annotations));
@@ -83,7 +87,7 @@ public class ComHandler {
 	}
 	
 	
-	public static ArrayList<Annotation> getServerAnnotations() throws IOException, ConnectionException {
+	public static ArrayList<Annotation> getServerAnnotations() throws IOException {
 		try {
 		
 			Communicator communicator = new Communicator(serverURL + "annotation");

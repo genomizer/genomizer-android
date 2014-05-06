@@ -12,7 +12,6 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.ConnectionException;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
 import android.annotation.SuppressLint;
 import android.content.Intent;

@@ -76,7 +76,7 @@ public class ComHandler {
 	}
 	
 	
-	public static JSONArray annotations() throws IOException, ConnectionException {
+	public static JSONArray getServerAnnotations() throws IOException, ConnectionException {
 		try {
 			Communicator communicator = new Communicator(serverURL + "annotation");
 			communicator.setupConnection("GET");

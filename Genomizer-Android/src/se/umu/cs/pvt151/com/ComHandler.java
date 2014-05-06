@@ -104,4 +104,22 @@ public class ComHandler {
 			return null;
 		}
 	}
+	
+	public static String generatePubmedQuery(HashMap<String, String> annotations) throws UnsupportedEncodingException {
+		String pubmedQuery = "<";
+		
+		Set<String> ann = annotations.keySet();
+		int i = 0;
+		for (String searchWord : ann) {
+			String value = annotations.get(searchWord);
+			pubmedQuery += value + "[" + searchWord + "]";
+			i++;
+			if (i != ann.size()) {
+				pubmedQuery+=" AND ";
+			}			
+		}
+		pubmedQuery += ">";
+		return URLEncoder.encode(pubmedQuery, "UTF-8");
+		
+	}
 }

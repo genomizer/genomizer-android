@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import se.umu.cs.pvt151.SearchListFragment.SearchViewHolder;
 import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -17,10 +21,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView.OnEditorActionListener;
 
 /**
  * Fragment which will display search options for the Genomizer app, displays
@@ -40,6 +47,7 @@ public class SearchListFragment extends ListFragment {
 	private HashMap<String, String> mSearchList;
 	private ArrayList<Annotation> mAnnotations;
 	private boolean waitServerAnnotations = true;
+	private ArrayList<SearchViewHolder> viewHolderList = new ArrayList<SearchViewHolder>();
 
 	/**
 	 * Defines search and textfield lists.
@@ -48,7 +56,6 @@ public class SearchListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mSearchList = new HashMap<String, String>();
-		
 		
 	}
 	
@@ -188,14 +195,30 @@ public class SearchListFragment extends ListFragment {
 					convertView = getActivity().getLayoutInflater().inflate(
 							R.layout.searchlist_field, null);
 					viewHolder = new SearchViewHolder();
-					viewHolder.editText = (EditText) convertView.findViewById(R.id.txtf_search_hint);
-					viewHolder.editText.setHint(mAnnotations.get(position).getName());
-					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_search_hint);
+					
 					viewHolder.isDropDown = false;
 					viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_field_search);
 					viewHolder.textView.setText(mAnnotations.get(position).getName());
 					viewHolder.position = position;
 					
+					viewHolder.editText = (EditText) convertView.findViewById(R.id.txtf_search_hint);
+					viewHolder.editText.setHint(mAnnotations.get(position).getName());
+				
+					viewHolder.editText.addTextChangedListener(new TheTextWatcher(viewHolder));					
+					
+					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_search_hint);
+					viewHolder.checkBox.setTag(viewHolder);
+					viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+						
+						@Override
+						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+							SearchViewHolder vh = (SearchViewHolder) buttonView.getTag();
+							vh.isChecked = isChecked;
+							
+						}
+					});
+					viewHolderList.add(viewHolder);
+					convertView.setTag(viewHolder);
 				} else {
 					convertView = getActivity().getLayoutInflater().inflate(
 							R.layout.searchlist_dropdown_field, null);
@@ -205,10 +228,32 @@ public class SearchListFragment extends ListFragment {
 					
 					spinner.setAdapter(spinAdapter);
 					
+					
+					viewHolder = new SearchViewHolder();
+					viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
+					viewHolder.textView.setText(mAnnotations.get(position).getName());
+					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_dropdown_search);
+					viewHolder.checkBox.setTag(viewHolder);
+					viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+						
+						@Override
+						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+							SearchViewHolder vh = (SearchViewHolder) buttonView.getTag();
+							vh.isChecked = isChecked;
+							
+						}
+					});
+					viewHolder.spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
+					viewHolder.isDropDown = true;
+					viewHolder.position = position;
+					
+					spinner.setTag(viewHolder);
 					spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 						@Override
 						public void onItemSelected(AdapterView<?> parent,
 								View view, int position, long id) {
+							SearchViewHolder vh = (SearchViewHolder) parent.getTag();
+							vh.selectedPosition = position;
 						}
 
 						@Override
@@ -216,31 +261,55 @@ public class SearchListFragment extends ListFragment {
 						}
 						
 					});
-					
-					viewHolder = new SearchViewHolder();
-					viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
-					viewHolder.textView.setText(mAnnotations.get(position).getName());
-					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_dropdown_search);
-					viewHolder.spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
-					viewHolder.isDropDown = true;
-					viewHolder.position = position;
 				}
-				
+				viewHolderList.add(viewHolder);
 				convertView.setTag(viewHolder);							
 				
 			} else {
 				viewHolder = (SearchViewHolder) convertView.getTag();
+				
+				if(viewHolder.isDropDown) {				
+					viewHolder.textView.setText(mAnnotationNamesList.get(viewHolder.position));
+					viewHolder.spinner.setSelection(viewHolder.selectedPosition);
+					viewHolder.checkBox.setChecked(viewHolder.isChecked);
+				} else {
+					viewHolder.editText.setText(viewHolder.freetext);
+					viewHolder.textView.setText(mAnnotationNamesList.get(viewHolder.position));
+					viewHolder.checkBox.setChecked(viewHolder.isChecked);
+				}
 			}
 			
-			if(viewHolder.isDropDown) {
-				
-			} else {
-				
-			}
+			
 			
 			return convertView;
 		}
 
+	}
+	private class TheTextWatcher implements TextWatcher {
+
+		private SearchViewHolder viewHolder;
+
+		public TheTextWatcher(SearchViewHolder viewHolder) {
+			this.viewHolder = viewHolder;
+		}
+		@Override
+		public void afterTextChanged(Editable s) {
+			viewHolder.freetext = s.toString();
+			
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			
+		}
+		
 	}
 	
 	/**

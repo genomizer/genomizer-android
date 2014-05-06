@@ -58,17 +58,15 @@ public class ComHandlerTest extends TestCase {
 	public void testAnnotationsPackage() {
 		try {
 			ComHandler.login("John", "password");
-			JSONArray experiments = ComHandler.getServerAnnotations();
+			ArrayList<Annotation> experiments = ComHandler.getServerAnnotations();
 			Log.d("DEBUG", "ANNOTATIONS");
 			Log.d("DEBUG", experiments.toString());
-			assertEquals("pubmedId", ((JSONObject) experiments.get(0)).get("name"));
+			assertEquals("pubmedId", experiments.get(0).getName());
 		} catch (IOException e) {
 			fail("IOException!");
 			e.printStackTrace();
 		} catch (ConnectionException e) {
 			fail("Can't reach server!");
-		} catch (JSONException e) {
-			fail("JSONException thrown!");
 		}
 		
 	}
@@ -78,23 +76,19 @@ public class ComHandlerTest extends TestCase {
 		try {
 			Log.d("DECONSTRUCT", "Test: MsgDeconstructor");
 			ComHandler.login("John", "password");
-			JSONArray jsonAnnotations = ComHandler.getServerAnnotations();
-			
-			Log.d("DECONSTRUCT", jsonAnnotations.toString());
-			ArrayList<Annotation> annotations = MsgDeconstructor.annotationJSON(jsonAnnotations);
-			for(int i = 0; i < annotations.size(); i++) {
-				Log.d("DECONSTRUCT", (annotations.get(i).getName()));
-			}
+			ArrayList<Annotation> jsonAnnotations = ComHandler.getServerAnnotations();
 		} catch (IOException e) {
 			fail("IOException!");
 			e.printStackTrace();
 		} catch (ConnectionException e) {
 			fail("Can't reach server!");
-		} catch (JSONException e) {
-			fail("JSONException thrown!");
 		}
 	}
 	
+	
+	/**
+	 * Can't fail.
+	 */
 	public void testPubmedQuery() {
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Species", "Human");

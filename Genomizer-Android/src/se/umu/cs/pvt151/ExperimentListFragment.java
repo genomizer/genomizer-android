@@ -9,8 +9,11 @@ package se.umu.cs.pvt151;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
 import android.annotation.SuppressLint;
@@ -42,8 +45,9 @@ public class ExperimentListFragment extends Fragment {
 	private HashMap<Integer, String> value;
 	private HashMap<String, String> searchInfo = new HashMap<String, String>();
 	private JSONArray results;
-	private ArrayList<Annotation> forExperiments = new ArrayList<Annotation>();
+	private ArrayList<Experiment> forExperiments = new ArrayList<Experiment>();
 	private SearchHandler startSearch = new SearchHandler();
+	private ArrayList<Annotation> anno = new ArrayList<Annotation>();
 	
 	
 	@SuppressWarnings("unchecked")
@@ -58,7 +62,7 @@ public class ExperimentListFragment extends Fragment {
 		Log.d("Experiment", "ExpList value: " + value.toString());
 		
 		//Try to run the Asynctask when all code for handling search info is done.
-		//startSearch.execute();
+		startSearch.execute();
 	}
 	
 	
@@ -69,7 +73,8 @@ public class ExperimentListFragment extends Fragment {
 		/*Temporary method to test show placeholder search results
 		 * until real ones are available, then replace this method with
 		 * the ones working as intended*/
-		tempPopulateArray();
+		//tempPopulateArray();
+		infoAnnotations();
 		
 		//Creating listview from xml view
 		list = (ListView) v.findViewById(R.id.listView1);
@@ -77,7 +82,10 @@ public class ExperimentListFragment extends Fragment {
 		 * is using temp information, when real search info is available replace
 		 * experiments with displaySearchResults*/
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, experiments);
+				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
+		Toast.makeText(getActivity().getApplicationContext(), annotations.get(0), Toast.LENGTH_SHORT).show();
+		/*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
+				R.layout.list_view_textbox, R.id.listText11, experiments);*/
 				
 		//Setting adapter to view
 		list.setAdapter(adapter);
@@ -161,14 +169,13 @@ public class ExperimentListFragment extends Fragment {
 	 * @param info
 	 */
 	//TODO: get right information from annotations to display
-	/*private void infoAnnotations(ArrayList<Annotation> info) {
-		for(int i=0; i<info.size(); i++) {
-			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName() 
-					+ "\n" +"Species: " + info.get(i).getValue() + "\n" 
-					+ "Sex: " + speciesSexInfo.get(i) + "\n" + "Genomic Release: " 
-					+ genomeInfo.get(i));
+	private void infoAnnotations() {
+		
+		for(int i=0; i<forExperiments.size(); i++) {
+			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName()
+					+ "\n" +"Created by: " + forExperiments.get(i).getCreated_by());
 		}
-	}*/
+	}
 	
 	private void summarizeInfo() {
 		for(int i = 0; i < experiments.size(); i++) {
@@ -201,18 +208,15 @@ public class ExperimentListFragment extends Fragment {
 		@Override
 		protected JSONArray doInBackground(Void... args0) {
 			//Remove comment for search until fixed
-		/*	try {
+		try {
 				//Sending hashmap with annotation, value for search to comhandler
-				ComHandler.search(searchInfo);
+				results = ComHandler.search(searchInfo);
 				//Getting JSONarray with search results
-				results = ComHandler.getServerAnnotations();
+				//results = ComHandler.;
 			} catch (IOException e) {
 				// TODO Write better error handling
 				e.printStackTrace();
-			} catch (ConnectionException e) {
-				// TODO Write better error handling
-				e.printStackTrace();
-			}*/
+			}
 			// TODO Send request to ComHandler, need to know what to send and receive...
 			return results;
 		}
@@ -220,13 +224,15 @@ public class ExperimentListFragment extends Fragment {
 		protected void onPostExecute(Void params) {
 		
 			//TODO: Needed to fetch results?
-			//try {
-				//TODO: get right unpackinformation from msgdeconstructo
-				//forExperiments = MsgDeconstructor.annotationJSON(results);
-			//} catch (JSONException e) {
-				// TODO Write better error handling
-				//e.printStackTrace();
-			//}
+			try {
+				//Receiving list of experiments from deconstructor
+				forExperiments = MsgDeconstructor.searchJSON(results);
+				
+				
+			} catch (JSONException e) {
+				//TODO Write better error handling
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -48,7 +48,7 @@ public class Experiment {
 	public List<Annotation> getAnnotations() {
 		return annotations;
 	}
-
+	
 	public void setAnnotations(List<Annotation> annotations) {
 		this.annotations = annotations;
 	}

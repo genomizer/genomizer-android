@@ -1,8 +1,13 @@
 package se.umu.cs.pvt151.com;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,10 +55,10 @@ public class ComHandler {
 		return false;
 	}
 
-	public static JSONArray search(List<String[]> annotations) throws IOException, ConnectionException {
+	public static JSONArray search(HashMap<String, String> annotations) throws IOException, ConnectionException {
 		try {
 			//TODO FIX THIS LINE - NEEDS ANNOTATIONS
-			Communicator communicator = new Communicator(serverURL + "search/annotations=?");
+			Communicator communicator = new Communicator(serverURL + "search/annotations=?"+generatePubmedQuery(annotations));
 			communicator.setupConnection("GET");
 			
 			JSONObject msg = MsgFactory.createRegularPackage();

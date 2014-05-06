@@ -27,6 +27,7 @@ public class ComHandler {
 
 	/**
 	 * Sends a login request to the server.
+	 * 
 	 * @param username The username in the login request.
 	 * @param password The password in the login request.
 	 * @return True on accepted login, otherwise false.
@@ -61,6 +62,14 @@ public class ComHandler {
 		return false;
 	}
 
+	/**
+	 * Sends a search request to the server. The search is based on annotations,
+	 * added as a parameter.
+	 * 
+	 * @param annotations
+	 * @return JSONArray
+	 * @throws IOException
+	 */
 	public static JSONArray search(HashMap<String, String> annotations) throws IOException {
 		try {
 			//TODO FIX THIS LINE - NEEDS ANNOTATIONS
@@ -86,7 +95,12 @@ public class ComHandler {
 		}
 	}
 	
-	
+	/**
+	 * Returns the Annotations of the server.
+	 * 
+	 * @return An ArrayList of all Annotations.
+	 * @throws IOException If communication with the server fails.
+	 */
 	public static ArrayList<Annotation> getServerAnnotations() throws IOException {
 		try {
 		
@@ -112,6 +126,13 @@ public class ComHandler {
 		}
 	}
 	
+	/**
+	 * Returns a pubmed query string ready to be put in a URL. It is encoded for URLs so it cannot be used elsewhere.
+	 * 
+	 * @param annotations HashMap with the annotation type as key and the value of the annotation as value.
+	 * @return An encoded pubmed query string based on the parameter.
+	 * @throws UnsupportedEncodingException If the device cannot encode the query.
+	 */
 	public static String generatePubmedQuery(HashMap<String, String> annotations) throws UnsupportedEncodingException {
 		String pubmedQuery = "<";
 		
@@ -134,7 +155,7 @@ public class ComHandler {
 	public static String rawToProfile(String fileID) throws IOException {
 		
 		try {
-			Communicator communicator = new Communicator(serverURL + "rawtoprofile/" + fileID);
+			Communicator communicator = new Communicator(serverURL + "process/rawtoprofile/" + fileID);
 			communicator.setupConnection("PUT");
 			JSONObject msg = MsgFactory.createRegularPackage();
 			

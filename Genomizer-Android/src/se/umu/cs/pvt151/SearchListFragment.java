@@ -107,10 +107,10 @@ public class SearchListFragment extends ListFragment {
 				HashMap<Integer, String> value = new HashMap<Integer, String>();
 				
 				//TODO pass the searchlist to the experimentList fragment
-//				intent.putExtra(ANNOTATION, annotations);
-//				intent.putExtra(VALUE, value);
-//				Log.d("Experiment", "Search annotations: " + annotations.toString());
-//				Log.d("Experiment", "Search value: " + value.toString());
+				intent.putExtra(ANNOTATION, annotations);
+				intent.putExtra(VALUE, value);
+				Log.d("Experiment", "Search annotations: " + annotations.toString());
+				Log.d("Experiment", "Search value: " + value.toString());
 				
 				startActivity(intent);
 				

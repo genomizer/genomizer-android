@@ -1,15 +1,8 @@
 package se.umu.cs.pvt151;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.json.JSONArray;
-
-import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.ConnectionException;
-import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -21,11 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -113,15 +102,17 @@ public class SearchListFragment extends ListFragment {
 
 			@Override
 			public void onClick(View v) {
-				int i = 0;
+				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
 				HashMap<Integer, String> annotations = new HashMap<Integer, String>();
 				HashMap<Integer, String> value = new HashMap<Integer, String>();
 				
-//				intent.putExtra(ANNOTATION, annotations);
-//				intent.putExtra(VALUE, value);
-//				Log.d("Experiment", "Search annotations: " + annotations.toString());
-//				Log.d("Experiment", "Search value: " + value.toString());
-//				startActivity(intent);
+				//TODO pass the searchlist to the experimentList fragment
+				intent.putExtra(ANNOTATION, annotations);
+				intent.putExtra(VALUE, value);
+				Log.d("Experiment", "Search annotations: " + annotations.toString());
+				Log.d("Experiment", "Search value: " + value.toString());
+				
+				startActivity(intent);
 				
 				Log.d("smurf", "Search: " + mSearchList.toString());
 
@@ -175,14 +166,12 @@ public class SearchListFragment extends ListFragment {
 			searchViewHolder viewHolder = null;
 			ArrayAdapter<String> spinAdapter;
 			Spinner spinner;
-			TextView text;
 
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(
 						R.layout.searchlist_dropdown_field, null);
 				
 				spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_item, mSpinnerList);
-				text = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
 				spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
 				spinner.setAdapter(spinAdapter);
 
@@ -210,20 +199,12 @@ public class SearchListFragment extends ListFragment {
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
 						// TODO Auto-generated method stub
+						
 					}
+
+					
 				});
 				
-//				viewHolder = new searchViewHolder();
-//				viewHolder.annotation = (TextView) convertView
-//						.findViewById(R.id.lbl_spinner_search);
-//				viewHolder.annotationValue = (Spinner) convertView
-//						.findViewById(R.id.spinner_search);
-
-
-//				convertView.setTag(R.id.lbl_spinner_search, 
-//						viewHolder.annotation);
-//				convertView.setTag(R.id.spinner_search,
-//						viewHolder.annotationValue);
 			} else {
 				viewHolder = (searchViewHolder) convertView.getTag();
 			}
@@ -233,14 +214,6 @@ public class SearchListFragment extends ListFragment {
 			
 			viewHolder.annotation.setText(annotationText);
 			viewHolder.annotationValue.setSelection(selectionPos);
-			
-//			viewHolder.annotationValue.setTag(position);
-//			viewHolder.annotation.setHint(mAnnotationList.get(position)
-//					.toString());
-			
-//			int annotationValuePos = mAnnotationList.indexOf()
-//			viewHolder.annotationValue.setSelection(mSearchList.get(mAnnotationList.get(position)));
-			
 			
 			return convertView;
 		}

@@ -6,10 +6,17 @@ package se.umu.cs.pvt151;
  * Presents a list over available
  * experiments to the user
  */
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.com.ConnectionException;
+import se.umu.cs.pvt151.com.MsgDeconstructor;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,13 +38,21 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> speciesSexInfo = new ArrayList<String>();
 	private ArrayList<String> genomeInfo = new ArrayList<String>();
 	private ArrayList<String> displaySearchResults = new ArrayList<String>();
+	@SuppressLint("UseSparseArrays")
+	private HashMap<Integer, String> annotations = new HashMap<Integer, String>();
+	private HashMap<Integer, String> value;
+	private HashMap<String, String> searchInfo = new HashMap<String, String>();
+	private JSONArray results;
+	private ArrayList<Annotation> forExperiments = new ArrayList<Annotation>();
 	
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-		HashMap<Integer, String> annotations = (HashMap<Integer, String>) getActivity()
-				.getIntent().getExtras().getSerializable("Annotation");
-		HashMap<Integer, String> value = (HashMap<Integer, String>) getActivity()
+		//Getting search information from SearchActivity
+		annotations = (HashMap<Integer, String>) getActivity().getIntent().getExtras().getSerializable("Annotation");
+		value = (HashMap<Integer, String>) getActivity()
 				.getIntent().getExtras().getSerializable("Value");
 		Log.d("Experiment", "ExpList annotations: " + annotations.toString());
 		Log.d("Experiment", "ExpList value: " + value.toString());
@@ -124,6 +139,33 @@ public class ExperimentListFragment extends Fragment {
 		genomeInfo = genomeRelease;
 	}
 	
+	/**
+	 * Method used to merge search information
+	 * to get annotations and value in same
+	 * hashmap.
+	 * @return
+	 */
+	private HashMap<String, String> mergeSearchInfo() {
+		for(int i = 0; i < annotations.size(); i++) {
+			searchInfo.put(annotations.get(i), value.get(i));
+		}
+		return searchInfo;
+	}
+	
+	/**
+	 * Starting temp method for display info from object
+	 * information received from comhandler.
+	 * @param info
+	 */
+	/*private void infoAnnotations(ArrayList<Annotation> info) {
+		for(int i=0; i<info.size(); i++) {
+			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName() 
+					+ "\n" +"Species: " + info.get(i).getValue() + "\n" 
+					+ "Sex: " + speciesSexInfo.get(i) + "\n" + "Genomic Release: " 
+					+ genomeInfo.get(i));
+		}
+	}*/
+	
 	private void summarizeInfo() {
 		for(int i = 0; i < experiments.size(); i++) {
 			displaySearchResults.add("Experiment:  " + experiments.get(i) 
@@ -142,6 +184,42 @@ public class ExperimentListFragment extends Fragment {
 					experiments.get(position), Toast.LENGTH_SHORT).show();*/
 			Intent intent = new Intent(getActivity(), FileListActivity.class);
 			startActivity(intent);
+		}
+	}
+	
+	/**
+	 * Used to get search information
+	 * @author Cecilia Lindmark
+	 *
+	 */
+	public class SearchHandler extends AsyncTask<Void, Void, JSONArray> {
+
+		@Override
+		protected JSONArray doInBackground(Void... args0) {
+			//Remove comment for search until fixed
+			//ComHandler.search(annotations);
+			try {
+				results = ComHandler.getServerAnnotations();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// TODO Send request to ComHandler, need to know what to send and receive...
+			return results;
+		}
+		
+		protected void onPostExecute(Void params) {
+		
+			//TODO: Needed to fetch results?
+			try {
+				forExperiments = MsgDeconstructor.annotationJSON(results);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

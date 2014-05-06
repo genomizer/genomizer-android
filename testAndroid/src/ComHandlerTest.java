@@ -110,7 +110,7 @@ public class ComHandlerTest extends TestCase {
 	public void testRawToProfile() {
 		try {
 			ComHandler.login("rawtoprofile", "password");
-			String result = ComHandler.rawToProfile("file1.exe");
+			String result = ComHandler.rawToProfile("1234");
 			Log.d("RAW", result);
 			
 		} catch (IOException e) {

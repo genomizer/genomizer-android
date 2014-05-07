@@ -40,9 +40,6 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> speciesSexInfo = new ArrayList<String>();
 	private ArrayList<String> genomeInfo = new ArrayList<String>();
 	private ArrayList<String> displaySearchResults = new ArrayList<String>();
-	@SuppressLint("UseSparseArrays")
-	private HashMap<Integer, String> annotations = new HashMap<Integer, String>();
-	private HashMap<Integer, String> value;
 	private HashMap<String, String> searchInfo = new HashMap<String, String>();
 	private JSONArray results;
 	private ArrayList<Experiment> forExperiments = new ArrayList<Experiment>();
@@ -55,11 +52,8 @@ public class ExperimentListFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		//Getting search information from SearchActivity
-		annotations = (HashMap<Integer, String>) getActivity().getIntent().getExtras().getSerializable("Annotation");
-		value = (HashMap<Integer, String>) getActivity()
-				.getIntent().getExtras().getSerializable("Value");
-		Log.d("Experiment", "ExpList annotations: " + annotations.toString());
-		Log.d("Experiment", "ExpList value: " + value.toString());
+		searchInfo = (HashMap<String, String>) getActivity().getIntent().getExtras().getSerializable("searchMap");
+		Log.d("Experiment", "ExpList annotations: " + searchInfo.toString());
 		
 		//Try to run the Asynctask when all code for handling search info is done.
 		startSearch.execute();
@@ -83,7 +77,7 @@ public class ExperimentListFragment extends Fragment {
 		 * experiments with displaySearchResults*/
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
-		Toast.makeText(getActivity().getApplicationContext(), annotations.get(0), Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity().getApplicationContext(), searchInfo.get(0), Toast.LENGTH_SHORT).show();
 		/*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, experiments);*/
 				
@@ -156,12 +150,12 @@ public class ExperimentListFragment extends Fragment {
 	 * hashmap.
 	 * @return
 	 */
-	private HashMap<String, String> mergeSearchInfo() {
+	/*private HashMap<String, String> mergeSearchInfo() {
 		for(int i = 0; i < annotations.size(); i++) {
 			searchInfo.put(annotations.get(i), value.get(i));
 		}
 		return searchInfo;
-	}
+	}*/
 	
 	/**
 	 * Starting temp method for display info from object

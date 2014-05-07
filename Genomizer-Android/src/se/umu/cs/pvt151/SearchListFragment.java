@@ -47,7 +47,6 @@ public class SearchListFragment extends ListFragment {
 	private boolean waitServerAnnotations = true;
 	private ArrayList<SearchViewHolder> viewHolderList = new ArrayList<SearchViewHolder>();
 	
-	private int testNumber = 0;
 	
 	/**
 	 * Defines search and textfield lists.
@@ -182,7 +181,7 @@ public class SearchListFragment extends ListFragment {
 		protected boolean isDropDown;
 		protected CheckBox checkBox;
 		protected boolean isChecked;
-		protected View cron;
+		protected View convertView;
 	}
 	
 	/**
@@ -207,10 +206,7 @@ public class SearchListFragment extends ListFragment {
 			Spinner spinner;
 
 			if (convertView == null) {
-				final ArrayList<String> mSpinnerList = mAnnotations.get(position).getValue();
-				
-				Log.d("smurf", "Created convertView nr: " + testNumber);
-				testNumber++;
+				final ArrayList<String> mSpinnerList = mAnnotations.get(position).getValue();				
 				
 				if(mSpinnerList.size() == 1 && mSpinnerList.get(0).compareTo("freetext") == 0) {
 					convertView = getActivity().getLayoutInflater().inflate(
@@ -218,8 +214,6 @@ public class SearchListFragment extends ListFragment {
 					viewHolder = new SearchViewHolder();
 					
 					makeFreeTextHolder(position, convertView, viewHolder);
-//					viewHolderList.add(viewHolder);
-//					convertView.setTag(viewHolder);
 				} else {
 					convertView = getActivity().getLayoutInflater().inflate(
 							R.layout.searchlist_dropdown_field, null);
@@ -235,20 +229,13 @@ public class SearchListFragment extends ListFragment {
 							spinner);
 				}
 				viewHolderList.add(viewHolder);
-				viewHolder.cron = convertView;
-				convertView.setTag(viewHolder);	
-				Log.d("smurf", "\nviewHolder position: " + viewHolder.position + "\nconvertView position: " + position + "\n---------------------------------\n");
+				viewHolder.convertView = convertView;
+//				convertView.setTag(viewHolder);	
+
 				
 			} else {
-			//	viewHolder = (SearchViewHolder) convertView.getTag();
 				viewHolder = viewHolderList.get(position);
-				convertView = viewHolder.cron;
-				if (position != viewHolder.position) {
-					Log.d("smurf", "--------------------------------------------------------------");
-					Log.d("smurf", "ALERT !!!!!!!!!!!!!!!!!!!!\n");
-					Log.d("smurf", "ConvertView position: " + position + "\nViewholder position: " + viewHolder.position);
-					Log.d("smurf", "--------------------------------------------------------------");
-				}
+				convertView = viewHolder.convertView;
 				
 				if(viewHolder.isDropDown) {				
 					viewHolder.textView.setText(mAnnotationNamesList.get(viewHolder.position));
@@ -357,21 +344,18 @@ public class SearchListFragment extends ListFragment {
 		@Override
 		public void afterTextChanged(Editable s) {
 			viewHolder.freetext = s.toString();
-			Log.d("smurf", "afterTextChanged");
 			
 		}
 
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
-			Log.d("smurf", "beforeTextChanged");
 
 		}
 
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			Log.d("smurf", "onTextChanged");
 
 		}
 		

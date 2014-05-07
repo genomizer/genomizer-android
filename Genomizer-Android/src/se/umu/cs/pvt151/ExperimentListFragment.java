@@ -98,8 +98,7 @@ public class ExperimentListFragment extends Fragment {
 	 * @param selectedExperiment int for experiment chosen
 	 */
 	private void getExperimentFiles(int selectedExperiment) {
-		Experiment tempExp = forExperiments.get(selectedExperiment);
-		List<GeneFile> files = tempExp.getFiles();
+		List<GeneFile> files = forExperiments.get(selectedExperiment).getFiles();
 		
 		for(int i=0; i<files.size(); i++) {
 			if(files.get(i).getType().equals("raw")) {

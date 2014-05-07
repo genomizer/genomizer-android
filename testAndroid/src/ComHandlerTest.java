@@ -43,7 +43,7 @@ public class ComHandlerTest extends TestCase {
 		try {
 			ComHandler.login("John", "SearchTest");
 			JSONArray experiments = ComHandler.search(searchValues);
-			Log.d("DEBUG", experiments.toString());
+			Log.d("TestLog", experiments.toString());
 			assertEquals("experimentName", ((JSONObject) experiments.get(0)).get("name"));
 		} catch (IOException e) {
 			fail("IOException!");
@@ -107,15 +107,15 @@ public class ComHandlerTest extends TestCase {
 	}
 	
 	
-	public void testRawToProfile() {
-		try {
-			ComHandler.login("rawtoprofile", "password");
-			String result = ComHandler.rawToProfile("1234");
-			Log.d("RAW", result);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public void testRawToProfile() {
+//		try {
+//			ComHandler.login("rawtoprofile", "password");
+//			String result = ComHandler.rawToProfile("1234");
+//			Log.d("RAW", result);
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 }

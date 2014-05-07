@@ -73,7 +73,7 @@ public class ComHandler {
 	 */
 	public static JSONArray search(HashMap<String, String> annotations) throws IOException {
 		try {
-			Communicator communicator = new Communicator(serverURL + "search/annotations=?"+generatePubmedQuery(annotations));
+			Communicator communicator = new Communicator(serverURL + "search/?annotations="+generatePubmedQuery(annotations));
 			communicator.setupConnection("GET");
 
 			JSONObject msg = MsgFactory.createRegularPackage();

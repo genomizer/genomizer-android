@@ -52,6 +52,7 @@ public class MsgDeconstructorTest extends TestCase {
 			e.printStackTrace();
 			fail("IOException!");
 		} catch (JSONException e) {
+			Log.d("TestLog", e.getMessage());
 			fail("JSONException!");
 			e.printStackTrace();
 		}

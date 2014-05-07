@@ -45,7 +45,7 @@ public class ComHandlerTest extends TestCase {
 				Log.d("DEBUG", "connected");
 			}
 		} catch (IOException e) {
-			Log.d("TestLog", "bug message: " + e.toString());
+			Log.d("TestLog", "bug message: " + e.getMessage());
 			Log.d("DEBUG", "Could not communicate with the server");
 			fail("Could not communicate with the server.");
 		}

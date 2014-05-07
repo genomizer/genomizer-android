@@ -42,6 +42,8 @@ public class MsgDeconstructorTest extends TestCase {
 			ComHandler.login("John", "password");
 			JSONArray experiments = ComHandler.search(searchValues);
 			
+			Log.d("TestLog", experiments.toString());
+			
 			ArrayList<Experiment> experimentsArray = MsgDeconstructor.searchJSON(experiments);
 			
 			Log.d("TestLog", "gaaah: " + experimentsArray.size());

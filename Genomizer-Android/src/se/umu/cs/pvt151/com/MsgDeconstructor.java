@@ -26,7 +26,7 @@ public class MsgDeconstructor {
 			annotation.setName(obj.getString("name"));
 			annotation.setForced(obj.getBoolean("forced"));
 			
-			Object valueObject = obj.get("value");
+			Object valueObject = obj.get("values");
 			
 			if(valueObject instanceof String) {
 				annotation.appendValue(valueObject.toString());

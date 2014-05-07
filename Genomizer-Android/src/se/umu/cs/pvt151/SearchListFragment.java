@@ -182,6 +182,7 @@ public class SearchListFragment extends ListFragment {
 		protected boolean isDropDown;
 		protected CheckBox checkBox;
 		protected boolean isChecked;
+		protected View cron;
 	}
 	
 	/**
@@ -234,13 +235,14 @@ public class SearchListFragment extends ListFragment {
 							spinner);
 				}
 				viewHolderList.add(viewHolder);
+				viewHolder.cron = convertView;
 				convertView.setTag(viewHolder);	
 				Log.d("smurf", "\nviewHolder position: " + viewHolder.position + "\nconvertView position: " + position + "\n---------------------------------\n");
 				
 			} else {
-				viewHolder = (SearchViewHolder) convertView.getTag();
-				
-				
+			//	viewHolder = (SearchViewHolder) convertView.getTag();
+				viewHolder = viewHolderList.get(position);
+				convertView = viewHolder.cron;
 				if (position != viewHolder.position) {
 					Log.d("smurf", "--------------------------------------------------------------");
 					Log.d("smurf", "ALERT !!!!!!!!!!!!!!!!!!!!\n");

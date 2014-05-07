@@ -66,6 +66,8 @@ public class MsgDeconstructor {
 	public static ArrayList<GeneFile> filesJSON(JSONArray json) throws JSONException {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 		
+		Log.d("TestLog", "Json length " + json.length());
+		
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			GeneFile file = new GeneFile();
@@ -77,6 +79,8 @@ public class MsgDeconstructor {
 			file.setDate(obj.getString("date"));
 			file.setSize(obj.getString("size"));
 			file.setURL(obj.getString("URL"));
+			
+			files.add(file);
 		}
 		
 		return files;

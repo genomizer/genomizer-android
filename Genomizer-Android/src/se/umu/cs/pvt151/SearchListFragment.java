@@ -214,8 +214,7 @@ public class SearchListFragment extends ListFragment {
 					viewHolder = new SearchViewHolder();
 					
 					makeFreeTextHolder(position, convertView, viewHolder);
-					viewHolderList.add(viewHolder);
-					convertView.setTag(viewHolder);
+
 				} else {
 					convertView = getActivity().getLayoutInflater().inflate(
 							R.layout.searchlist_dropdown_field, null);
@@ -250,7 +249,6 @@ public class SearchListFragment extends ListFragment {
 					viewHolder.checkBox.setChecked(viewHolder.isChecked);
 				} else {
 					viewHolder.editText.setText(viewHolder.freetext);
-					viewHolder.editText.clearFocus();
 					viewHolder.textView.setText(mAnnotationNamesList.get(viewHolder.position));
 					viewHolder.checkBox.setChecked(viewHolder.isChecked);
 				}
@@ -331,7 +329,9 @@ public class SearchListFragment extends ListFragment {
 					
 				}
 			});
+			viewHolder.editText.setSelected(false);
 			viewHolder.editText.clearFocus();
+			
 		}
 
 	}

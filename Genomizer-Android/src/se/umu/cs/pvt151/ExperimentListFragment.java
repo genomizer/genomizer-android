@@ -16,7 +16,6 @@ import org.json.JSONException;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,9 +27,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class ExperimentListFragment extends Fragment {
 	
@@ -45,6 +42,10 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<Experiment> forExperiments = new ArrayList<Experiment>();
 	private SearchHandler startSearch = new SearchHandler();
 	private ArrayList<Annotation> anno = new ArrayList<Annotation>();
+	//Lists used for saving files for a certain experiment
+	private ArrayList<String> rawDataFiles = new ArrayList<String>();
+	private ArrayList<String> profileDataFiles = new ArrayList<String>();
+	private ArrayList<String> regionDataFiles = new ArrayList<String>();
 	
 	
 	@SuppressWarnings("unchecked")
@@ -56,7 +57,7 @@ public class ExperimentListFragment extends Fragment {
 		Log.d("Experiment", "ExpList annotations: " + searchInfo.toString());
 		
 		//Try to run the Asynctask when all code for handling search info is done.
-		startSearch.execute();
+		startSearch.execute((Void) null);
 	}
 	
 	
@@ -91,6 +92,28 @@ public class ExperimentListFragment extends Fragment {
 		return v;
 	}
 	
+	/**
+	 * Method to get all different datafiles in separate lists
+	 * used to pass to FileListActivity
+	 * @param selectedExperiment int for experiment chosen
+	 */
+	private void getExperimentFiles(int selectedExperiment) {
+		Experiment tempExp = forExperiments.get(selectedExperiment);
+		List<GeneFile> files = tempExp.getFiles();
+		
+		for(int i=0; i<files.size(); i++) {
+			if(files.get(i).getType().equals("raw")) {
+				rawDataFiles.add(files.get(i).getName() + " "
+						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
+			} else if(files.get(i).getType().equals("profile")) {
+				profileDataFiles.add(files.get(i).getName() + " "
+						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
+			} else if(files.get(i).getType().equals("region")) {
+				regionDataFiles.add(files.get(i).getName() + " "
+						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
+			}
+		}
+	}
 	/**
 	 * Temporary method used for showing
 	 * temp search information, to test
@@ -197,10 +220,10 @@ public class ExperimentListFragment extends Fragment {
 	 * @author Cecilia Lindmark
 	 *
 	 */
-	public class SearchHandler extends AsyncTask<HashMap<String, String>, Void, JSONArray> {
+	public class SearchHandler extends AsyncTask<Void, Void, JSONArray> {
 
 		//@Override
-		protected JSONArray doInBackground(HashMap<String, String> searchInfo) {
+		protected JSONArray doInBackground(Void...arg0) {
 			//Remove comment for search until fixed
 		try {
 				//Sending hashmap with annotation, value for search to comhandler
@@ -215,7 +238,7 @@ public class ExperimentListFragment extends Fragment {
 			return results;
 		}
 		
-		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
+		protected void onPostExecute(JSONArray results) {
 		//protected void onPostExecute(Void params) {
 		
 			//TODO: Needed to fetch results?
@@ -229,12 +252,6 @@ public class ExperimentListFragment extends Fragment {
 				//TODO Write better error handling
 				e.printStackTrace();
 			}
-		}
-
-		@Override
-		protected JSONArray doInBackground(HashMap<String, String>... params) {
-			// TODO Auto-generated method stub
-			return null;
 		}
 	}
 }

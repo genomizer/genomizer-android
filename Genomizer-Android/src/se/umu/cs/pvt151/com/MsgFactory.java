@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.umu.cs.pvt151.GeneFile;
-import se.umu.cs.pvt151.ProcessParameters;
+import se.umu.cs.pvt151.ProcessingParameters;
 
 public class MsgFactory {
 
@@ -35,11 +35,16 @@ public class MsgFactory {
 	}
 	
 	
-	public static JSONObject createConversionRequest(ProcessParameters param, GeneFile file) throws JSONException {
+	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, 
+			String metadata, String author) throws JSONException {
+		
 		JSONObject obj = new JSONObject();
 		
 		obj.put("filename", file.getName());
-		obj.put("filename", file.getName());
+		obj.put("filepath", file.getURL());
+		
+		//TODO: FIX this method when we know how to create process packages
+		obj.put("expid", file.getURL());
 		
 		return obj;
 	}

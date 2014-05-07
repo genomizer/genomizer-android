@@ -21,6 +21,11 @@ public class ComHandler {
 
 	private static String serverURL = "http://genomizer.apiary-mock.com/";
 
+	/**
+	 * Used to change the targeted server URL.
+	 * 
+	 * @param serverURL The URL of the server.
+	 */
 	public static void setServerURL(String serverURL) {
 		ComHandler.serverURL = serverURL;
 	}
@@ -50,25 +55,20 @@ public class ComHandler {
 			} else {
 				return false;
 			}
-
-
-
 		} catch (JSONException e) {
+			//This is only an issue if the server is changed.
 			Log.d("DEBUG", e.getMessage());
 			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			Log.d("DEBUG", e.getMessage());
-			e.printStackTrace();
+			throw new IOException();
 		}
-		return false;
 	}
 
 	/**
 	 * Sends a search request to the server. The search is based on annotations,
 	 * added as a parameter.
 	 * 
-	 * @param annotations
-	 * @return JSONArray
+	 * @param annotations HashMap with the name of the field as key and the value of the field as value.
+	 * @return JSONArray Contains an arbitrary amount of JSONObjects. Each object is information about a file.
 	 * @throws IOException
 	 */
 	public static JSONArray search(HashMap<String, String> annotations) throws IOException {

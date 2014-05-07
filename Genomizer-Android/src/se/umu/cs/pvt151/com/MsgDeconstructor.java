@@ -15,6 +15,14 @@ import se.umu.cs.pvt151.GeneFile;
 public class MsgDeconstructor {
 	
 	
+	/**
+	 * Takes a JSONArray object as parameter and breaks it down into a list
+	 * of Annotation objects, which is returned.
+	 * 
+	 * @param json
+	 * @return An arraylist of Annotation objects.
+	 * @throws JSONException
+	 */
 	public static ArrayList<Annotation> annotationJSON(JSONArray json) throws JSONException {
 		ArrayList<Annotation> annotations = new ArrayList<Annotation>();
 		
@@ -47,6 +55,14 @@ public class MsgDeconstructor {
 	}
 	
 	
+	/**
+	 * Converts a list of files from JSON to a an ArrayList of GeneFiles.
+	 * The list is broken down into a list of GeneFile objects and returned.
+	 * 
+	 * @param json
+	 * @return An arraylist of GeneFile objects
+	 * @throws JSONException
+	 */
 	public static ArrayList<GeneFile> filesJSON(JSONArray json) throws JSONException {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 		
@@ -67,6 +83,13 @@ public class MsgDeconstructor {
 	}
 	
 	
+	/**
+	 * Unpacks and returns a JSONArray in the form of an list of experiments.
+	 * 
+	 * @param json
+	 * @return An arraylist with experiments
+	 * @throws JSONException
+	 */
 	public static ArrayList<Experiment> searchJSON(JSONArray json) throws JSONException {
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
 		

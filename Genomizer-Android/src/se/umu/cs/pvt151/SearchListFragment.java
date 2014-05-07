@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import se.umu.cs.pvt151.SearchListFragment.SearchViewHolder;
 import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,7 +25,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView.OnEditorActionListener;
 
 /**
  * Fragment which will display search options for the Genomizer app, displays
@@ -41,6 +38,7 @@ public class SearchListFragment extends ListFragment {
 
 	protected static final String ANNOTATION = "Annotation";
 	protected static final String VALUE = "Value";
+	protected static final String SEARCH_MAP = "searchMap";
 	private ArrayList<String> mAnnotationNamesList;
 	private Button searchButton;
 	private ArrayList<String> mSpinnerList;
@@ -119,18 +117,32 @@ public class SearchListFragment extends ListFragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
-				HashMap<Integer, String> annotations = new HashMap<Integer, String>();
-				HashMap<Integer, String> value = new HashMap<Integer, String>();
+				String key = null;
+				String value = null;
+//				HashMap<Integer, String> annotations = new HashMap<Integer, String>();
+//				HashMap<Integer, String> value = new HashMap<Integer, String>();
+				HashMap<String, String> search = new HashMap<String, String>();
 				
-				//TODO pass the searchlist to the experimentList fragment
-				intent.putExtra(ANNOTATION, annotations);
-				intent.putExtra(VALUE, value);
-				Log.d("Experiment", "Search annotations: " + annotations.toString());
-				Log.d("Experiment", "Search value: " + value.toString());
+				for (SearchViewHolder vh : viewHolderList) {
+					if (vh.isChecked && vh.isDropDown) {
+						key = vh.textView.getText().toString();
+						for (Annotation annotation : mAnnotations) {
+							if (annotation.getName().equals(key)) {
+								value = annotation.getValue().get(vh.selectedPosition);
+							}
+						}
+					} else if (vh.isChecked) {
+						key = vh.textView.getText().toString();
+						value = vh.freetext;
+					}
+					
+					search.put(key, value);
+				}
+				Log.d("smurf", "Search: " + search.toString());
 				
+				intent.putExtra(SEARCH_MAP, search);			
 				startActivity(intent);
 				
-				Log.d("smurf", "Search: " + mSearchList.toString());
 
 			}
 		});
@@ -196,27 +208,7 @@ public class SearchListFragment extends ListFragment {
 							R.layout.searchlist_field, null);
 					viewHolder = new SearchViewHolder();
 					
-					viewHolder.isDropDown = false;
-					viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_field_search);
-					viewHolder.textView.setText(mAnnotations.get(position).getName());
-					viewHolder.position = position;
-					
-					viewHolder.editText = (EditText) convertView.findViewById(R.id.txtf_search_hint);
-					viewHolder.editText.setHint(mAnnotations.get(position).getName());
-				
-					viewHolder.editText.addTextChangedListener(new TheTextWatcher(viewHolder));					
-					
-					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_search_hint);
-					viewHolder.checkBox.setTag(viewHolder);
-					viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-						
-						@Override
-						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-							SearchViewHolder vh = (SearchViewHolder) buttonView.getTag();
-							vh.isChecked = isChecked;
-							
-						}
-					});
+					makeFreeTextHolder(position, convertView, viewHolder);
 					viewHolderList.add(viewHolder);
 					convertView.setTag(viewHolder);
 				} else {
@@ -230,37 +222,8 @@ public class SearchListFragment extends ListFragment {
 					
 					
 					viewHolder = new SearchViewHolder();
-					viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
-					viewHolder.textView.setText(mAnnotations.get(position).getName());
-					viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_dropdown_search);
-					viewHolder.checkBox.setTag(viewHolder);
-					viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-						
-						@Override
-						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-							SearchViewHolder vh = (SearchViewHolder) buttonView.getTag();
-							vh.isChecked = isChecked;
-							
-						}
-					});
-					viewHolder.spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
-					viewHolder.isDropDown = true;
-					viewHolder.position = position;
-					
-					spinner.setTag(viewHolder);
-					spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-						@Override
-						public void onItemSelected(AdapterView<?> parent,
-								View view, int position, long id) {
-							SearchViewHolder vh = (SearchViewHolder) parent.getTag();
-							vh.selectedPosition = position;
-						}
-
-						@Override
-						public void onNothingSelected(AdapterView<?> parent) {							
-						}
-						
-					});
+					makeSpinnerHolder(position, convertView, viewHolder,
+							spinner);
 				}
 				viewHolderList.add(viewHolder);
 				convertView.setTag(viewHolder);							
@@ -284,7 +247,85 @@ public class SearchListFragment extends ListFragment {
 			return convertView;
 		}
 
+		/**
+		 * @param position
+		 * @param convertView
+		 * @param viewHolder
+		 * @param spinner
+		 */
+		private void makeSpinnerHolder(int position, View convertView,
+				SearchViewHolder viewHolder, Spinner spinner) {
+			viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_spinner_search);
+			viewHolder.textView.setText(mAnnotations.get(position).getName());
+			viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_dropdown_search);
+			viewHolder.checkBox.setTag(viewHolder);
+			viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					SearchViewHolder vh = (SearchViewHolder) buttonView.getTag();
+					vh.isChecked = isChecked;
+					
+				}
+			});
+			viewHolder.spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
+			viewHolder.isDropDown = true;
+			viewHolder.position = position;
+			
+			spinner.setTag(viewHolder);
+			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> parent,
+						View view, int position, long id) {
+					SearchViewHolder vh = (SearchViewHolder) parent.getTag();
+					vh.selectedPosition = position;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> parent) {							
+				}
+				
+			});
+		}
+
+		/**
+		 * 
+		 * @param position
+		 * @param convertView
+		 * @param viewHolder
+		 */
+		private void makeFreeTextHolder(int position, View convertView,
+				SearchViewHolder viewHolder) {
+			viewHolder.isDropDown = false;
+			viewHolder.textView = (TextView) convertView.findViewById(R.id.lbl_field_search);
+			viewHolder.textView.setText(mAnnotations.get(position).getName());
+			viewHolder.position = position;
+			
+			viewHolder.editText = (EditText) convertView.findViewById(R.id.txtf_search_hint);
+			viewHolder.editText.setHint(mAnnotations.get(position).getName());
+
+			viewHolder.editText.addTextChangedListener(new TheTextWatcher(viewHolder));					
+			
+			viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_search_hint);
+			viewHolder.checkBox.setTag(viewHolder);
+			viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					SearchViewHolder vh = (SearchViewHolder) buttonView.getTag();
+					vh.isChecked = isChecked;
+					
+				}
+			});
+		}
+
 	}
+	
+	/**
+	 * 
+	 * @author 
+	 *
+	 */
 	private class TheTextWatcher implements TextWatcher {
 
 		private SearchViewHolder viewHolder;

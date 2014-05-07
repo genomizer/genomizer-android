@@ -43,6 +43,13 @@ public class LogInFragment extends Fragment {
 		return v;
 	}
 
+	/**
+	 * Attempts a login with the credentials in the EditTextFields that the private attributes userName and userPwd are bound to.
+	 * 
+	 * Only called from the android layout files.
+	 * 
+	 * @param v The current view.
+	 */
 	protected void login(View v) {
 		Log.d("DEBUG", "Login button pressed:");
 
@@ -52,8 +59,6 @@ public class LogInFragment extends Fragment {
 			public void run() {
 				String uname = userName.getText().toString();
 				String password = userPwd.getText().toString();
-				Log.d("DEBUG", "Username: " + uname);
-				Log.d("DEBUG", "Password: " + password);
 
 				if(uname.length() == 0 || password.length() == 0) {
 					makeToast("Please enter both username and password.", false);
@@ -63,9 +68,15 @@ public class LogInFragment extends Fragment {
 				try {
 
 					boolean loginOk = ComHandler.login(uname, password);
-
+					
+					//A correct login will proceed to the next activity. 
+					//Going to this view without a correct login results in
+					//the device not having a token and can as such not 
+					//communicate with the server.
 					if(loginOk) {
 						startSearchActivity();
+					} else {
+						makeToast("Wrong username or password.", false);
 					}
 
 				} catch (IOException e) {
@@ -78,6 +89,12 @@ public class LogInFragment extends Fragment {
 
 	}
 
+	/**
+	 * Creates an android toast (small unintrusive text popup).
+	 * 
+	 * @param msg The message that should be displayed.
+	 * @param longToast True if the toast should be displayed for a long time (3.5 seconds) otherwise it is displayed for 2 seconds.
+	 */
 	protected void makeToast(final String msg, final boolean longToast) {
 		getActivity().runOnUiThread(new Thread() {
 			public void run() {

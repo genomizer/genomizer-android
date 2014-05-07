@@ -35,8 +35,11 @@ public class MsgFactory {
 	}
 	
 	
-	public static JSONObject createConversionRequest(ProcessParameters param, GeneFile file) {
+	public static JSONObject createConversionRequest(ProcessParameters param, GeneFile file) throws JSONException {
 		JSONObject obj = new JSONObject();
+		
+		obj.put("filename", file.getName());
+		obj.put("filename", file.getName());
 		
 		return obj;
 	}

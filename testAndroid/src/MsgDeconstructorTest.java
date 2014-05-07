@@ -44,6 +44,7 @@ public class MsgDeconstructorTest extends TestCase {
 			
 			ArrayList<Experiment> experimentsArray = MsgDeconstructor.searchJSON(experiments);
 			
+			Log.d("TestLog", "gaaah: " + experimentsArray.size());
 			assertEquals("experimentName", experimentsArray.get(0).getName());
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,9 +1,13 @@
 package se.umu.cs.pvt151;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class LogInActivity extends SingleFragmentActivity {
@@ -29,6 +33,5 @@ public class LogInActivity extends SingleFragmentActivity {
 		} else {
 			fragment.makeToast("Internet access unavailable.", true);
 		}
-		
 	}
 }

@@ -25,7 +25,12 @@ public class MsgDeconstructor {
 			annotation.setId(obj.getInt("id"));
 			annotation.setName(obj.getString("name"));
 			
-			Object valueObject = obj.get("values");
+			Object valueObject;
+			try {
+				valueObject = obj.get("values");
+			} catch (JSONException e) {
+				valueObject = obj.get("value");
+			}
 			
 			if(valueObject instanceof String) {
 				annotation.appendValue(valueObject.toString());

@@ -46,7 +46,9 @@ public class SearchListFragment extends ListFragment {
 	private ArrayList<Annotation> mAnnotations;
 	private boolean waitServerAnnotations = true;
 	private ArrayList<SearchViewHolder> viewHolderList = new ArrayList<SearchViewHolder>();
-
+	
+	private int testNumber = 0;
+	
 	/**
 	 * Defines search and textfield lists.
 	 */
@@ -119,8 +121,7 @@ public class SearchListFragment extends ListFragment {
 				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
 				String key = null;
 				String value = null;
-//				HashMap<Integer, String> annotations = new HashMap<Integer, String>();
-//				HashMap<Integer, String> value = new HashMap<Integer, String>();
+				
 				HashMap<String, String> search = new HashMap<String, String>();
 				
 				for (SearchViewHolder vh : viewHolderList) {
@@ -140,8 +141,8 @@ public class SearchListFragment extends ListFragment {
 				}
 				Log.d("smurf", "Search: " + search.toString());
 				
-				intent.putExtra(SEARCH_MAP, search);			
-				startActivity(intent);
+//				intent.putExtra(SEARCH_MAP, search);			
+//				startActivity(intent);
 				
 
 			}
@@ -203,6 +204,10 @@ public class SearchListFragment extends ListFragment {
 
 			if (convertView == null) {
 				final ArrayList<String> mSpinnerList = mAnnotations.get(position).getValue();
+				
+				testNumber++;
+				Log.d("smurf", "Created convertView nr: " + testNumber);
+				
 				if(mSpinnerList.size() == 1 && mSpinnerList.get(0).compareTo("freetext") == 0) {
 					convertView = getActivity().getLayoutInflater().inflate(
 							R.layout.searchlist_field, null);
@@ -231,12 +236,21 @@ public class SearchListFragment extends ListFragment {
 			} else {
 				viewHolder = (SearchViewHolder) convertView.getTag();
 				
+				
+				if (position != viewHolder.position) {
+					Log.d("smurf", "--------------------------------------------------------------");
+					Log.d("smurf", "ALERT !!!!!!!!!!!!!!!!!!!!\n");
+					Log.d("smurf", "ConvertView position: " + position + "\nViewholder position: " + viewHolder.position);
+					Log.d("smurf", "--------------------------------------------------------------");
+				}
+				
 				if(viewHolder.isDropDown) {				
 					viewHolder.textView.setText(mAnnotationNamesList.get(viewHolder.position));
 					viewHolder.spinner.setSelection(viewHolder.selectedPosition);
 					viewHolder.checkBox.setChecked(viewHolder.isChecked);
 				} else {
 					viewHolder.editText.setText(viewHolder.freetext);
+					viewHolder.editText.clearFocus();
 					viewHolder.textView.setText(mAnnotationNamesList.get(viewHolder.position));
 					viewHolder.checkBox.setChecked(viewHolder.isChecked);
 				}
@@ -317,6 +331,7 @@ public class SearchListFragment extends ListFragment {
 					
 				}
 			});
+			viewHolder.editText.clearFocus();
 		}
 
 	}
@@ -336,19 +351,22 @@ public class SearchListFragment extends ListFragment {
 		@Override
 		public void afterTextChanged(Editable s) {
 			viewHolder.freetext = s.toString();
+			Log.d("smurf", "afterTextChanged");
 			
 		}
 
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
-			
+			Log.d("smurf", "beforeTextChanged");
+
 		}
 
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			
+			Log.d("smurf", "onTextChanged");
+
 		}
 		
 	}

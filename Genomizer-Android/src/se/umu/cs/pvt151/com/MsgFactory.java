@@ -32,5 +32,9 @@ public class MsgFactory {
 	}
 	
 	
-	public static JSONObject create
+	public static JSONObject createConversionRequest() {
+		JSONObject obj = new JSONObject();
+		
+		return obj;
+	}
 }

@@ -132,17 +132,20 @@ public class SearchListFragment extends ListFragment {
 								value = annotation.getValue().get(vh.selectedPosition);
 							}
 						}
+						
 					} else if (vh.isChecked) {
-						key = vh.textView.getText().toString();
-						value = vh.freetext;
+						if (vh.freetext.length() > 0) {
+							key = vh.textView.getText().toString();
+							value = vh.freetext;
+						}
 					}
 					
 					search.put(key, value);
 				}
 				Log.d("smurf", "Search: " + search.toString());
 				
-//				intent.putExtra(SEARCH_MAP, search);			
-//				startActivity(intent);
+				intent.putExtra(SEARCH_MAP, search);			
+				startActivity(intent);
 				
 
 			}
@@ -205,8 +208,8 @@ public class SearchListFragment extends ListFragment {
 			if (convertView == null) {
 				final ArrayList<String> mSpinnerList = mAnnotations.get(position).getValue();
 				
-				testNumber++;
 				Log.d("smurf", "Created convertView nr: " + testNumber);
+				testNumber++;
 				
 				if(mSpinnerList.size() == 1 && mSpinnerList.get(0).compareTo("freetext") == 0) {
 					convertView = getActivity().getLayoutInflater().inflate(
@@ -214,7 +217,8 @@ public class SearchListFragment extends ListFragment {
 					viewHolder = new SearchViewHolder();
 					
 					makeFreeTextHolder(position, convertView, viewHolder);
-
+//					viewHolderList.add(viewHolder);
+//					convertView.setTag(viewHolder);
 				} else {
 					convertView = getActivity().getLayoutInflater().inflate(
 							R.layout.searchlist_dropdown_field, null);
@@ -230,7 +234,8 @@ public class SearchListFragment extends ListFragment {
 							spinner);
 				}
 				viewHolderList.add(viewHolder);
-				convertView.setTag(viewHolder);							
+				convertView.setTag(viewHolder);	
+				Log.d("smurf", "\nviewHolder position: " + viewHolder.position + "\nconvertView position: " + position + "\n---------------------------------\n");
 				
 			} else {
 				viewHolder = (SearchViewHolder) convertView.getTag();
@@ -249,6 +254,7 @@ public class SearchListFragment extends ListFragment {
 					viewHolder.checkBox.setChecked(viewHolder.isChecked);
 				} else {
 					viewHolder.editText.setText(viewHolder.freetext);
+					viewHolder.editText.clearFocus();
 					viewHolder.textView.setText(mAnnotationNamesList.get(viewHolder.position));
 					viewHolder.checkBox.setChecked(viewHolder.isChecked);
 				}
@@ -329,9 +335,7 @@ public class SearchListFragment extends ListFragment {
 					
 				}
 			});
-			viewHolder.editText.setSelected(false);
 			viewHolder.editText.clearFocus();
-			
 		}
 
 	}

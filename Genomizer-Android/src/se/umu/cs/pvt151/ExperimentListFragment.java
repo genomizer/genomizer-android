@@ -77,7 +77,7 @@ public class ExperimentListFragment extends Fragment {
 		 * experiments with displaySearchResults*/
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
-		Toast.makeText(getActivity().getApplicationContext(), searchInfo.get(0), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getActivity().getApplicationContext(), forExperiments.get(0).getName(), Toast.LENGTH_SHORT).show();
 		/*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, experiments);*/
 				
@@ -167,7 +167,7 @@ public class ExperimentListFragment extends Fragment {
 		
 		for(int i=0; i<forExperiments.size(); i++) {
 			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName()
-					+ "\n" +"Created by: " + forExperiments.get(i).getCreated_by());
+					+ "\n" +"Created by: " + forExperiments.get(i).getCreatedBy());
 		}
 	}
 	
@@ -197,10 +197,10 @@ public class ExperimentListFragment extends Fragment {
 	 * @author Cecilia Lindmark
 	 *
 	 */
-	public class SearchHandler extends AsyncTask<Void, Void, JSONArray> {
+	public class SearchHandler extends AsyncTask<HashMap<String, String>, Void, JSONArray> {
 
-		@Override
-		protected JSONArray doInBackground(Void... args0) {
+		//@Override
+		protected JSONArray doInBackground(HashMap<String, String> searchInfo) {
 			//Remove comment for search until fixed
 		try {
 				//Sending hashmap with annotation, value for search to comhandler
@@ -215,18 +215,26 @@ public class ExperimentListFragment extends Fragment {
 			return results;
 		}
 		
-		protected void onPostExecute(Void params) {
+		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
+		//protected void onPostExecute(Void params) {
 		
 			//TODO: Needed to fetch results?
 			try {
 				//Receiving list of experiments from deconstructor
 				forExperiments = MsgDeconstructor.searchJSON(results);
+				Log.d("Experiment", "Size received experiments: " + forExperiments.size());
 				
 				
 			} catch (JSONException e) {
 				//TODO Write better error handling
 				e.printStackTrace();
 			}
+		}
+
+		@Override
+		protected JSONArray doInBackground(HashMap<String, String>... params) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 }

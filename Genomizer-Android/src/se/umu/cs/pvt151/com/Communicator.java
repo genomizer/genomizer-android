@@ -49,7 +49,7 @@ public class Communicator {
 		connection.setReadTimeout(3000);
 	}
 
-	public String sendRequest(JSONObject jsonPackage) throws IOException {
+	public GenomizerHttpPackage sendRequest(JSONObject jsonPackage) throws IOException {
 
 		if (connection.getDoOutput()) {
 			out = new DataOutputStream(connection.getOutputStream());		
@@ -66,16 +66,14 @@ public class Communicator {
 
 		StringBuffer response = new StringBuffer();
 		String inputLine;
+		
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
 		in.close();
+		
+		GenomizerHttpPackage httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
 
-
-		if (responseCode == 200) {
-			return response.toString();
-		} else {
-			return null;
-		}
+		return httpResponse;
 	}
 }

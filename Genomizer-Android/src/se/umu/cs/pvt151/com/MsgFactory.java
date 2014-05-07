@@ -30,4 +30,11 @@ public class MsgFactory {
 	public static JSONObject createRegularPackage() throws JSONException {
 		return new JSONObject();		
 	}
+	
+	
+	public static JSONObject createConversionRequest() {
+		JSONObject obj = new JSONObject();
+		
+		return obj;
+	}
 }

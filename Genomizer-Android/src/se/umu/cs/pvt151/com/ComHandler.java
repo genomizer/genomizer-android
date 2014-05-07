@@ -87,6 +87,7 @@ public class ComHandler {
 			} else if (searchResponse.getCode() == 204) { 
 				//If the search yields no result.
 				JSONArray jsonPackage = new JSONArray();
+				Log.d("TestLog", "size: " + jsonPackage.length());
 				return jsonPackage;
 			} else {
 				return null;

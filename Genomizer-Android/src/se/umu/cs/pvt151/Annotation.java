@@ -9,8 +9,6 @@ public class Annotation {
 	
 	private ArrayList<String> value;
 	
-	private boolean forced;
-	
 	
 	public Annotation() {
 		value = new ArrayList<String>();
@@ -51,27 +49,10 @@ public class Annotation {
 		value.add(newValue);
 	}
 
-
-	public boolean isForced() {
-		return forced;
-	}
-
-
-	public void setForced(String string) {
-		if (string.compareTo("true") == 0) {
-			forced = true;
-		} else {
-			forced = false;
-		}
-		
-	}
 	
 	public boolean isFreeText() {
 		return value.size() == 0;
 	}
 	
 	
-	public void setForced(boolean forced) {
-		this.forced = forced;
-	}
 }

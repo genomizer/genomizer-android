@@ -24,7 +24,6 @@ public class MsgDeconstructor {
 			
 			annotation.setId(obj.getInt("id"));
 			annotation.setName(obj.getString("name"));
-			annotation.setForced(obj.getBoolean("forced"));
 			
 			Object valueObject = obj.get("values");
 			
@@ -66,7 +65,7 @@ public class MsgDeconstructor {
 	public static ArrayList<Experiment> searchJSON(JSONArray json) throws JSONException {
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
 		
-		for (int i = 0; i < experiments.size(); i++) {
+		for (int i = 0; i < json.length(); i++) {
 			Experiment experiment = new Experiment();
 			
 			JSONObject jsonExperiment = (JSONObject) json.get(i);

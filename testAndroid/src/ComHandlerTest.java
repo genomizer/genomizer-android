@@ -38,13 +38,14 @@ public class ComHandlerTest extends TestCase {
 	
 	public void testLogInToServer() {
 		try {
-			ComHandler.setServerURL("http://scratchy.cs.umu.se:7000");
+			ComHandler.setServerURL("http://scratchy.cs.umu.se");
 			boolean test = ComHandler.login("BobSaget", "Hemligt");
 			
 			if (test) {
 				Log.d("DEBUG", "connected");
 			}
 		} catch (IOException e) {
+			Log.d("TestLog", "bug message: " + e.getMessage());
 			Log.d("DEBUG", "Could not communicate with the server");
 			fail("Could not communicate with the server.");
 		}

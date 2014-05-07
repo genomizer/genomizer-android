@@ -212,7 +212,8 @@ public class ExperimentListFragment extends Fragment {
 	private void infoAnnotations() {
 		Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
 		for(int i=0; i<forExperiments.size(); i++) {
-			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName() + "\n" +"Created by: " + forExperiments.get(i).getCreatedBy());
+			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName() 
+					+ "\n" +"Created by: " + forExperiments.get(i).getCreatedBy());
 		}
 		//Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
 	}
@@ -252,7 +253,8 @@ public class ExperimentListFragment extends Fragment {
 			//Remove comment for search until fixed
 		try {
 				//Sending hashmap with annotation, value for search to comhandler
-			results = ComHandler.search(tempHash());
+			results = ComHandler.search(searchInfo);
+			//results = ComHandler.search(tempHash());
 			forExperiments = MsgDeconstructor.searchJSON(results);
 			Log.d("Experiment", "Size received experiments: " + forExperiments.get(0).getCreatedBy());
 			//results = ComHandler.search(searchInfo);

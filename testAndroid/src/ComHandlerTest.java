@@ -36,6 +36,21 @@ public class ComHandlerTest extends TestCase {
 	}
 	
 	
+	public void testLogInToServer() {
+		try {
+			ComHandler.setServerURL("http://scratchy.cs.umu.se:7000");
+			boolean test = ComHandler.login("BobSaget", "Hemligt");
+			
+			if (test) {
+				Log.d("DEBUG", "connected");
+			}
+		} catch (IOException e) {
+			Log.d("DEBUG", "Could not communicate with the server");
+			fail("Could not communicate with the server.");
+		}
+	}
+	
+	
 	public void testSearchPackage() {
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Species", "Human");

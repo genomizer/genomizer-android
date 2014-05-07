@@ -18,7 +18,7 @@ public class Experiment {
 
 	private String name;
 	private String createdBy;
-	private List<File> files = new ArrayList<File>();
+	private List<GeneFile> files = new ArrayList<GeneFile>();
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
 	public String getName() {
@@ -37,11 +37,11 @@ public class Experiment {
 		this.createdBy = created_by;
 	}
 
-	public List<File> getFiles() {
+	public List<GeneFile> getFiles() {
 		return files;
 	}
 
-	public void setFiles(List<File> files) {
+	public void setFiles(List<GeneFile> files) {
 		this.files = files;
 	}
 

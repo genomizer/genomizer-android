@@ -10,7 +10,7 @@ package se.umu.cs.pvt151;
  */
 import java.util.Map;
 
-public class File {
+public class GeneFile {
 
 	private String id;
 	private String type;

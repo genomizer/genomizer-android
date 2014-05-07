@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import android.util.Log;
 import se.umu.cs.pvt151.Annotation;
 import se.umu.cs.pvt151.Experiment;
-import se.umu.cs.pvt151.File;
+import se.umu.cs.pvt151.GeneFile;
 
 public class MsgDeconstructor {
 	
@@ -43,12 +43,12 @@ public class MsgDeconstructor {
 	}
 	
 	
-	public static ArrayList<File> filesJSON(JSONArray json) throws JSONException {
-		ArrayList<File> files = new ArrayList<File>();
+	public static ArrayList<GeneFile> filesJSON(JSONArray json) throws JSONException {
+		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 		
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
-			File file = new File();
+			GeneFile file = new GeneFile();
 			
 			file.setId(obj.getString("id"));
 			file.setType(obj.getString("type"));

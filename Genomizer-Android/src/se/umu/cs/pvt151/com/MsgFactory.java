@@ -3,6 +3,9 @@ package se.umu.cs.pvt151.com;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import se.umu.cs.pvt151.GeneFile;
+import se.umu.cs.pvt151.ProcessParameters;
+
 public class MsgFactory {
 
 	/**
@@ -32,7 +35,7 @@ public class MsgFactory {
 	}
 	
 	
-	public static JSONObject createConversionRequest() {
+	public static JSONObject createConversionRequest(ProcessParameters param, GeneFile file) {
 		JSONObject obj = new JSONObject();
 		
 		return obj;

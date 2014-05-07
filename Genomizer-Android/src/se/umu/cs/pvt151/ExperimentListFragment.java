@@ -123,7 +123,7 @@ public class ExperimentListFragment extends Fragment {
 	 */
 	private void getExperimentFiles(int selectedExperiment) {
 		List<GeneFile> files = forExperiments.get(selectedExperiment).getFiles();
-		
+		Log.d("Experiment", "File names: " + forExperiments.get(0).getFiles().get(0).getType());
 		for(int i=0; i<files.size(); i++) {
 			if(files.get(i).getType().equals("raw")) {
 				rawDataFiles.add(files.get(i).getName() + " "
@@ -136,6 +136,8 @@ public class ExperimentListFragment extends Fragment {
 						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
 			}
 		}
+		
+		
 	}
 	/**
 	 * Temporary method used for showing
@@ -212,8 +214,10 @@ public class ExperimentListFragment extends Fragment {
 	private void infoAnnotations() {
 		Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
 		for(int i=0; i<forExperiments.size(); i++) {
-			displaySearchResults.add("Experiment:  " + forExperiments.get(i).getName() 
-					+ "\n" +"Created by: " + forExperiments.get(i).getCreatedBy());
+			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" 
+		+ "Created by: " + forExperiments.get(i).getCreatedBy() + "\n" 
+		+ "Specie: " + forExperiments.get(i).getAnnotations().get(2).getValue().get(0) + "\n"
+		+ "Genome release: " + forExperiments.get(i).getAnnotations().get(3).getValue().get(0));
 		}
 		//Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
 	}
@@ -234,7 +238,11 @@ public class ExperimentListFragment extends Fragment {
 			//Placeholder for what happens when a listitem is clicked
 			/*Toast.makeText(getActivity().getApplicationContext(), 
 					experiments.get(position), Toast.LENGTH_SHORT).show();*/
+			getExperimentFiles(position);
 			Intent intent = new Intent(getActivity(), FileListActivity.class);
+			intent.putStringArrayListExtra("raw", rawDataFiles);
+			intent.putStringArrayListExtra("profile", profileDataFiles);
+			intent.putStringArrayListExtra("region", regionDataFiles);
 			startActivity(intent);
 		}
 	}

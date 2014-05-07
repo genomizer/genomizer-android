@@ -8,6 +8,7 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,7 +33,19 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> profileData = new ArrayList<String>();
 	private ArrayList<String> regionData = new ArrayList<String>();
 	private ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
+	
+	//testarrays to see if transfer works
+	private ArrayList<String> raw = new ArrayList<String>();
+	private ArrayList<String> profile = new ArrayList<String>();
+	private ArrayList<String> region = new ArrayList<String>();
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);	
+		raw = getActivity().getIntent().getExtras().getStringArrayList("raw");
+		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
+		region = getActivity().getIntent().getExtras().getStringArrayList("region");
+	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
@@ -53,14 +66,18 @@ public class FileListFragment extends Fragment {
 		fillData();
 		
 		//Set adapter, onitemclicklistener, selector to listview for rawdata
-		listRaw.setAdapter(new FileListAdapter(rawData));
+		//listRaw.setAdapter(new FileListAdapter(rawData));
+		listRaw.setAdapter(new FileListAdapter(raw));
+		
 		//TODO: Is listener for listview an idea or just for checkboxes enough?
 		//listRaw.setOnItemClickListener(new ListHandler());
 		//Set adapter to listview for profiledata
-		listProfile.setAdapter(new FileListAdapter(profileData));
+		listProfile.setAdapter(new FileListAdapter(profile));
+		//listProfile.setAdapter(new FileListAdapter(profileData));
 		//listProfile.setOnItemClickListener(new ListHandler());
 		//Set adapter for regiondata
-		listRegion.setAdapter(new FileListAdapter(regionData));
+		listRegion.setAdapter(new FileListAdapter(region));
+		//listRegion.setAdapter(new FileListAdapter(regionData));
 		//listRegion.setOnItemClickListener(new ListHandler());
 		
 		return v;

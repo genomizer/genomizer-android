@@ -234,6 +234,7 @@ public class SearchListFragment extends ListFragment {
 
 				
 			} else {
+				if(position >= viewHolderList.size()) return getView(position, null, parent);
 				viewHolder = viewHolderList.get(position);
 				convertView = viewHolder.convertView;
 				

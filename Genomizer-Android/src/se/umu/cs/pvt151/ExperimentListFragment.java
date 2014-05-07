@@ -47,6 +47,9 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> profileDataFiles = new ArrayList<String>();
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
 	
+	//Temphash
+	private HashMap<String, String> test = new HashMap<String, String>();
+	
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -90,6 +93,18 @@ public class ExperimentListFragment extends Fragment {
 		list.setSelector(R.drawable.explist_selector);
 		
 		return v;
+	}
+	
+	private HashMap<String,String> tempHash() {
+		test.put("pubmedId", "abc123");
+		test.put("type", "outdoor");
+		test.put("specie", "human");
+		test.put("genome release", "v.123");
+		test.put("cell line", "yes");
+		test.put("development stage", "larva");
+		test.put("sex", "male");
+		test.put("tissue", "eye");
+		return test;
 	}
 	
 	/**
@@ -226,15 +241,16 @@ public class ExperimentListFragment extends Fragment {
 			//Remove comment for search until fixed
 		try {
 				//Sending hashmap with annotation, value for search to comhandler
-				results = ComHandler.search(searchInfo);
+			results = ComHandler.search(tempHash());
+			//results = ComHandler.search(searchInfo);
 				//Getting JSONarray with search results
 				//results = ComHandler.;
 			} catch (IOException e) {
 				// TODO Write better error handling
 				e.printStackTrace();
 			}
-			// TODO Send request to ComHandler, need to know what to send and receive...
-			return results;
+				// TODO Send request to ComHandler, need to know what to send and receive...
+				return results;
 		}
 		
 		protected void onPostExecute(JSONArray results) {

@@ -36,12 +36,14 @@ public class MsgFactory {
 	
 	
 	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, 
-			String metadata, String author) throws JSONException {
+			String metadata, String author, String processType) throws JSONException {
 		
 		JSONObject obj = new JSONObject();
 		
 		obj.put("filename", file.getName());
 		obj.put("filepath", file.getURL());
+		
+		obj.put("processtype", processType);
 		
 		//TODO: FIX this method when we know how to create process packages
 		obj.put("expid", file.getURL());

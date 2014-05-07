@@ -155,21 +155,21 @@ public class ComHandler {
 	}
 
 
-	public static String rawToProfile(String fileID) throws IOException {
-
-		try {
-			Communicator communicator = new Communicator(serverURL + "process/rawtoprofile/" + fileID);
-			communicator.setupConnection("PUT");
-			JSONObject msg = MsgFactory.createRegularPackage();
-
-			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
-			
-			String jsonString = annotationResponse.getBody();
-
-			return jsonString;
-
-		} catch (JSONException e) {
-			return null;
-		}
-	}
+//	public static String rawToProfile(String fileID) throws IOException {
+//
+//		try {
+//			Communicator communicator = new Communicator(serverURL + "process/");
+//			communicator.setupConnection("PUT");
+//			JSONObject msg = MsgFactory.createConversionRequest(param, file, metadata, author, "rawtoprofile");
+//
+//			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
+//			
+//			String jsonString = annotationResponse.getBody();
+//
+//			return jsonString;
+//
+//		} catch (JSONException e) {
+//			return null;
+//		}
+//	}
 }

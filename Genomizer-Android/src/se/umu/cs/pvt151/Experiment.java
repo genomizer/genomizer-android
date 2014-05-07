@@ -17,7 +17,7 @@ import java.util.Map;
 public class Experiment {
 
 	private String name;
-	private String created_by;
+	private String createdBy;
 	private List<File> files = new ArrayList<File>();
 	private List<Annotation> annotations = new ArrayList<Annotation>();
 
@@ -29,12 +29,12 @@ public class Experiment {
 		this.name = name;
 	}
 
-	public String getCreated_by() {
-		return created_by;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setCreated_by(String created_by) {
-		this.created_by = created_by;
+	public void setCreatedBy(String created_by) {
+		this.createdBy = created_by;
 	}
 
 	public List<File> getFiles() {

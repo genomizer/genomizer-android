@@ -33,24 +33,15 @@ import android.widget.ListView;
 public class ExperimentListFragment extends Fragment {
 	
 	private ListView list;
-	private ArrayList<String> experiments = new ArrayList<String>();
-	private ArrayList<String> species = new ArrayList<String>();
-	private ArrayList<String> speciesSexInfo = new ArrayList<String>();
-	private ArrayList<String> genomeInfo = new ArrayList<String>();
 	private ArrayList<String> displaySearchResults = new ArrayList<String>();
 	private HashMap<String, String> searchInfo = new HashMap<String, String>();
 	private JSONArray results;
 	private ArrayList<Experiment> forExperiments = new ArrayList<Experiment>();
 	private SearchHandler startSearch = new SearchHandler();
-	private ArrayList<Annotation> anno = new ArrayList<Annotation>();
 	//Lists used for saving files for a certain experiment
 	private ArrayList<String> rawDataFiles = new ArrayList<String>();
 	private ArrayList<String> profileDataFiles = new ArrayList<String>();
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
-	
-	//Temphash
-	private HashMap<String, String> test = new HashMap<String, String>();
-	
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -104,18 +95,6 @@ public class ExperimentListFragment extends Fragment {
 		return v;
 	}
 	
-	private HashMap<String,String> tempHash() {
-		test.put("pubmedId", "abc123");
-		test.put("type", "outdoor");
-		test.put("specie", "human");
-		test.put("genome release", "v.123");
-		test.put("cell line", "yes");
-		test.put("development stage", "larva");
-		test.put("sex", "male");
-		test.put("tissue", "eye");
-		return test;
-	}
-	
 	/**
 	 * Method to get all different datafiles in separate lists
 	 * used to pass to FileListActivity
@@ -136,74 +115,7 @@ public class ExperimentListFragment extends Fragment {
 						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
 			}
 		}
-		
-		
 	}
-	/**
-	 * Temporary method used for showing
-	 * temp search information, to test
-	 * that view is working
-	 */
-	private void tempPopulateArray() {
-		//Temp array used to fill listview with values
-		for(int i = 0; i < 5; i++) {
-			experiments.add("Experiment " + i + "\n" +"Species " + i + "\n" 
-				+ "Sex " + i + "\n" + "Genomic Release " + i);
-		}
-				
-		for(int j=0; j<5; j++) {
-				species.add("Species " + j);
-		}
-	}
-	
-	/**
-	 * Method used to get experiment id from
-	 * json package
-	 * @param expID
-	 */
-	private void getExperimentID(ArrayList<String> expID) {
-		experiments = expID;
-	}
-	
-	/**
-	 * Method used to get species from search results
-	 * json
-	 * @param speciesInfo
-	 */
-	private void getSpeciesInfo(ArrayList<String> speciesInfo) {
-		species = speciesInfo;
-	}
-	
-	/**
-	 * Method used to get info about species sex
-	 * from search results json
-	 * @param speciesSex
-	 */
-	private void getSexInfo(ArrayList<String> speciesSex) {
-		speciesSexInfo = speciesSex;
-	}
-	
-	/**
-	 * Method used to get info about genome release
-	 * from search results json
-	 * @param genomeRelease
-	 */
-	private void getGenomeInfo(ArrayList<String> genomeRelease) {
-		genomeInfo = genomeRelease;
-	}
-	
-	/**
-	 * Method used to merge search information
-	 * to get annotations and value in same
-	 * hashmap.
-	 * @return
-	 */
-	/*private HashMap<String, String> mergeSearchInfo() {
-		for(int i = 0; i < annotations.size(); i++) {
-			searchInfo.put(annotations.get(i), value.get(i));
-		}
-		return searchInfo;
-	}*/
 	
 	/**
 	 * Starting temp method for display info from object
@@ -222,14 +134,6 @@ public class ExperimentListFragment extends Fragment {
 		//Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
 	}
 	
-	private void summarizeInfo() {
-		for(int i = 0; i < experiments.size(); i++) {
-			displaySearchResults.add("Experiment:  " + experiments.get(i) 
-				+ "\n" +"Species: " + species.get(i) + "\n" 
-				+ "Sex: " + speciesSexInfo.get(i) + "\n" + "Genomic Release: " 
-				+ genomeInfo.get(i));
-		}
-	}
 	private class ListHandler implements OnItemClickListener {
 
 		@Override
@@ -253,21 +157,16 @@ public class ExperimentListFragment extends Fragment {
 	 *
 	 */
 	public class SearchHandler extends AsyncTask<Void, Void, ArrayList<Experiment>> {
-	//public class SearchHandler extends AsyncTask<Void, Void, JSONArray> {
 
 		//@Override
 		protected ArrayList<Experiment> doInBackground(Void...arg0) {
-		//protected JSONArray doInBackground(Void...arg0) {
-			//Remove comment for search until fixed
+		
 		try {
-				//Sending hashmap with annotation, value for search to comhandler
+			//Sending hashmap with annotation, value for search to comhandler
 			results = ComHandler.search(searchInfo);
-			//results = ComHandler.search(tempHash());
 			forExperiments = MsgDeconstructor.searchJSON(results);
 			Log.d("Experiment", "Size received experiments: " + forExperiments.get(0).getCreatedBy());
-			//results = ComHandler.search(searchInfo);
 				//Getting JSONarray with search results
-				//results = ComHandler.;
 			} catch (IOException e) {
 				// TODO Write better error handling
 				e.printStackTrace();
@@ -279,21 +178,10 @@ public class ExperimentListFragment extends Fragment {
 				//return results;
 			return forExperiments;
 		}
-		
-		//protected void onPostExecute(JSONArray results) {
+
 		protected void onPostExecute(Void params) {
 		
 			//TODO: Needed to fetch results?
-			/*try {
-				forExperiments = MsgDeconstructor.searchJSON(results);
-				Log.d("Experiment", "Size received experiments: " + forExperiments.get(0).getCreatedBy());
-				
-				
-				
-			} catch (JSONException e) {
-				
-				e.printStackTrace();
-			}*/
 		}
 	}
 }

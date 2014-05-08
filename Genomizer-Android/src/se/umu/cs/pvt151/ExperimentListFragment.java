@@ -148,7 +148,7 @@ public class ExperimentListFragment extends Fragment {
 		/*+ "Specie: " + forExperiments.get(i).getAnnotations().get(2).getValue().get(0) + "\n"
 		+ "Genome release: " + forExperiments.get(i).getAnnotations().get(3).getValue().get(0));*/
 		}
-		Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
+		//Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
 	}
 	
 	private class ListHandler implements OnItemClickListener {

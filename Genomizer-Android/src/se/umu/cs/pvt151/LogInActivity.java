@@ -1,5 +1,6 @@
 package se.umu.cs.pvt151;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
@@ -12,13 +13,15 @@ import android.widget.Toast;
 
 public class LogInActivity extends SingleFragmentActivity {
 	
+	private static final String CONNECT_MESSAGE = "Connecting to Genomizer server";
+	private static final String CONNECT = "Connect";
 	LogInFragment fragment;
 
 	protected Fragment createFragment() {
 		fragment = new LogInFragment();
 		return fragment;
 	}
-	
+
 	private boolean isOnline() {
 	    ConnectivityManager cm =
 	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -29,7 +32,11 @@ public class LogInActivity extends SingleFragmentActivity {
 	
 	public void login(View v) {
 		if(isOnline()) {
-			fragment.login(v);
+			ProgressDialog progress = new ProgressDialog(this);
+			progress.setTitle(CONNECT);
+			progress.setMessage(CONNECT_MESSAGE);
+			progress.show();
+			fragment.login();
 		} else {
 			fragment.makeToast("Internet access unavailable.", true);
 		}

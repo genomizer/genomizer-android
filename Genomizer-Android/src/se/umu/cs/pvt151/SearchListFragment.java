@@ -128,6 +128,7 @@ public class SearchListFragment extends ListFragment {
 				} else {
 					intent.putExtra(SEARCH_MAP, search);
 					startActivity(intent);
+					getActivity().finish();
 				}
 
 			}

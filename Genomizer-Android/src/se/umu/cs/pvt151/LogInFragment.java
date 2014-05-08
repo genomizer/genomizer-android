@@ -3,8 +3,10 @@ package se.umu.cs.pvt151;
 import java.io.IOException;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -25,6 +27,7 @@ public class LogInFragment extends Fragment {
 	private EditText userPwd;
 
 	private ImageView image;
+	private Button button;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,43 +53,82 @@ public class LogInFragment extends Fragment {
 	 * 
 	 * @param v The current view.
 	 */
-	protected void login(View v) {
+	protected void login() {
 		Log.d("DEBUG", "Login button pressed:");
+		
+		button = (Button) getActivity().findViewById(R.id.logInButton);
+		button.setEnabled(false);
+		new LoginTask().execute();
+		
+		
+		
+		
+//		new Thread(new Runnable() {
+//			@Override
+//
+//			public void run() {
+//				String uname = userName.getText().toString();
+//				String password = userPwd.getText().toString();
+//
+//				if(uname.length() == 0 || password.length() == 0) {
+//					makeToast("Please enter both username and password.", false);
+//					return;
+//				}
+//
+//				try {
+//
+//					boolean loginOk = ComHandler.login(uname, password);
+//					
+//					//A correct login will proceed to the next activity. 
+//					//Going to this view without a correct login results in
+//					//the device not having a token and can as such not 
+//					//communicate with the server.
+//					if(loginOk) {
+//						startSearchActivity();
+//					} else {
+//						makeToast("Wrong username or password.", false);
+//					}
+//
+//				} catch (IOException e) {
+//					makeToast("Error. Could not connect to the server.", false);
+//				}
+//			}
+//		}).start();
 
-		new Thread(new Runnable() {
-			@Override
 
-			public void run() {
-				String uname = userName.getText().toString();
-				String password = userPwd.getText().toString();
 
-				if(uname.length() == 0 || password.length() == 0) {
-					makeToast("Please enter both username and password.", false);
-					return;
-				}
+	}
 
-				try {
 
-					boolean loginOk = ComHandler.login(uname, password);
-					
-					//A correct login will proceed to the next activity. 
-					//Going to this view without a correct login results in
-					//the device not having a token and can as such not 
-					//communicate with the server.
-					if(loginOk) {
-						startSearchActivity();
-					} else {
-						makeToast("Wrong username or password.", false);
-					}
+	/**
+	 * 
+	 */
+	private void sendLoginRequest() {
+		String uname = userName.getText().toString();
+		String password = userPwd.getText().toString();
 
-				} catch (IOException e) {
-					makeToast("Error. Could not connect to the server.", false);
-				}
+		if(uname.length() < 3 || password.length() < 3) {
+			makeToast("Minimum length for username and password is 3 letters.", false);
+			return;
+		}
+
+		try {
+
+			boolean loginOk = ComHandler.login(uname, password);
+			
+			//A correct login will proceed to the next activity. 
+			//Going to this view without a correct login results in
+			//the device not having a token and can as such not 
+			//communicate with the server.
+			if(loginOk) {
+				startSearchActivity();
+			} else {
+				makeToast("Wrong username or password.", false);
 			}
-		}).start();
 
-
-
+		} catch (IOException e) {
+			makeToast("Error. Could not connect to the server.", false);
+		}
 	}
 
 	/**
@@ -110,14 +152,40 @@ public class LogInFragment extends Fragment {
 
 
 	private void startSearchActivity() {
-		getActivity().runOnUiThread(new Thread() {
-			public void run() {
-				makeToast("Welcome!", false);
+		
+		Intent intent = new Intent(getActivity(), SearchActivity.class);
+		startActivity(intent);
+		getActivity().finish();
+		
+//		getActivity().runOnUiThread(new Thread() {
+//			public void run() {
+//				makeToast("Welcome!", false);
+//
+//				Intent intent = new Intent(getActivity(), SearchActivity.class);
+//				startActivity(intent);
+//				getActivity().finish();
+//			}
+//		});
+	}
+	
+	private class LoginTask extends AsyncTask<Void, Void, Void> {
 
-				Intent intent = new Intent(getActivity(), SearchActivity.class);
-				startActivity(intent);
-			}
-		});
+		@Override
+		protected Void doInBackground(Void... params) {
+			
+			sendLoginRequest();
+			
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			button.setEnabled(true);
+		}
+		
+		
+		
 	}
 
 

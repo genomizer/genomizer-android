@@ -100,6 +100,21 @@ public class ComHandlerTest extends TestCase {
 	}
 	
 	
+	public void testAnnotationsPackageFromServer() {
+		try {
+			ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+			
+			ComHandler.login("annotationFromServer", "password");
+			ArrayList<Annotation> experiments = ComHandler.getServerAnnotations();
+			assertEquals("pubmedId", experiments.get(0).getName());
+		} catch (IOException e) {
+			fail("IOException!");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	public void testAnnotationsDeconstruct() {
 		try {
 			ComHandler.login("John", "password");

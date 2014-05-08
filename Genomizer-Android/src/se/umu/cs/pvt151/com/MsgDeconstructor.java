@@ -30,7 +30,7 @@ public class MsgDeconstructor {
 			JSONObject obj = (JSONObject) json.get(i);
 			Annotation annotation = new Annotation();
 			
-			annotation.setId(obj.getInt("id"));
+//			annotation.setId(obj.getInt("id"));
 			annotation.setName(obj.getString("name"));
 			
 			Object valueObject;
@@ -73,11 +73,11 @@ public class MsgDeconstructor {
 			
 			file.setId(obj.getString("id"));
 			file.setType(obj.getString("type"));
-			file.setName(obj.getString("name"));
-			file.setUploadedBy(obj.getString("uploadedBy"));
+//			file.setName(obj.getString("name"));
+//			file.setUploadedBy(obj.getString("uploadedBy"));
 			file.setDate(obj.getString("date"));
-			file.setSize(obj.getString("size"));
-			file.setURL(obj.getString("URL"));
+//			file.setSize(obj.getString("size"));
+//			file.setURL(obj.getString("URL"));
 			
 			files.add(file);
 		}

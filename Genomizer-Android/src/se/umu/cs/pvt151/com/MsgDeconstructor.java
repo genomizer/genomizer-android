@@ -50,7 +50,6 @@ public class MsgDeconstructor {
 			}
 			annotations.add(annotation);
 		}
-		
 		return annotations;
 	}
 	
@@ -82,7 +81,6 @@ public class MsgDeconstructor {
 			
 			files.add(file);
 		}
-		
 		return files;
 	}
 	
@@ -113,7 +111,7 @@ public class MsgDeconstructor {
 			
 			experiments.add(experiment);
 		}
-		Log.d("TestLog", "EXPERIMENT NAMEEE:   " + experiments.get(0).getName());
+		Log.d("TestLog", " returns experiments - EXPERIMENT NAMEEE:   " + experiments.get(0).getName());
 		return experiments;
 	}
 	
@@ -139,8 +137,5 @@ public class MsgDeconstructor {
 				}
 			}
 		}
-		
 	}
-	
-
 }

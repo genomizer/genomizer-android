@@ -47,7 +47,8 @@ public class MsgFactory {
 		
 		obj.put("processtype", processType);
 		obj.put("parameters", parametersToJson(param));
-		obj.put("metadata", file.getMetadata());
+		
+		obj.put("metadata", metadata);
 		obj.put("genomeRelease", genomeRelease);
 		obj.put("author", file.getAuthor());
 		

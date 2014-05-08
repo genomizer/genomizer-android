@@ -8,7 +8,6 @@ package se.umu.cs.pvt151;
  * @author erik c11ean
  *
  */
-import java.util.Map;
 
 public class GeneFile {
 
@@ -18,10 +17,34 @@ public class GeneFile {
 	private String name;
 	private String author;
 	private String uploadedBy;
-	private String metadata;
 	private String isPrivate;
 	private String path;
+	private String url;
+	private String date;
 
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	public String getIsPrivate() {
 		return isPrivate;
@@ -78,13 +101,4 @@ public class GeneFile {
 	public void setUploadedBy(String uploadedBy) {
 		this.uploadedBy = uploadedBy;
 	}
-
-	public String getMetadata() {
-		return metadata;
-	}
-
-	public void setMetadata(String metadata) {
-		this.metadata = metadata;
-	}
-
 }

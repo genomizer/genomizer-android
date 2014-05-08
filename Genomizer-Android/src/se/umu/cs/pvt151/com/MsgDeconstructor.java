@@ -29,7 +29,7 @@ public class MsgDeconstructor {
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			Annotation annotation = new Annotation();
-			
+			Log.d("LOGIN", obj.toString());
 			annotation.setName(obj.getString("name"));
 			
 			Object valueObject;
@@ -76,8 +76,10 @@ public class MsgDeconstructor {
 			file.setName(obj.getString("filename"));
 			file.setAuthor(obj.getString("author"));
 			file.setUploadedBy(obj.getString("uploader"));
-//			file.setMetadata(obj.getString("metadata"));
 			file.setIsPrivate("isprivate");
+			file.setDate(obj.getString("date"));
+			file.setUrl(obj.getString("url"));
+			file.setPath(obj.getString("path"));
 			
 			files.add(file);
 		}

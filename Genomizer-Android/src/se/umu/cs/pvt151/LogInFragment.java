@@ -5,100 +5,55 @@ import java.io.IOException;
 import se.umu.cs.pvt151.com.ComHandler;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.webkit.WebView.FindListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 public class LogInFragment extends Fragment {
 
+	private static final String CONNECTION_ERROR = "Error. Could not connect to the server.";
+	private static final String INPUT_WRONG = "Wrong username or password.";
+	private static final String INPUT_MALFORMED = "Minimum length for username and password is 3 letters.";
 	private EditText userName;
 	private EditText userPwd;
-
-	private ImageView image;
 	private Button button;
+	private ProgressDialog progress;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
-
-	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);
-		userName =  (EditText) v.findViewById(R.id.editTextUser);
-		userPwd =  (EditText) v.findViewById(R.id.editTextPwd);
-
-		image = (ImageView) v.findViewById(R.id.imageView1);
-//		setLayoutChangedListener();
+		userName = (EditText) v.findViewById(R.id.editTextUser);
+		userPwd = (EditText) v.findViewById(R.id.editTextPwd);
 		return v;
 	}
 
 	/**
-	 * Attempts a login with the credentials in the EditTextFields that the private attributes userName and userPwd are bound to.
+	 * Attempts a login with the credentials in the EditTextFields that the
+	 * private attributes userName and userPwd are bound to.
 	 * 
 	 * Only called from the android layout files.
+	 * @param progress 
 	 * 
-	 * @param v The current view.
+	 * @param v
+	 *            The current view.
 	 */
-	protected void login() {
-		Log.d("DEBUG", "Login button pressed:");
-		
+	protected void login(ProgressDialog progress) {
+		this.progress = progress;
 		button = (Button) getActivity().findViewById(R.id.logInButton);
 		button.setEnabled(false);
 		new LoginTask().execute();
-		
-		
-		
-		
-//		new Thread(new Runnable() {
-//			@Override
-//
-//			public void run() {
-//				String uname = userName.getText().toString();
-//				String password = userPwd.getText().toString();
-//
-//				if(uname.length() == 0 || password.length() == 0) {
-//					makeToast("Please enter both username and password.", false);
-//					return;
-//				}
-//
-//				try {
-//
-//					boolean loginOk = ComHandler.login(uname, password);
-//					
-//					//A correct login will proceed to the next activity. 
-//					//Going to this view without a correct login results in
-//					//the device not having a token and can as such not 
-//					//communicate with the server.
-//					if(loginOk) {
-//						startSearchActivity();
-//					} else {
-//						makeToast("Wrong username or password.", false);
-//					}
-//
-//				} catch (IOException e) {
-//					makeToast("Error. Could not connect to the server.", false);
-//				}
-//			}
-//		}).start();
-
-
-
 	}
-
 
 	/**
 	 * 
@@ -107,100 +62,77 @@ public class LogInFragment extends Fragment {
 		String uname = userName.getText().toString();
 		String password = userPwd.getText().toString();
 
-		if(uname.length() < 3 || password.length() < 3) {
-			makeToast("Minimum length for username and password is 3 letters.", false);
+		if (uname.length() < 3 || password.length() < 3) {
+			makeToast(INPUT_MALFORMED, false);
 			return;
 		}
 
 		try {
 
 			boolean loginOk = ComHandler.login(uname, password);
-			
-			//A correct login will proceed to the next activity. 
-			//Going to this view without a correct login results in
-			//the device not having a token and can as such not 
-			//communicate with the server.
-			if(loginOk) {
+
+			// A correct login will proceed to the next activity.
+			// Going to this view without a correct login results in
+			// the device not having a token and can as such not
+			// communicate with the server.
+			if (loginOk) {
 				startSearchActivity();
 			} else {
-				makeToast("Wrong username or password.", false);
+				makeToast(INPUT_WRONG, false);
 			}
 
 		} catch (IOException e) {
-			makeToast("Error. Could not connect to the server.", false);
+			makeToast(CONNECTION_ERROR, false);
 		}
 	}
 
 	/**
 	 * Creates an android toast (small unintrusive text popup).
 	 * 
-	 * @param msg The message that should be displayed.
-	 * @param longToast True if the toast should be displayed for a long time (3.5 seconds) otherwise it is displayed for 2 seconds.
+	 * @param msg
+	 *            The message that should be displayed.
+	 * @param longToast
+	 *            True if the toast should be displayed for a long time (3.5
+	 *            seconds) otherwise it is displayed for 2 seconds.
 	 */
 	protected void makeToast(final String msg, final boolean longToast) {
 		getActivity().runOnUiThread(new Thread() {
 			public void run() {
-				if(longToast) {
-					Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+				if (longToast) {
+					Toast.makeText(getActivity().getApplicationContext(), msg,
+							Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity().getApplicationContext(), msg,
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 
 	}
 
-
 	private void startSearchActivity() {
-		
+
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 		getActivity().finish();
-		
-//		getActivity().runOnUiThread(new Thread() {
-//			public void run() {
-//				makeToast("Welcome!", false);
-//
-//				Intent intent = new Intent(getActivity(), SearchActivity.class);
-//				startActivity(intent);
-//				getActivity().finish();
-//			}
-//		});
+
 	}
-	
+
 	private class LoginTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			
+
 			sendLoginRequest();
-			
+
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			button.setEnabled(true);
+			progress.dismiss();
 		}
-		
-		
-		
 	}
-
-
-//	public void setLayoutChangedListener() {
-//		final View activityRootView = getActivity().findViewById(R.id.fragmentContainer);
-//		activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-//			@Override
-//			public void onGlobalLayout() {
-//				int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
-//				if (heightDiff > 100) {
-//					image.setVisibility(ImageView.GONE);
-//				} else {
-//					image.setVisibility(ImageView.VISIBLE);
-//				}
-//			}
-//		});
-//	}
 }

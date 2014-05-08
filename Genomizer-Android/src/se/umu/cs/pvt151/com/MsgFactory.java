@@ -1,5 +1,6 @@
 package se.umu.cs.pvt151.com;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,19 +36,28 @@ public class MsgFactory {
 	}
 	
 	
-	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, 
-			String metadata, String author, String processType) throws JSONException {
+	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, String expId, 
+			String metadata, String author, String processType, String genomeRelease) throws JSONException {
 		
 		JSONObject obj = new JSONObject();
 		
 		obj.put("filename", file.getName());
-		obj.put("filepath", file.getURL());
+		obj.put("fileid", file.getId());
+		obj.put("expid", expId);
 		
 		obj.put("processtype", processType);
-		
-		//TODO: FIX this method when we know how to create process packages
-		obj.put("expid", file.getURL());
+		obj.put("parameters", parametersToJson(param));
+		obj.put("metadata", metadata);
+		obj.put("genomeRelease", genomeRelease);
+		obj.put("author", author);
 		
 		return obj;
+	}
+	
+	
+	private static JSONArray parametersToJson(ProcessingParameters param) {
+		JSONArray json = new JSONArray();
+		
+		return json;
 	}
 }

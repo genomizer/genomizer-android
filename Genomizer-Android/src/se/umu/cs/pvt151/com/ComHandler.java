@@ -17,6 +17,7 @@ import android.util.Log;
 public class ComHandler {
 
 	private static String serverURL = "http://genomizer.apiary-mock.com/";
+//	private static String serverURL = "http://scratchy.cs.umu.se:7000/";
 
 	/**
 	 * Used to change the targeted server URL.
@@ -113,7 +114,11 @@ public class ComHandler {
 			if (annotationResponse.getCode() == 200) {
 				String jsonString = annotationResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
-
+				ArrayList<Annotation> annotations = MsgDeconstructor.annotationJSON(jsonPackage);
+				
+				for (int i = 0; i < annotations.size(); i++) {
+					Log.d("TestLog", "annotation : " + annotations.get(i).getName());
+				}
 				return MsgDeconstructor.annotationJSON(jsonPackage);
 			} else {
 				return null;
@@ -132,7 +137,7 @@ public class ComHandler {
 	 * @throws UnsupportedEncodingException If the device cannot encode the query.
 	 */
 	public static String generatePubmedQuery(HashMap<String, String> annotations) throws UnsupportedEncodingException {
-		String pubmedQuery = "<";
+		String pubmedQuery = "";
 
 		Set<String> ann = annotations.keySet();
 		int i = 0;
@@ -144,27 +149,26 @@ public class ComHandler {
 				pubmedQuery+=" AND ";
 			}			
 		}
-		pubmedQuery += ">";
 		return URLEncoder.encode(pubmedQuery, "UTF-8");
 
 	}
 
 
-	//	public static String rawToProfile(String fileID) throws IOException {
-	//
-	//		try {
-	//			Communicator communicator = new Communicator(serverURL + "process/");
-	//			communicator.setupConnection("PUT");
-	//			JSONObject msg = MsgFactory.createConversionRequest(param, file, metadata, author, "rawtoprofile");
-	//
-	//			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
-	//			
-	//			String jsonString = annotationResponse.getBody();
-	//
-	//			return jsonString;
-	//
-	//		} catch (JSONException e) {
-	//			return null;
-	//		}
-	//	}
+//	public static String rawToProfile(String fileID) throws IOException {
+//
+//		try {
+//			Communicator communicator = new Communicator(serverURL + "process/");
+//			communicator.setupConnection("PUT");
+//			JSONObject msg = MsgFactory.createConversionRequest(param, file, "expid1", "metadata", "yuri", "rawtoprofile", "genomeRelease5");
+//
+//			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
+//
+//			String jsonString = annotationResponse.getBody();
+//
+//			return jsonString;
+//
+//		} catch (JSONException e) {
+//			return null;
+//		}
+//	}
 }

@@ -60,19 +60,26 @@ public class Communicator {
 		}	
 		int responseCode = connection.getResponseCode();
 		Log.d("DEBUG", "Response: " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(connection.getInputStream()));
-
-		StringBuffer response = new StringBuffer();
-		String inputLine;
 		
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
+		GenomizerHttpPackage httpResponse;
+
+		if (responseCode != 400) {
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(connection.getInputStream()));
+
+			StringBuffer response = new StringBuffer();
+			String inputLine;
+			
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			
+			httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
+		} else {
+			httpResponse = new GenomizerHttpPackage(responseCode, "");
 		}
-		in.close();
 		
-		GenomizerHttpPackage httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
 
 		return httpResponse;
 	}

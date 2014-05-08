@@ -124,7 +124,7 @@ public class ExperimentListFragment extends Fragment {
 	 */
 	//TODO: get right information from annotations to display
 	private void infoAnnotations() {
-		Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
+		//Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
 		for(int i=0; i<forExperiments.size(); i++) {
 			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" 
 		+ "Created by: " + forExperiments.get(i).getCreatedBy() + "\n" 

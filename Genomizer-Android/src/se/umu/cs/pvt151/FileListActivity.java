@@ -14,6 +14,7 @@ import android.os.Build;
 public class FileListActivity extends SingleFragmentActivity {
 
 	FileListFragment fragment;
+	
 	@Override
 	protected Fragment createFragment() {
 		fragment = new FileListFragment();

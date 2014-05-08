@@ -69,8 +69,8 @@ public class ComHandlerTest extends TestCase {
 		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
 		
 		HashMap<String, String> searchValues = new HashMap<String, String>();
-		searchValues.put("Species", "Human");
-		searchValues.put("Sex", "Male");
+		searchValues.put("specie", "human");
+		searchValues.put("sex", "male");
 		try {
 			ComHandler.login("liveSearchTest", "password");
 			JSONArray experiments = ComHandler.search(searchValues);

@@ -182,7 +182,7 @@ public class ExperimentListFragment extends Fragment {
 			//Sending hashmap with annotation, value for search to comhandler
 			results = ComHandler.search(searchInfo);
 			forExperiments = MsgDeconstructor.searchJSON(results);
-			Log.d("Experiment", "Size received experiments: " + forExperiments.get(0).getName());
+			Log.d("Experiment", "Size received experiments: " + forExperiments.size());
 				//Getting JSONarray with search results
 			} catch (IOException e) {
 				// TODO Write better error handling

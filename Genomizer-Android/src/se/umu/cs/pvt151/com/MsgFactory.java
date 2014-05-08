@@ -55,8 +55,19 @@ public class MsgFactory {
 	}
 	
 	
-	private static JSONArray parametersToJson(ProcessingParameters param) {
-		JSONArray json = new JSONArray();
+	private static JSONArray parametersToJson(ProcessingParameters param) throws JSONException {
+		String parameterString = "[";
+		
+		for (int i = 0; i < param.size(); i++) {
+			if (i != 0) {
+				parameterString += ",";
+			}
+			parameterString += param.getParameter(i);
+		}
+		
+		JSONArray json = new JSONArray(parameterString);
+		
+		
 		
 		return json;
 	}

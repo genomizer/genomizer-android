@@ -43,6 +43,8 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> profileDataFiles = new ArrayList<String>();
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
 	
+	private ArrayAdapter<String> adapter;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,21 @@ public class ExperimentListFragment extends Fragment {
 		Log.d("Experiment", "ExpList annotations: " + searchInfo.toString());
 		
 		//Try to run the Asynctask when all code for handling search info is done.
+		/*try {
+			forExperiments = startSearch.execute((Void) null).get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
 		try {
 			forExperiments = startSearch.execute((Void) null).get();
 		} catch (InterruptedException e) {
@@ -61,6 +78,7 @@ public class ExperimentListFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
@@ -71,19 +89,18 @@ public class ExperimentListFragment extends Fragment {
 		/*Temporary method to test show placeholder search results
 		 * until real ones are available, then replace this method with
 		 * the ones working as intended*/
-		//tempPopulateArray();
-		infoAnnotations();
+	
+		//infoAnnotations();
 		
 		//Creating listview from xml view
 		list = (ListView) v.findViewById(R.id.listView1);
 		/*Creating adapter used to set values to listview, this one
 		 * is using temp information, when real search info is available replace
 		 * experiments with displaySearchResults*/
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
-		//Toast.makeText(getActivity().getApplicationContext(), forExperiments.get(0).getName(), Toast.LENGTH_SHORT).show();
+		
 		/*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, experiments);*/
+				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);*/
+		
 				
 		//Setting adapter to view
 		list.setAdapter(adapter);
@@ -124,7 +141,7 @@ public class ExperimentListFragment extends Fragment {
 	 */
 	//TODO: get right information from annotations to display
 	private void infoAnnotations() {
-		Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
+		//Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
 		for(int i=0; i<forExperiments.size(); i++) {
 			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" 
 		+ "Created by: " + forExperiments.get(i).getCreatedBy() + "\n" 
@@ -165,7 +182,7 @@ public class ExperimentListFragment extends Fragment {
 			//Sending hashmap with annotation, value for search to comhandler
 			results = ComHandler.search(searchInfo);
 			forExperiments = MsgDeconstructor.searchJSON(results);
-			Log.d("Experiment", "Size received experiments: " + forExperiments.get(0).getCreatedBy());
+			Log.d("Experiment", "Size received experiments: " + forExperiments.size());
 				//Getting JSONarray with search results
 			} catch (IOException e) {
 				// TODO Write better error handling
@@ -181,7 +198,9 @@ public class ExperimentListFragment extends Fragment {
 
 		protected void onPostExecute(Void params) {
 		
-			//TODO: Needed to fetch results?
+			infoAnnotations();
+			adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
+					R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
 		}
 	}
 }

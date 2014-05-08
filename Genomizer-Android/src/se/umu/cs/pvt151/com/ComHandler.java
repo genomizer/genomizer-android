@@ -149,8 +149,7 @@ public class ComHandler {
 				pubmedQuery+=" AND ";
 			}			
 		}
-//		return URLEncoder.encode(pubmedQuery, "UTF-8");
-		return pubmedQuery;
+		return URLEncoder.encode(pubmedQuery, "UTF-8");
 	}
 
 

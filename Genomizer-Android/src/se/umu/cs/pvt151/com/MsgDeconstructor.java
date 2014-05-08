@@ -50,7 +50,6 @@ public class MsgDeconstructor {
 			}
 			annotations.add(annotation);
 		}
-		
 		return annotations;
 	}
 	
@@ -82,7 +81,6 @@ public class MsgDeconstructor {
 			
 			files.add(file);
 		}
-		
 		return files;
 	}
 	
@@ -96,7 +94,7 @@ public class MsgDeconstructor {
 	 */
 	public static ArrayList<Experiment> searchJSON(JSONArray json) throws JSONException {
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
-		
+		Log.d("TestLog", "nr of experiments:: " + json.length());
 		for (int i = 0; i < json.length(); i++) {
 			Experiment experiment = new Experiment();
 			
@@ -107,13 +105,13 @@ public class MsgDeconstructor {
 			
 			JSONArray files = jsonExperiment.getJSONArray("files");
 			JSONArray annotations = jsonExperiment.getJSONArray("annotations");
-			
+			Log.d("TestLog", "exp name: " + experiment.getName());
 			experiment.setFiles(filesJSON(files));
 			experiment.setAnnotations(annotationJSON(annotations));
 			
 			experiments.add(experiment);
 		}
-		
+		Log.d("TestLog", " returns experiments - EXPERIMENT NAMEEE:   " + experiments.get(0).getName());
 		return experiments;
 	}
 	
@@ -139,8 +137,5 @@ public class MsgDeconstructor {
 				}
 			}
 		}
-		
 	}
-	
-
 }

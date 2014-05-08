@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -33,6 +35,7 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> profileData = new ArrayList<String>();
 	private ArrayList<String> regionData = new ArrayList<String>();
 	private ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
+	private Button sendButton;
 	
 	//testarrays to see if transfer works
 	private ArrayList<String> raw = new ArrayList<String>();
@@ -53,6 +56,17 @@ public class FileListFragment extends Fragment {
 		listRaw = (ListView) v.findViewById(R.id.listView1);
 		listProfile = (ListView) v.findViewById(R.id.listView2);
 		listRegion = (ListView) v.findViewById(R.id.listView3);
+		sendButton = (Button) v.findViewById(R.id.sendBtn);
+		
+		sendButton.setOnClickListener(new OnClickListener () {
+
+			@Override
+			public void onClick(View arg0) {
+				Toast.makeText(getActivity().getApplicationContext(), "Send to conversion", Toast.LENGTH_SHORT).show();;
+			}
+			
+		});
+		
 		
 		//Filling of temp arraylists to display data
 		for(int i=0; i<5; i++) {
@@ -162,6 +176,7 @@ public class FileListFragment extends Fragment {
 						} 
 					}
 				});
+				
 				convertView.setTag(viewHolder);
 				convertView.setTag(R.id.textView1, viewHolder.fileInfo);
 				convertView.setTag(R.id.textForBox, viewHolder.fileCheckBox);

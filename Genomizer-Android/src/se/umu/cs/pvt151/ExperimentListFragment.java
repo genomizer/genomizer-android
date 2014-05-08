@@ -98,8 +98,8 @@ public class ExperimentListFragment extends Fragment {
 		 * is using temp information, when real search info is available replace
 		 * experiments with displaySearchResults*/
 		
-		/*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);*/
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
+				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
 		
 				
 		//Setting adapter to view
@@ -143,12 +143,12 @@ public class ExperimentListFragment extends Fragment {
 	private void infoAnnotations() {
 		//Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
 		for(int i=0; i<forExperiments.size(); i++) {
-			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" 
-		+ "Created by: " + forExperiments.get(i).getCreatedBy() + "\n" 
-		+ "Specie: " + forExperiments.get(i).getAnnotations().get(2).getValue().get(0) + "\n"
-		+ "Genome release: " + forExperiments.get(i).getAnnotations().get(3).getValue().get(0));
+			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" );
+		//+ "Created by: " + forExperiments.get(i).getCreatedBy() + "\n" );
+		/*+ "Specie: " + forExperiments.get(i).getAnnotations().get(2).getValue().get(0) + "\n"
+		+ "Genome release: " + forExperiments.get(i).getAnnotations().get(3).getValue().get(0));*/
 		}
-		//Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
+		Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
 	}
 	
 	private class ListHandler implements OnItemClickListener {
@@ -196,11 +196,11 @@ public class ExperimentListFragment extends Fragment {
 			return forExperiments;
 		}
 
-		protected void onPostExecute(Void params) {
+		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
 		
 			infoAnnotations();
-			adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-					R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
+			/*adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
+					R.layout.list_view_textbox, R.id.listText11, displaySearchResults);*/
 		}
 	}
 }

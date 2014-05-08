@@ -3,6 +3,7 @@ package se.umu.cs.pvt151;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Intent;
@@ -133,19 +134,22 @@ public class SearchListFragment extends ListFragment {
 						}
 						
 					} else if (vh.isChecked) {
-						if (vh.freetext.length() > 0) {
+						if (vh.freetext != null && vh.freetext.length() > 0) {
 							key = vh.textView.getText().toString();
 							value = vh.freetext;
+							
 						}
 					}
+					if(key != null & value != null) {
+						search.put(key, value);
+					}
 					
-					search.put(key, value);
 				}
-				Log.d("smurf", "Search: " + search.toString());
+				
+				Log.d("SEARCH", "Search: " + search.toString());
 				
 				intent.putExtra(SEARCH_MAP, search);			
-				startActivity(intent);
-				
+				startActivity(intent);				
 
 			}
 		});
@@ -218,7 +222,8 @@ public class SearchListFragment extends ListFragment {
 					convertView = getActivity().getLayoutInflater().inflate(
 							R.layout.searchlist_dropdown_field, null);
 					
-					spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_dropdown_item, mSpinnerList);
+					spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_item, mSpinnerList);
+					spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 					spinner = (Spinner) convertView.findViewById(R.id.spinner_search);
 					
 					spinner.setAdapter(spinAdapter);
@@ -361,34 +366,5 @@ public class SearchListFragment extends ListFragment {
 		}
 		
 	}
-	
-	/**
-	 * Add the selected search to searchList, with both annotation and the
-	 * string input by user.
-	 * 
-	 * @param pos , position of the marked annotationField
-	 */
-	private void addToSearchList(int pos) {
-//		String text = mTextFields.get(pos).getText().toString();
-//		String[] search = null;
-//		if (text.length() > 0) {
-//			search = new String[2];
-//			search[0] = mAnnotationList.get(pos);
-//			search[1] = text;
-//			mSearchList.add(search);
-//		}
-	}
-	
-	/**
-	 * Removes the selected search from the searchList.
-	 * 
-	 * @param pos , position of the unchecked annotationField
-	 */
-	private void removeFromSearchList(int pos) {
-//		for (String[] s : mSearchList) {
-//			if (s[0].equals(mAnnotationList.get(pos))) {
-//				mSearchList.remove(s);
-//			}
-//		}
-	}
+
 }

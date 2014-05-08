@@ -16,8 +16,8 @@ import android.util.Log;
 
 public class ComHandler {
 
-	private static String serverURL = "http://genomizer.apiary-mock.com/";
-//	private static String serverURL = "http://scratchy.cs.umu.se:7000/";
+//	private static String serverURL = "http://genomizer.apiary-mock.com/";
+	private static String serverURL = "http://scratchy.cs.umu.se:7000/";
 
 	/**
 	 * Used to change the targeted server URL.
@@ -75,7 +75,7 @@ public class ComHandler {
 		try {
 			Communicator communicator = new Communicator(serverURL + "search/?annotations="+generatePubmedQuery(annotations));
 			communicator.setupConnection("GET");
-
+			Log.d("TestLog", serverURL + "search/?annotations="+generatePubmedQuery(annotations));
 			JSONObject msg = MsgFactory.createRegularPackage();
 
 			GenomizerHttpPackage searchResponse = communicator.sendRequest(msg);
@@ -149,8 +149,8 @@ public class ComHandler {
 				pubmedQuery+=" AND ";
 			}			
 		}
-		return URLEncoder.encode(pubmedQuery, "UTF-8");
-
+//		return URLEncoder.encode(pubmedQuery, "UTF-8");
+		return pubmedQuery;
 	}
 
 

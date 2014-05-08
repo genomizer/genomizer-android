@@ -37,14 +37,13 @@ public class MsgDeconstructorTest extends TestCase {
 	public void testCanDeconstructSearchResults() {
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Species", "Human");
-		searchValues.put("Sex", "Male");
 		try {
 			ComHandler.login("John", "password");
 			JSONArray experiments = ComHandler.search(searchValues);
 			
-			ArrayList<Experiment> experimentsArray = MsgDeconstructor.searchJSON(experiments);
+			ArrayList<Experiment> experimentArray = MsgDeconstructor.searchJSON(experiments);
 			
-			assertEquals("experimentName", experimentsArray.get(0).getName());
+			assertNotNull(experimentArray);
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail("IOException!");

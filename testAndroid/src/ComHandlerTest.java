@@ -38,6 +38,7 @@ public class ComHandlerTest extends TestCase {
 	
 	public void testLogInToServer() {
 		try {
+			Log.d("LOGIN", "http://scratchy.cs.usdfzdf.rfv/");
 			ComHandler.setServerURL("http://scratchy.cs.usdfzdf.rfv/");
 			boolean test = ComHandler.login("yo", "Hemligt");
 			

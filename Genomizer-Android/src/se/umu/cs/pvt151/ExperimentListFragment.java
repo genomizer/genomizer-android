@@ -54,6 +54,21 @@ public class ExperimentListFragment extends Fragment {
 		Log.d("Experiment", "ExpList annotations: " + searchInfo.toString());
 		
 		//Try to run the Asynctask when all code for handling search info is done.
+		/*try {
+			forExperiments = startSearch.execute((Void) null).get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
 		try {
 			forExperiments = startSearch.execute((Void) null).get();
 		} catch (InterruptedException e) {
@@ -63,6 +78,7 @@ public class ExperimentListFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	
@@ -166,7 +182,7 @@ public class ExperimentListFragment extends Fragment {
 			//Sending hashmap with annotation, value for search to comhandler
 			results = ComHandler.search(searchInfo);
 			forExperiments = MsgDeconstructor.searchJSON(results);
-			//Log.d("Experiment", "Size received experiments: " + forExperiments.get(0).getCreatedBy());
+			Log.d("Experiment", "Size received experiments: " + forExperiments.get(0).getName());
 				//Getting JSONarray with search results
 			} catch (IOException e) {
 				// TODO Write better error handling

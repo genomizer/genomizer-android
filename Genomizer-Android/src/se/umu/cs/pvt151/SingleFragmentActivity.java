@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public abstract class SingleFragmentActivity extends FragmentActivity{
+
+	private boolean inflateMenu = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,16 +25,28 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 			fragment = createFragment();
 			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
 		}
-
+		
+		if (!fragment.getClass().getSimpleName().equals("LogInFragment")) {
+			inflateMenu = true;
+		} else {
+			inflateMenu  = false;
+		}
+		Log.d("smurf", fragment.getClass().getSimpleName());
 	}
 
 	protected abstract Fragment createFragment();
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
 		
+		
+		if (inflateMenu) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.main_menu, menu);
+		} else {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.main, menu);
+		}
 		return true;
 	}
 	

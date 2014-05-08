@@ -36,20 +36,20 @@ public class MsgFactory {
 	}
 	
 	
-	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, String expId, 
-			String metadata, String author, String processType, String genomeRelease) throws JSONException {
+	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, 
+			String metadata, String processType, String genomeRelease) throws JSONException {
 		
 		JSONObject obj = new JSONObject();
 		
-//		obj.put("filename", file.getName());
-//		obj.put("fileid", file.getId());
-//		obj.put("expid", expId);
-//		
-//		obj.put("processtype", processType);
-//		obj.put("parameters", parametersToJson(param));
-//		obj.put("metadata", metadata);
-//		obj.put("genomeRelease", genomeRelease);
-//		obj.put("author", author);
+		obj.put("filename", file.getName());
+		obj.put("fileid", file.getFileId());
+		obj.put("expid", file.getExpId());
+		
+		obj.put("processtype", processType);
+		obj.put("parameters", parametersToJson(param));
+		obj.put("metadata", file.getMetadata());
+		obj.put("genomeRelease", genomeRelease);
+		obj.put("author", file.getAuthor());
 		
 		return obj;
 	}

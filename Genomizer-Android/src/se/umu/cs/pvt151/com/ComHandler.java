@@ -16,7 +16,6 @@ import android.util.Log;
 
 public class ComHandler {
 
-//	private static String serverURL = "http://genomizer.apiary-mock.com/";
 	private static String serverURL = "http://scratchy.cs.umu.se:7000/";
 
 	/**
@@ -39,6 +38,7 @@ public class ComHandler {
 	 * @throws ConnectionException 
 	 */
 	public static boolean login(String username, String password) throws IOException {
+		
 		try {
 			Communicator communicator = new Communicator(serverURL + "login");
 			
@@ -52,13 +52,12 @@ public class ComHandler {
 				JSONObject jsonPackage = new JSONObject(jsonString);
 				communicator.setToken(jsonPackage.get("token").toString());
 				return true;
+				
 			} else {
 				return false;
 			}
 		} catch (JSONException e) {
 			//This is only an issue if the server is changed.
-			Log.d("DEBUG", e.getMessage());
-			e.printStackTrace();
 			throw new IOException("JSONException. Has the server changed?");
 		}
 	}
@@ -72,10 +71,11 @@ public class ComHandler {
 	 * @throws IOException
 	 */
 	public static JSONArray search(HashMap<String, String> annotations) throws IOException {
+		
 		try {
 			Communicator communicator = new Communicator(serverURL + "search/?annotations="+generatePubmedQuery(annotations));
 			communicator.setupConnection("GET");
-			Log.d("TestLog", serverURL + "search/?annotations="+generatePubmedQuery(annotations));
+			
 			JSONObject msg = MsgFactory.createRegularPackage();
 
 			GenomizerHttpPackage searchResponse = communicator.sendRequest(msg);
@@ -84,6 +84,7 @@ public class ComHandler {
 				String jsonString = searchResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
 				return jsonPackage;
+				
 			} else if (searchResponse.getCode() == 204) { 
 				//If the search yields no result.
 				JSONArray jsonPackage = new JSONArray();
@@ -103,6 +104,7 @@ public class ComHandler {
 	 * @throws IOException If communication with the server fails.
 	 */
 	public static ArrayList<Annotation> getServerAnnotations() throws IOException {
+		
 		try {
 
 			Communicator communicator = new Communicator(serverURL + "annotation");
@@ -114,11 +116,7 @@ public class ComHandler {
 			if (annotationResponse.getCode() == 200) {
 				String jsonString = annotationResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
-				ArrayList<Annotation> annotations = MsgDeconstructor.annotationJSON(jsonPackage);
 				
-				for (int i = 0; i < annotations.size(); i++) {
-					Log.d("TestLog", "annotation : " + annotations.get(i).getName());
-				}
 				return MsgDeconstructor.annotationJSON(jsonPackage);
 			} else {
 				return null;

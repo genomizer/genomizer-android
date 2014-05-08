@@ -2,12 +2,9 @@ package se.umu.cs.pvt151.com;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -43,10 +40,12 @@ public class ComHandler {
 	public static boolean login(String username, String password) throws IOException {
 		try {
 			Communicator communicator = new Communicator(serverURL + "login");
-
+			
 			JSONObject msg = MsgFactory.createLogin(username, password);
 			communicator.setupConnection("POST");
+			
 			GenomizerHttpPackage loginResponse = communicator.sendRequest(msg);
+
 			if (loginResponse.getCode() == 200) {
 				String jsonString = loginResponse.getBody();
 				JSONObject jsonPackage = new JSONObject(jsonString);
@@ -59,7 +58,7 @@ public class ComHandler {
 			//This is only an issue if the server is changed.
 			Log.d("DEBUG", e.getMessage());
 			e.printStackTrace();
-			throw new IOException();
+			throw new IOException("JSONException. Has the server changed?");
 		}
 	}
 
@@ -87,7 +86,6 @@ public class ComHandler {
 			} else if (searchResponse.getCode() == 204) { 
 				//If the search yields no result.
 				JSONArray jsonPackage = new JSONArray();
-				Log.d("TestLog", "size: " + jsonPackage.length());
 				return jsonPackage;
 			} else {
 				return null;
@@ -116,15 +114,12 @@ public class ComHandler {
 				String jsonString = annotationResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
 
-				Log.d("DEBUG", jsonPackage.toString());
 				return MsgDeconstructor.annotationJSON(jsonPackage);
 			} else {
-				Log.d("DEBUG", "ComHandler - NULL json paket response");
 				return null;
 			}
 
 		} catch (JSONException e) {
-			Log.d("DEBUG", "ComHandler(annotations) JSONException: " + e.getMessage());
 			return null;
 		}
 	}
@@ -155,21 +150,21 @@ public class ComHandler {
 	}
 
 
-//	public static String rawToProfile(String fileID) throws IOException {
-//
-//		try {
-//			Communicator communicator = new Communicator(serverURL + "process/");
-//			communicator.setupConnection("PUT");
-//			JSONObject msg = MsgFactory.createConversionRequest(param, file, metadata, author, "rawtoprofile");
-//
-//			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
-//			
-//			String jsonString = annotationResponse.getBody();
-//
-//			return jsonString;
-//
-//		} catch (JSONException e) {
-//			return null;
-//		}
-//	}
+	//	public static String rawToProfile(String fileID) throws IOException {
+	//
+	//		try {
+	//			Communicator communicator = new Communicator(serverURL + "process/");
+	//			communicator.setupConnection("PUT");
+	//			JSONObject msg = MsgFactory.createConversionRequest(param, file, metadata, author, "rawtoprofile");
+	//
+	//			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
+	//			
+	//			String jsonString = annotationResponse.getBody();
+	//
+	//			return jsonString;
+	//
+	//		} catch (JSONException e) {
+	//			return null;
+	//		}
+	//	}
 }

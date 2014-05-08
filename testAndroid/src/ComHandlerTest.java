@@ -65,6 +65,25 @@ public class ComHandlerTest extends TestCase {
 	}
 	
 	
+	public void testSearchOnServer() {
+		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+		
+		HashMap<String, String> searchValues = new HashMap<String, String>();
+		searchValues.put("Species", "Human");
+		searchValues.put("Sex", "Male");
+		try {
+			ComHandler.login("liveSearchTest", "password");
+			JSONArray experiments = ComHandler.search(searchValues);
+			assertEquals("experimentName", ((JSONObject) experiments.get(0)).get("name"));
+		} catch (IOException e) {
+			fail("IOException!");
+			e.printStackTrace();
+		} catch (JSONException e) {
+			fail("JSONException thrown!");
+		}
+	}
+	
+	
 	public void testAnnotationsPackage() {
 		try {
 			ComHandler.login("John", "password");

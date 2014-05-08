@@ -41,15 +41,15 @@ public class MsgFactory {
 		
 		JSONObject obj = new JSONObject();
 		
-		obj.put("filename", file.getName());
-		obj.put("fileid", file.getId());
-		obj.put("expid", expId);
-		
-		obj.put("processtype", processType);
-		obj.put("parameters", parametersToJson(param));
-		obj.put("metadata", metadata);
-		obj.put("genomeRelease", genomeRelease);
-		obj.put("author", author);
+//		obj.put("filename", file.getName());
+//		obj.put("fileid", file.getId());
+//		obj.put("expid", expId);
+//		
+//		obj.put("processtype", processType);
+//		obj.put("parameters", parametersToJson(param));
+//		obj.put("metadata", metadata);
+//		obj.put("genomeRelease", genomeRelease);
+//		obj.put("author", author);
 		
 		return obj;
 	}

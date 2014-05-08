@@ -120,18 +120,18 @@ public class ExperimentListFragment extends Fragment {
 	private void getExperimentFiles(int selectedExperiment) {
 		List<GeneFile> files = forExperiments.get(selectedExperiment).getFiles();
 		Log.d("Experiment", "File names: " + forExperiments.get(0).getFiles().get(0).getType());
-		for(int i=0; i<files.size(); i++) {
-			if(files.get(i).getType().equals("raw")) {
-				rawDataFiles.add(files.get(i).getName() + " "
-						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
-			} else if(files.get(i).getType().equals("profile")) {
-				profileDataFiles.add(files.get(i).getName() + " "
-						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
-			} else if(files.get(i).getType().equals("region")) {
-				regionDataFiles.add(files.get(i).getName() + " "
-						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
-			}
-		}
+//		for(int i=0; i<files.size(); i++) {
+//			if(files.get(i).getType().equals("raw")) {
+//				rawDataFiles.add(files.get(i).getName() + " "
+//						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
+//			} else if(files.get(i).getType().equals("profile")) {
+//				profileDataFiles.add(files.get(i).getName() + " "
+//						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
+//			} else if(files.get(i).getType().equals("region")) {
+//				regionDataFiles.add(files.get(i).getName() + " "
+//						+ files.get(i).getDate() + " " + files.get(i).getUploadedBy());
+//			}
+//		}
 	}
 	
 	/**

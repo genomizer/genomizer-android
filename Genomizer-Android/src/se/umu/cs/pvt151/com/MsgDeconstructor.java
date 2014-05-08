@@ -70,14 +70,15 @@ public class MsgDeconstructor {
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			GeneFile file = new GeneFile();
-			
-			file.setId(obj.getString("id"));
+			Log.d("LOGIN", obj.toString());
+			file.setFileId(obj.getString("id"));
+			file.setExpId(obj.getString("expId"));
 			file.setType(obj.getString("type"));
-//			file.setName(obj.getString("name"));
-//			file.setUploadedBy(obj.getString("uploadedBy"));
-			file.setDate(obj.getString("date"));
-//			file.setSize(obj.getString("size"));
-//			file.setURL(obj.getString("URL"));
+			file.setName(obj.getString("filename"));
+			file.setAuthor(obj.getString("author"));
+			file.setUploadedBy(obj.getString("uploader"));
+//			file.setMetadata(obj.getString("metadata"));
+			file.setIsPrivate("isprivate");
 			
 			files.add(file);
 		}

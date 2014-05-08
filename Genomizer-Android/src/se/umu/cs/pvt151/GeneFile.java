@@ -12,21 +12,39 @@ import java.util.Map;
 
 public class GeneFile {
 
-	private String id;
+	private String fileId;
+	private String expId;
 	private String type;
 	private String name;
+	private String author;
 	private String uploadedBy;
-	private String date;
-	private String size;
-	private String uRL;
+	private String metadata;
+	private String isPrivate;
+	private String path;
 
 
-	public String getId() {
-		return id;
+	public String getIsPrivate() {
+		return isPrivate;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setIsPrivate(String isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
+	}
+	
+	public String getExpId() {
+		return expId;
+	}
+
+	public void setExpId(String expId) {
+		this.expId = expId;
 	}
 
 	public String getType() {
@@ -45,38 +63,28 @@ public class GeneFile {
 		this.name = name;
 	}
 
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	
 	public String getUploadedBy() {
 		return uploadedBy;
 	}
-
+	
 	public void setUploadedBy(String uploadedBy) {
 		this.uploadedBy = uploadedBy;
 	}
 
-	public String getDate() {
-		return date;
+	public String getMetadata() {
+		return metadata;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setMetadata(String metadata) {
+		this.metadata = metadata;
 	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public String getURL() {
-		return uRL;
-	}
-
-	public void setURL(String uRL) {
-		this.uRL = uRL;
-	}
-
-
 
 }

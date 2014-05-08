@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 
 import se.umu.cs.pvt151.Annotation;
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.MsgDeconstructor;
 import android.util.Log;
 import junit.framework.TestCase;
 
@@ -40,14 +38,10 @@ public class ComHandlerTest extends TestCase {
 		try {
 			Log.d("LOGIN", "http://scratchy.cs.umu.se:7000/");
 			ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
-			boolean test = ComHandler.login("yo", "Hemligt");
 			
-			if (test) {
-				Log.d("DEBUG", "connected");
-			}
+			ComHandler.login("yo", "Hemligt");
+			
 		} catch (IOException e) {
-			Log.d("TestLog", "bug message: " + e.getMessage());
-			Log.d("DEBUG", "Could not communicate with the server");
 			fail("Could not communicate with the server.");
 		}
 	}
@@ -60,7 +54,6 @@ public class ComHandlerTest extends TestCase {
 		try {
 			ComHandler.login("John", "SearchTest");
 			JSONArray experiments = ComHandler.search(searchValues);
-			Log.d("TestLog", experiments.toString());
 			assertEquals("experimentName", ((JSONObject) experiments.get(0)).get("name"));
 		} catch (IOException e) {
 			fail("IOException!");
@@ -89,9 +82,9 @@ public class ComHandlerTest extends TestCase {
 	
 	public void testAnnotationsDeconstruct() {
 		try {
-			Log.d("DECONSTRUCT", "Test: MsgDeconstructor");
 			ComHandler.login("John", "password");
-			ArrayList<Annotation> jsonAnnotations = ComHandler.getServerAnnotations();
+			
+			ComHandler.getServerAnnotations();
 		} catch (IOException e) {
 			fail("IOException!");
 			e.printStackTrace();

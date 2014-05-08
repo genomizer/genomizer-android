@@ -73,14 +73,12 @@ public class ComHandlerTest extends TestCase {
 		try {
 			ComHandler.login("liveSearchTest", "password");
 			JSONArray experiments = ComHandler.search(searchValues);
-			assertEquals("experimentName", ((JSONObject) experiments.get(0)).get("name"));
+			assertNotNull(experiments);
 		} catch (IOException e) {
 			Log.d("TestLog", e.getMessage());
 			e.printStackTrace();
 			fail("IOException!");
-		} catch (JSONException e) {
-			fail("JSONException thrown!");
-		}
+		} 
 	}
 	
 	

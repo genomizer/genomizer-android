@@ -76,8 +76,9 @@ public class ComHandlerTest extends TestCase {
 			JSONArray experiments = ComHandler.search(searchValues);
 			assertEquals("experimentName", ((JSONObject) experiments.get(0)).get("name"));
 		} catch (IOException e) {
-			fail("IOException!");
+			Log.d("TestLog", e.getMessage());
 			e.printStackTrace();
+			fail("IOException!");
 		} catch (JSONException e) {
 			fail("JSONException thrown!");
 		}

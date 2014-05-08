@@ -70,6 +70,7 @@ public class ComHandlerTest extends TestCase {
 		
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Sex", "male");
+		searchValues.put("Specie", "human");
 		try {
 			ComHandler.login("liveSearchTest", "password");
 			JSONArray experiments = ComHandler.search(searchValues);

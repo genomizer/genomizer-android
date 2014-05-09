@@ -34,6 +34,7 @@
     <string name="results">SEARCH RESULTS</string>
     <string name="title_activity_experiment_list">ExperimentListActivity</string>
     <string name="btn_search_footer">Search</string>
+    <string name="preference_file_key">se.umu.cs.pvt151.PREFERENCE_FILE_KEY</string>
     
     
 </resources>

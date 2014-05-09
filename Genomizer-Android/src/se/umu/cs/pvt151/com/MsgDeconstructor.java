@@ -23,7 +23,7 @@ public class MsgDeconstructor {
 	 * @return An arraylist of Annotation objects.
 	 * @throws JSONException
 	 */
-	public static ArrayList<Annotation> annotationJSON(JSONArray json) throws JSONException {
+	public static ArrayList<Annotation> deconAnnotations(JSONArray json) throws JSONException {
 		ArrayList<Annotation> annotations = new ArrayList<Annotation>();
 		
 		for (int i = 0; i < json.length(); i++) {
@@ -61,7 +61,7 @@ public class MsgDeconstructor {
 	 * @return An arraylist of GeneFile objects
 	 * @throws JSONException
 	 */
-	public static ArrayList<GeneFile> filesJSON(JSONArray json) throws JSONException {
+	public static ArrayList<GeneFile> deconFiles(JSONArray json) throws JSONException {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 		
 		Log.d("TestLog", "Json length " + json.length());
@@ -93,7 +93,7 @@ public class MsgDeconstructor {
 	 * @return An arraylist with experiments
 	 * @throws JSONException
 	 */
-	public static ArrayList<Experiment> searchJSON(JSONArray json) throws JSONException {
+	public static ArrayList<Experiment> deconSearch(JSONArray json) throws JSONException {
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
 
 		for (int i = 0; i < json.length(); i++) {
@@ -107,8 +107,8 @@ public class MsgDeconstructor {
 			JSONArray files = jsonExperiment.getJSONArray("files");
 			JSONArray annotations = jsonExperiment.getJSONArray("annotations");
 
-			experiment.setFiles(filesJSON(files));
-			experiment.setAnnotations(annotationJSON(annotations));
+			experiment.setFiles(deconFiles(files));
+			experiment.setAnnotations(deconAnnotations(annotations));
 			
 			experiments.add(experiment);
 		}

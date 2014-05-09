@@ -65,10 +65,7 @@ public class MsgFactory {
 			}
 			parameterString += param.getParameter(i);
 		}
-		
 		JSONArray json = new JSONArray(parameterString);
-		
-		
 		
 		return json;
 	}

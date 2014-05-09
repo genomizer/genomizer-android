@@ -9,6 +9,8 @@ package se.umu.cs.pvt151;
  */
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -41,6 +43,9 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> raw = new ArrayList<String>();
 	private ArrayList<String> profile = new ArrayList<String>();
 	private ArrayList<String> region = new ArrayList<String>();
+	
+	//Received experiments
+	private ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -150,6 +155,7 @@ public class FileListFragment extends Fragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			listViewHolder viewHolder = null;
+			final int getPos = position;
 		
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(
@@ -174,6 +180,12 @@ public class FileListFragment extends Fragment {
 								selectedItem[getPosition] = buttonView.isChecked();
 							} 
 						} 
+						
+						if(isChecked) {
+							Toast.makeText(getActivity(), raw.get(getPos), Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(getActivity(), "Unchecking", Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 				

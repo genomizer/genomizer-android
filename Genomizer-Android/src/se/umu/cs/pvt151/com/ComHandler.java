@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 import se.umu.cs.pvt151.Annotation;
 import se.umu.cs.pvt151.Experiment;
+import se.umu.cs.pvt151.GeneFile;
+import se.umu.cs.pvt151.ProcessingParameters;
 import android.util.Log;
 
 public class ComHandler {
@@ -84,12 +86,12 @@ public class ComHandler {
 			if (searchResponse.getCode() == 200) {
 				String jsonString = searchResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
-				return MsgDeconstructor.searchJSON(jsonPackage);
+				return MsgDeconstructor.deconSearch(jsonPackage);
 				
 			} else if (searchResponse.getCode() == 204) { 
 				//If the search yields no result.
 				JSONArray jsonPackage = new JSONArray();
-				return MsgDeconstructor.searchJSON(jsonPackage);
+				return MsgDeconstructor.deconSearch(jsonPackage);
 			} else {
 				return null;
 			}
@@ -118,7 +120,7 @@ public class ComHandler {
 				String jsonString = annotationResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
 				
-				return MsgDeconstructor.annotationJSON(jsonPackage);
+				return MsgDeconstructor.deconAnnotations(jsonPackage);
 			} else {
 				return null;
 			}
@@ -152,21 +154,21 @@ public class ComHandler {
 	}
 
 
-//	public static String rawToProfile(String fileID) throws IOException {
-//
-//		try {
-//			Communicator communicator = new Communicator(serverURL + "process/");
-//			communicator.setupConnection("PUT");
-//			JSONObject msg = MsgFactory.createConversionRequest(param, file, "expid1", "metadata", "yuri", "rawtoprofile", "genomeRelease5");
-//
-//			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
-//
-//			String jsonString = annotationResponse.getBody();
-//
-//			return jsonString;
-//
-//		} catch (JSONException e) {
-//			return null;
-//		}
-//	}
+	public static GenomizerHttpPackage rawToProfile(GeneFile file, ProcessingParameters parameters) throws IOException {
+
+		try {
+			Communicator communicator = new Communicator(serverURL + "process/");
+			communicator.setupConnection("PUT");
+			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, "metadata", "rawtoprofile", "release1");
+
+			GenomizerHttpPackage response = communicator.sendRequest(msg);
+
+			response.getBody();
+
+			return response;
+
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 }

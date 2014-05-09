@@ -34,23 +34,23 @@ public class MsgDeconstructorTest extends TestCase {
 	}
 	
 	
-	public void testCanDeconstructSearchResults() {
-		HashMap<String, String> searchValues = new HashMap<String, String>();
-		searchValues.put("Species", "Human");
-		try {
-			ComHandler.login("John", "password");
-			JSONArray experiments = ComHandler.search(searchValues);
-			
-			ArrayList<Experiment> experimentArray = MsgDeconstructor.searchJSON(experiments);
-			
-			assertNotNull(experimentArray);
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail("IOException!");
-		} catch (JSONException e) {
-			Log.d("TestLog", e.getMessage());
-			fail("JSONException!");
-			e.printStackTrace();
-		}
-	}
+//	public void testCanDeconstructSearchResults() {
+//		HashMap<String, String> searchValues = new HashMap<String, String>();
+//		searchValues.put("Species", "Human");
+//		try {
+//			ComHandler.login("John", "password");
+//			JSONArray experiments = ComHandler.search(searchValues);
+//			
+//			ArrayList<Experiment> experimentArray = MsgDeconstructor.searchJSON(experiments);
+//			
+//			assertNotNull(experimentArray);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			fail("IOException!");
+//		} catch (JSONException e) {
+//			Log.d("TestLog", e.getMessage());
+//			fail("JSONException!");
+//			e.printStackTrace();
+//		}
+//	}
 }

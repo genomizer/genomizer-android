@@ -172,7 +172,7 @@ public class ComHandlerTest extends TestCase {
 		try {
 			GenomizerHttpPackage result = ComHandler.rawToProfile(files.get(0), parameters);
 			
-			Log.d("RAW", result.getBody());
+			Log.d("RAW", "Code" + result.getCode());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

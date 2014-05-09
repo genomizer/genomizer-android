@@ -152,8 +152,7 @@ public class ComHandlerTest extends TestCase {
 		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
 		
 		HashMap<String, String> searchValues = new HashMap<String, String>();
-		searchValues.put("Sex", "male");
-		searchValues.put("Specie", "human");
+		searchValues.put("Species", "Human");
 		
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
 		

@@ -168,6 +168,10 @@ public class ComHandlerTest extends TestCase {
 		List<GeneFile> files = experiments.get(0).getFiles();
 		
 		ProcessingParameters parameters = new ProcessingParameters();
+		parameters.addParameter("param1");
+		parameters.addParameter("param2");
+		parameters.addParameter("param3");
+		parameters.addParameter("param4");
 		
 		try {
 			GenomizerHttpPackage result = ComHandler.rawToProfile(files.get(0), parameters);

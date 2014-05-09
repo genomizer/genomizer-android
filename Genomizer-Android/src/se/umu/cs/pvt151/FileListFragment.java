@@ -8,16 +8,12 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,7 +22,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class FileListFragment extends Fragment {
 	
@@ -44,9 +39,11 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> profile = new ArrayList<String>();
 	private ArrayList<String> region = new ArrayList<String>();
 	
-	//Received experiments
-	private ArrayList<GeneFile> files = new ArrayList<GeneFile>();
-
+	//Strings showing type of data.
+	String rawInfo;
+	String profileInfo;
+	String regionInfo;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
@@ -84,35 +81,24 @@ public class FileListFragment extends Fragment {
 		//Used to set tempdata to array for checked values
 		fillData();
 		
-		//Set adapter, onitemclicklistener, selector to listview for rawdata
+		//Set adapter to listview for rawdata
 		//listRaw.setAdapter(new FileListAdapter(rawData));
-		listRaw.setAdapter(new FileListAdapter(raw));
+		rawInfo = "raw";
+		listRaw.setAdapter(new FileListAdapter(raw, rawInfo));
 		
 		//TODO: Is listener for listview an idea or just for checkboxes enough?
-		//listRaw.setOnItemClickListener(new ListHandler());
 		//Set adapter to listview for profiledata
-		listProfile.setAdapter(new FileListAdapter(profile));
+		profileInfo = "profile";
+		listProfile.setAdapter(new FileListAdapter(profile, profileInfo));
 		//listProfile.setAdapter(new FileListAdapter(profileData));
-		//listProfile.setOnItemClickListener(new ListHandler());
+		
 		//Set adapter for regiondata
-		listRegion.setAdapter(new FileListAdapter(region));
-		//listRegion.setAdapter(new FileListAdapter(regionData));
-		//listRegion.setOnItemClickListener(new ListHandler());
+		regionInfo = "region";
+		listRegion.setAdapter(new FileListAdapter(region, regionInfo));
 		
 		return v;
 	}
 	
-	//TODO: Needed to get right values?
-	private class ListHandler implements OnItemClickListener {
-
-		@Override
-		public void onItemClick(AdapterView<?> Adapter, View view, int position,
-				long arg3) {
-			//Placeholder for what happens when a listitem is clicked
-			Toast.makeText(getActivity().getApplicationContext(), 
-					rawData.get(position), Toast.LENGTH_SHORT).show();
-		}
-	}
 	
 	/**
 	 * Temp method to fill array with values
@@ -142,10 +128,12 @@ public class FileListFragment extends Fragment {
 		//TODO: Use same adapter for all three listviews, or need to make 3 differents ones?
 		ArrayList<String> forShow = new ArrayList<String>();
 		boolean[] selectedItem;
+		String data;
 
-		public FileListAdapter(ArrayList<String> fileInfo) {
+		public FileListAdapter(ArrayList<String> fileInfo, String dataType) {
 				super(getActivity(), 0, fileInfo);
 				forShow = fileInfo;
+				data = dataType;
 				selectedItem = new boolean[fileInfo.size()];
 				for(int i = 0; i<selectedItem.length; i++) {
 					selectedItem[i] = false;
@@ -182,7 +170,11 @@ public class FileListFragment extends Fragment {
 						} 
 						
 						if(isChecked) {
-							Toast.makeText(getActivity(), raw.get(getPos), Toast.LENGTH_SHORT).show();
+							if(data.equals("raw")) {
+								Toast.makeText(getActivity(), raw.get(getPos), Toast.LENGTH_SHORT).show();
+							} else if(data.equals("profile")) {
+								Toast.makeText(getActivity(), profile.get(getPos), Toast.LENGTH_SHORT).show();
+							}
 						} else {
 							Toast.makeText(getActivity(), "Unchecking", Toast.LENGTH_SHORT).show();
 						}

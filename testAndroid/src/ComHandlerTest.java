@@ -179,7 +179,7 @@ public class ComHandlerTest extends TestCase {
 			Log.d("RAW", "Code" + result.getCode());
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			fail("Could not create profile from raw data.");
 			e.printStackTrace();
 		}
 	}

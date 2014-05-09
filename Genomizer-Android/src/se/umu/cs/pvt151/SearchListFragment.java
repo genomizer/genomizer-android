@@ -115,7 +115,7 @@ public class SearchListFragment extends ListFragment {
 
 						}
 					}
-					if (key != null & value != null) {
+					if (key != null && value != null) {
 						search.put(key, value);
 					}
 				}

@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +42,16 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> profileDataFiles = new ArrayList<String>();
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
 	
+	//TODO: Some way to deal with supressedwarnings?
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-		//Getting search information from SearchActivity
-		searchInfo = (HashMap<String, String>) getActivity().getIntent().getExtras().getSerializable("searchMap");
+		/*Getting search information from SearchListFragment.
+		 * Information is stored in a HashMap with annotations
+		 * as key and values as value.*/
+		searchInfo = (HashMap<String, String>) getActivity().getIntent()
+				.getExtras().getSerializable("searchMap");
 	}
 	
 	@Override
@@ -56,6 +59,8 @@ public class ExperimentListFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		
 		try {
+			/*Information sent to server and receiving a
+			 * list with all experiments available*/
 			forExperiments = startSearch.execute((Void) null).get();
 		} catch (InterruptedException e) {
 			Toast.makeText(getActivity(), "ERROR: " + e.getMessage(), 
@@ -71,15 +76,14 @@ public class ExperimentListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_experiment_list, parent, false);
-		
 		//Creating listview from xml view
 		list = (ListView) v.findViewById(R.id.listView1);
-	
+		//Creating adapter for displaying search results
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);	
 		//Setting adapter to view
 		list.setAdapter(adapter);
-		//Set onitemclicklistener to listview, used to detect clicks
+		//Set onItemclicklistener to list, used to detect clicks
 		list.setOnItemClickListener(new ListHandler());
 		//Set selector to view to change looks on view when item is clicked
 		list.setSelector(R.drawable.explist_selector);
@@ -88,16 +92,18 @@ public class ExperimentListFragment extends Fragment {
 	}
 	
 	/**
-	 * Method to get all different datafiles in separate lists
+	 * Method to get all different data files in separate lists
 	 * used to pass to FileListActivity
 	 * @param selectedExperiment int for experiment chosen
 	 */
 	private void getExperimentFiles(int selectedExperiment) {
+		//Getting all files for a selected experiment
 		List<GeneFile> files = forExperiments.get(selectedExperiment).getFiles();
 		rawDataFiles = new ArrayList<String>();
 		profileDataFiles = new ArrayList<String>();
 		regionDataFiles = new ArrayList<String>();
-		Log.d("Experiment", "File names: " + forExperiments.get(0).getFiles().get(0).getName());
+		/*Sorting the files in right lists, all raw in one,
+		 * all profile in one, all region in one.*/
 		for(int i=0; i<files.size(); i++) {
 			if(files.get(i).getType().equals("Raw")) {
 				rawDataFiles.add(files.get(i).getName() + " ");
@@ -110,24 +116,35 @@ public class ExperimentListFragment extends Fragment {
 	}
 	
 	/**
-	 * Starting temp method for display info from object
-	 * information received from comhandler.
-	 * @param info
+	 * Method used to make strings with right
+	 * look to display search results in view.
 	 */
 	//TODO: get right information from annotations to display
 	private void infoAnnotations() {
+		
 		for(int i=0; i<forExperiments.size(); i++) {
 			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" );
 		}
 	}
 	
+	/**
+	 * Listener used to detect what happens
+	 * when user clicks on an experiment in
+	 * the search result list.
+	 * @author Cecilia Lindmark
+	 *
+	 */
 	private class ListHandler implements OnItemClickListener {
 
 		@Override
 		public void onItemClick(AdapterView<?> Adapter, View view, int position,
 				long arg3) {
+			//Getting list of files belonging to experiment
 			getExperimentFiles(position);
+			//Creating new intent for moving to FileListActivity
 			Intent intent = new Intent(getActivity(), FileListActivity.class);
+			/*Put the lists with file names so they follow and is
+			 * fetchable in FileListFragment*/
 			intent.putStringArrayListExtra("raw", rawDataFiles);
 			intent.putStringArrayListExtra("profile", profileDataFiles);
 			intent.putStringArrayListExtra("region", regionDataFiles);
@@ -136,7 +153,9 @@ public class ExperimentListFragment extends Fragment {
 	}
 	
 	/**
-	 * Used to get search information
+	 * SearchHandler
+	 * ASyncTask to receive information
+	 * from server, performed in background.
 	 * @author Cecilia Lindmark
 	 *
 	 */
@@ -146,7 +165,8 @@ public class ExperimentListFragment extends Fragment {
 		protected ArrayList<Experiment> doInBackground(Void...arg0) {
 		
 		try {
-			//Sending hashmap with annotation, value for search to ComHandler
+			/*Sending HashMap with annotation, value for search to ComHandler,
+			 * receiving a list with experiments matching the search*/
 			forExperiments = ComHandler.search(searchInfo);
 			} catch (IOException e) {
 				Toast.makeText(getActivity().getApplicationContext(),
@@ -156,6 +176,8 @@ public class ExperimentListFragment extends Fragment {
 		}
 
 		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
+			/*Creating list with right looking information
+			 * used to be displayed in search.*/
 			infoAnnotations();
 		}
 	}

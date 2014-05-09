@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 import se.umu.cs.pvt151.Annotation;
 import se.umu.cs.pvt151.Experiment;
+import se.umu.cs.pvt151.GeneFile;
+import se.umu.cs.pvt151.ProcessingParameters;
 import android.util.Log;
 
 public class ComHandler {
@@ -152,21 +154,23 @@ public class ComHandler {
 	}
 
 
-//	public static String rawToProfile(String fileID) throws IOException {
-//
-//		try {
-//			Communicator communicator = new Communicator(serverURL + "process/");
-//			communicator.setupConnection("PUT");
-//			JSONObject msg = MsgFactory.createConversionRequest(param, file, "expid1", "metadata", "yuri", "rawtoprofile", "genomeRelease5");
-//
-//			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
-//
-//			String jsonString = annotationResponse.getBody();
-//
-//			return jsonString;
-//
-//		} catch (JSONException e) {
-//			return null;
-//		}
-//	}
+	public static GenomizerHttpPackage rawToProfile(GeneFile file, ProcessingParameters parameters) throws IOException {
+
+		try {
+			Communicator communicator = new Communicator(serverURL + "process/");
+			communicator.setupConnection("PUT");
+			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, "metadata", "rawtoprofile", "release1");
+
+			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
+
+			String jsonString = annotationResponse.getBody();
+			
+			GenomizerHttpPackage searchResponse = communicator.sendRequest(msg);
+
+			return searchResponse;
+
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 }

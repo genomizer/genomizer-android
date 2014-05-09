@@ -76,7 +76,6 @@ public class MsgDeconstructor {
 			file.setName(obj.getString("filename"));
 			file.setAuthor(obj.getString("author"));
 			file.setUploadedBy(obj.getString("uploader"));
-			file.setIsPrivate("isprivate");
 			file.setDate(obj.getString("date"));
 			file.setUrl(obj.getString("url"));
 			file.setPath(obj.getString("path"));

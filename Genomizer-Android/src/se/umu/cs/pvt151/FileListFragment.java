@@ -171,12 +171,14 @@ public class FileListFragment extends Fragment {
 						
 						if(isChecked) {
 							if(data.equals("raw")) {
-								Toast.makeText(getActivity(), raw.get(getPos), Toast.LENGTH_SHORT).show();
+								Toast.makeText(getActivity(), "Selecting: " + raw.get(getPos),
+										Toast.LENGTH_SHORT).show();
 							} else if(data.equals("profile")) {
-								Toast.makeText(getActivity(), profile.get(getPos), Toast.LENGTH_SHORT).show();
+								Toast.makeText(getActivity(), "Selecting: " + profile.get(getPos), 
+										Toast.LENGTH_SHORT).show();
 							}
 						} else {
-							Toast.makeText(getActivity(), "Unchecking", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(getActivity(), "Unchecking", Toast.LENGTH_SHORT).show();
 						}
 					}
 				});

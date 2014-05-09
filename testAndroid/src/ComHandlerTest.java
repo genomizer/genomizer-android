@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.umu.cs.pvt151.Annotation;
+import se.umu.cs.pvt151.Experiment;
 import se.umu.cs.pvt151.com.ComHandler;
 import android.util.Log;
 import junit.framework.TestCase;
@@ -53,15 +54,12 @@ public class ComHandlerTest extends TestCase {
 		searchValues.put("Sex", "Male");
 		try {
 			ComHandler.login("John", "SearchTest");
-			JSONArray experiments = ComHandler.search(searchValues);
-			assertEquals("experimentName", ((JSONObject) experiments.get(0)).get("name"));
+			ArrayList<Experiment> experiments = ComHandler.search(searchValues);
+			assertEquals("experimentName", experiments.get(0).getName());
 		} catch (IOException e) {
 			fail("IOException!");
 			e.printStackTrace();
-		} catch (JSONException e) {
-			fail("JSONException thrown!");
-		}
-		
+		} 
 	}
 	
 	
@@ -73,7 +71,7 @@ public class ComHandlerTest extends TestCase {
 		searchValues.put("Specie", "human");
 		try {
 			ComHandler.login("liveSearchTest", "password");
-			JSONArray experiments = ComHandler.search(searchValues);
+			ArrayList<Experiment> experiments = ComHandler.search(searchValues);
 			assertNotNull(experiments);
 		} catch (IOException e) {
 			Log.d("TestLog", e.getMessage());

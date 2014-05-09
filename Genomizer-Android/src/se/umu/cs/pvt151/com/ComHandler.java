@@ -161,13 +161,11 @@ public class ComHandler {
 			communicator.setupConnection("PUT");
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, "metadata", "rawtoprofile", "release1");
 
-			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
+			GenomizerHttpPackage response = communicator.sendRequest(msg);
 
-			String jsonString = annotationResponse.getBody();
-			
-			GenomizerHttpPackage searchResponse = communicator.sendRequest(msg);
+			response.getBody();
 
-			return searchResponse;
+			return response;
 
 		} catch (JSONException e) {
 			return null;

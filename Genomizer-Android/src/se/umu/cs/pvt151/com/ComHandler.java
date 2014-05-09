@@ -84,12 +84,12 @@ public class ComHandler {
 			if (searchResponse.getCode() == 200) {
 				String jsonString = searchResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
-				return MsgDeconstructor.searchJSON(jsonPackage);
+				return MsgDeconstructor.deconSearch(jsonPackage);
 				
 			} else if (searchResponse.getCode() == 204) { 
 				//If the search yields no result.
 				JSONArray jsonPackage = new JSONArray();
-				return MsgDeconstructor.searchJSON(jsonPackage);
+				return MsgDeconstructor.deconSearch(jsonPackage);
 			} else {
 				return null;
 			}
@@ -118,7 +118,7 @@ public class ComHandler {
 				String jsonString = annotationResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
 				
-				return MsgDeconstructor.annotationJSON(jsonPackage);
+				return MsgDeconstructor.deconAnnotations(jsonPackage);
 			} else {
 				return null;
 			}

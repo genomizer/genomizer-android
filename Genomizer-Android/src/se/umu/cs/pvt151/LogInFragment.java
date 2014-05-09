@@ -61,7 +61,7 @@ public class LogInFragment extends Fragment {
 	private void sendLoginRequest() {
 		String uname = userName.getText().toString();
 		String password = userPwd.getText().toString();
-
+		
 		if (uname.length() < 4 || password.length() < 4) {
 			makeToast(INPUT_MALFORMED, false);
 			return;

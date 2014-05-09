@@ -6,17 +6,9 @@ package se.umu.cs.pvt151;
  * for user, using a fragment with
  * a listview. 
  */
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+
 import android.support.v4.app.Fragment;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 public class ExperimentListActivity extends SingleFragmentActivity {
 	ExperimentListFragment fragment;

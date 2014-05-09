@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 import se.umu.cs.pvt151.Annotation;
 import se.umu.cs.pvt151.Experiment;
+import se.umu.cs.pvt151.GeneFile;
+import se.umu.cs.pvt151.ProcessingParameters;
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.com.GenomizerHttpPackage;
 import android.util.Log;
 import junit.framework.TestCase;
 
@@ -148,15 +148,36 @@ public class ComHandlerTest extends TestCase {
 	}
 	
 	
-//	public void testRawToProfile() {
-//		try {
-//			ComHandler.login("rawtoprofile", "password");
-//			String result = ComHandler.rawToProfile("1234");
-//			Log.d("RAW", result);
-//			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	public void testRawToProfile() {
+		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+		
+		HashMap<String, String> searchValues = new HashMap<String, String>();
+		searchValues.put("Sex", "male");
+		searchValues.put("Specie", "human");
+		
+		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
+		
+		try {
+			ComHandler.login("liveSearchTest", "password");
+			experiments = ComHandler.search(searchValues);
+		} catch (IOException e) {
+			Log.d("TestLog", e.getMessage());
+			e.printStackTrace();
+			fail("IOException!");
+		} 
+		
+		List<GeneFile> files = experiments.get(0).getFiles();
+		
+		ProcessingParameters parameters = new ProcessingParameters();
+		
+		try {
+			GenomizerHttpPackage result = ComHandler.rawToProfile(files.get(0), parameters);
+			
+			Log.d("RAW", result.getBody());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

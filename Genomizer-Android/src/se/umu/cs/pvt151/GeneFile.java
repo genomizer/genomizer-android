@@ -3,14 +3,17 @@
  */
 package se.umu.cs.pvt151;
 
+import java.io.Serializable;
+
 /**
  * Object to represent files within experiment.
  * @author erik c11ean
  *
  */
 
-public class GeneFile {
+public class GeneFile implements Serializable {
 
+	private static final long serialVersionUID = 7879413096818681732L;
 	private String fileId;
 	private String expId;
 	private String type;

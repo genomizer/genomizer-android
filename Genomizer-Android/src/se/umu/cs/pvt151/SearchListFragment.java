@@ -387,6 +387,8 @@ public class SearchListFragment extends ListFragment {
 	 */
 	private class AnnotationsTask extends AsyncTask<Void, Void, Void> {
 		
+		private IOException except;
+
 		/**
 		 * Connects to the server, collects annotation data from the database
 		 * and sets the retrieved values into corresponding lists.
@@ -403,8 +405,7 @@ public class SearchListFragment extends ListFragment {
 				}
 				
 			} catch (IOException e) {
-				toastMessage(CONNECTION_ERROR);
-				e.printStackTrace();
+				except = e;
 			}
 			return null;
 			
@@ -417,7 +418,13 @@ public class SearchListFragment extends ListFragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			setupListView();
+			if (except == null) {
+				setupListView();
+			} else {
+				toastMessage(CONNECTION_ERROR);
+				except.printStackTrace();
+			}
+			
 		}
 		
 	}

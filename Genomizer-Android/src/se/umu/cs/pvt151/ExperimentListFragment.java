@@ -119,6 +119,9 @@ public class ExperimentListFragment extends Fragment {
 	 */
 	private void getExperimentFiles(int selectedExperiment) {
 		List<GeneFile> files = forExperiments.get(selectedExperiment).getFiles();
+		rawDataFiles = new ArrayList<String>();
+		profileDataFiles = new ArrayList<String>();
+		regionDataFiles = new ArrayList<String>();
 		Log.d("Experiment", "File names: " + forExperiments.get(0).getFiles().get(0).getName());
 		for(int i=0; i<files.size(); i++) {
 			if(files.get(i).getType().equals("Raw")) {

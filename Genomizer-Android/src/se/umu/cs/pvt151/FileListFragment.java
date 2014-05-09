@@ -82,9 +82,9 @@ public class FileListFragment extends Fragment {
 		fillData();
 		
 		//Set adapter to listview for rawdata
-		//listRaw.setAdapter(new FileListAdapter(rawData));
 		rawInfo = "raw";
 		listRaw.setAdapter(new FileListAdapter(raw, rawInfo));
+		//listRaw.setAdapter(new FileListAdapter(rawData, rawInfo));
 		
 		//TODO: Is listener for listview an idea or just for checkboxes enough?
 		//Set adapter to listview for profiledata

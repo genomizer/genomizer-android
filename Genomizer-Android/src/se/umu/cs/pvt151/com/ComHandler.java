@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.umu.cs.pvt151.Annotation;
+import se.umu.cs.pvt151.Experiment;
 import android.util.Log;
 
 public class ComHandler {
@@ -70,7 +71,7 @@ public class ComHandler {
 	 * @return JSONArray Contains an arbitrary amount of JSONObjects. Each object is information about a file.
 	 * @throws IOException
 	 */
-	public static JSONArray search(HashMap<String, String> annotations) throws IOException {
+	public static ArrayList<Experiment> search(HashMap<String, String> annotations) throws IOException {
 		
 		try {
 			Communicator communicator = new Communicator(serverURL + "search/?annotations="+generatePubmedQuery(annotations));
@@ -83,12 +84,12 @@ public class ComHandler {
 			if (searchResponse.getCode() == 200) {
 				String jsonString = searchResponse.getBody();
 				JSONArray jsonPackage = new JSONArray(jsonString);
-				return jsonPackage;
+				return MsgDeconstructor.searchJSON(jsonPackage);
 				
 			} else if (searchResponse.getCode() == 204) { 
 				//If the search yields no result.
 				JSONArray jsonPackage = new JSONArray();
-				return jsonPackage;
+				return MsgDeconstructor.searchJSON(jsonPackage);
 			} else {
 				return null;
 			}

@@ -155,6 +155,7 @@ public class FileListFragment extends Fragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			listViewHolder viewHolder = null;
+			final int getPos = position;
 		
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(
@@ -179,6 +180,12 @@ public class FileListFragment extends Fragment {
 								selectedItem[getPosition] = buttonView.isChecked();
 							} 
 						} 
+						
+						if(isChecked) {
+							Toast.makeText(getActivity(), raw.get(getPos), Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(getActivity(), "Unchecking", Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 				

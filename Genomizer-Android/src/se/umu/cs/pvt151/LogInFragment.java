@@ -19,7 +19,7 @@ public class LogInFragment extends Fragment {
 
 	private static final String CONNECTION_ERROR = "Error. Could not connect to the server.";
 	private static final String INPUT_WRONG = "Wrong username or password.";
-	private static final String INPUT_MALFORMED = "Minimum length for username and password is 3 letters.";
+	private static final String INPUT_MALFORMED = "Minimum length for username and password is 4 letters.";
 	private EditText userName;
 	private EditText userPwd;
 	private Button button;
@@ -62,7 +62,7 @@ public class LogInFragment extends Fragment {
 		String uname = userName.getText().toString();
 		String password = userPwd.getText().toString();
 
-		if (uname.length() < 3 || password.length() < 3) {
+		if (uname.length() < 4 || password.length() < 4) {
 			makeToast(INPUT_MALFORMED, false);
 			return;
 		}

@@ -16,6 +16,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/listText2"
         android:background="#F5F5F5"
+        android:dividerHeight="1dp"        
         android:choiceMode="singleChoice" >
 
     </ListView>
@@ -26,10 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="#FFFFFF"
         android:text="@string/results"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#000000"
         android:textStyle="bold" />

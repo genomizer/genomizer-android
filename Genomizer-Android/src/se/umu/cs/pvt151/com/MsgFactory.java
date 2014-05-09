@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
 import se.umu.cs.pvt151.GeneFile;
 import se.umu.cs.pvt151.ProcessingParameters;
 
@@ -65,6 +66,8 @@ public class MsgFactory {
 			}
 			parameterString += param.getParameter(i);
 		}
+		parameterString += "]";
+		Log.d("RAW", "String " + parameterString);
 		JSONArray json = new JSONArray(parameterString);
 		
 		return json;

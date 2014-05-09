@@ -11,11 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
 import se.umu.cs.pvt151.Annotation;
 import se.umu.cs.pvt151.Experiment;
 import se.umu.cs.pvt151.GeneFile;
 import se.umu.cs.pvt151.ProcessingParameters;
-import android.util.Log;
 
 public class ComHandler {
 
@@ -157,17 +157,17 @@ public class ComHandler {
 	public static GenomizerHttpPackage rawToProfile(GeneFile file, ProcessingParameters parameters) throws IOException {
 
 		try {
-			Communicator communicator = new Communicator(serverURL + "process/");
+			Communicator communicator = new Communicator(serverURL + "process");
 			communicator.setupConnection("PUT");
+			
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, "metadata", "rawtoprofile", "release1");
-
+			Log.d("RAW", msg.toString());
 			GenomizerHttpPackage response = communicator.sendRequest(msg);
-
-			response.getBody();
 
 			return response;
 
 		} catch (JSONException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

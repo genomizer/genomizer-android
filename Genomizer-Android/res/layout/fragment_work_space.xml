@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,11 +6,72 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="se.umu.cs.pvt151.WorkSpaceActivity$PlaceholderFragment" >
+    tools:context="se.umu.cs.pvt151.WorkSpaceActivity$PlaceholderFragment"
+    android:orientation="vertical" >
 
-    <TextView
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ListView
+                    android:id="@+id/rawList"
+                    android:layout_width="match_parent"
+                    android:layout_height="114dp"
+                    android:background="#F5F5F5"
+                    android:choiceMode="multipleChoice"
+                    android:dividerHeight="1dp" >
+                </ListView>
+
+                <ListView
+                    android:id="@+id/profileList"
+                    android:layout_width="match_parent"
+                    android:layout_height="114dp"
+                    android:background="#F5F5F5"
+                    android:choiceMode="multipleChoice"
+                    android:dividerHeight="1dp" >
+                </ListView>
+
+                <ListView
+                    android:id="@+id/regionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="114dp"
+                    android:background="#F5F5F5"
+                    android:choiceMode="multipleChoice"
+                    android:dividerHeight="1dp" >
+                </ListView>
+
+                <ListView
+                    android:id="@+id/resultList"
+                    android:layout_width="match_parent"
+                    android:layout_height="114dp"
+                    android:background="#F5F5F5"
+                    android:choiceMode="multipleChoice"
+                    android:dividerHeight="1dp" >
+                </ListView>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <Button
+        android:id="@+id/convertButt"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

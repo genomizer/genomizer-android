@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
 import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -128,6 +129,29 @@ public class ExperimentListFragment extends Fragment {
 	}
 	
 	/**
+	 * Creates an android toast (small unintrusive text popup).
+	 * @param msg
+	 *            The message that should be displayed.
+	 * @param longToast
+	 *            True if the toast should be displayed for a long time (3.5
+	 *            seconds) otherwise it is displayed for 2 seconds.
+	 *@author Rickard
+	 */
+	protected void makeToast(final String msg, final boolean longToast) {
+		getActivity().runOnUiThread(new Thread() {
+			public void run() {
+				if (longToast) {
+					Toast.makeText(getActivity().getApplicationContext(), msg,
+							Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(), msg,
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
+	
+	/**
 	 * Listener used to detect what happens
 	 * when user clicks on an experiment in
 	 * the search result list.
@@ -169,8 +193,7 @@ public class ExperimentListFragment extends Fragment {
 			 * receiving a list with experiments matching the search*/
 			forExperiments = ComHandler.search(searchInfo);
 			} catch (IOException e) {
-				Toast.makeText(getActivity().getApplicationContext(),
-						"ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();;
+				makeToast("ERROR: " + e.getMessage(), false);
 			} 
 			return forExperiments;
 		}

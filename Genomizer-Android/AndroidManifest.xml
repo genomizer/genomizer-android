@@ -18,8 +18,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="se.umu.cs.pvt151.LogInActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name"  >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,19 +28,23 @@
         </activity>
         <activity
             android:name="se.umu.cs.pvt151.SearchActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:label="@string/app_name" 
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="se.umu.cs.pvt151.ExperimentListActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="se.umu.cs.pvt151.FileListActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="se.umu.cs.pvt151.WorkSpaceActivity"
+            android:label="@string/title_activity_work_space" >
         </activity>
     </application>
 

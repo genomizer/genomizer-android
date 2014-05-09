@@ -17,7 +17,9 @@ import org.json.JSONException;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,6 +46,8 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
 	
 	private ArrayAdapter<String> adapter;
+	
+	private ArrayList<GeneFile> rawToSend = new ArrayList<GeneFile>();
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -126,6 +130,7 @@ public class ExperimentListFragment extends Fragment {
 		for(int i=0; i<files.size(); i++) {
 			if(files.get(i).getType().equals("Raw")) {
 				rawDataFiles.add(files.get(i).getName() + " ");
+				rawToSend.add(files.get(i));
 					// + files.get(i).getUploadedBy());
 			} else if(files.get(i).getType().equals("Profile")) {
 				profileDataFiles.add(files.get(i).getName() + " ");
@@ -183,17 +188,14 @@ public class ExperimentListFragment extends Fragment {
 		
 		try {
 			//Sending hashmap with annotation, value for search to comhandler
-			results = ComHandler.search(searchInfo);
-			forExperiments = MsgDeconstructor.searchJSON(results);
+			forExperiments = ComHandler.search(searchInfo);
+			//forExperiments = MsgDeconstructor.searchJSON(results);
 			Log.d("Experiment", "Size received experiments: " + forExperiments.size());
 				//Getting JSONarray with search results
 			} catch (IOException e) {
 				// TODO Write better error handling
 				e.printStackTrace();
-			} catch (JSONException e) {
-				
-				e.printStackTrace();
-			}
+			} 
 				// TODO Send request to ComHandler, need to know what to send and receive...
 				//return results;
 			return forExperiments;

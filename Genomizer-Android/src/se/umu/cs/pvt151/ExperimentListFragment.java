@@ -11,15 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.MsgDeconstructor;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,23 +24,24 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ExperimentListFragment extends Fragment {
 	
+	//ListView used to display search results:
 	private ListView list;
+	//List used to display search results through adapter:
 	private ArrayList<String> displaySearchResults = new ArrayList<String>();
+	//List used to store search information received from SearchListFragment:
 	private HashMap<String, String> searchInfo = new HashMap<String, String>();
-	private JSONArray results;
+	//List used to store experiments received from ComHandler:
 	private ArrayList<Experiment> forExperiments = new ArrayList<Experiment>();
+	//ASyncTask used to get information from server:
 	private SearchHandler startSearch = new SearchHandler();
-	//Lists used for saving files for a certain experiment
+	//Lists used for saving files for a certain experiment:
 	private ArrayList<String> rawDataFiles = new ArrayList<String>();
 	private ArrayList<String> profileDataFiles = new ArrayList<String>();
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
-	
-	private ArrayAdapter<String> adapter;
-	
-	private ArrayList<GeneFile> rawToSend = new ArrayList<GeneFile>();
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -55,32 +49,20 @@ public class ExperimentListFragment extends Fragment {
 		super.onCreate(savedInstanceState);	
 		//Getting search information from SearchActivity
 		searchInfo = (HashMap<String, String>) getActivity().getIntent().getExtras().getSerializable("searchMap");
-		Log.d("Experiment", "ExpList annotations: " + searchInfo.toString());
-		
-		//Try to run the Asynctask when all code for handling search info is done.
-		/*try {
-			forExperiments = startSearch.execute((Void) null).get();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
 		try {
 			forExperiments = startSearch.execute((Void) null).get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Toast.makeText(getActivity(), "ERROR: " + e.getMessage(), 
+					Toast.LENGTH_SHORT).show();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Toast.makeText(getActivity(), "ERROR: " + e.getMessage(), 
+					Toast.LENGTH_SHORT).show();
 		}
 		
 	}
@@ -90,22 +72,11 @@ public class ExperimentListFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_experiment_list, parent, false);
 		
-		/*Temporary method to test show placeholder search results
-		 * until real ones are available, then replace this method with
-		 * the ones working as intended*/
-	
-		//infoAnnotations();
-		
 		//Creating listview from xml view
 		list = (ListView) v.findViewById(R.id.listView1);
-		/*Creating adapter used to set values to listview, this one
-		 * is using temp information, when real search info is available replace
-		 * experiments with displaySearchResults*/
-		
+	
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);
-		
-				
+				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);	
 		//Setting adapter to view
 		list.setAdapter(adapter);
 		//Set onitemclicklistener to listview, used to detect clicks
@@ -130,14 +101,10 @@ public class ExperimentListFragment extends Fragment {
 		for(int i=0; i<files.size(); i++) {
 			if(files.get(i).getType().equals("Raw")) {
 				rawDataFiles.add(files.get(i).getName() + " ");
-				rawToSend.add(files.get(i));
-					// + files.get(i).getUploadedBy());
 			} else if(files.get(i).getType().equals("Profile")) {
 				profileDataFiles.add(files.get(i).getName() + " ");
-					// + files.get(i).getUploadedBy());
 			} else if(files.get(i).getType().equals("Region")) {
 				regionDataFiles.add(files.get(i).getName() + " ");
-					// + files.get(i).getUploadedBy());
 			}
 		}
 	}
@@ -149,14 +116,9 @@ public class ExperimentListFragment extends Fragment {
 	 */
 	//TODO: get right information from annotations to display
 	private void infoAnnotations() {
-		//Log.d("Experiment", "Search results: " + forExperiments.get(0).getName());
 		for(int i=0; i<forExperiments.size(); i++) {
 			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" );
-		//+ "Created by: " + forExperiments.get(i).getCreatedBy() + "\n" );
-		/*+ "Specie: " + forExperiments.get(i).getAnnotations().get(2).getValue().get(0) + "\n"
-		+ "Genome release: " + forExperiments.get(i).getAnnotations().get(3).getValue().get(0));*/
 		}
-		//Log.d("Experiment", "Search results: " + displaySearchResults.get(0));
 	}
 	
 	private class ListHandler implements OnItemClickListener {
@@ -164,9 +126,6 @@ public class ExperimentListFragment extends Fragment {
 		@Override
 		public void onItemClick(AdapterView<?> Adapter, View view, int position,
 				long arg3) {
-			//Placeholder for what happens when a listitem is clicked
-			/*Toast.makeText(getActivity().getApplicationContext(), 
-					experiments.get(position), Toast.LENGTH_SHORT).show();*/
 			getExperimentFiles(position);
 			Intent intent = new Intent(getActivity(), FileListActivity.class);
 			intent.putStringArrayListExtra("raw", rawDataFiles);
@@ -187,25 +146,17 @@ public class ExperimentListFragment extends Fragment {
 		protected ArrayList<Experiment> doInBackground(Void...arg0) {
 		
 		try {
-			//Sending hashmap with annotation, value for search to comhandler
+			//Sending hashmap with annotation, value for search to ComHandler
 			forExperiments = ComHandler.search(searchInfo);
-			//forExperiments = MsgDeconstructor.searchJSON(results);
-			Log.d("Experiment", "Size received experiments: " + forExperiments.size());
-				//Getting JSONarray with search results
 			} catch (IOException e) {
-				// TODO Write better error handling
-				e.printStackTrace();
+				Toast.makeText(getActivity().getApplicationContext(),
+						"ERROR: " + e.getMessage(), Toast.LENGTH_SHORT).show();;
 			} 
-				// TODO Send request to ComHandler, need to know what to send and receive...
-				//return results;
 			return forExperiments;
 		}
 
 		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
-		
 			infoAnnotations();
-			/*adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-					R.layout.list_view_textbox, R.id.listText11, displaySearchResults);*/
 		}
 	}
 }

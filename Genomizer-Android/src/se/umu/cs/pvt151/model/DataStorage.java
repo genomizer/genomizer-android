@@ -24,8 +24,11 @@ public class DataStorage {
 		return list;
 	}
 	
-	public static ArrayList<GeneFile> getRawDataFiles(ArrayList<GeneFile> raw) {
+	public static void setRawDataFiles(ArrayList<GeneFile> raw) {
 		rawData = raw;
+	}
+	
+	public static ArrayList<GeneFile> getRawDataFiles() {
 		return rawData;
 	}
 

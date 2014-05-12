@@ -26,7 +26,7 @@
     <string name="profile_data">PROFILE DATA</string>
     <string name="region_data">REGION DATA</string>
     <string name="enter_username">Enter username</string>
-    <string name="convert">Send to conversion</string>
+    <string name="convert">Add to selection</string>
     <string name="password_dots">••••••</string>
     <string name="results">SEARCH RESULTS</string>
     <string name="title_activity_experiment_list">ExperimentListActivity</string>

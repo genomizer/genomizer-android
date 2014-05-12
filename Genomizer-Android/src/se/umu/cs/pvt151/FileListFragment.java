@@ -79,8 +79,8 @@ public class FileListFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Send to conversion" + selectedDataFiles.toString()
-						+ "Size fileobj: " + rawSelected.size(), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + " file(s) to selection", 
+						Toast.LENGTH_SHORT).show();
 				DataStorage.appendFileList("Raw", rawSelected);
 			}
 			
@@ -199,14 +199,11 @@ public class FileListFragment extends Fragment {
 					
 					if(buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
-							Toast.makeText(getActivity(), "Selecting: " + raw.get(getPos),
-									Toast.LENGTH_SHORT).show();
+							
 							if(!selectedDataFiles.contains(raw.get(getPos))) {
 								selectedDataFiles.add(raw.get(getPos));
 								rawSelected.add(allRawFiles.get(getPos));
 								buttonHolder.fileCheckBox.setChecked(true);
-								Toast.makeText(getActivity(), "Selecting: " + raw.get(getPos),
-										Toast.LENGTH_SHORT).show();
 							} else {
 								Toast.makeText(getActivity(), "Already added: " + raw.get(getPos),
 										Toast.LENGTH_SHORT).show();
@@ -222,8 +219,6 @@ public class FileListFragment extends Fragment {
 								if(selectedDataFiles.get(i).equals(rawData.get(getPos))) {
 									selectedDataFiles.remove(i);
 									rawSelected.remove(i);
-									Toast.makeText(getActivity(), "Removed: " + rawData.get(getPos),
-											Toast.LENGTH_SHORT).show();
 								}
 							}
 						}

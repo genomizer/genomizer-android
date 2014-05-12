@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 public class WorkSpaceFragment extends Fragment {
@@ -40,6 +42,11 @@ public class WorkSpaceFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_work_space, parent, false);
+		
+		TabHost tabs = (TabHost) v.findViewById(R.id.tabhost);
+	    tabs.setup();
+	    
+	    tabs.addTab(tabs.newTabSpec("RAW"));
 
 		listRaw = (ListView) v.findViewById(R.id.raw);
 		listProfile = (ListView) v.findViewById(R.id.profile);

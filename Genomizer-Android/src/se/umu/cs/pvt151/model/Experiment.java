@@ -1,7 +1,7 @@
 /**
  * 
  */
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.model;
 
 import java.util.ArrayList;
 import java.util.List;

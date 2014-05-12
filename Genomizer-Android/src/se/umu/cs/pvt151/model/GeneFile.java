@@ -1,7 +1,7 @@
 /**
  * 
  */
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

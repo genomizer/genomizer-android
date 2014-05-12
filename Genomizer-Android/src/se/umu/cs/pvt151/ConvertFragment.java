@@ -5,6 +5,8 @@ package se.umu.cs.pvt151;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import se.umu.cs.pvt151.model.GeneFile;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -28,18 +30,36 @@ import android.widget.TextView;
  */
 public class ConvertFragment extends Fragment {
 	
+	private static final String RAW_CONVERSION = "raw";
+	private static final String FILES = "files";
+	private static final String CONVERSION_TYPE = "type";
 	private ListView convertListView;
 	private ArrayList<String> convertFields;
+	private ArrayList<String> hintList;
 	private HashMap <String, String> parameterMap;
 	private HashMap <String, Boolean> checkedFields;
 	private Button convertButton;
+	private String type;
+	private ArrayList<GeneFile> files;
 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		convertFields = new ArrayList<String>();
+		hintList = new ArrayList<String>();
+		parameterMap = new HashMap<String, String>();
+		checkedFields = new HashMap<String, Boolean>();
+		
+		Bundle bundle = getActivity().getIntent().getExtras();
+		if (bundle != null) {
+			type = (String) bundle.get(CONVERSION_TYPE);
+			files = (ArrayList<GeneFile>) bundle.get(FILES);
+		}	
 	}
 	
+	
+
 	public View onCreateView(android.view.LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_convert, container, false);
 		
@@ -98,17 +118,26 @@ public class ConvertFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		
-		convertFields = new ArrayList<String>();
-		parameterMap = new HashMap<String, String>();
-		checkedFields = new HashMap<String, Boolean>();
-
 		// TODO test
-		setupTest();
-
+//		setupTest();
+		if (type != null && type.equals(RAW_CONVERSION)) {
+			setupRawParameters();
+		}
 		setup();
 	}
 	
+	private void setupRawParameters() {
+		convertFields.add("Bowtie parameters");
+		convertFields.add("Genome index reference");
+		convertFields.add("Smoothing");
+		convertFields.add("Step size");
+		
+		hintList.add("-a -m l --best -p 10 -v 2 -q -S");
+		hintList.add("d_melanogaster_fb5_22");
+		hintList.add("10 1 5 0 1");
+		hintList.add("y standard, 10 standard");
+	}
+
 	private static class ConvertViewHolder {
 		TextView title;
 		EditText parameter;
@@ -162,6 +191,7 @@ public class ConvertFragment extends Fragment {
 			textWatcher = (ConvertTextWatch) viewHolder.parameter.getTag();
 			textWatcher.updatePosition(position);
 			viewHolder.title.setText(temp);
+			viewHolder.parameter.setHint(hintList.get(position));
 			viewHolder.parameter.setText(parameterMap.get(temp));
 			viewHolder.checkBox.setChecked(checkedFields.get(temp).booleanValue());
 			
@@ -175,6 +205,7 @@ public class ConvertFragment extends Fragment {
 	private class ConvertTextWatch implements TextWatcher {
 		
 		private int position;
+		private int test = 0;
 
 		public ConvertTextWatch() {
 			
@@ -202,7 +233,8 @@ public class ConvertFragment extends Fragment {
 		public void afterTextChanged(Editable s) {
 			String key = convertFields.get(position);
 			parameterMap.put(key, s.toString());
-			Log.d("smurf", "Position: " + position);
+			Log.d("smurf", "Test: " + test);
+			test++;
 		}
 		
 	}

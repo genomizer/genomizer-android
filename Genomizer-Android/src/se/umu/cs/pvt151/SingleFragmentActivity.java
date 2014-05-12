@@ -65,7 +65,8 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 			return true;
 			
 		case R.id.action_settings:
-			
+			i = new Intent(this, SettingsActivity.class);
+			startActivity(i);
 			return true;
 			
 		default:

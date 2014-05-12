@@ -85,7 +85,7 @@
                         android:gravity="bottom" >
 
                         <Button
-                            android:id="@+id/convert_raw_button"
+                            android:id="@+id/convert_profile_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Convert to Region"
@@ -117,14 +117,14 @@
                         android:gravity="bottom" >
 
                         <Button
-                            android:id="@+id/convert_raw_button"
+                            android:id="@+id/merge_regions_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Merge Regions"
                             android:layout_weight="1" />
                         
                         <Button
-                            android:id="@+id/convert_raw_button"
+                            android:id="@+id/analyze_region_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Analyze"
@@ -157,14 +157,14 @@
                         android:gravity="bottom" >
 
                         <Button
-                            android:id="@+id/convert_raw_button"
+                            android:id="@+id/do_something_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Do something.."
                             android:layout_weight="1" />
                         
                         <Button
-                            android:id="@+id/analyze_raw_button"
+                            android:id="@+id/analyze_result_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Analyze"

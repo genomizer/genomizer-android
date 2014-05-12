@@ -6,12 +6,15 @@ import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -79,8 +82,31 @@ public class WorkSpaceFragment extends Fragment {
 		listProfile.setAdapter(new FileListAdapter(profile, "profile"));
 		listRegion.setAdapter(new FileListAdapter(region, "region"));
 		listResults.setAdapter(new FileListAdapter(results, "results"));
+		
+		setButtonListeners(v);
 
 		return v;
+	}
+	
+	
+	private void setButtonListeners(View v) {
+		Button convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
+		
+		convertRawButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(),
+						ConvertActivity.class);
+				
+				ArrayList<GeneFile> files = new ArrayList<GeneFile>();
+				
+				intent.putExtra("type", "raw");
+				intent.putExtra("files", files);
+				
+				startActivity(intent);
+			}
+		});
 	}
 
 

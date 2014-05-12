@@ -61,12 +61,14 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 			return true;
 		
 		case R.id.btnworkspace_main_menu:
-			
+			Intent intent = new Intent(this,
+					WorkSpaceActivity.class);
+			startActivity(intent);
 			return true;
 			
 		case R.id.action_settings:
-			i = new Intent(this, SettingsActivity.class);
-			startActivity(i);
+//			i = new Intent(this, SettingsActivity.class);
+//			startActivity(i);
 			return true;
 			
 		default:

@@ -2,7 +2,6 @@ package se.umu.cs.pvt151;
 
 import java.util.ArrayList;
 
-import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.content.Context;

@@ -45,6 +45,9 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> profileDataFiles = new ArrayList<String>();
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
 	
+	private ArrayList<GeneFile> rawToConv = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> profileToConv = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> regionToRaw = new ArrayList<GeneFile>();
 	//TODO: Some way to deal with supressedwarnings?
 	@SuppressWarnings("unchecked")
 	@Override

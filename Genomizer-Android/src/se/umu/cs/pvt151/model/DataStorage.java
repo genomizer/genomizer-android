@@ -9,6 +9,7 @@ public class DataStorage {
 	//Hashmap which stores arraylists with GeneFile objects
 	private static HashMap<String, ArrayList<GeneFile>> fileMap = 
 			new HashMap<String, ArrayList<GeneFile>>();
+	private static ArrayList<GeneFile> rawData = new ArrayList<GeneFile>();
 	
 	
 	public static void appendFileList(String key, ArrayList<GeneFile> files) {
@@ -21,6 +22,11 @@ public class DataStorage {
 			return new ArrayList<GeneFile>();
 		}
 		return list;
+	}
+	
+	public static ArrayList<GeneFile> getRawDataFiles(ArrayList<GeneFile> raw) {
+		rawData = raw;
+		return rawData;
 	}
 
 }

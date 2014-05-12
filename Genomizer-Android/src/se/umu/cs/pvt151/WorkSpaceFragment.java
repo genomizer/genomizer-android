@@ -2,6 +2,7 @@ package se.umu.cs.pvt151;
 
 import java.util.ArrayList;
 
+import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,10 +32,10 @@ public class WorkSpaceFragment extends Fragment {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		raw = new ArrayList<GeneFile>();
-		profile = new ArrayList<GeneFile>();
-		region = new ArrayList<GeneFile>();
-		results = new ArrayList<GeneFile>();
+		raw = ComHandler.getFileList("raw");
+		profile = ComHandler.getFileList("profile");
+		region = ComHandler.getFileList("region");
+		results = ComHandler.getFileList("result");
 	}
 
 

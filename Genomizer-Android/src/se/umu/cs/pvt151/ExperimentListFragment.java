@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.model.Experiment;
+import se.umu.cs.pvt151.model.GeneFile;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;

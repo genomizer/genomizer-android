@@ -12,10 +12,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import se.umu.cs.pvt151.Annotation;
-import se.umu.cs.pvt151.Experiment;
-import se.umu.cs.pvt151.GeneFile;
-import se.umu.cs.pvt151.ProcessingParameters;
+import se.umu.cs.pvt151.model.Annotation;
+import se.umu.cs.pvt151.model.Experiment;
+import se.umu.cs.pvt151.model.GeneFile;
+import se.umu.cs.pvt151.model.ProcessingParameters;
 
 public class ComHandler {
 

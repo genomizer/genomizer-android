@@ -3,7 +3,9 @@ package se.umu.cs.pvt151;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.model.Annotation;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;

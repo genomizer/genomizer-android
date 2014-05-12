@@ -8,9 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import se.umu.cs.pvt151.Annotation;
-import se.umu.cs.pvt151.Experiment;
-import se.umu.cs.pvt151.GeneFile;
+import se.umu.cs.pvt151.model.Annotation;
+import se.umu.cs.pvt151.model.Experiment;
+import se.umu.cs.pvt151.model.GeneFile;
 
 public class MsgDeconstructor {
 	

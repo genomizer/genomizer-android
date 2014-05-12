@@ -3,10 +3,15 @@
  */
 package se.umu.cs.pvt151;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.GeneFile;
+import se.umu.cs.pvt151.model.ProcessingParameters;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -30,6 +35,7 @@ import android.widget.TextView;
  */
 public class ConvertFragment extends Fragment {
 	
+	private static final String PARAMETERS_RAW_PROFILE = "Parameters RAW -> Profile";
 	private static final String RAW_CONVERSION = "raw";
 	private static final String FILES = "files";
 	private static final String CONVERSION_TYPE = "type";
@@ -41,53 +47,87 @@ public class ConvertFragment extends Fragment {
 	private Button convertButton;
 	private String type;
 	private ArrayList<GeneFile> files;
+	private TextView convertLabel;
 
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		convertFields = new ArrayList<String>();
-		hintList = new ArrayList<String>();
-		parameterMap = new HashMap<String, String>();
-		checkedFields = new HashMap<String, Boolean>();
-		
-		Bundle bundle = getActivity().getIntent().getExtras();
-		if (bundle != null) {
-			type = (String) bundle.get(CONVERSION_TYPE);
-			files = (ArrayList<GeneFile>) bundle.get(FILES);
-		}	
-	}
-	
-	
-
+	/**
+	 * 
+	 */
 	public View onCreateView(android.view.LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_convert, container, false);
 		
 		convertListView = (ListView) v.findViewById(R.id.listview_convert);
-		
+		convertLabel = (TextView) v.findViewById(R.id.lbl_convert_header);
 		
 		return v;
-	};
-	
-	private void setupTest() {
-		convertFields.add("A");
-		convertFields.add("B");
-		convertFields.add("C");
-		convertFields.add("D");
-		convertFields.add("E");
-		convertFields.add("F");
-		convertFields.add("G");
-		convertFields.add("H");
-		convertFields.add("I");
-		convertFields.add("J");
-		convertFields.add("K");
-		convertFields.add("L");
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		
+		createLists();
+		retrieveData();	
 	}
 
 
-	private void setup() {
+	/**
+	 * 
+	 */
+	private void retrieveData() {
+		Bundle bundle = getActivity().getIntent().getExtras();
+		if (bundle != null) {
+			type = (String) bundle.get(CONVERSION_TYPE);
+			files = (ArrayList<GeneFile>) bundle.get(FILES);
+		}
+	}
+
+
+	/**
+	 * 
+	 */
+	private void createLists() {
+		convertFields = new ArrayList<String>();
+		hintList = new ArrayList<String>();
+		parameterMap = new HashMap<String, String>();
+		checkedFields = new HashMap<String, Boolean>();
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 		
+		if (type != null && type.equals(RAW_CONVERSION)) {
+			setupRawParameters();
+		}
+
+		createConvertButton();
+		setupConvert();
+	}
+
+	/**
+	 * 
+	 */
+	private void setupConvert() {
+		
+		for (String s : convertFields) {
+			checkedFields.put(s, false);
+			parameterMap.put(s, null);
+		}
+		
+		convertListView.setAdapter(new ConvertAdapter(convertFields));
+	}
+
+
+	/**
+	 * 
+	 */
+	private void createConvertButton() {
 		convertButton = (Button) getActivity().findViewById(R.id.btn_convert_convert);
 		convertButton.setOnClickListener(new OnClickListener() {
 			
@@ -101,31 +141,20 @@ public class ConvertFragment extends Fragment {
 								+ "\n" + "Parameters:\n"
 								+ parameterMap
 								+ "\n-------------------------------------------------\n");
+				ProcessingParameters parameters = new ProcessingParameters();
+				for (String s : convertFields) {
+					parameters.addParameter(parameterMap.get(s));
+				}
+				
+				new ConvertTask().execute(parameters);
 				
 			}
 		});
-		
-		for (String s : convertFields) {
-			checkedFields.put(s, false);
-			parameterMap.put(s, null);
-		}
-		
-		convertListView.setAdapter(new ConvertAdapter(convertFields));
-	}
-
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		
-		// TODO test
-//		setupTest();
-		if (type != null && type.equals(RAW_CONVERSION)) {
-			setupRawParameters();
-		}
-		setup();
 	}
 	
+	/**
+	 * 
+	 */
 	private void setupRawParameters() {
 		convertFields.add("Bowtie parameters");
 		convertFields.add("Genome index reference");
@@ -136,21 +165,39 @@ public class ConvertFragment extends Fragment {
 		hintList.add("d_melanogaster_fb5_22");
 		hintList.add("10 1 5 0 1");
 		hintList.add("y standard, 10 standard");
+		
+		convertLabel.setText(PARAMETERS_RAW_PROFILE);
 	}
-
+	
+	/**
+	 * 
+	 * @author Anders
+	 *
+	 */
 	private static class ConvertViewHolder {
 		TextView title;
 		EditText parameter;
 		CheckBox checkBox;
 	}
 	
+	/**
+	 * 
+	 * @author Anders
+	 *
+	 */
 	private class ConvertAdapter extends ArrayAdapter<String> {
 
-
+		/**
+		 * 
+		 * @param convertFields
+		 */
 		public ConvertAdapter(ArrayList<String> convertFields) {
 			super(getActivity(), 0, convertFields);
 		}
 		
+		/**
+		 * 
+		 */
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ConvertViewHolder viewHolder = null;
@@ -197,45 +244,67 @@ public class ConvertFragment extends Fragment {
 			
 			return convertView;
 		}
-
-		
-		
 	}
 	
+	/**
+	 * 
+	 * @author Anders
+	 *
+	 */
 	private class ConvertTextWatch implements TextWatcher {
-		
 		private int position;
-		private int test = 0;
-
-		public ConvertTextWatch() {
-			
-		}
 		
+		/**
+		 * 
+		 * @param position
+		 */
 		public void updatePosition(int position) {
 			this.position = position;
 		}
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		
+		/**
+		 * 
+		 */
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			// TODO Auto-generated method stub
 			
 		}
-
+		
+		/**
+		 * 
+		 */
 		@Override
 		public void afterTextChanged(Editable s) {
 			String key = convertFields.get(position);
 			parameterMap.put(key, s.toString());
-			Log.d("smurf", "Test: " + test);
-			test++;
+		}
+
+
+		/**
+		 * 
+		 */
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			
+		}
+	}
+	
+	private class ConvertTask extends AsyncTask<ProcessingParameters, Void, Void> {
+		
+		@Override
+		protected Void doInBackground(ProcessingParameters... params) {
+			
+			try {
+				ComHandler.rawToProfile(files.get(0), params[0]);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
 		}
 		
 	}
+	
 }

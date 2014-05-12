@@ -30,10 +30,17 @@ public class WorkSpaceFragment extends Fragment {
 	private ListView listResults;
 
 	private ArrayList<GeneFile> raw;
+	private ArrayList<GeneFile> selectedRaw;
+	
 	private ArrayList<GeneFile> profile;
+	private ArrayList<GeneFile> selectedProfile;
+	
 	private ArrayList<GeneFile> region;
+	private ArrayList<GeneFile> selectedRegion;
+	
 	private ArrayList<GeneFile> results;
-
+	private ArrayList<GeneFile> selectedResults;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +48,11 @@ public class WorkSpaceFragment extends Fragment {
 		profile = DataStorage.getFileList("profile");
 		region = DataStorage.getFileList("region");
 		results = DataStorage.getFileList("result");
+		
+		selectedRaw = new ArrayList<GeneFile>();
+		selectedProfile = new ArrayList<GeneFile>();
+		selectedRegion = new ArrayList<GeneFile>();
+		selectedResults = new ArrayList<GeneFile>();
 	}
 
 
@@ -99,14 +111,52 @@ public class WorkSpaceFragment extends Fragment {
 				Intent intent = new Intent(getActivity(),
 						ConvertActivity.class);
 				
-				ArrayList<GeneFile> files = new ArrayList<GeneFile>();
-				
 				intent.putExtra("type", "raw");
-				intent.putExtra("files", files);
+				intent.putExtra("files", getSelectedFiles("raw"));
 				
 				startActivity(intent);
 			}
 		});
+	}
+	
+	
+	private void appendSelectedFile(String type, GeneFile file) {
+		if (type.equals("raw")) {
+			selectedRaw.add(file);
+		} else if (type.equals("profile")) {
+			selectedProfile.add(file);
+		} else if (type.equals("region")) {
+			selectedRegion.add(file);
+		} else if (type.equals("result")) {
+			selectedResults.add(file);
+		}
+	}
+	
+	
+	private void removeSelectedFile(String type, GeneFile file) {
+		if (type.equals("raw")) {
+			selectedRaw.remove(file);
+		} else if (type.equals("profile")) {
+			selectedProfile.remove(file);
+		} else if (type.equals("region")) {
+			selectedRegion.remove(file);
+		} else if (type.equals("result")) {
+			selectedResults.remove(file);
+		}
+	}
+	
+	
+	private ArrayList<GeneFile> getSelectedFiles(String type) {
+		if (type.equals("raw")) {
+			return selectedRaw;
+		} else if (type.equals("profile")) {
+			return selectedProfile;
+		} else if (type.equals("region")) {
+			return selectedRegion;
+		} else if (type.equals("result")) {
+			return selectedResults;
+		}
+		return null;
 	}
 
 
@@ -145,6 +195,8 @@ public class WorkSpaceFragment extends Fragment {
 			if (file != null) {
 				TextView textView = (TextView) view.findViewById(R.id.textView1);
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
+				
+				checkBox.setTag(position);
 
 				textView.setText(file.getName());
 				
@@ -152,7 +204,14 @@ public class WorkSpaceFragment extends Fragment {
 
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+						
+						int position = (Integer) buttonView.getTag();
+						
+						if (isChecked) {
+							appendSelectedFile(data, forShow.get(position));
+						} else {
+							removeSelectedFile(data, forShow.get(position));
+						}
 					}
 				});
 				

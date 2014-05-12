@@ -107,7 +107,6 @@ public class WorkSpaceFragment extends Fragment {
 
 
 		public View getView(int position, View view, ViewGroup parent) {
-
 			Context cont = getActivity();
 			
 			if (view == null) {

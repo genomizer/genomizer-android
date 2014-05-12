@@ -88,7 +88,8 @@
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Convert to Region" />
+                            android:text="Convert to Region"
+                            android:layout_weight="1" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -119,13 +120,15 @@
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Merge Regions" />
+                            android:text="Merge Regions"
+                            android:layout_weight="1" />
                         
                         <Button
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Analyze" />
+                            android:text="Analyze"
+                            android:layout_weight="1" />
                         
                     </LinearLayout>
                 </LinearLayout>
@@ -157,13 +160,15 @@
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Do something.." />
+                            android:text="Do something.."
+                            android:layout_weight="1" />
                         
                         <Button
                             android:id="@+id/analyze_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Analyze" />
+                            android:text="Analyze"
+                            android:layout_weight="1" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>

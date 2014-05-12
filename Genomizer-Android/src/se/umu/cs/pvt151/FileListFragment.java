@@ -9,6 +9,7 @@ package se.umu.cs.pvt151;
  */
 import java.util.ArrayList;
 
+import se.umu.cs.pvt151.SearchListFragment.SearchViewHolder;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -42,12 +43,12 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> region = new ArrayList<String>();
 	
 	//Strings showing type of data.
-	String rawInfo;
-	String profileInfo;
-	String regionInfo;
+	private String rawInfo;
+	private String profileInfo;
+	private String regionInfo;
 	
-	private Parcelable rawState = null;
-	private static final String RAW_STATE = "rawState";
+	private ArrayList<String> selectedDataFiles = new ArrayList<String>();
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class FileListFragment extends Fragment {
 		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
 		region = getActivity().getIntent().getExtras().getStringArrayList("region");
 	}
+	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
@@ -70,12 +72,13 @@ public class FileListFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Send to conversion", Toast.LENGTH_SHORT).show();;
+				Toast.makeText(getActivity().getApplicationContext(), "Send to conversion" + selectedDataFiles.toString(), 
+						Toast.LENGTH_SHORT).show();;
 			}
 			
 		});
 		
-		//public void onActivityCreated(Bundle )
+		
 		//Filling of temp arraylists to display data
 		for(int i=0; i<5; i++) {
 			String temp = "DataFile" + i + ".wig " + "2014-04-29 " + "Yuri";
@@ -124,6 +127,7 @@ public class FileListFragment extends Fragment {
 		protected TextView fileInfo;
 		protected CheckBox fileCheckBox;
 		protected ArrayList<String> forChecks;
+		protected View convertView;
 	}
 	
 	/**
@@ -155,47 +159,73 @@ public class FileListFragment extends Fragment {
 				convertView = getActivity().getLayoutInflater().inflate(
 						R.layout.list_view_checkbox, null);
 				viewHolder = new listViewHolder();
-				viewHolder.fileInfo = (TextView) convertView.findViewById(R.id.textView1);
-				viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(R.id.textForBox);
-				viewHolder.fileCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-					
-					@Override
-					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						//Handling show right checks when scrolled
-						if(buttonView.isShown()) {
-							int getPosition = (Integer) buttonView.getTag();
-							
-							if(!forChecks.isEmpty()) {
-								//Adding values if checkbox is checked
-								forChecks.set(getPosition,buttonView.isChecked());
-								selectedItem[getPosition] = buttonView.isChecked();
-							} else {
-								forChecks.add(getPosition, buttonView.isChecked());
-								selectedItem[getPosition] = buttonView.isChecked();
-							} 
-						} 
-						
-						if(isChecked) {
-							if(data.equals("raw")) {
-								Toast.makeText(getActivity(), "Selecting: " + raw.get(getPos),
-										Toast.LENGTH_SHORT).show();
-							} else if(data.equals("profile")) {
-								Toast.makeText(getActivity(), "Selecting: " + profile.get(getPos), 
-										Toast.LENGTH_SHORT).show();
-							}
-						} else {
-							//Toast.makeText(getActivity(), "Unchecking", Toast.LENGTH_SHORT).show();
-						}
-					}
-				});
 				
-				convertView.setTag(viewHolder);
-				convertView.setTag(R.id.textView1, viewHolder.fileInfo);
-				convertView.setTag(R.id.textForBox, viewHolder.fileCheckBox);
 			} else {
 				viewHolder = (listViewHolder) convertView.getTag();
+				//if(position >= viewHolderList.size()) return getView(position, null, parent);
+				//viewHolder = viewHolderList.get(position);
+				//convertView = viewHolder.convertView;
 			}
 			
+			//viewHolder = new listViewHolder();
+			viewHolder.fileInfo = (TextView) convertView.findViewById(R.id.textView1);
+			viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(R.id.textForBox);
+			final listViewHolder buttonHolder = viewHolder;
+			viewHolder.fileCheckBox.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if(v.isShown()) {
+						int getPosition = (Integer) v.getTag();
+						
+						if(!forChecks.isEmpty()) {
+							//Adding values if checkbox is checked
+							forChecks.set(getPosition,((CompoundButton) v).isChecked());
+							selectedItem[getPosition] = ((CompoundButton) v).isChecked();
+							
+						} else {
+							forChecks.add(getPosition, ((CompoundButton) v).isChecked());
+							selectedItem[getPosition] = ((CompoundButton) v).isChecked();
+						} 
+					} 
+					
+					if(buttonHolder.fileCheckBox.isChecked()) {
+						if(data.equals("raw")) {
+							Toast.makeText(getActivity(), "Selecting: " + raw.get(getPos),
+									Toast.LENGTH_SHORT).show();
+							if(!selectedDataFiles.contains(raw.get(getPos))) {
+								selectedDataFiles.add(raw.get(getPos));
+								buttonHolder.fileCheckBox.setChecked(true);
+								Toast.makeText(getActivity(), "Selecting: " + raw.get(getPos),
+										Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(getActivity(), "Already added: " + raw.get(getPos),
+										Toast.LENGTH_SHORT).show();
+							}
+						} else if(data.equals("profile")) {
+							Toast.makeText(getActivity(), "Selecting: " + profile.get(getPos), 
+									Toast.LENGTH_SHORT).show();
+						}
+					} else if(!buttonHolder.fileCheckBox.isChecked()) {
+						if(data.equals("raw")) {
+							
+							for(int i = 0; i < selectedDataFiles.size(); i++) {
+								if(selectedDataFiles.get(i).equals(rawData.get(getPos))) {
+									selectedDataFiles.remove(i);
+									Toast.makeText(getActivity(), "Removed: " + rawData.get(getPos),
+											Toast.LENGTH_SHORT).show();
+								}
+							}
+						}
+					}
+				}
+				
+			});
+			
+			
+			convertView.setTag(viewHolder);
+			convertView.setTag(R.id.textView1, viewHolder.fileInfo);
+			convertView.setTag(R.id.textForBox, viewHolder.fileCheckBox);
 			
 			viewHolder.fileCheckBox.setTag(position);
 			if(!forChecks.isEmpty()) {

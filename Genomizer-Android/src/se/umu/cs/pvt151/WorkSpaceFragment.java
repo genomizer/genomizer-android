@@ -3,6 +3,7 @@ package se.umu.cs.pvt151;
 import java.util.ArrayList;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.content.Context;
 import android.os.Bundle;
@@ -33,10 +34,10 @@ public class WorkSpaceFragment extends Fragment {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		raw = ComHandler.getFileList("raw");
-		profile = ComHandler.getFileList("profile");
-		region = ComHandler.getFileList("region");
-		results = ComHandler.getFileList("result");
+		raw = DataStorage.getFileList("raw");
+		profile = DataStorage.getFileList("profile");
+		region = DataStorage.getFileList("region");
+		results = DataStorage.getFileList("result");
 	}
 
 

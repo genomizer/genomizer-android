@@ -20,17 +20,6 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
 public class ComHandler {
 
 	private static String serverURL = "http://scratchy.cs.umu.se:7000/";
-
-	private static HashMap<String, ArrayList<GeneFile>> fileMap = 
-			new HashMap<String, ArrayList<GeneFile>>();
-	
-	public static void appendFileList(String key, ArrayList<GeneFile> files) {
-		fileMap.put(key, files);
-	}
-	
-	public static ArrayList<GeneFile> getFileList(String key) {
-		return fileMap.get(key);
-	}
 	
 	/**
 	 * Used to change the targeted server URL.

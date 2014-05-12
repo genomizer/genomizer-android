@@ -60,7 +60,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 			startActivity(i);
 			return true;
 		
-		case R.id.btnhelp_main_menu:
+		case R.id.btnworkspace_main_menu:
 			
 			return true;
 			

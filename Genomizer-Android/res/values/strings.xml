@@ -35,5 +35,6 @@
     <string name="title_activity_work_space">WorkSpaceActivity</string>
     <string name="workspace_title">Workspace</string>
     <string name="hello_world">Hello world</string>
+    <string name="btnworkspace_main_menu">Selected files</string>
 
 </resources>

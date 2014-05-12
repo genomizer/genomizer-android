@@ -1,12 +1,14 @@
 package se.umu.cs.pvt151;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class FileListActivity extends SingleFragmentActivity {
 
 	FileListFragment fragment;
-	
+
 	@Override
 	protected Fragment createFragment() {
 		fragment = new FileListFragment();
@@ -20,7 +22,7 @@ public class FileListActivity extends SingleFragmentActivity {
 		getMenuInflater().inflate(R.menu.file_list, menu);
 		return true;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -28,6 +30,19 @@ public class FileListActivity extends SingleFragmentActivity {
 		//Intent intent = new Intent(FileListActivity.this, ExperimentListActivity.class);
 		//startActivity(intent);
 		finish();
+	}
+
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_workspace:
+				Intent intent = new Intent(this,
+						WorkSpaceActivity.class);
+				startActivity(intent);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

@@ -50,22 +50,22 @@ public class WorkSpaceFragment extends Fragment {
 		
 		
 		TabHost.TabSpec spec = tabHost.newTabSpec("tag1");
-		spec.setContent(R.id.rawlayout);
+		spec.setContent(R.id.raw_layout);
 	    spec.setIndicator("RAW");
 	    tabHost.addTab(spec);
 	    
 	    spec = tabHost.newTabSpec("tag2");
-	    spec.setContent(R.id.profilelayout);
+	    spec.setContent(R.id.profile_layout);
 	    spec.setIndicator("PROFILE");
 	    tabHost.addTab(spec);
 	    
 	    spec = tabHost.newTabSpec("tag3");
-	    spec.setContent(R.id.regionlayout);
+	    spec.setContent(R.id.region_layout);
 	    spec.setIndicator("REGION");
 	    tabHost.addTab(spec);
 	    
 	    spec = tabHost.newTabSpec("tag4");
-	    spec.setContent(R.id.resultlayout);
+	    spec.setContent(R.id.result_layout);
 	    spec.setIndicator("RESULT");
 	    tabHost.addTab(spec);
 

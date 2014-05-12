@@ -29,7 +29,7 @@
                 android:layout_height="match_parent" >
 
                 <LinearLayout
-                    android:id="@+id/rawlayout"
+                    android:id="@+id/raw_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
@@ -57,17 +57,11 @@
                             android:layout_height="wrap_content"
                             android:text="Convert to Profile" />
 
-                        <Button
-                            android:id="@+id/analyze_raw_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Analyze" />
-                        
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/profilelayout"
+                    android:id="@+id/profile_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
@@ -93,12 +87,12 @@
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Convert to Profile" />
+                            android:text="Convert to Region" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/regionlayout"
+                    android:id="@+id/region_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
@@ -124,12 +118,19 @@
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Convert to Profile" />
+                            android:text="Merge Regions" />
+                        
+                        <Button
+                            android:id="@+id/convert_raw_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Analyze" />
+                        
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/resultlayout"
+                    android:id="@+id/result_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
@@ -155,7 +156,13 @@
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Convert to Profile" />
+                            android:text="Do something.." />
+                        
+                        <Button
+                            android:id="@+id/analyze_raw_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Analyze" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>

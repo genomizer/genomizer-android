@@ -28,71 +28,132 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rawlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
                     <ListView
                         android:id="@+id/raw"
                         android:layout_width="match_parent"
-                        android:layout_height="114dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="17"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
                     </ListView>
 
-                    <Button
-                        android:id="@+id/convert_raw_button"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Convert to RAW" />
-                </RelativeLayout>
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
 
-                <RelativeLayout
+                        <Button
+                            android:id="@+id/convert_raw_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Convert to Profile" />
+
+                        <Button
+                            android:id="@+id/analyze_raw_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Analyze" />
+                        
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/profilelayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
                     <ListView
                         android:id="@+id/profile"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
+                        android:layout_weight="17"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
                     </ListView>
-                </RelativeLayout>
 
-                <RelativeLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/convert_raw_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Convert to Profile" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/regionlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
                     <ListView
                         android:id="@+id/region"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
+                        android:layout_weight="17"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
                     </ListView>
-                </RelativeLayout>
 
-                <RelativeLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/convert_raw_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Convert to Profile" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/resultlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
                     <ListView
                         android:id="@+id/result"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
+                        android:layout_weight="17"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
                     </ListView>
-                </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <Button
+                            android:id="@+id/convert_raw_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Convert to Profile" />
+                    </LinearLayout>
+                </LinearLayout>
             </FrameLayout>
         </LinearLayout>
     </TabHost>

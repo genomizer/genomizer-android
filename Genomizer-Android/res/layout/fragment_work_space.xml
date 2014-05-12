@@ -38,7 +38,7 @@
                         android:id="@+id/raw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="17"
+                        android:layout_weight="21"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
@@ -48,18 +48,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal"
+                        android:gravity="bottom" >
 
                         <Button
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="Convert to Profile" />
 
                         <Button
                             android:id="@+id/analyze_raw_button"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="Analyze" />
                         
                     </LinearLayout>
@@ -85,12 +86,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal"
+                        android:gravity="bottom" >
 
                         <Button
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="Convert to Profile" />
                     </LinearLayout>
                 </LinearLayout>
@@ -115,12 +117,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal"
+                        android:gravity="bottom" >
 
                         <Button
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="Convert to Profile" />
                     </LinearLayout>
                 </LinearLayout>
@@ -145,12 +148,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal"
+                        android:gravity="bottom" >
 
                         <Button
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:text="Convert to Profile" />
                     </LinearLayout>
                 </LinearLayout>

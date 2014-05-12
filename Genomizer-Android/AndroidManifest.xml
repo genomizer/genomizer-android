@@ -46,6 +46,10 @@
             android:name="se.umu.cs.pvt151.WorkSpaceActivity"
             android:label="@string/title_activity_work_space" >
         </activity>
+        <activity 
+            android:name="se.umu.cs.pvt151.ConvertActivity"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 </manifest>

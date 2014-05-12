@@ -81,7 +81,7 @@ public class FileListFragment extends Fragment {
 			public void onClick(View arg0) {
 				Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + " file(s) to selection", 
 						Toast.LENGTH_SHORT).show();
-				DataStorage.appendFileList("Raw", rawSelected);
+				DataStorage.appendFileList("raw", rawSelected);
 			}
 			
 		});
@@ -209,7 +209,7 @@ public class FileListFragment extends Fragment {
 										Toast.LENGTH_SHORT).show();
 							}
 						} else if(data.equals("profile")) {
-							Toast.makeText(getActivity(), "Selecting: " + profile.get(getPos), 
+							Toast.makeText(getActivity(), "You can't select profile data at this point", 
 									Toast.LENGTH_SHORT).show();
 						}
 					} else if(!buttonHolder.fileCheckBox.isChecked()) {

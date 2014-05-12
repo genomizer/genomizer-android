@@ -55,7 +55,8 @@
                             android:id="@+id/convert_raw_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Convert to Profile" />
+                            android:text="Convert to Profile"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
                 </LinearLayout>

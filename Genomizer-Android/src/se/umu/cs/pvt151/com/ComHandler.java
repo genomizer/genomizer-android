@@ -19,7 +19,7 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
 
 public class ComHandler {
 
-	private static String serverURL = "http://genomizer.apiary-mock.com/";
+	private static String serverURL = "http://scratchy.cs.umu.se:7050/";
 	
 	/**
 	 * Used to change the targeted server URL.

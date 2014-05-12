@@ -111,6 +111,7 @@ public class WorkSpaceFragment extends Fragment {
 			Context cont = getActivity();
 
 			View view = convertView;
+			
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_checkbox, null);
@@ -124,6 +125,8 @@ public class WorkSpaceFragment extends Fragment {
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
 
 				textView.setText(file.getName());
+				
+				
 
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -132,10 +135,19 @@ public class WorkSpaceFragment extends Fragment {
 
 					}
 				});
+				
+				view.setTag(textView);
+				view.setTag(checkBox);
 			}
 
 			return view;
 		}
+		
+		
+		@Override
+        public boolean hasStableIds() {
+          return true;
+        }
 
 
 		public GeneFile getItem(int position) {

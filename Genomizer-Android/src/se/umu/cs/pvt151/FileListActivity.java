@@ -35,11 +35,11 @@ public class FileListActivity extends SingleFragmentActivity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-//			case R.id.menu_workspace:
-//				Intent intent = new Intent(this,
-//						WorkSpaceActivity.class);
-//				startActivity(intent);
-//				return true;
+			case R.id.menu_workspace:
+				Intent intent = new Intent(this,
+						WorkSpaceActivity.class);
+				startActivity(intent);
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}

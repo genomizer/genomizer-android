@@ -14,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 public class WorkSpaceFragment extends Fragment {
@@ -42,11 +41,31 @@ public class WorkSpaceFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_work_space, parent, false);
+
+		TabHost tabHost = (TabHost) v.findViewById(R.id.tabhost);
+		tabHost.setup();
 		
-		TabHost tabs = (TabHost) v.findViewById(R.id.tabhost);
-	    tabs.setup();
+		
+		TabHost.TabSpec spec = tabHost.newTabSpec("tag1");
+		spec.setContent(R.id.rawlayout);
+	    spec.setIndicator("RAW");
+	    tabHost.addTab(spec);
 	    
-	    tabs.addTab(tabs.newTabSpec("RAW"));
+	    spec = tabHost.newTabSpec("tag2");
+	    spec.setContent(R.id.profilelayout);
+	    spec.setIndicator("PROFILE");
+	    tabHost.addTab(spec);
+	    
+	    spec = tabHost.newTabSpec("tag3");
+	    spec.setContent(R.id.regionlayout);
+	    spec.setIndicator("REGION");
+	    tabHost.addTab(spec);
+	    
+	    spec = tabHost.newTabSpec("tag4");
+	    spec.setContent(R.id.resultlayout);
+	    spec.setIndicator("RESULT");
+	    tabHost.addTab(spec);
+
 
 		listRaw = (ListView) v.findViewById(R.id.raw);
 		listProfile = (ListView) v.findViewById(R.id.profile);
@@ -105,15 +124,15 @@ public class WorkSpaceFragment extends Fragment {
 
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						
+
 					}
 				});
 			}
 
 			return view;
 		}
-		
-		
+
+
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
 		}

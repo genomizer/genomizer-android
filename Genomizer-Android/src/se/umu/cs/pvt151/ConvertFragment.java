@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,17 +38,16 @@ public class ConvertFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		convertListView = (ListView) getActivity().findViewById(R.id.listview_convert);
-		convertFields = new ArrayList<String>();
-		parameterMap = new HashMap<String, String>();
-		checkedFields = new HashMap<String, Boolean>();
-		
-		//TODO test
-		setupTest();
-		
-		setup();
 	}
 	
+	public View onCreateView(android.view.LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_convert, container, false);
+		
+		convertListView = (ListView) v.findViewById(R.id.listview_convert);
+		
+		
+		return v;
+	};
 	
 	private void setupTest() {
 		convertFields.add("A");
@@ -57,6 +58,11 @@ public class ConvertFragment extends Fragment {
 		convertFields.add("F");
 		convertFields.add("G");
 		convertFields.add("H");
+		convertFields.add("I");
+		convertFields.add("J");
+		convertFields.add("K");
+		convertFields.add("L");
+		
 	}
 
 
@@ -69,10 +75,10 @@ public class ConvertFragment extends Fragment {
 			public void onClick(View v) {
 				Log.d("smurf",
 						"--------------------------------------\n"
-								+ convertFields
-								+ "\n"
+								+ "FieldNames:\n" + convertFields
+								+ "\n" + "CheckedList:\n"
 								+ checkedFields
-								+ "\n"
+								+ "\n" + "Parameters:\n"
 								+ parameterMap
 								+ "\n-------------------------------------------------\n");
 				
@@ -91,6 +97,16 @@ public class ConvertFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		
+		
+		convertFields = new ArrayList<String>();
+		parameterMap = new HashMap<String, String>();
+		checkedFields = new HashMap<String, Boolean>();
+
+		// TODO test
+		setupTest();
+
+		setup();
 	}
 	
 	private static class ConvertViewHolder {
@@ -109,14 +125,18 @@ public class ConvertFragment extends Fragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ConvertViewHolder viewHolder = null;
+			ConvertTextWatch textWatcher = null;
 			String temp;
 			
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.conversion_item, null);
 				
 				viewHolder = new ConvertViewHolder();
+				textWatcher = new ConvertTextWatch();
 				viewHolder.title = (TextView) convertView.findViewById(R.id.lbl_conversion_item);
 				viewHolder.parameter = (EditText) convertView.findViewById(R.id.edit_conversion_item);
+				viewHolder.parameter.addTextChangedListener(textWatcher);
+				viewHolder.parameter.setTag(textWatcher);
 				viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox_conversion_item);
 				viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					
@@ -139,6 +159,8 @@ public class ConvertFragment extends Fragment {
 			
 			temp = convertFields.get(position);
 			viewHolder.checkBox.setTag(position);
+			textWatcher = (ConvertTextWatch) viewHolder.parameter.getTag();
+			textWatcher.updatePosition(position);
 			viewHolder.title.setText(temp);
 			viewHolder.parameter.setText(parameterMap.get(temp));
 			viewHolder.checkBox.setChecked(checkedFields.get(temp).booleanValue());
@@ -147,6 +169,41 @@ public class ConvertFragment extends Fragment {
 		}
 
 		
+		
+	}
+	
+	private class ConvertTextWatch implements TextWatcher {
+		
+		private int position;
+
+		public ConvertTextWatch() {
+			
+		}
+		
+		public void updatePosition(int position) {
+			this.position = position;
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			String key = convertFields.get(position);
+			parameterMap.put(key, s.toString());
+			Log.d("smurf", "Position: " + position);
+		}
 		
 	}
 }

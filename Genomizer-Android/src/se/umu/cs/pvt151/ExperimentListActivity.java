@@ -22,8 +22,6 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		Intent intent = new Intent(ExperimentListActivity.this, SearchActivity.class);
-		startActivity(intent);
 		finish();
 	}
 

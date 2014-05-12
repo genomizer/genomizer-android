@@ -8,7 +8,9 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
+
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,9 @@ public class FileListFragment extends Fragment {
 	String profileInfo;
 	String regionInfo;
 	
+	private Parcelable rawState = null;
+	private static final String RAW_STATE = "rawState";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
@@ -56,6 +61,7 @@ public class FileListFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_file_list, parent, false);
 		listRaw = (ListView) v.findViewById(R.id.listView1);
+	
 		listProfile = (ListView) v.findViewById(R.id.listView2);
 		listRegion = (ListView) v.findViewById(R.id.listView3);
 		sendButton = (Button) v.findViewById(R.id.sendBtn);
@@ -69,7 +75,7 @@ public class FileListFragment extends Fragment {
 			
 		});
 		
-		
+		//public void onActivityCreated(Bundle )
 		//Filling of temp arraylists to display data
 		for(int i=0; i<5; i++) {
 			String temp = "DataFile" + i + ".wig " + "2014-04-29 " + "Yuri";

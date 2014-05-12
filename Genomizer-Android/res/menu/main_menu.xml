@@ -10,9 +10,9 @@
         app:showAsAction="never"/>
     
     <item 
-        android:id="@+id/btnhelp_main_menu"
-        android:icon="@drawable/help"
-        android:title="@string/btnhelp_search_menu"
+        android:id="@+id/btnworkspace_main_menu	"
+        android:icon="@drawable/workspace"
+        android:title="@string/btnworkspace_main_menu"
         android:showAsAction="always"
         />
     

@@ -8,8 +8,11 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import se.umu.cs.pvt151.SearchListFragment.SearchViewHolder;
+import se.umu.cs.pvt151.model.DataStorage;
+import se.umu.cs.pvt151.model.GeneFile;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -48,6 +51,9 @@ public class FileListFragment extends Fragment {
 	private String regionInfo;
 	
 	private ArrayList<String> selectedDataFiles = new ArrayList<String>();
+	private ArrayList<GeneFile> allRawFiles = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> rawSelected = new ArrayList<GeneFile>();
+	private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
 	
 	
 	@Override
@@ -56,6 +62,7 @@ public class FileListFragment extends Fragment {
 		raw = getActivity().getIntent().getExtras().getStringArrayList("raw");
 		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
 		region = getActivity().getIntent().getExtras().getStringArrayList("region");
+		allRawFiles = DataStorage.getRawDataFiles();
 	}
 	
 	
@@ -72,8 +79,9 @@ public class FileListFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Send to conversion" + selectedDataFiles.toString(), 
-						Toast.LENGTH_SHORT).show();;
+				Toast.makeText(getActivity().getApplicationContext(), "Send to conversion" + selectedDataFiles.toString()
+						+ "Size fileobj: " + rawSelected.size(), Toast.LENGTH_SHORT).show();
+				DataStorage.appendFileList("Raw", rawSelected);
 			}
 			
 		});
@@ -195,6 +203,7 @@ public class FileListFragment extends Fragment {
 									Toast.LENGTH_SHORT).show();
 							if(!selectedDataFiles.contains(raw.get(getPos))) {
 								selectedDataFiles.add(raw.get(getPos));
+								rawSelected.add(allRawFiles.get(getPos));
 								buttonHolder.fileCheckBox.setChecked(true);
 								Toast.makeText(getActivity(), "Selecting: " + raw.get(getPos),
 										Toast.LENGTH_SHORT).show();
@@ -212,6 +221,7 @@ public class FileListFragment extends Fragment {
 							for(int i = 0; i < selectedDataFiles.size(); i++) {
 								if(selectedDataFiles.get(i).equals(rawData.get(getPos))) {
 									selectedDataFiles.remove(i);
+									rawSelected.remove(i);
 									Toast.makeText(getActivity(), "Removed: " + rawData.get(getPos),
 											Toast.LENGTH_SHORT).show();
 								}

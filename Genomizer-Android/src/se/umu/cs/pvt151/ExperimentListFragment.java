@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.content.Intent;
@@ -113,6 +114,7 @@ public class ExperimentListFragment extends Fragment {
 		for(int i=0; i<files.size(); i++) {
 			if(files.get(i).getType().equals("Raw")) {
 				rawDataFiles.add(files.get(i).getName() + " ");
+				rawToConv.add(files.get(i));
 			} else if(files.get(i).getType().equals("Profile")) {
 				profileDataFiles.add(files.get(i).getName() + " ");
 			} else if(files.get(i).getType().equals("Region")) {
@@ -168,6 +170,7 @@ public class ExperimentListFragment extends Fragment {
 		@Override
 		public void onItemClick(AdapterView<?> Adapter, View view, int position,
 				long arg3) {
+			DataStorage.setRawDataFiles(rawToConv);
 			//Getting list of files belonging to experiment
 			getExperimentFiles(position);
 			//Creating new intent for moving to FileListActivity

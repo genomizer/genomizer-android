@@ -37,7 +37,7 @@ public class FileListActivity extends SingleFragmentActivity {
 		switch (item.getItemId()) {
 			case R.id.menu_workspace:
 				Intent intent = new Intent(this,
-						ExperimentListActivity.class);
+						WorkSpaceActivity.class);
 				startActivity(intent);
 				return true;
 			default:

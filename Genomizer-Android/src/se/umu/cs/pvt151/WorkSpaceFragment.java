@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,36 +60,55 @@ public class WorkSpaceFragment extends Fragment {
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
-		//TODO: Use same adapter for all three listviews, or need to make 3 differents ones?
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
 		boolean[] selectedItem;
 		String data;
 
-		public FileListAdapter(ArrayList<GeneFile> fileInfo, String dataType) {
-			super(getActivity(), 0, fileInfo);
-			forShow = fileInfo;
+		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
+			super(getActivity(), 0, files);
+			forShow = files;
 			data = dataType;
-			selectedItem = new boolean[fileInfo.size()];
+			selectedItem = new boolean[files.size()];
 			for(int i = 0; i<selectedItem.length; i++) {
 				selectedItem[i] = false;
 			}
 		}
-		
-		
+
+
 		public View getView(int position, View convertView, ViewGroup parent) {
-			
+
 			Context cont = getActivity();
-			
-			LayoutInflater inflater = (LayoutInflater) cont
-			        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View v = inflater.inflate(R.layout.list_view_checkbox, parent, false);
-			
-			TextView textView = (TextView) v.findViewById(R.id.textView1);
-			CheckBox checkBox = (CheckBox) v.findViewById(R.id.textForBox);
-			
-			
-			
-			return parent;
+
+			View view = convertView;
+			if (view == null) {
+				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				view = inflater.inflate(R.layout.list_view_checkbox, null);
+			}
+
+
+			GeneFile file = getItem(position);
+
+			if (file != null) {
+				TextView textView = (TextView) view.findViewById(R.id.textView1);
+				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
+
+				textView.setText(file.getName());
+
+				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						
+					}
+				});
+			}
+
+			return view;
+		}
+		
+		
+		public GeneFile getItem(int position) {
+			return forShow.get(position);
 		}
 	}
 }

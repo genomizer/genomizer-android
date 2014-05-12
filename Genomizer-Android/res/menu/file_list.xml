@@ -8,5 +8,11 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
+    
+    <item
+        android:id="@+id/menu_workspace"
+        android:orderInCategory="100"
+        android:title="@string/workspace_title"
+        app:showAsAction="never"/>
 
 </menu>

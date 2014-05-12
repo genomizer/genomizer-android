@@ -96,9 +96,11 @@ public class WorkSpaceFragment extends Fragment {
 			super(getActivity(), 0, files);
 			forShow = files;
 			data = dataType;
-			selectedItem = new boolean[files.size()];
-			for(int i = 0; i<selectedItem.length; i++) {
-				selectedItem[i] = false;
+			if (files != null) {
+				selectedItem = new boolean[files.size()];
+				for(int i = 0; i<selectedItem.length; i++) {
+					selectedItem[i] = false;
+				}
 			}
 		}
 

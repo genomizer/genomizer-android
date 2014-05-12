@@ -15,13 +15,6 @@ public class FileListActivity extends SingleFragmentActivity {
 		return fragment;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.file_list, menu);
-		return true;
-	}
 
 	@Override
 	public void onBackPressed() {
@@ -31,18 +24,4 @@ public class FileListActivity extends SingleFragmentActivity {
 		//startActivity(intent);
 		finish();
 	}
-
-
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.menu_workspace:
-				Intent intent = new Intent(this,
-						WorkSpaceActivity.class);
-				startActivity(intent);
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
-
 }

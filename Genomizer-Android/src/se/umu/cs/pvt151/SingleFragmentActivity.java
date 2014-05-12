@@ -67,7 +67,12 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 			return true;
 			
 		case R.id.action_settings:
-			i = new Intent(this, SettingsActivity.class);
+//			i = new Intent(this, SettingsActivity.class);
+//			startActivity(i);
+			return true;
+			
+		case R.id.btnconvert_main_menu:
+			i = new Intent(this, ConvertActivity.class);
 			startActivity(i);
 			return true;
 			

@@ -23,6 +23,11 @@
         android:showAsAction="always"
         />
     
+    <item android:id="@+id/btnconvert_main_menu"
+        android:title="Convert"
+        android:showAsAction="never"
+        />
+    
    
     
 

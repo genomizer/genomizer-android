@@ -16,7 +16,11 @@ public class DataStorage {
 	}
 	
 	public static ArrayList<GeneFile> getFileList(String key) {
-		return fileMap.get(key);
+		ArrayList<GeneFile> list = fileMap.get(key);
+		if (list == null) {
+			return new ArrayList<GeneFile>();
+		}
+		return list;
 	}
 
 }

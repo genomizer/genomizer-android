@@ -117,6 +117,7 @@ public class ExperimentListFragment extends Fragment {
 				rawToConv.add(files.get(i));
 			} else if(files.get(i).getType().equals("Profile")) {
 				profileDataFiles.add(files.get(i).getName() + " ");
+				profileToConv.add(files.get(i));
 			} else if(files.get(i).getType().equals("Region")) {
 				regionDataFiles.add(files.get(i).getName() + " ");
 			}
@@ -171,6 +172,7 @@ public class ExperimentListFragment extends Fragment {
 		public void onItemClick(AdapterView<?> Adapter, View view, int position,
 				long arg3) {
 			DataStorage.setRawDataFiles(rawToConv);
+			DataStorage.setProfileDataFiles(profileToConv);
 			//Getting list of files belonging to experiment
 			getExperimentFiles(position);
 			//Creating new intent for moving to FileListActivity

@@ -1,17 +1,7 @@
 
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.umu.cs.pvt151.Experiment;
-import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.MsgDeconstructor;
-import android.util.Log;
 import junit.framework.TestCase;
 
 

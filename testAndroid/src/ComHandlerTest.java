@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import se.umu.cs.pvt151.Annotation;
-import se.umu.cs.pvt151.Experiment;
-import se.umu.cs.pvt151.GeneFile;
-import se.umu.cs.pvt151.ProcessingParameters;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.com.GenomizerHttpPackage;
+import se.umu.cs.pvt151.model.Annotation;
+import se.umu.cs.pvt151.model.Experiment;
+import se.umu.cs.pvt151.model.GeneFile;
+import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.util.Log;
 import junit.framework.TestCase;
 
@@ -174,9 +174,9 @@ public class ComHandlerTest extends TestCase {
 		parameters.addParameter("param4");
 		
 		try {
-			GenomizerHttpPackage result = ComHandler.rawToProfile(files.get(0), parameters);
+			boolean result = ComHandler.rawToProfile(files.get(0), parameters);
 			
-			Log.d("RAW", "Code" + result.getCode());
+			Log.d("RAW", "Code" + result);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

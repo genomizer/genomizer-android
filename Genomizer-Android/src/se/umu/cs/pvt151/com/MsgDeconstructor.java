@@ -29,10 +29,10 @@ public class MsgDeconstructor {
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			Annotation annotation = new Annotation();
-			Log.d("LOGIN", obj.toString());
 			annotation.setName(obj.getString("name"));
 			
 			Object valueObject;
+			
 			try {
 				valueObject = obj.get("values");
 			} catch (JSONException e) {
@@ -64,12 +64,11 @@ public class MsgDeconstructor {
 	public static ArrayList<GeneFile> deconFiles(JSONArray json) throws JSONException {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 		
-		Log.d("TestLog", "Json length " + json.length());
-		
 		for (int i = 0; i < json.length(); i++) {
+			
 			JSONObject obj = (JSONObject) json.get(i);
 			GeneFile file = new GeneFile();
-			Log.d("LOGIN", obj.toString());
+
 			file.setFileId(obj.getString("id"));
 			file.setExpId(obj.getString("expId"));
 			file.setType(obj.getString("type"));

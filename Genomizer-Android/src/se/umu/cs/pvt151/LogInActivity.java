@@ -1,7 +1,9 @@
 package se.umu.cs.pvt151;
 
+import se.umu.cs.pvt151.com.ComHandler;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -15,9 +17,16 @@ public class LogInActivity extends SingleFragmentActivity {
 
 	protected Fragment createFragment() {
 		fragment = new LogInFragment();
+		getSavedServerURL();
 		return fragment;
 	}
 
+	private void getSavedServerURL() {
+		SharedPreferences settings = this.getSharedPreferences("Settings", 0);
+		ComHandler.setServerURL(settings.getString("url", ComHandler.getServerURL()));
+		
+	}
+	
 	private boolean isOnline() {
 	    ConnectivityManager cm =
 	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

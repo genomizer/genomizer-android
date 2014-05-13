@@ -8,12 +8,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="se.umu.cs.pvt151.SettingsActivity$PlaceholderFragment" >
 
-    <ListView
-        android:id="@+id/listview1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/settings_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:listitem="@android:layout/simple_list_item_single_choice" >
+        android:layout_alignLeft="@+id/spinner1"
+        android:layout_alignParentTop="true"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    </ListView>
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settings_textview"
+        android:layout_centerHorizontal="true"
+     
+        android:entries="@array/server_list" />
 
 </RelativeLayout>

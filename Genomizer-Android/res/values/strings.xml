@@ -36,5 +36,14 @@
     <string name="workspace_title">Workspace</string>
     <string name="hello_world">Hello world</string>
     <string name="btnworkspace_main_menu">Selected files</string>
+    
+    <string-array name="server_list">
+        
+        <item>http://genomizer.apiary-mock.com/</item>
+        <item>http://scratchy.cs.umu.se:7000/</item>
+        <item>http://scratchy.cs.umu.se:7050/</item>
+        <item>http://scratchy.cs.umu.se:8050/</item>
+        <item>http://scratchy.cs.umu.se:60000/</item>
+    </string-array>
 
 </resources>

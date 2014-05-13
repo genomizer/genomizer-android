@@ -28,6 +28,7 @@ public class ComHandler {
 	 */
 	public static void setServerURL(String serverURL) {
 		ComHandler.serverURL = serverURL;
+
 	}
 	
 	public static String getServerURL() {

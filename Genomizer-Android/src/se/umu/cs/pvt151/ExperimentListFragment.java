@@ -117,6 +117,7 @@ public class ExperimentListFragment extends Fragment {
 				rawToConv.add(files.get(i));
 			} else if(files.get(i).getType().equals("Profile")) {
 				profileDataFiles.add(files.get(i).getName() + " ");
+				profileToConv.add(files.get(i));
 			} else if(files.get(i).getType().equals("Region")) {
 				regionDataFiles.add(files.get(i).getName() + " ");
 			}

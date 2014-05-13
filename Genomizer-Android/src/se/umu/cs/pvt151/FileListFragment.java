@@ -211,6 +211,9 @@ public class FileListFragment extends Fragment {
 						} else if(data.equals("profile")) {
 							Toast.makeText(getActivity(), "You can't select profile data at this point", 
 									Toast.LENGTH_SHORT).show();
+						} else if(data.equals("region")) {
+							Toast.makeText(getActivity(), "You can't select region data at this point", 
+									Toast.LENGTH_SHORT).show();
 						}
 					} else if(!buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {

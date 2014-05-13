@@ -10,6 +10,7 @@ public class DataStorage {
 	private static HashMap<String, ArrayList<GeneFile>> fileMap = 
 			new HashMap<String, ArrayList<GeneFile>>();
 	private static ArrayList<GeneFile> rawData = new ArrayList<GeneFile>();
+	private static ArrayList<GeneFile> profileData = new ArrayList<GeneFile>();
 	
 	
 	public static void appendFileList(String key, ArrayList<GeneFile> files) {
@@ -30,6 +31,14 @@ public class DataStorage {
 	
 	public static ArrayList<GeneFile> getRawDataFiles() {
 		return rawData;
+	}
+	
+	public static void setProfileDataFiles(ArrayList<GeneFile> profile) {
+		profileData = profile;
+	}
+	
+	public static ArrayList<GeneFile> getProfileDataFiles() {
+		return profileData;
 	}
 
 }

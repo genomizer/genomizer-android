@@ -172,6 +172,7 @@ public class ExperimentListFragment extends Fragment {
 		public void onItemClick(AdapterView<?> Adapter, View view, int position,
 				long arg3) {
 			DataStorage.setRawDataFiles(rawToConv);
+			DataStorage.setProfileDataFiles(profileToConv);
 			//Getting list of files belonging to experiment
 			getExperimentFiles(position);
 			//Creating new intent for moving to FileListActivity

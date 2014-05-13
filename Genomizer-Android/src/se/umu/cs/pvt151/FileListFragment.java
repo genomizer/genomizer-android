@@ -50,9 +50,12 @@ public class FileListFragment extends Fragment {
 	private String profileInfo;
 	private String regionInfo;
 	
-	private ArrayList<String> selectedDataFiles = new ArrayList<String>();
+	private ArrayList<String> selectedRawDataFiles = new ArrayList<String>();
+	private ArrayList<String> selectedProfileDataFiles = new ArrayList<String>();
 	private ArrayList<GeneFile> allRawFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> rawSelected = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> allProfileFiles = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
 	
 	
@@ -63,6 +66,7 @@ public class FileListFragment extends Fragment {
 		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
 		region = getActivity().getIntent().getExtras().getStringArrayList("region");
 		allRawFiles = DataStorage.getRawDataFiles();
+		allProfileFiles = DataStorage.getProfileDataFiles();
 	}
 	
 	
@@ -79,9 +83,10 @@ public class FileListFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + " file(s) to selection", 
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + "  raw file(s)"
+						+ "and " + profileSelected.size() + "profile file(s) to selection", Toast.LENGTH_SHORT).show();
 				DataStorage.appendFileList("raw", rawSelected);
+				DataStorage.appendFileList("profile", profileSelected);
 			}
 			
 		});
@@ -200,8 +205,8 @@ public class FileListFragment extends Fragment {
 					if(buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
 							
-							if(!selectedDataFiles.contains(raw.get(getPos))) {
-								selectedDataFiles.add(raw.get(getPos));
+							if(!selectedRawDataFiles.contains(raw.get(getPos))) {
+								selectedRawDataFiles.add(raw.get(getPos));
 								rawSelected.add(allRawFiles.get(getPos));
 								buttonHolder.fileCheckBox.setChecked(true);
 							} else {
@@ -209,8 +214,12 @@ public class FileListFragment extends Fragment {
 										Toast.LENGTH_SHORT).show();
 							}
 						} else if(data.equals("profile")) {
-							Toast.makeText(getActivity(), "You can't select profile data at this point", 
-									Toast.LENGTH_SHORT).show();
+							if(!selectedProfileDataFiles.contains(profile.get(getPos))) {
+								selectedProfileDataFiles.add(profile.get(getPos));
+								profileSelected.add(allProfileFiles.get(getPos));
+								buttonHolder.fileCheckBox.setChecked(true);
+							}
+							
 						} else if(data.equals("region")) {
 							Toast.makeText(getActivity(), "You can't select region data at this point", 
 									Toast.LENGTH_SHORT).show();
@@ -218,10 +227,17 @@ public class FileListFragment extends Fragment {
 					} else if(!buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
 							
-							for(int i = 0; i < selectedDataFiles.size(); i++) {
-								if(selectedDataFiles.get(i).equals(rawData.get(getPos))) {
-									selectedDataFiles.remove(i);
+							for(int i = 0; i < selectedRawDataFiles.size(); i++) {
+								if(selectedRawDataFiles.get(i).equals(raw.get(getPos))) {
+									selectedRawDataFiles.remove(i);
 									rawSelected.remove(i);
+								}
+							}
+						} else if(data.equals("profile")) {
+							for(int j = 0; j < selectedProfileDataFiles.size(); j++) {
+								if(selectedProfileDataFiles.get(j).equals(profile.get(getPos))) {
+									selectedProfileDataFiles.remove(j);
+									profileSelected.remove(j);
 								}
 							}
 						}

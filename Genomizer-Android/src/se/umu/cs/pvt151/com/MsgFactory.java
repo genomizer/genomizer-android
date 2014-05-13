@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 
@@ -37,6 +36,18 @@ public class MsgFactory {
 	}
 	
 	
+	/**
+	 * Creates a conversion JSONObject that contains information about a file, 
+	 * an arbitrary number of parameters, metadata, processtype and genomerelease.
+	 * 
+	 * @param param
+	 * @param file
+	 * @param metadata
+	 * @param processType
+	 * @param genomeRelease
+	 * @return JSONObject
+	 * @throws JSONException
+	 */
 	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, 
 			String metadata, String processType, String genomeRelease) throws JSONException {
 		
@@ -57,6 +68,14 @@ public class MsgFactory {
 	}
 	
 	
+	/**
+	 * Takes a ProcessingParameters object with information about an arbitrary number
+	 * of parameters and returns it as an JSONArray.
+	 * 
+	 * @param param
+	 * @return JSONArray
+	 * @throws JSONException
+	 */
 	private static JSONArray parametersToJson(ProcessingParameters param) throws JSONException {
 		String parameterString = "[";
 		
@@ -67,7 +86,7 @@ public class MsgFactory {
 			parameterString += param.getParameter(i);
 		}
 		parameterString += "]";
-		Log.d("RAW", "String " + parameterString);
+		
 		JSONArray json = new JSONArray(parameterString);
 		
 		return json;

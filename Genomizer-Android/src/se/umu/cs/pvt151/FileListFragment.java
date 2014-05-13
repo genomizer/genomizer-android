@@ -175,12 +175,9 @@ public class FileListFragment extends Fragment {
 				
 			} else {
 				viewHolder = (listViewHolder) convertView.getTag();
-				//if(position >= viewHolderList.size()) return getView(position, null, parent);
-				//viewHolder = viewHolderList.get(position);
-				//convertView = viewHolder.convertView;
+				
 			}
 			
-			//viewHolder = new listViewHolder();
 			viewHolder.fileInfo = (TextView) convertView.findViewById(R.id.textView1);
 			viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(R.id.textForBox);
 			final listViewHolder buttonHolder = viewHolder;

@@ -21,6 +21,7 @@ public class ComHandler {
 
 	private static String serverURL = "http://genomizer.apiary-mock.com/";
 	
+	
 	/**
 	 * Used to change the targeted server URL.
 	 * 
@@ -30,9 +31,16 @@ public class ComHandler {
 		ComHandler.serverURL = serverURL;
 	}
 	
+	
+	/**
+	 * Returns the targeted URL
+	 * 
+	 * @return serverURL The URL of the server.
+	 */
 	public static String getServerURL() {
 		return ComHandler.serverURL;
 	}
+	
 
 	/**
 	 * Sends a login request to the server.
@@ -68,6 +76,7 @@ public class ComHandler {
 			throw new IOException("JSONException. Has the server changed?");
 		}
 	}
+	
 
 	/**
 	 * Sends a search request to the server. The search is based on annotations,
@@ -103,6 +112,7 @@ public class ComHandler {
 			return null;
 		}
 	}
+	
 
 	/**
 	 * Returns the Annotations of the server.
@@ -133,6 +143,7 @@ public class ComHandler {
 			return null;
 		}
 	}
+	
 
 	/**
 	 * Returns a pubmed query string ready to be put in a URL. It is encoded for URLs so it cannot be used elsewhere.
@@ -158,7 +169,16 @@ public class ComHandler {
 	}
 
 
-	public static GenomizerHttpPackage rawToProfile(GeneFile file, ProcessingParameters parameters) throws IOException {
+	/**
+	 * Sends a convertion-task to the server were a specified file is to be converted
+	 * from raw to profile data.
+	 * 
+	 * @param file
+	 * @param parameters
+	 * @return true if the task was recieved and validated by the server, false otherwise
+	 * @throws IOException
+	 */
+	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters) throws IOException {
 
 		try {
 			Communicator communicator = new Communicator(serverURL + "process");
@@ -168,11 +188,11 @@ public class ComHandler {
 			Log.d("RAW", msg.toString());
 			GenomizerHttpPackage response = communicator.sendRequest(msg);
 
-			return response;
+			return response.getCode() == 201;
 
 		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
+			//This is only an issue if the server is changed.
+			throw new IOException("JSONException. Has the server changed?");
 		}
 	}
 }

@@ -22,7 +22,7 @@ public class LogInActivity extends SingleFragmentActivity {
 	}
 
 	private void getSavedServerURL() {
-		SharedPreferences settings = this.getSharedPreferences("Settings", 0);
+		SharedPreferences settings = this.getSharedPreferences("Settings",Context.MODE_PRIVATE);
 		ComHandler.setServerURL(settings.getString("url", ComHandler.getServerURL()));
 		
 	}

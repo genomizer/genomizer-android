@@ -2,7 +2,6 @@ package se.umu.cs.pvt151;
 
 import java.util.ArrayList;
 
-import se.umu.cs.pvt151.FileListFragment.listViewHolder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SearchSettingsFragment extends Fragment {
 	
@@ -33,7 +31,7 @@ public class SearchSettingsFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_search_settings, parent, false);
 		list = (ListView) v.findViewById(R.id.listView1);
 		fillData();
-		list.setAdapter(new FileListAdapter(annotations, "hello"));
+		list.setAdapter(new SearchSettingAdapter(annotations, "hello"));
 		
 		return v;
 	}
@@ -53,13 +51,13 @@ public class SearchSettingsFragment extends Fragment {
 		protected ArrayList<String> forBoxChecks;
 	}
 	
-	private class FileListAdapter extends ArrayAdapter<String> {
+	private class SearchSettingAdapter extends ArrayAdapter<String> {
 		//TODO: Use same adapter for all three listviews, or need to make 3 differents ones?
 		ArrayList<String> forShow = new ArrayList<String>();
 		boolean[] selectedItem;
 		String data;
 
-		public FileListAdapter(ArrayList<String> fileInfo, String dataType) {
+		public SearchSettingAdapter(ArrayList<String> fileInfo, String dataType) {
 				super(getActivity(), 0, fileInfo);
 				forShow = fileInfo;
 				data = dataType;

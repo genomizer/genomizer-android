@@ -48,7 +48,9 @@ public class ExperimentListFragment extends Fragment {
 	
 	private ArrayList<GeneFile> rawToConv = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> profileToConv = new ArrayList<GeneFile>();
-	private ArrayList<GeneFile> regionToRaw = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> regionToConv = new ArrayList<GeneFile>();
+	
+	private String place;
 	//TODO: Some way to deal with supressedwarnings?
 	@SuppressWarnings("unchecked")
 	@Override
@@ -59,6 +61,7 @@ public class ExperimentListFragment extends Fragment {
 		 * as key and values as value.*/
 		searchInfo = (HashMap<String, String>) getActivity().getIntent()
 				.getExtras().getSerializable("searchMap");
+		place = getActivity().getIntent().getStringExtra("from");
 	}
 	
 	@Override
@@ -121,6 +124,7 @@ public class ExperimentListFragment extends Fragment {
 				profileToConv.add(files.get(i));
 			} else if(files.get(i).getType().equals("Region")) {
 				regionDataFiles.add(files.get(i).getName() + " ");
+				regionToConv.add(files.get(i));
 			}
 		}
 	}
@@ -174,6 +178,7 @@ public class ExperimentListFragment extends Fragment {
 				long arg3) {
 			DataStorage.setRawDataFiles(rawToConv);
 			DataStorage.setProfileDataFiles(profileToConv);
+			DataStorage.setRegionDataFiles(regionToConv);
 			//Getting list of files belonging to experiment
 			getExperimentFiles(position);
 			//Creating new intent for moving to FileListActivity
@@ -202,6 +207,7 @@ public class ExperimentListFragment extends Fragment {
 		try {
 			/*Sending HashMap with annotation, value for search to ComHandler,
 			 * receiving a list with experiments matching the search*/
+			
 			forExperiments = ComHandler.search(searchInfo);
 			} catch (IOException e) {
 				makeToast("ERROR: " + e.getMessage(), false);

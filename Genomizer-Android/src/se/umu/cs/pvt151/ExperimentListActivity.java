@@ -8,6 +8,7 @@ package se.umu.cs.pvt151;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.content.Intent;
 public class ExperimentListActivity extends SingleFragmentActivity {
 	ExperimentListFragment fragment;
 	ArrayList<String> annotation = new ArrayList<String>();
+	HashMap<String, String> searchResults = new HashMap<String, String>();
 	
 	@Override
 	protected Fragment createFragment() {
@@ -26,11 +28,14 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		return fragment;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		annotation = getIntent().getExtras().getStringArrayList("Annotations");
+		searchResults = (HashMap<String, String>) getIntent().getExtras().getSerializable("searchMap");
+		
 	}
 	
 	@Override
@@ -66,6 +71,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		case R.id.search_settings:
 			i = new Intent(this, SearchSettingsActivity.class);
 			i.putStringArrayListExtra("Annotations", annotation);
+			i.putExtra("searchMap", searchResults);
 			startActivity(i);
 			return true;
 			
@@ -79,6 +85,12 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putStringArrayList("annotations", annotation);
 	}
 	
 	@Override

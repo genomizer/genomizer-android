@@ -1,7 +1,13 @@
 package se.umu.cs.pvt151;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,11 +29,18 @@ public class SearchSettingsFragment extends Fragment {
 	private ArrayList<Boolean> forBoxChecks = new ArrayList<Boolean>();
 	private Button saveButton;
 	private Button defaultButton;
+	private ArrayList<String> newSettings = new ArrayList<String>();
+	private String setting;
+	private String file;
+	private HashMap<String, String> searchResults = new HashMap<String, String>();
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		annotations = getActivity().getIntent().getExtras().getStringArrayList("Annotations");
+		searchResults = (HashMap<String, String>) getActivity().getIntent()
+				.getExtras().getSerializable("searchMap");
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
@@ -35,7 +48,7 @@ public class SearchSettingsFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_search_settings, parent, false);
 		list = (ListView) v.findViewById(R.id.listView1);
 		fillData();
-		list.setAdapter(new SearchSettingAdapter(annotations, "hello"));
+		list.setAdapter(new SearchSettingAdapter(annotations));
 		
 		saveButton = (Button) v.findViewById(R.id.save_srcbtn);
 		defaultButton = (Button) v.findViewById(R.id.default_btn);
@@ -44,7 +57,13 @@ public class SearchSettingsFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Saving settings", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity().getApplicationContext(), "Adding: " + newSettings.toString(), 
+						Toast.LENGTH_SHORT).show();
+				saveSettings();
+				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
+				intent.putStringArrayListExtra("Annotations", annotations);
+				intent.putExtra("searchMap", searchResults);
+				startActivity(intent);
 			}
 			
 		});
@@ -61,6 +80,31 @@ public class SearchSettingsFragment extends Fragment {
 		return v;
 	}
 	
+	private void saveSettings() {
+		setting = "";
+		Context cont = getActivity();
+		getActivity().deleteFile("Settings.txt");
+		file = "Settings.txt";
+		
+		if(!newSettings.isEmpty()) {
+			for(int i = 0; i < newSettings.size(); i++) {
+				setting = setting + newSettings.get(i) + ";";
+			}
+		}
+		
+		try {
+			FileOutputStream fos = cont.getApplicationContext().openFileOutput(file, Context.MODE_APPEND);
+			fos.write(setting.getBytes());
+			fos.close();
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Temp method to fill array with values
 	 */
@@ -80,12 +124,10 @@ public class SearchSettingsFragment extends Fragment {
 		//TODO: Use same adapter for all three listviews, or need to make 3 differents ones?
 		ArrayList<String> forShow = new ArrayList<String>();
 		boolean[] selectedItem;
-		String data;
 
-		public SearchSettingAdapter(ArrayList<String> fileInfo, String dataType) {
+		public SearchSettingAdapter(ArrayList<String> fileInfo) {
 				super(getActivity(), 0, fileInfo);
 				forShow = fileInfo;
-				data = dataType;
 				selectedItem = new boolean[fileInfo.size()];
 				for(int i = 0; i<selectedItem.length; i++) {
 					selectedItem[i] = false;
@@ -129,9 +171,9 @@ public class SearchSettingsFragment extends Fragment {
 					} 
 					
 					if(buttonHolder.annotationCheckBox.isChecked()) {
-						
+						newSettings.add(annotations.get(getPos));
 					} else if(!buttonHolder.annotationCheckBox.isChecked()) {
-						
+						newSettings.remove(annotations.get(getPos));
 					}
 				}
 				

@@ -52,10 +52,13 @@ public class FileListFragment extends Fragment {
 	
 	private ArrayList<String> selectedRawDataFiles = new ArrayList<String>();
 	private ArrayList<String> selectedProfileDataFiles = new ArrayList<String>();
+	private ArrayList<String> selectedRegionDataFiles = new ArrayList<String>();
 	private ArrayList<GeneFile> allRawFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> rawSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> allProfileFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> allRegionFiles = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
 	private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
 	
 	
@@ -67,6 +70,7 @@ public class FileListFragment extends Fragment {
 		region = getActivity().getIntent().getExtras().getStringArrayList("region");
 		allRawFiles = DataStorage.getRawDataFiles();
 		allProfileFiles = DataStorage.getProfileDataFiles();
+		allRegionFiles = DataStorage.getRegionDataFiles();
 	}
 	
 	
@@ -84,9 +88,11 @@ public class FileListFragment extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + "  raw file(s)"
-						+ "and " + profileSelected.size() + "profile file(s) to selection", Toast.LENGTH_SHORT).show();
+						+ "and " + profileSelected.size() + "profile file(s) and " 
+						+ regionSelected.size() + " region file(s) added to selection", Toast.LENGTH_SHORT).show();
 				DataStorage.appendFileList("raw", rawSelected);
 				DataStorage.appendFileList("profile", profileSelected);
+				DataStorage.appendFileList("region", regionSelected);
 			}
 			
 		});
@@ -121,7 +127,6 @@ public class FileListFragment extends Fragment {
 		
 		return v;
 	}
-	
 	
 	/**
 	 * Temp method to fill array with values
@@ -219,8 +224,11 @@ public class FileListFragment extends Fragment {
 							}
 							
 						} else if(data.equals("region")) {
-							Toast.makeText(getActivity(), "You can't select region data at this point", 
-									Toast.LENGTH_SHORT).show();
+							if(!selectedRegionDataFiles.contains(region.get(getPos))) {
+								selectedRegionDataFiles.add(region.get(getPos));
+								regionSelected.add(allRegionFiles.get(getPos));
+								buttonHolder.fileCheckBox.setChecked(true);
+							}
 						}
 					} else if(!buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
@@ -236,6 +244,13 @@ public class FileListFragment extends Fragment {
 								if(selectedProfileDataFiles.get(j).equals(profile.get(getPos))) {
 									selectedProfileDataFiles.remove(j);
 									profileSelected.remove(j);
+								}
+							}
+						} else if(data.equals("region")) {
+							for(int j = 0; j < selectedRegionDataFiles.size(); j++) {
+								if(selectedRegionDataFiles.get(j).equals(region.get(getPos))) {
+									selectedRegionDataFiles.remove(j);
+									regionSelected.remove(j);
 								}
 							}
 						}

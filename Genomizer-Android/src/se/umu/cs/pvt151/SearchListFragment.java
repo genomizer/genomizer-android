@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -35,19 +34,20 @@ import android.widget.Spinner;
  * the user for searching.
  * 
  * @author Anders Lundberg, dv12alg
- * @author Erik Åberg, c11eag
+ * @author Erik Åberg, c11ean
  *
  */
 public class SearchListFragment extends ListFragment {
 
-	protected static final String SEARCH_MAP = "searchMap";
+	private static final String ANNOTATIONS_EXTRA = "Annotations";
+	protected static final String SEARCH_MAP_EXTRA = "searchMap";
 	protected static final String CONNECTION_ERROR = "Unable to connect to the remote server";
 	protected static final String NO_SEARCH_VALUES = "No annotations choosen for search";
 	
 	private ArrayList<String> mAnnotationNamesList;
-	private Button searchButton;
+	private Button mSearchButton;
 	private ArrayList<Annotation> mAnnotations;
-	private ArrayList<SearchViewHolder> viewHolderList = new ArrayList<SearchViewHolder>();
+	private ArrayList<SearchViewHolder> mViewHolderList = new ArrayList<SearchViewHolder>();
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +64,6 @@ public class SearchListFragment extends ListFragment {
 		new AnnotationsTask().execute();
 	}
 	
-	
-	
-
 	/**
 	 * Initializes a new SearchListAdapter for the listView in the fragment 
 	 * containing the generated annotations from the database and
@@ -88,8 +85,8 @@ public class SearchListFragment extends ListFragment {
 	 * @param footer the view where the button is placed
 	 */
 	private void generateSearchButton(View footer) {
-		searchButton = (Button) footer.findViewById(R.id.btn_search_footer);
-		searchButton.setOnClickListener(new OnClickListener() {
+		mSearchButton = (Button) footer.findViewById(R.id.btn_search_footer);
+		mSearchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -100,7 +97,7 @@ public class SearchListFragment extends ListFragment {
 
 				HashMap<String, String> search = new HashMap<String, String>();
 
-				for (SearchViewHolder vh : viewHolderList) {
+				for (SearchViewHolder vh : mViewHolderList) {
 					if (vh.isChecked && vh.isDropDown) {
 						key = vh.textView.getText().toString();
 						for (Annotation annotation : mAnnotations) {
@@ -122,13 +119,11 @@ public class SearchListFragment extends ListFragment {
 					}
 				}
 				
-				//TODO remove this
-				Log.d("SEARCH", "Search: " + search.toString());
-
 				if (search.isEmpty()) {
 					toastMessage(NO_SEARCH_VALUES);
 				} else {
-					intent.putExtra(SEARCH_MAP, search);
+					intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
+					intent.putExtra(SEARCH_MAP_EXTRA, search);
 					startActivity(intent);
 					
 				}
@@ -185,7 +180,7 @@ public class SearchListFragment extends ListFragment {
 	 * Will use the searchViewHolder as memory of the list scrolled out of view.
 	 * 
 	 * @author Anders Lundberg, dv12alg 
-	 * @author Erik Åberg, c11eag
+	 * @author Erik Åberg, c11ean
 	 */
 	private class SearchListAdapter extends ArrayAdapter<String> {
 		
@@ -237,13 +232,13 @@ public class SearchListFragment extends ListFragment {
 					makeSpinnerHolder(position, convertView, viewHolder,
 							spinner);
 				}
-				viewHolderList.add(viewHolder);
+				mViewHolderList.add(viewHolder);
 				viewHolder.convertView = convertView;
 
 				
 			} else {
-				if(position >= viewHolderList.size()) return getView(position, null, parent);
-				viewHolder = viewHolderList.get(position);
+				if(position >= mViewHolderList.size()) return getView(position, null, parent);
+				viewHolder = mViewHolderList.get(position);
 				convertView = viewHolder.convertView;
 				
 				if(viewHolder.isDropDown) {				
@@ -351,26 +346,43 @@ public class SearchListFragment extends ListFragment {
 	 * collects user input from freetextfields. 
 	 * 
 	 * @author Anders Lundberg, dv12alg 
-	 * @author Erik Åberg, c11eag
+	 * @author Erik Åberg, c11ean
 	 */
 	private class TheTextWatcher implements TextWatcher {
 
 		private SearchViewHolder viewHolder;
-
+		
+		/**
+		 * Creates a new TheTextWatcher object.
+		 * 
+		 * @param viewHolder the viewHolder that contains the EditText that
+		 * is connected with the textWatcher.
+		 */
 		public TheTextWatcher(SearchViewHolder viewHolder) {
 			this.viewHolder = viewHolder;
 		}
+		
+		/**
+		 * After text is changed, updates the freeText field in the viewHolder
+		 * connected to the specific field.
+		 */
 		@Override
 		public void afterTextChanged(Editable s) {
 			viewHolder.freetext = s.toString();	
 		}
-
+		
+		/**
+		 * Unimplemented
+		 */
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
 
 		}
-
+		
+		/**
+		 * Unimplemented
+		 */
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
@@ -384,7 +396,7 @@ public class SearchListFragment extends ListFragment {
 	 * search view in the Genomizer android application.
 	 * 
 	 * @author Anders Lundberg, dv12alg 
-	 * @author Erik Åberg, c11eag
+	 * @author Erik Åberg, c11ean
 	 *
 	 */
 	private class AnnotationsTask extends AsyncTask<Void, Void, Void> {
@@ -425,6 +437,7 @@ public class SearchListFragment extends ListFragment {
 			} else {
 				toastMessage(CONNECTION_ERROR);
 				except.printStackTrace();
+				except = null;
 			}
 			
 		}

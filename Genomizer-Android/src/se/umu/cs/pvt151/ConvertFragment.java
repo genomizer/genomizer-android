@@ -171,7 +171,7 @@ public class ConvertFragment extends Fragment {
 	}
 	
 	protected void toastUser(String string) {
-		Toast.makeText(getActivity().getApplicationContext(), string, Toast.LENGTH_SHORT);
+		Toast.makeText(getActivity().getApplicationContext(), string, Toast.LENGTH_SHORT).show();
 		
 	}
 
@@ -180,14 +180,25 @@ public class ConvertFragment extends Fragment {
 	 */
 	private void setupRawParameters() {
 		convertFields.add("Bowtie parameters");
-		convertFields.add("Genome index reference");
+		convertFields.add("Genome version");
+		convertFields.add("SAM to GFF");
+		convertFields.add("GFF to SGR");
 		convertFields.add("Smoothing");
 		convertFields.add("Step size");
+		convertFields.add("Ratio Calculation");
+		convertFields.add("Ratio");
+		convertFields.add("Ratio smoothing");
 		
-		hintList.add("-a -m l --best -p 10 -v 2 -q -S");
-		hintList.add("d_melanogaster_fb5_22");
-		hintList.add("10 1 5 0 1");
-		hintList.add("y standard, 10 standard");
+		
+		hintList.add("1");
+		hintList.add("2");
+		hintList.add("3");
+		hintList.add("4");
+		hintList.add("5");
+		hintList.add("6");
+		hintList.add("7");
+		hintList.add("8");
+		hintList.add("9");
 		
 		convertLabel.setText(PARAMETERS_RAW_PROFILE);
 	}

@@ -10,9 +10,23 @@
         app:showAsAction="never"/>
     
     <item
-        android:id="@+id/menu_workspace"
-        android:orderInCategory="100"
-        android:title="@string/workspace_title"
-        app:showAsAction="never"/>
+        android:id="@+id/search_settings"
+        android:orderInCategory="99"
+        android:title="@string/search_settings"
+        android:showAsAction="never"/>
+    
+    <item 
+        android:id="@+id/btnworkspace_main_menu	"
+        android:icon="@drawable/workspace"
+        android:title="@string/btnworkspace_main_menu"
+        android:showAsAction="always"
+        />
+    
+     <item 
+        android:id="@+id/btnsearch_main_menu"
+        android:icon="@drawable/search"
+        android:title="@string/btnsearch_search_menu"
+        android:showAsAction="always"
+        />
 
 </menu>

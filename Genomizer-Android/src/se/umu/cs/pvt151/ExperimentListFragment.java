@@ -93,7 +93,8 @@ public class ExperimentListFragment extends Fragment {
 		//Set onItemclicklistener to list, used to detect clicks
 		list.setOnItemClickListener(new ListHandler());
 		//Set selector to view to change looks on view when item is clicked
-		list.setSelector(R.drawable.explist_selector);
+		
+		//list.setSelector(R.drawable.explist_selector);
 		
 		return v;
 	}

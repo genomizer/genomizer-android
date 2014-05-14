@@ -15,6 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * LogInFragment is the view that presents the user with two input fields
+ * for user name and user password. These are used to verify server access and 
+ * "log into" the server.
+ */
 public class LogInFragment extends Fragment {
 
 	private static final String CONNECTION_ERROR = "Error. Could not connect to the server.";
@@ -25,11 +30,16 @@ public class LogInFragment extends Fragment {
 	private Button button;
 	private ProgressDialog progress;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
+	/**
+	 * Inflates the LogInFragment view and preserves references to the 
+	 * edit text fields.
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);
@@ -56,7 +66,10 @@ public class LogInFragment extends Fragment {
 	}
 
 	/**
-	 * 
+	 * Fetches the text that user inputs into the user name and user password
+	 * input fields. These strings are used to verify server access through the
+	 * ComHandler. The ComHandler receives a token identifier if the user gets
+	 * access, and is needed throughout the session.
 	 */
 	private void sendLoginRequest() {
 		String uname = userName.getText().toString();
@@ -68,13 +81,8 @@ public class LogInFragment extends Fragment {
 		}
 
 		try {
-
-			boolean loginOk = ComHandler.login(uname, password);
-
-			// A correct login will proceed to the next activity.
-			// Going to this view without a correct login results in
-			// the device not having a token and can as such not
-			// communicate with the server.
+			boolean loginOk = ComHandler.login(uname, password);		
+			
 			if (loginOk) {
 				startSearchActivity();
 			} else {
@@ -110,21 +118,27 @@ public class LogInFragment extends Fragment {
 
 	}
 
+	/**
+	 * Initiate the activity that will be viewed after the login view.
+	 */
 	private void startSearchActivity() {
-
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 		getActivity().finish();
-
 	}
 
+	/**
+	 * 
+	 * An AsyncTask class which is used to perform the login communication 
+	 * in a background thread. When the background activity is done the
+	 * focus is returned to the callee. 
+	 *
+	 */
 	private class LoginTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-
 			sendLoginRequest();
-
 			return null;
 		}
 

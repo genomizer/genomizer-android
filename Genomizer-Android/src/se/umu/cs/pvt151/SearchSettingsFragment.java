@@ -9,16 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchSettingsFragment extends Fragment {
 	
 	private ArrayList<String> annotations = new ArrayList<String>();
 	private ListView list;
 	private ArrayList<Boolean> forBoxChecks = new ArrayList<Boolean>();
+	private Button saveButton;
+	private Button defaultButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,27 @@ public class SearchSettingsFragment extends Fragment {
 		list = (ListView) v.findViewById(R.id.listView1);
 		fillData();
 		list.setAdapter(new SearchSettingAdapter(annotations, "hello"));
+		
+		saveButton = (Button) v.findViewById(R.id.save_srcbtn);
+		defaultButton = (Button) v.findViewById(R.id.default_btn);
+		
+		saveButton.setOnClickListener(new OnClickListener () {
+
+			@Override
+			public void onClick(View arg0) {
+				Toast.makeText(getActivity().getApplicationContext(), "Saving settings", Toast.LENGTH_SHORT).show();
+			}
+			
+		});
+		
+		defaultButton.setOnClickListener(new OnClickListener () {
+
+			@Override
+			public void onClick(View arg0) {
+				Toast.makeText(getActivity().getApplicationContext(), "Use default", Toast.LENGTH_SHORT).show();
+			}
+			
+		});
 		
 		return v;
 	}

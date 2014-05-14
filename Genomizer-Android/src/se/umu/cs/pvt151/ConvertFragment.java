@@ -28,6 +28,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author Anders
@@ -48,6 +49,7 @@ public class ConvertFragment extends Fragment {
 	private String type;
 	private ArrayList<GeneFile> files;
 	private TextView convertLabel;
+	public boolean taskCompleted;
 
 	/**
 	 * 
@@ -148,10 +150,31 @@ public class ConvertFragment extends Fragment {
 				
 				new ConvertTask().execute(parameters);
 				
+				
 			}
+
+			
 		});
 	}
 	
+	
+	/**
+	 * 
+	 */
+	private void conversionCheck() {
+		if (taskCompleted) {
+			toastUser("Conversion started");
+		} else {
+			toastUser("Conversion malfunction");
+		}
+		taskCompleted = false;
+	}
+	
+	protected void toastUser(String string) {
+		Toast.makeText(getActivity().getApplicationContext(), string, Toast.LENGTH_SHORT);
+		
+	}
+
 	/**
 	 * 
 	 */
@@ -297,12 +320,19 @@ public class ConvertFragment extends Fragment {
 		protected Void doInBackground(ProcessingParameters... params) {
 			
 			try {
-				ComHandler.rawToProfile(files.get(0), params[0]);
+				taskCompleted = ComHandler.rawToProfile(files.get(0), params[0]);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
 			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			conversionCheck();
 		}
 		
 	}

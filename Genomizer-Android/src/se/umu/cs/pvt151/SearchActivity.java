@@ -4,6 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 
+/**
+ * Activity class to start up the SearchListFragment in the Genomizer
+ * android-application.
+ * 
+ * @author Anders Lundberg, dv12alg
+ * @author Erik Åberg, c11ean
+ *
+ */
 public class SearchActivity extends SingleFragmentActivity {
 
 	private static final String NEGATIVE_RESPONSE = "No";
@@ -12,8 +20,7 @@ public class SearchActivity extends SingleFragmentActivity {
 	private static final String EXIT_QUERY = "Are you sure you want to exit?";
 
 	@Override
-	protected Fragment createFragment() {
-		
+	protected Fragment createFragment() {	
 		return new SearchListFragment();
 	}
 	

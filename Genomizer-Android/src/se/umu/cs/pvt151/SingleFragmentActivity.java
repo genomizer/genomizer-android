@@ -10,10 +10,25 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+/**
+ * Abstract FragmentActivity class for managing fragments into the empty
+ * fragment container (activity_fragment.xml). Manages a global menu for the
+ * Activitys extending this class.
+ *  
+ * @author Anders Lundberg, dv12alg
+ *
+ */
 public abstract class SingleFragmentActivity extends FragmentActivity{
-
+	
 	private boolean inflateMenu = false;
-
+	
+	/**
+	 * For use with the Genomizer Android application.
+	 * Manages the setup for the fragment, if the current fragment don't exist
+	 * it will create a new instance of it before fragmentTransaction.
+	 * Implemented with a global menu for all fragments extending this class
+	 * except the LoginFragment. 
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_activity);
@@ -33,9 +48,18 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 		}
 		Log.d("smurf", fragment.getClass().getSimpleName());
 	}
-
+	
+	/**
+	 * Needs to be implemented to manage how the fragment is to be
+	 * created for the SingleFragmentActivity.
+	 * 
+	 * @return the created fragment to transact into the container
+	 */
 	protected abstract Fragment createFragment();
 	
+	/**
+	 * Inflates the global menu for use in the Genomizer Android application.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
@@ -50,6 +74,10 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 		return true;
 	}
 	
+	/**
+	 * Defines how the different menu options in the global menu is
+	 * implemented.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent i;

@@ -11,6 +11,7 @@ public class DataStorage {
 			new HashMap<String, ArrayList<GeneFile>>();
 	private static ArrayList<GeneFile> rawData = new ArrayList<GeneFile>();
 	private static ArrayList<GeneFile> profileData = new ArrayList<GeneFile>();
+	private static ArrayList<GeneFile> regionData;
 
 
 	public static void appendFileList(String key, ArrayList<GeneFile> files) {
@@ -46,6 +47,15 @@ public class DataStorage {
 
 	public static ArrayList<GeneFile> getProfileDataFiles() {
 		return profileData;
+	}
+
+	public static ArrayList<GeneFile> getRegionDataFiles() {
+		return regionData;
+	}
+
+	public static void setRegionDataFiles(ArrayList<GeneFile> regionToConv) {
+		regionData = regionToConv;
+		
 	}
 
 }

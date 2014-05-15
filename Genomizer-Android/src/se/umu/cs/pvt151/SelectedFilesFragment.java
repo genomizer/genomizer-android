@@ -57,7 +57,7 @@ public class SelectedFilesFragment extends Fragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_work_space, parent, false);
+		View v = inflater.inflate(R.layout.fragment_selected_files, parent, false);
 
 		TabHost tabHost = (TabHost) v.findViewById(R.id.tabhost);
 		tabHost.setup();

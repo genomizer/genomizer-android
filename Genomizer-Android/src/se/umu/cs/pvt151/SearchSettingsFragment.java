@@ -31,7 +31,7 @@ public class SearchSettingsFragment extends Fragment {
 	private Button defaultButton;
 	private ArrayList<String> newSettings = new ArrayList<String>();
 	private String setting;
-	private String file;
+	private String file = "SearchSettings.txt";
 	private HashMap<String, String> searchResults = new HashMap<String, String>();
 	
 	@SuppressWarnings("unchecked")
@@ -83,9 +83,8 @@ public class SearchSettingsFragment extends Fragment {
 	private void saveSettings() {
 		setting = "";
 		Context cont = getActivity();
-		getActivity().deleteFile("Settings.txt");
-		file = "Settings.txt";
-		
+		getActivity().deleteFile(file);
+				
 		if(!newSettings.isEmpty()) {
 			for(int i = 0; i < newSettings.size(); i++) {
 				setting = setting + newSettings.get(i) + ";";

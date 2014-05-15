@@ -1,17 +1,11 @@
 package se.umu.cs.pvt151;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +89,14 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 					break;
 				}
 			}
+		} else if(menuString.equals("Dev mode")) {
+			devMode = !devMode;
+			mSavedURLsList.clear();
+			if(!devMode) {			
+				fetchSavedURLs();
+			}			
+			createAdapter();
+			markCurrentlyUsedURL();
 		}
 		
 	}

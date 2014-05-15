@@ -15,5 +15,10 @@
         android:title="@string/action_settings_remove"
         app:showAsAction="never"/>
        
+       <item
+        android:id="@+id/action_settings_dev"
+        android:orderInCategory="100"
+        android:title="@string/action_settings_dev"
+        app:showAsAction="never"/>
 
 </menu>

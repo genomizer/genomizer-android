@@ -42,10 +42,10 @@
     <string name="use_default">Use default</string>
     
     <string name="action_settings">Settings</string>
-    <string name="action_settings_edit">Edit selected URL</string>
     <string name="action_settings_add">Add new URL</string>
     <string name="action_settings_remove">Remove selected URL</string>
-
+	<string name="action_settings_dev">Dev mode</string>
+	
     <string-array name="server_list">
         <item>http://genomizer.apiary-mock.com/</item>
         <item>http://scratchy.cs.umu.se:7000/</item>

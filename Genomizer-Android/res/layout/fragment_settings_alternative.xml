@@ -9,30 +9,32 @@
     tools:context="se.umu.cs.pvt151.SettingsActivity$PlaceholderFragment" >
 
     <TextView
-        android:id="@+id/settings_textview"
+        android:id="@+id/settings_textview_alternative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_alignParentTop="true"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/settings_textview"
-        android:layout_marginLeft="4dp"
-        android:entries="@array/server_list" />
     
-       <Button
-        android:id="@+id/settingsEditButton"
-        android:layout_below="@+id/spinner1"
+    <EditText 
+         android:id="@+id/settings_edittext_alternative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_below="@+id/settings_textview_alternative"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:hint="Small Text"
+        />
+    
+   	<Button
+        android:id="@+id/settingsEditButton_alternative"
+        android:layout_below="@+id/settings_edittext_alternative"
        	android:layout_marginLeft="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="editURLs"
         android:textSize="12sp"        
-        android:text="Edit urls" />
-
-</RelativeLayout>
+        android:text="Save URL" />
+    
+</RelativeLayout>    

@@ -12,6 +12,7 @@ import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.ConversionParameter;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.ProcessingParameters;
+import android.database.DataSetObserver;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +70,8 @@ public class ConvertFragment extends Fragment {
 		
 		convertListView = (ListView) v.findViewById(R.id.listview_convert);
 		convertLabel = (TextView) v.findViewById(R.id.lbl_convert_header);
+		convertLabel.setText(PARAMETERS_RAW_PROFILE);
+
 		
 		return v;
 	}
@@ -101,10 +105,10 @@ public class ConvertFragment extends Fragment {
 	 */
 	private void createLists() {
 		parameters = new ArrayList<ConversionParameter>();
+		convertFields = new ArrayList<String>();
 		setupRawParameters();
 		
 		
-//		convertFields = new ArrayList<String>();
 //		hintList = new ArrayList<String>();
 //		parameterMap = new HashMap<String, String>();
 //		checkedFields = new HashMap<String, Boolean>();
@@ -267,7 +271,6 @@ public class ConvertFragment extends Fragment {
 //		valueList.put("SAM to GFF", new String[]{"Yes", "No"});
 //		valueList.put("GFF to SGR", new String[]{"Yes", "No"});
 		
-		convertLabel.setText(PARAMETERS_RAW_PROFILE);
 	}
 	
 	/**
@@ -305,6 +308,7 @@ public class ConvertFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ConvertViewHolder viewHolder = null;
 			ConvertTextWatch textWatcher = null;
+			ArrayAdapter<String> spinAdapter;
 			int resource;
 			boolean fieldIsFreetext = parameters.get(position).getParameterType().equals("freetext");
 			String temp;
@@ -337,6 +341,10 @@ public class ConvertFragment extends Fragment {
 					viewHolder.parameter.setTag(textWatcher);
 				} else {
 					viewHolder.spinner = (Spinner) convertView.findViewById(R.id.spinner_conversion_item);
+					spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_item, parameters.get(position).getValues());
+					spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					
+					viewHolder.spinner.setAdapter(spinAdapter);
 					viewHolder.spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 						@Override
@@ -347,13 +355,6 @@ public class ConvertFragment extends Fragment {
 							
 							c.setSelectedSpinnerVal(position);
 							c.setPresentValue(parent.getSelectedItem().toString());
-							
-									choosenConversionParameters.put(
-											convertFields.get(pos),
-											parent.getItemAtPosition(position)
-													.toString());
-							
-							// TODO Auto-generated method stub
 							
 						}
 
@@ -377,16 +378,21 @@ public class ConvertFragment extends Fragment {
 				viewHolder = (ConvertViewHolder) convertView.getTag();
 			}
 			
-			temp = convertFields.get(position);
+			if (fieldIsFreetext) {
+				textWatcher = (ConvertTextWatch) viewHolder.parameter.getTag();
+				textWatcher.updatePosition(position);
+				viewHolder.parameter.setHint("Nudge nudge, you know what i mean");
+				viewHolder.parameter.setText(parameters.get(position).getPresentValue());
+				
+			} else {
+				viewHolder.spinner.setTag(position);
+				viewHolder.spinner.setSelection(parameters.get(position).getSelectedSpinnerVal());
+				
+			}
+			
 			viewHolder.checkBox.setTag(position);
-			viewHolder.spinner.setTag(position);
-			textWatcher = (ConvertTextWatch) viewHolder.parameter.getTag();
-			textWatcher.updatePosition(position);
-			viewHolder.title.setText(temp);
-			viewHolder.parameter.setHint(hintList.get(position));
-			viewHolder.parameter.setText(parameterMap.get(temp));
-			viewHolder.checkBox.setChecked(checkedFields.get(temp).booleanValue());
-			viewHolder.spinner.setSelection(position);
+			viewHolder.title.setText(parameters.get(position).getName());
+			viewHolder.checkBox.setChecked(parameters.get(position).isChecked());
 			
 			return convertView;
 		}
@@ -423,7 +429,7 @@ public class ConvertFragment extends Fragment {
 		@Override
 		public void afterTextChanged(Editable s) {
 			String key = convertFields.get(position);
-			parameterMap.put(key, s.toString());
+			parameters.get(position).setPresentValue(s.toString());
 		}
 
 

@@ -49,7 +49,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.WorkSpaceActivity"
+            android:name="se.umu.cs.pvt151.SelectedFilesActivity"
             android:label="@string/title_activity_work_space" >
         </activity>
         <activity

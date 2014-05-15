@@ -59,7 +59,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		
 		case R.id.btnworkspace_main_menu:
 			Intent intent = new Intent(this,
-					WorkSpaceActivity.class);
+					SelectedFilesActivity.class);
 			startActivity(intent);
 			return true;
 			

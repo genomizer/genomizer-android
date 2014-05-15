@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-public class WorkSpaceFragment extends Fragment {
+public class SelectedFilesFragment extends Fragment {
 
 	private ListView listRaw;
 	private ListView listProfile;

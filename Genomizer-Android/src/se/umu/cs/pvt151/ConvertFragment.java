@@ -157,22 +157,33 @@ public class ConvertFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-//				Log.d("smurf",
-//						"--------------------------------------\n"
-//								+ "FieldNames:\n" + convertFields
-//								+ "\n" + "CheckedList:\n"
-//								+ checkedFields
-//								+ "\n" + "Parameters:\n"
-//								+ parameterMap
-//								+ "\n-------------------------------------------------\n");
-				ProcessingParameters parameters = new ProcessingParameters();
-//				for (String s : convertFields) {
-//					parameters.addParameter(parameterMap.get(s));
-//				}
+				boolean gap = false;
+				boolean paramGatherOk = true;
+				int position = 0;
+				ProcessingParameters processList = new ProcessingParameters();
 				
-				new ConvertTask().execute(parameters);
+				for (ConversionParameter conv : parameters) {
+					if (!conv.isChecked()) {
+						gap = true;
+					} else if (gap) {
+						toastUser(parameters.get(position - 1).getName() + " needs to be filled");
+						paramGatherOk = false;
+						break;
+					} else {
+						processList.addParameter(conv.getPresentValue());
+						Log.d("smurf", "Value added: " + conv.getPresentValue());
+					}
+					position++;
+				}
 				
+				if (paramGatherOk) {
+					for (int i = processList.size(); i < 9; i++) {
+						Log.d("smurf", "Value added: " + "");
+					}
+//					new ConvertTask().execute(processList);
+				}
 				
+				Log.d("smurf", "============================================");
 			}
 
 			
@@ -238,39 +249,7 @@ public class ConvertFragment extends Fragment {
 			}
 			parameters.add(temp);
 			i++;
-		}
-		
-//		for (int i = 0; i < 9; i++) {
-//			choosenConversionParameters.put(convertFields.get(i), "");
-//		}
-//		
-//		
-//		
-//		fieldTypeMap.add("freetext");
-//		fieldTypeMap.add("spinner");
-//		fieldTypeMap.add("spinner");
-//		fieldTypeMap.add("spinner");
-//		fieldTypeMap.add("freetext");
-//		fieldTypeMap.add("freetext");
-//		fieldTypeMap.add("freetext");
-//		fieldTypeMap.add("freetext");
-//		fieldTypeMap.add("freetext");
-//		
-//		hintList.add("1");
-//		hintList.add("2");
-//		hintList.add("3");
-//		hintList.add("4");
-//		hintList.add("5");
-//		hintList.add("6");
-//		hintList.add("7");
-//		hintList.add("8");
-//		hintList.add("9");
-//		
-//		
-//		valueList.put("Genome version", new String[]{"d_melanogaster_fb5_22", "smurf ver.032615", "Gargamel ver. 2.832"});
-//		valueList.put("SAM to GFF", new String[]{"Yes", "No"});
-//		valueList.put("GFF to SGR", new String[]{"Yes", "No"});
-		
+		}		
 	}
 	
 	/**

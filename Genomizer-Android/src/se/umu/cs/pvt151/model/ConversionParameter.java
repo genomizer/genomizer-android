@@ -109,8 +109,14 @@ public class ConversionParameter {
 	public void setSelectedSpinnerVal(int selectedSpinnerVal) {
 		this.selectedSpinnerVal = selectedSpinnerVal;
 	}
-
 	
-	
+	@Override
+	public String toString() {
+		String s = "Parameter name: " + name + "\n";
+		s += "Value: " + presentValue + "\n";
+		s += "Checked: " + checked + "\n";
+		
+		return s;
+	}
 	
 }

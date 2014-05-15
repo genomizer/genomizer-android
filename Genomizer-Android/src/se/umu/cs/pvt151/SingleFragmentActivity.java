@@ -18,9 +18,10 @@ import android.view.MenuItem;
  * @author Anders Lundberg, dv12alg
  *
  */
-public abstract class SingleFragmentActivity extends FragmentActivity{
+public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	private boolean inflateMenu = false;
+	private String fragmentClassSimpleName = "";
 	
 	/**
 	 * For use with the Genomizer Android application.
@@ -40,13 +41,14 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 			fragment = createFragment();
 			fm.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
 		}
+		fragmentClassSimpleName = fragment.getClass().getSimpleName();
 		
-		if (!fragment.getClass().getSimpleName().equals("LogInFragment")) {
+		if (!fragmentClassSimpleName.equals("LogInFragment")) {
 			inflateMenu = true;
 		} else {
 			inflateMenu  = false;
 		}
-		Log.d("smurf", fragment.getClass().getSimpleName());
+		
 	}
 	
 	/**
@@ -64,7 +66,10 @@ public abstract class SingleFragmentActivity extends FragmentActivity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
 		
-		if (inflateMenu) {
+		if(fragmentClassSimpleName.equals("SettingsFragment")) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.settings, menu);
+		} else if (inflateMenu) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.main_menu, menu);
 		} else {

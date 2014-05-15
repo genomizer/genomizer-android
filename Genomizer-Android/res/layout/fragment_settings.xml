@@ -21,18 +21,37 @@
         android:id="@+id/spinner1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/settings_textview"
+        android:layout_below="@id/settings_textview"
         android:layout_marginLeft="4dp"
         android:entries="@array/server_list" />
     
+    <EditText 
+         android:id="@+id/settings_input_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:singleLine="true"
+        android:visibility="invisible"
+        android:layout_below="@id/settings_textview"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:hint="Small Text"
+        />
+    
+       
        <Button
-        android:id="@+id/settingsEditButton"
-        android:layout_below="@+id/spinner1"
-       	android:layout_marginLeft="4dp"
+        android:id="@+id/settingsAddButton"
+        android:layout_below="@id/spinner1"        
+       	android:layout_alignParentRight="true"
+       	android:layout_marginRight="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="editURLs"
-        android:textSize="12sp"        
-        android:text="Edit urls" />
+        android:onClick="onClickaddNewURL"
+        android:textSize="12sp"  
+        android:visibility="invisible"      
+        android:text="Add URL" />
+       
+    
+    
+       
 
 </RelativeLayout>

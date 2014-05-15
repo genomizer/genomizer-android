@@ -22,17 +22,19 @@ public class SettingsFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_settings, container,
 				false);
+		createSpinner(view);
+		createAdapter();
+		
 
+		return view;
+	}
+
+
+	private void createSpinner(View view) {
 		spinner = (Spinner) view.findViewById(R.id.spinner1);
 		((TextView) view.findViewById(R.id.settings_textview))
 				.setText("Select server url");
-
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-				getActivity(), R.array.server_list,
-				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-
-		spinner.setAdapter(adapter);
+		
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -55,8 +57,15 @@ public class SettingsFragment extends Fragment {
 				spinner.setSelection(i);
 			}
 		}
+	}
 
-		return view;
+	private void createAdapter() {
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+				getActivity(), R.array.server_list,
+				android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
+		spinner.setAdapter(adapter);
 	}
 	
 	private void saveSettings(String url) {

@@ -20,6 +20,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	private final String settingsURLanchor = "selectedURL";
 	private final String settingsAllURLsAnchor = "savedURLs";
 	private ArrayList<String> mSavedURLsList = new ArrayList<String>();
+	private boolean devMode = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,9 +43,17 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 
 	private void createAdapter() {
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+		ArrayAdapter<?> adapter = null;
+		if(devMode) {
+		adapter = ArrayAdapter.createFromResource(
 				getActivity(), R.array.server_list,
 				android.R.layout.simple_spinner_item);
+		} else {
+			String[] urls = new String[2];
+			adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
+			
+		}
+		
 		adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 		spinner.setAdapter(adapter);
 	}

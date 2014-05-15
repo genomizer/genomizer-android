@@ -5,6 +5,9 @@ package se.umu.cs.pvt151.model;
 
 import java.util.ArrayList;
 
+import android.widget.CheckBox;
+import android.widget.EditText;
+
 /**
  * Data container for conversionParameters for the Genomizer Android 
  * application.
@@ -19,7 +22,11 @@ public class ConversionParameter {
 	String parameterType;
 	int selectedSpinnerVal;
 	boolean checked;
+	boolean enabled;
+	EditText editText;
+	CheckBox checkBox;
 	ArrayList<String> values;
+	
 	
 	public ConversionParameter(String name) {
 		this.name = name;
@@ -117,6 +124,48 @@ public class ConversionParameter {
 		s += "Checked: " + checked + "\n";
 		
 		return s;
+	}
+
+	/**
+	 * @return the disabled
+	 */
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	/**
+	 * @param disabled the disabled to set
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	/**
+	 * @return the editText
+	 */
+	public EditText getEditText() {
+		return editText;
+	}
+
+	/**
+	 * @param editText the editText to set
+	 */
+	public void setEditText(EditText editText) {
+		this.editText = editText;
+	}
+
+	/**
+	 * @return the checkBox
+	 */
+	public CheckBox getCheckBox() {
+		return checkBox;
+	}
+
+	/**
+	 * @param checkBox the checkBox to set
+	 */
+	public void setCheckBox(CheckBox checkBox) {
+		this.checkBox = checkBox;
 	}
 	
 }

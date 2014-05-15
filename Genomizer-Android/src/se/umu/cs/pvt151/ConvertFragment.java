@@ -49,18 +49,13 @@ public class ConvertFragment extends Fragment {
 	private ListView convertListView;
 	private ArrayList<ConversionParameter> parameters;
 	private ArrayList<String> convertFields;
-//	private ArrayList<String> hintList;
-//	private ArrayList<String> fieldTypeMap;
-//	private ArrayList<Integer> spinnerSelection;
-//	private HashMap <String, String> parameterMap;
-//	private HashMap <String, Boolean> checkedFields;
-//	private HashMap<String, String[]> valueList;
-//	private HashMap<String, String> choosenConversionParameters;
+	private ArrayList<ConvertViewHolder> viewHolderList;
 	private Button convertButton;
 	private String type;
 	private ArrayList<GeneFile> files;
 	private TextView convertLabel;
 	public boolean taskCompleted;
+	private ConvertAdapter convertAdapter;
 
 	/**
 	 * 
@@ -106,6 +101,7 @@ public class ConvertFragment extends Fragment {
 	private void createLists() {
 		parameters = new ArrayList<ConversionParameter>();
 		convertFields = new ArrayList<String>();
+		viewHolderList = new ArrayList<ConvertFragment.ConvertViewHolder>();
 		setupRawParameters();
 		
 		
@@ -143,8 +139,8 @@ public class ConvertFragment extends Fragment {
 //			checkedFields.put(s, false);
 //			parameterMap.put(s, null);
 //		}
-		
-		convertListView.setAdapter(new ConvertAdapter(convertFields));
+		convertAdapter = new ConvertAdapter(convertFields);
+		convertListView.setAdapter(convertAdapter);
 	}
 
 
@@ -169,6 +165,21 @@ public class ConvertFragment extends Fragment {
 						toastUser(parameters.get(position - 1).getName() + " needs to be filled");
 						paramGatherOk = false;
 						break;
+					} else if (conv.getPresentValue().length() < 1) {
+						toastUser(conv.getName() +  ", must be filled");
+						paramGatherOk = false;
+						break;
+					} else if (conv.getName().equals("Ratio Calculation") && conv.isChecked()) {
+						boolean a = parameters.get(7).isChecked();
+						boolean b = parameters.get(8).isChecked();
+						if (!a || !b) {
+							toastUser("Both " + parameters.get(7).getName()
+									+ " and " + parameters.get(8).getName()
+									+ " must be used if " + conv.getName()
+									+ " is checked");
+							paramGatherOk = false;
+							break;
+						}
 					} else {
 						processList.addParameter(conv.getPresentValue());
 						Log.d("smurf", "Value added: " + conv.getPresentValue());
@@ -293,17 +304,19 @@ public class ConvertFragment extends Fragment {
 			String temp;
 
 			if (fieldIsFreetext) {
-				resource = R.layout.conversion_item;
+				resource = R.layout.searchlist_field;
 			} else {
-				resource = R.layout.conversion_spinner_item;
+				resource = R.layout.searchlist_dropdown_field;
 			}
 			
 			if (convertView == null) {
 				convertView = getActivity().getLayoutInflater().inflate(resource, null);
 				
 				viewHolder = new ConvertViewHolder();
+				viewHolderList.add(viewHolder);
 				viewHolder.title = (TextView) convertView.findViewById(R.id.lbl_conversion_item);
 				viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox_conversion_item);
+				
 				viewHolder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					
 					@Override
@@ -318,6 +331,8 @@ public class ConvertFragment extends Fragment {
 					viewHolder.parameter = (EditText) convertView.findViewById(R.id.edit_conversion_item);
 					viewHolder.parameter.addTextChangedListener(textWatcher);
 					viewHolder.parameter.setTag(textWatcher);
+					parameters.get(position).setEditText(viewHolder.parameter);
+					
 				} else {
 					viewHolder.spinner = (Spinner) convertView.findViewById(R.id.spinner_conversion_item);
 					spinAdapter = new ArrayAdapter<String>(convertView.getContext(), android.R.layout.simple_spinner_item, parameters.get(position).getValues());
@@ -372,7 +387,6 @@ public class ConvertFragment extends Fragment {
 			viewHolder.checkBox.setTag(position);
 			viewHolder.title.setText(parameters.get(position).getName());
 			viewHolder.checkBox.setChecked(parameters.get(position).isChecked());
-			
 			return convertView;
 		}
 	}

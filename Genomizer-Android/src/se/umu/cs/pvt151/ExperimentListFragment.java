@@ -6,16 +6,21 @@ package se.umu.cs.pvt151;
  * Presents a list over available
  * experiments to the user
  */
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +56,11 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<GeneFile> regionToConv = new ArrayList<GeneFile>();
 	
 	private String place;
+	private String getAnnotations;
+	private ArrayList<String> storedAnnotations = new ArrayList<String>();
+	
+	private ArrayList<String> annotation = new ArrayList<String>();
+	
 	//TODO: Some way to deal with supressedwarnings?
 	@SuppressWarnings("unchecked")
 	@Override
@@ -59,6 +69,7 @@ public class ExperimentListFragment extends Fragment {
 		/*Getting search information from SearchListFragment.
 		 * Information is stored in a HashMap with annotations
 		 * as key and values as value.*/
+		annotation = getActivity().getIntent().getExtras().getStringArrayList("Annotations");
 		searchInfo = (HashMap<String, String>) getActivity().getIntent()
 				.getExtras().getSerializable("searchMap");
 		place = getActivity().getIntent().getStringExtra("from");
@@ -72,6 +83,7 @@ public class ExperimentListFragment extends Fragment {
 			/*Information sent to server and receiving a
 			 * list with all experiments available*/
 			forExperiments = startSearch.execute((Void) null).get();
+			//forExperiments = startSearch.execute((Void) null).get();
 		} catch (InterruptedException e) {
 			Toast.makeText(getActivity(), "ERROR: " + e.getMessage(), 
 					Toast.LENGTH_SHORT).show();
@@ -87,14 +99,21 @@ public class ExperimentListFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_experiment_list, parent, false);
 		//Creating listview from xml view
+		
 		list = (ListView) v.findViewById(R.id.listView1);
+		
+		
+		
+		/*for(int i = 0; i < forExperiments.size(); i++) {
+			getDisplayValues(forExperiments.get(i));
+		}
 		//Creating adapter for displaying search results
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
 				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);	
 		//Setting adapter to view
 		list.setAdapter(adapter);
 		//Set onItemclicklistener to list, used to detect clicks
-		list.setOnItemClickListener(new ListHandler());
+		list.setOnItemClickListener(new ListHandler());*/
 		//Set selector to view to change looks on view when item is clicked
 		
 		//list.setSelector(R.drawable.explist_selector);
@@ -129,15 +148,90 @@ public class ExperimentListFragment extends Fragment {
 		}
 	}
 	
+	private void getStoredAnnotations() {
+		getAnnotations = "";
+		String savedFile = "SearchSettings.txt";
+		Context cont = getActivity();
+		
+		try {
+			FileInputStream fis = cont.getApplicationContext().openFileInput(savedFile);
+			InputStreamReader is = new InputStreamReader(fis);
+			StringBuilder sb = new StringBuilder();
+			char[] ib = new char[2048];
+			int temp;
+			while((temp = is.read(ib)) != -1) {
+				sb.append(ib, 0, temp);
+			}
+			fis.close();
+			
+			getAnnotations = sb.toString();
+				
+		} catch (FileNotFoundException e) {
+			getAnnotations = "";
+			makeToast("Anno " + getAnnotations.length(), false);
+		} catch (IOException e) {
+			//makeToast("ERROR: " + e.getMessage(), false);
+			getAnnotations = "";
+		}
+	
+		//return getAnnotations = "";
+	}
+	
+	private void organizeAnnotations() {
+		String[] toSplit = new String[200];
+		storedAnnotations = new ArrayList<String>();
+		
+		if(getAnnotations.length() > 1) {
+			//for(int i = 0; i < getAnnotations.length(); i++) {
+			toSplit = getAnnotations.split(";");
+			//}
+			makeToast("Found Annos" + getAnnotations , false);
+			
+			for(int j = 0; j < toSplit.length; j++) {
+				storedAnnotations.add(toSplit[j].trim());
+			}
+		} else {
+			storedAnnotations.add("pubmedId");
+			storedAnnotations.add("specie");
+		}
+	}
+	
+	private void getDisplayValues(Experiment experiment) {
+		List<Annotation> annos = experiment.getAnnotations();
+		String toDisplay = "Experiment " + experiment.getName() + "\n"
+				+ "Created by " + experiment.getCreatedBy() + "\n";
+		String temp = "";
+		 
+		for(int i = 0; i < storedAnnotations.size(); i++) {
+			for(int j = 0; j < annos.size(); j++) {
+				if(storedAnnotations.get(i).equals(annos.get(j).getName())) {
+					//if(storedAnnotations.contains(annos.get(i))) {
+					makeToast("Found specie " , false);
+					temp = temp + annos.get(j).getName() + " " + annos.get(j).getValue().toString() + "\n";
+				}
+			}
+			
+		}
+		
+		
+		displaySearchResults.add(toDisplay + temp);
+	}
+	
 	/**
 	 * Method used to make strings with right
 	 * look to display search results in view.
 	 */
 	//TODO: get right information from annotations to display
 	private void infoAnnotations() {
-		
+		String displayString = "";
 		for(int i=0; i<forExperiments.size(); i++) {
-			displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" );
+			displayString = "Experiment: " + forExperiments.get(i).getName() + "\n";
+			//displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" );
+			if(forExperiments.get(i).getAnnotations().get(0).getName() != null) {
+				displayString = displayString + "Experiment: " + forExperiments.get(i).getAnnotations().get(0).getValue() + "\n" ;
+			}
+			
+			displaySearchResults.add(displayString);
 		}
 	}
 	
@@ -214,11 +308,26 @@ public class ExperimentListFragment extends Fragment {
 			} 
 			return forExperiments;
 		}
-
+		
 		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
 			/*Creating list with right looking information
 			 * used to be displayed in search.*/
-			infoAnnotations();
+			//infoAnnotations();
+			
+			getStoredAnnotations();
+			organizeAnnotations();
+			for(int i = 0; i < forExperiments.size(); i++) {
+				getDisplayValues(forExperiments.get(i));
+			}
+			//Creating adapter for displaying search results
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
+					R.layout.list_view_textbox, R.id.listText11, displaySearchResults);	
+			//Setting adapter to view
+			list.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
+			//Set onItemclicklistener to list, used to detect clicks
+			list.setOnItemClickListener(new ListHandler());
+			
 		}
 	}
 }

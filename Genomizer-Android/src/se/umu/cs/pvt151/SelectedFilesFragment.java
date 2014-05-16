@@ -35,9 +35,16 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 		tabHost = (TabHost) v.findViewById(R.id.tabhostSwipe);
 		
 		initializeTabs();
+		
+		tabHost.setCurrentTab(1);
 
 		return v;
 	}
+	
+	
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		tabHost.setCurrentTab(0);	}
 	
 	
 	private void initializeTabs() {

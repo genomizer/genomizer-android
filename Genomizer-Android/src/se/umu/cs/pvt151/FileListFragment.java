@@ -61,10 +61,16 @@ public class FileListFragment extends Fragment {
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
 	private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
 	
+	int sent = 0;
+	String tempprofile = "";
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
+		selectedRawDataFiles = new ArrayList<String>();
+		selectedProfileDataFiles = new ArrayList<String>();
+		selectedRegionDataFiles = new ArrayList<String>();
 		raw = getActivity().getIntent().getExtras().getStringArrayList("raw");
 		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
 		region = getActivity().getIntent().getExtras().getStringArrayList("region");
@@ -84,15 +90,23 @@ public class FileListFragment extends Fragment {
 		sendButton = (Button) v.findViewById(R.id.sendBtn);
 		
 		sendButton.setOnClickListener(new OnClickListener () {
-
+			
+			
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + "  raw file(s)"
+				
+				//Toast.makeText(getActivity().getApplicationContext(), "Added " + tempprofile, Toast.LENGTH_SHORT).show();
+				/*Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + "  raw file(s)"
 						+ "and " + profileSelected.size() + "profile file(s) and " 
-						+ regionSelected.size() + " region file(s) added to selection", Toast.LENGTH_SHORT).show();
-				DataStorage.appendFileList("raw", rawSelected);
-				DataStorage.appendFileList("profile", profileSelected);
-				DataStorage.appendFileList("region", regionSelected);
+						+ regionSelected.size() + " region file(s) added to selection", Toast.LENGTH_SHORT).show();*/
+				if(sent == 0) {
+					DataStorage.appendFileList("raw", rawSelected);
+					DataStorage.appendFileList("profile", profileSelected);
+					DataStorage.appendFileList("region", regionSelected);
+					sent = 1;
+				} else if(sent == 1) {
+					Toast.makeText(getActivity().getApplicationContext(), "Files already sent", Toast.LENGTH_SHORT).show();
+				}
 			}
 			
 		});
@@ -221,7 +235,7 @@ public class FileListFragment extends Fragment {
 								selectedProfileDataFiles.add(profile.get(getPos));
 								profileSelected.add(allProfileFiles.get(getPos));
 								buttonHolder.fileCheckBox.setChecked(true);
-							}
+							} 
 							
 						} else if(data.equals("region")) {
 							if(!selectedRegionDataFiles.contains(region.get(getPos))) {

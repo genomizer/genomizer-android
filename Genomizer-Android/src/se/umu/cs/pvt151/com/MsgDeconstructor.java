@@ -157,4 +157,9 @@ public class MsgDeconstructor {
 		}
 		return genomeReleases;
 	}
+
+
+	public static ArrayList<String> deconProcessPackage(JSONArray jsonPackage) {
+		return null;
+	}
 }

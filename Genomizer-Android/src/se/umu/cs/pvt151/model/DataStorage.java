@@ -49,6 +49,7 @@ public class DataStorage {
 	}
 
 	public static void setRawDataFiles(ArrayList<GeneFile> raw) {
+		rawData = new ArrayList<GeneFile>();
 		rawData = raw;
 	}
 
@@ -57,6 +58,7 @@ public class DataStorage {
 	}
 
 	public static void setProfileDataFiles(ArrayList<GeneFile> profile) {
+		profileData = new ArrayList<GeneFile>();
 		profileData = profile;
 	}
 

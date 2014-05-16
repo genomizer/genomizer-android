@@ -222,26 +222,35 @@ public class FileListFragment extends Fragment {
 					
 					if(buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
-							
-							if(!selectedRawDataFiles.contains(raw.get(getPos))) {
+							if(!rawSelected.contains(allRawFiles.get(getPos))) {
+							//if(!selectedRawDataFiles.contains(raw.get(getPos)) && !rawSelected.contains(allRawFiles.get(getPos))) {
 								selectedRawDataFiles.add(raw.get(getPos));
 								rawSelected.add(allRawFiles.get(getPos));
 								buttonHolder.fileCheckBox.setChecked(true);
+								Toast.makeText(getActivity(), "Already added: " + allRawFiles.get(getPos).getName(),
+										Toast.LENGTH_SHORT).show();
 							} else {
 								Toast.makeText(getActivity(), "Already added: " + raw.get(getPos),
 										Toast.LENGTH_SHORT).show();
 							}
+							
 						} else if(data.equals("profile")) {
-							if(!selectedProfileDataFiles.contains(profile.get(getPos))) {
+							if(!profileSelected.contains(allProfileFiles.get(getPos))) {
+							//if(!selectedProfileDataFiles.contains(profile.get(getPos))) {
 								selectedProfileDataFiles.add(profile.get(getPos));
 								profileSelected.add(allProfileFiles.get(getPos));
+								Toast.makeText(getActivity(), "Already added: " + allProfileFiles.get(getPos).getName(),
+										Toast.LENGTH_SHORT).show();
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 
 							
 						} else if(data.equals("region")) {
-							if(!selectedRegionDataFiles.contains(region.get(getPos))) {
+							//if(!selectedRegionDataFiles.contains(region.get(getPos))) {
+							if(!regionSelected.contains(allRegionFiles.get(getPos))) {
 								selectedRegionDataFiles.add(region.get(getPos));
 								regionSelected.add(allRegionFiles.get(getPos));
+								Toast.makeText(getActivity(), "Already added: " + allRegionFiles.get(getPos).getName(),
+										Toast.LENGTH_SHORT).show();
 								buttonHolder.fileCheckBox.setChecked(true);
 							}
 						}

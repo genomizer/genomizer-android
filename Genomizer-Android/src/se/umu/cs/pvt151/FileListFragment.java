@@ -101,6 +101,7 @@ public class FileListFragment extends Fragment {
 		}
 		
 		//Used to set tempdata to array for checked values
+		//TODO: adapt to right array sizes
 		fillData();
 		
 		//Set adapter to listview for rawdata

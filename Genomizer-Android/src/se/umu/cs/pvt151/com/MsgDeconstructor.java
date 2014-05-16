@@ -11,10 +11,11 @@ import android.util.Log;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
+import se.umu.cs.pvt151.model.GenomeRelease;
 
 public class MsgDeconstructor {
-	
-	
+
+
 	/**
 	 * Takes a JSONArray object as parameter and breaks it down into a list
 	 * of Annotation objects, which is returned.
@@ -25,20 +26,20 @@ public class MsgDeconstructor {
 	 */
 	public static ArrayList<Annotation> deconAnnotations(JSONArray json) throws JSONException {
 		ArrayList<Annotation> annotations = new ArrayList<Annotation>();
-		
+
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			Annotation annotation = new Annotation();
 			annotation.setName(obj.getString("name"));
-			
+
 			Object valueObject;
-			
+
 			try {
 				valueObject = obj.get("values");
 			} catch (JSONException e) {
 				valueObject = obj.get("value");
 			}
-			
+
 			if(valueObject instanceof String) {
 				annotation.appendValue(valueObject.toString());
 			} else {
@@ -51,8 +52,8 @@ public class MsgDeconstructor {
 		}
 		return annotations;
 	}
-	
-	
+
+
 	/**
 	 * Converts a list of files from JSON to a an ArrayList of GeneFiles.
 	 * The list is broken down into a list of GeneFile objects and returned.
@@ -63,9 +64,9 @@ public class MsgDeconstructor {
 	 */
 	public static ArrayList<GeneFile> deconFiles(JSONArray json) throws JSONException {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
-		
+
 		for (int i = 0; i < json.length(); i++) {
-			
+
 			JSONObject obj = (JSONObject) json.get(i);
 			GeneFile file = new GeneFile();
 
@@ -78,13 +79,13 @@ public class MsgDeconstructor {
 			file.setDate(obj.getString("date"));
 			file.setUrl(obj.getString("url"));
 			file.setPath(obj.getString("path"));
-			
+
 			files.add(file);
 		}
 		return files;
 	}
-	
-	
+
+
 	/**
 	 * Unpacks and returns a JSONArray in the form of an list of experiments.
 	 * 
@@ -97,24 +98,24 @@ public class MsgDeconstructor {
 
 		for (int i = 0; i < json.length(); i++) {
 			Experiment experiment = new Experiment();
-			
+
 			JSONObject jsonExperiment = (JSONObject) json.get(i);
-			
+
 			experiment.setName(jsonExperiment.getString("name"));
 			experiment.setCreatedBy(jsonExperiment.getString("created by"));
-			
+
 			JSONArray files = jsonExperiment.getJSONArray("files");
 			JSONArray annotations = jsonExperiment.getJSONArray("annotations");
 
 			experiment.setFiles(deconFiles(files));
 			experiment.setAnnotations(deconAnnotations(annotations));
-			
+
 			experiments.add(experiment);
 		}
 		return experiments;
 	}
-	
-	
+
+
 	/**
 	 * Om det skulle vara mšjligt att gšra en generell deconstruct metod fšr alla typer av json objekt.
 	 * @deprecated
@@ -127,7 +128,7 @@ public class MsgDeconstructor {
 			while(iterator.hasNext()) {
 				String name = iterator.next();
 				Object jo =  o.opt(name);
-				
+
 				if(jo != null) {
 					Log.d("DECON", "Class name: " +jo.getClass().getSimpleName());
 					Log.d("DECON", "Object toString: " + jo.toString());
@@ -139,8 +140,21 @@ public class MsgDeconstructor {
 	}
 
 
-	public static ArrayList<String> deconGenomeReleases(JSONArray jsonPackage) {
-		// TODO Auto-generated method stub
-		return null;
+	public static ArrayList<GenomeRelease> deconGenomeReleases(JSONArray json) throws JSONException {
+		ArrayList<GenomeRelease> genomeReleases = new ArrayList<GenomeRelease>();
+
+		for (int i = 0; i < json.length(); i++) {
+			JSONObject obj = (JSONObject) json.get(i);
+			
+			GenomeRelease release = new GenomeRelease();
+			
+			release.setGenomeVersion(obj.getString("genomeVersion"));
+			release.setSpecie(obj.getString("specie"));
+			release.setPath(obj.getString("path"));
+			release.setFileName(obj.getString("fileName"));
+			
+			genomeReleases.add(release);
+		}
+		return genomeReleases;
 	}
 }

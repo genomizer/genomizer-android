@@ -15,6 +15,7 @@ import android.util.Log;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
+import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 
 public class ComHandler {
@@ -197,7 +198,7 @@ public class ComHandler {
 	}
 	
 	
-	public static ArrayList<String> getGenomeReleases() throws IOException {
+	public static ArrayList<GenomeRelease> getGenomeReleases() throws IOException {
 		try {
 
 			Communicator communicator = new Communicator(serverURL + "genomeRelease");

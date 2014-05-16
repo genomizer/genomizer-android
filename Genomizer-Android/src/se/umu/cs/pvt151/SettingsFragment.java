@@ -92,11 +92,15 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		} else if(menuString.equals("Dev mode")) {
 			devMode = !devMode;
 			mSavedURLsList.clear();
-			if(!devMode) {			
+			
+			if(!devMode) {		
 				fetchSavedURLs();
-			}			
-			createAdapter();
-			markCurrentlyUsedURL();
+				createAdapter();
+			} else {
+				markCurrentlyUsedURL();
+			}
+			
+			//markCurrentlyUsedURL();
 		}
 		
 	}
@@ -173,12 +177,14 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 	
 	private void saveCurrentlySelectedURL(String url) {
-		SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);		
-		SharedPreferences.Editor prefEditor = settings.edit();		
-		prefEditor.putString(settingsURLanchor, url);
-		prefEditor.commit();
+		if(!devMode) {
+			SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);		
+			SharedPreferences.Editor prefEditor = settings.edit();		
+			prefEditor.putString(settingsURLanchor, url);
+			prefEditor.commit();			
+		}
 		
-		if(!urlExists(url)) {
+		if(!urlExists(url) && !devMode) {
 			mSavedURLsList.add(url);
 		}
 	}

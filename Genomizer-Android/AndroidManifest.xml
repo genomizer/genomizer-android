@@ -60,6 +60,10 @@
             android:name="se.umu.cs.pvt151.SearchSettingsActivity"
             android:label="@string/title_activity_search_settings" >
         </activity>
+        <activity
+            android:name="se.umu.cs.pvt151.ConverterActivity"
+            android:label="@string/title_activity_search_settings" >
+        </activity>
     </application>
 
 </manifest>

@@ -137,4 +137,10 @@ public class MsgDeconstructor {
 			}
 		}
 	}
+
+
+	public static ArrayList<String> deconGenomeReleases(JSONArray jsonPackage) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

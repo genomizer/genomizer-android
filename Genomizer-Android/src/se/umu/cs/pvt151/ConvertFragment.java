@@ -548,11 +548,11 @@ public class ConvertFragment extends Fragment {
 		@Override
 		protected Void doInBackground(ProcessingParameters... params) {
 
-			try {
-				taskCompleted = ComHandler.rawToProfile(files.get(0), params[0]);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				taskCompleted = ComHandler.rawToProfile(files.get(0), params[0]);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 
 			return null;
 		}

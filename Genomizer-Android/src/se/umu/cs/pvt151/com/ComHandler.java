@@ -195,4 +195,28 @@ public class ComHandler {
 			throw new IOException("JSONException. Has the server changed?");
 		}
 	}
+	
+	
+	public static ArrayList<String> getGenomeReleases() throws IOException {
+		try {
+
+			Communicator communicator = new Communicator(serverURL + "genomeRelease");
+			communicator.setupConnection("GET");
+			JSONObject msg = MsgFactory.createRegularPackage();
+
+			GenomizerHttpPackage genomeResponse = communicator.sendRequest(msg);
+
+			if (genomeResponse.getCode() == 200) {
+				String jsonString = genomeResponse.getBody();
+				JSONArray jsonPackage = new JSONArray(jsonString);
+				
+				return MsgDeconstructor.deconGenomeReleases(jsonPackage);
+			} else {
+				return null;
+			}
+
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 }

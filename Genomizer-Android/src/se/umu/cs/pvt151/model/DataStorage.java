@@ -3,6 +3,8 @@ package se.umu.cs.pvt151.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.Log;
+
 public class DataStorage {
 
 
@@ -15,13 +17,26 @@ public class DataStorage {
 
 
 	public static void appendFileList(String key, ArrayList<GeneFile> files) {
+
+		for (int i = 0; i < files.size(); i++) {
+			Log.d("HEJ", "add files: " + files.get(i).getName());
+		}
+
 		ArrayList<GeneFile> currentFiles = fileMap.get(key);
 
 		if (currentFiles == null) {
 			fileMap.put(key, files);
 		} else {
-			currentFiles.addAll(files);
+			for (int i = 0; i < files.size(); i++) {
+				GeneFile file = files.get(i);
+				currentFiles.add(file);
+				Log.d("HEJ", "added file");
+			}
 			fileMap.put(key, currentFiles);
+		}
+
+		for (int i = 0; i < fileMap.get(key).size(); i++) {
+			Log.d("HEJ", "Efter add files: " + fileMap.get(key).get(i).getName());
 		}
 	}
 
@@ -55,7 +70,7 @@ public class DataStorage {
 
 	public static void setRegionDataFiles(ArrayList<GeneFile> regionToConv) {
 		regionData = regionToConv;
-		
+
 	}
 
 }

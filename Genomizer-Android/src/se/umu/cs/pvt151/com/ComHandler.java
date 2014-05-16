@@ -179,14 +179,13 @@ public class ComHandler {
 	 * @return true if the task was recieved and validated by the server, false otherwise
 	 * @throws IOException
 	 */
-	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters) throws IOException {
+	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, String meta, String release) throws IOException {
 
 		try {
-			Communicator communicator = new Communicator(serverURL + "process");
+			Communicator communicator = new Communicator(serverURL + "process/rawtoprofile");
 			communicator.setupConnection("PUT");
 			
-			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, "metadata", "rawtoprofile", "release1");
-			Log.d("RAW", msg.toString());
+			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
 			GenomizerHttpPackage response = communicator.sendRequest(msg);
 
 			return response.getCode() == 201;

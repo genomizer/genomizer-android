@@ -36,6 +36,7 @@ import android.widget.ToggleButton;
 public class ConverterFragment extends Fragment{
 
 	private ArrayList<View> viewList;
+	private ArrayList<View> enableList;
 	private String[] headers = new String[] { "Bowtie", "Geneome version",
 			"SAM to GFF", "GFF to SGR", "Smoothing", "Stepsize",
 			"Ratio calculation", "Ratio", "Smoothing" };
@@ -57,6 +58,7 @@ public class ConverterFragment extends Fragment{
 		viewList = setupEditTexts(v, viewList);
 		viewList = setupToggleButtons(v, viewList);
 		convertButton = setupButton(v);
+		enableList = sortListForLayout(viewList);
 		viewMap = mapWidgets();
 
 		new GetGeneReleaseTask().execute();
@@ -161,6 +163,32 @@ public class ConverterFragment extends Fragment{
 		return button;
 	}
 
+	private ArrayList<View> sortListForLayout(ArrayList<View> viewList2) {
+		ArrayList<View> temp = new ArrayList<View>();
+		
+		temp.add(viewList2.get(0));
+		temp.add(viewList2.get(9));
+		temp.add(viewList2.get(1));
+		temp.add(viewList2.get(17));
+		temp.add(viewList2.get(2));
+		temp.add(viewList2.get(14));
+		temp.add(viewList2.get(3));
+		temp.add(viewList2.get(15));
+		temp.add(viewList2.get(4));
+		temp.add(viewList2.get(10));
+		temp.add(viewList2.get(5));
+		temp.add(viewList2.get(11));
+		temp.add(viewList2.get(6));
+		temp.add(viewList2.get(16));
+		temp.add(viewList2.get(7));
+		temp.add(viewList2.get(12));
+		temp.add(viewList2.get(8));
+		temp.add(viewList2.get(13));
+		return temp;
+	}
+
+
+
 	private HashMap<String, Integer> mapWidgets() {
 		HashMap<String, Integer> temp = new HashMap<String, Integer>();
 
@@ -206,6 +234,7 @@ public class ConverterFragment extends Fragment{
 				android.R.layout.simple_spinner_item, geneList);
 		spinnerGeneVer.setAdapter(adapter);
 		spinnerGeneVer.setOnItemSelectedListener(new itemListener());
+		spinnerGeneVer.setEnabled(false);
 		viewList.add(spinnerGeneVer);
 	}
 

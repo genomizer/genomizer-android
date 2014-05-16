@@ -55,13 +55,18 @@ public class RawFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(),
-						ConvertActivity.class);
 				
-				intent.putExtra("type", "raw");
-				intent.putExtra("files", getSelectedFiles());
-				
-				startActivity(intent);
+				if (selectedRaw.size() > 0) {
+					Intent intent = new Intent(getActivity(),
+							ConvertActivity.class);
+					
+					intent.putExtra("type", "raw");
+					intent.putExtra("files", selectedRaw);
+					
+					startActivity(intent);
+				} else {
+					
+				}
 			}
 		});
 	}
@@ -74,11 +79,6 @@ public class RawFragment extends Fragment {
 	
 	private void removeSelectedFile(GeneFile file) {
 		selectedRaw.remove(file);
-	}
-	
-	
-	private ArrayList<GeneFile> getSelectedFiles() {
-		return selectedRaw;
 	}
 
 

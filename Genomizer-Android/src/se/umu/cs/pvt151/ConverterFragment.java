@@ -3,13 +3,18 @@
  */
 package se.umu.cs.pvt151;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.model.GenomeRelease;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,6 +57,7 @@ public class ConverterFragment extends Fragment{
 	private Button convertButton;
 	private String[] headers = new String[] {"Bowtie", "Geneome version", "SAM to GFF", "GFF to SGR", "Smoothing", "Stepsize", "Ratio calculation", "Ratio", "Smoothing"};
 	private String[] hints = new String[] {"-a -m 1 --best -p 10 -v 2 -q -S", "10 1 5 0 0", "y 10", "single 4 0", "150 1 7 0 0"};
+	private ArrayList<EditText> editTextList;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -60,11 +66,10 @@ public class ConverterFragment extends Fragment{
 		setupTextViews(v);
 		setupEditTexts(v);
 		setupToggleButtons(v);
-		
-//		GetGeneReleaseTask.execute();
-//		setupSpinner(v);
 		setupButton(v);
-		
+		spinnerGeneVer = (Spinner) v.findViewById(R.id.spinner_convert_geneversion);
+		new GetGeneReleaseTask().execute();
+
 		return v;
 	}
 
@@ -87,15 +92,20 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
-	 * @param v
+	 * 
+	 * @param geneRelList
 	 */
-	private void setupSpinner(View v) {
-		spinnerGeneVer = (Spinner) v.findViewById(R.id.spinner_convert_geneversion);
+	private void setupSpinner(ArrayList<GenomeRelease> geneRelList) {
+		ArrayAdapter<String> adapter;
 		ArrayList<String> geneList = new ArrayList<String>();
-		
-		
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, geneList);
+
+		geneList.add("");
+		for (GenomeRelease genomeRelease : geneRelList) {
+			geneList.add(genomeRelease.getGenomeVersion());
+		}
+		adapter = new ArrayAdapter<String>(getActivity()
+				,
+				android.R.layout.simple_spinner_item, geneList);
 		spinnerGeneVer.setAdapter(adapter);
 	}
 
@@ -104,24 +114,71 @@ public class ConverterFragment extends Fragment{
 	 */
 	private void setupToggleButtons(View v) {
 		toggleSamToGff = (ToggleButton) v.findViewById(R.id.toggle_convert_samtogff);
+		toggleSamToGff.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		toggleGffToSam = (ToggleButton) v.findViewById(R.id.toggle_convert_gfftosgr);
+		toggleGffToSam.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		toggleRatioCalc = (ToggleButton) v.findViewById(R.id.toggle_convert_ratiocalc);
+		toggleRatioCalc.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	/**
 	 * @param v
 	 */
 	private void setupEditTexts(View v) {
+		editTextList = new ArrayList<EditText>();
+		
 		editBowtie = (EditText) v.findViewById(R.id.edit_convert_bowtie);
 		editBowtie.setHint(hints[0]);
+		editBowtie.addTextChangedListener(new TextWatch(0));
+		editTextList.add(editBowtie);
+		
 		editSmoothing = (EditText) v.findViewById(R.id.edit_convert_smoothing);
 		editSmoothing.setHint(hints[1]);
+		editBowtie.addTextChangedListener(new TextWatch(1));
+		editTextList.add(editSmoothing);
+		
 		editStepSize = (EditText) v.findViewById(R.id.edit_convert_stepsize);
 		editStepSize.setHint(hints[2]);
+		editBowtie.addTextChangedListener(new TextWatch(2));
+		editTextList.add(editStepSize);
+		
 		editRatio = (EditText) v.findViewById(R.id.edit_convert_ratio);
 		editRatio.setHint(hints[3]);
+		editBowtie.addTextChangedListener(new TextWatch(3));
+		editTextList.add(editRatio);
+		
 		editRatioSmooth = (EditText) v.findViewById(R.id.edit_convert_ratiosmooth);
 		editRatioSmooth.setHint(hints[4]);
+		editBowtie.addTextChangedListener(new TextWatch(4));
+		editTextList.add(editRatioSmooth);
+		
+		for (EditText e : editTextList) {
+			e.setEnabled(false);
+		}
+		editTextList.get(0).setEnabled(true);
 	}
 
 	/**
@@ -130,20 +187,28 @@ public class ConverterFragment extends Fragment{
 	private void setupTextViews(View v) {
 		txtBowtie = (TextView) v.findViewById(R.id.lbl_convert_bowtie);
 		txtBowtie.setText(headers[0]);
+		
 		txtGeneVer = (TextView) v.findViewById(R.id.lbl_convert_geneversion);
 		txtGeneVer.setText(headers[1]);
+		
 		txtSamToGff = (TextView) v.findViewById(R.id.lbl_convert_samtogff);
 		txtSamToGff.setText(headers[2]);
+		
 		txtGffToSgr = (TextView) v.findViewById(R.id.lbl_convert_gfftosgr);
 		txtGffToSgr.setText(headers[3]);
+		
 		txtSmoothing = (TextView) v.findViewById(R.id.lbl_convert_smoothing);
 		txtSmoothing.setText(headers[4]);
+		
 		txtStepSize = (TextView) v.findViewById(R.id.lbl_convert_stepsize);
 		txtStepSize.setText(headers[5]);
+		
 		txtRatioCalc = (TextView) v.findViewById(R.id.lbl_convert_ratiocalc);
 		txtRatioCalc.setText(headers[6]);
+		
 		txtRatio = (TextView) v.findViewById(R.id.lbl_convert_ratio);
 		txtRatio.setText(headers[7]);
+		
 		txtRatioSmooth = (TextView) v.findViewById(R.id.lbl_convert_ratiosmooth);
 		txtRatioSmooth.setText(headers[8]);
 	}
@@ -177,46 +242,39 @@ public class ConverterFragment extends Fragment{
 
 		@Override
 		public void afterTextChanged(Editable s) {
-			// TODO Auto-generated method stub
-			
+			Log.d("smurf", "s: " + s);
+			if (editTextList.size() > id && s.length() == 0) {
+				Log.d("smurf", "edittext: " + editTextList.size());
+//				editTextList.get(id + 1).setEnabled(false);
+			} else if (editTextList.size() > id) {
+				Log.d("smurf", "edittext: " + editTextList.size());
+//				editTextList.get(id + 1).setEnabled(true);
+			}
 		}
 		
 	}
 	
-	private class CheckedChangeListener implements OnCheckedChangeListener {
-
-		@Override
-		public void onCheckedChanged(CompoundButton buttonView,
-				boolean isChecked) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 	
-	private class SpinnListener implements OnItemSelectedListener {
+	private class GetGeneReleaseTask extends AsyncTask<Void, Void, ArrayList<GenomeRelease>> {
+
+		private ArrayList<GenomeRelease> genomeList;
 
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
-			// TODO Auto-generated method stub
+		protected ArrayList<GenomeRelease> doInBackground(Void... params) {
+			try {
+				genomeList = ComHandler.getGenomeReleases();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> parent) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-	
-	private class GetGeneReleaseTask extends AsyncTask<Void, Void, ArrayList<String>> {
-
-		@Override
-		protected ArrayList<String> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
 			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(ArrayList<GenomeRelease> result) {
+			super.onPostExecute(result);
+			setupSpinner(genomeList);
 		}
 		
 	}

@@ -220,4 +220,28 @@ public class ComHandler {
 			return null;
 		}
 	}
+	
+	
+	public static ArrayList<String> getProcesses() throws IOException {
+		try {
+
+			Communicator communicator = new Communicator(serverURL + "process");
+			communicator.setupConnection("GET");
+			JSONObject msg = MsgFactory.createRegularPackage();
+
+			GenomizerHttpPackage genomeResponse = communicator.sendRequest(msg);
+
+			if (genomeResponse.getCode() == 200) {
+				String jsonString = genomeResponse.getBody();
+				JSONArray jsonPackage = new JSONArray(jsonString);
+				
+				return MsgDeconstructor.deconProcessPackage(jsonPackage);
+			} else {
+				return null;
+			}
+
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 }

@@ -11,6 +11,7 @@ import se.umu.cs.pvt151.com.GenomizerHttpPackage;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
+import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.util.Log;
 import junit.framework.TestCase;
@@ -174,7 +175,7 @@ public class ComHandlerTest extends TestCase {
 		parameters.addParameter("param4");
 		
 		try {
-			boolean result = ComHandler.rawToProfile(files.get(0), parameters);
+			boolean result = ComHandler.rawToProfile(files.get(0), parameters, "meta", "randoom");
 			
 			Log.d("RAW", "Code" + result);
 			
@@ -182,5 +183,28 @@ public class ComHandlerTest extends TestCase {
 			e.printStackTrace();
 			fail("Could not create profile from raw data.");
 		}
+	}
+	
+	
+	public void testGetGenomeReleases() {
+		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+		
+		HashMap<String, String> searchValues = new HashMap<String, String>();
+		searchValues.put("Species", "Human");
+		
+		ArrayList<GenomeRelease> gr = new ArrayList<GenomeRelease>();
+		
+		try {
+			ComHandler.login("liveSearchTest", "password");
+			gr = ComHandler.getGenomeReleases();
+			
+			for (int i = 0; i < gr.size(); i++) {
+				Log.d("HEJ", "gr version: " + gr.get(i).getGenomeVersion());
+			}
+		} catch (IOException e) {
+			Log.d("TestLog", e.getMessage());
+			e.printStackTrace();
+			fail("IOException!");
+		} 
 	}
 }

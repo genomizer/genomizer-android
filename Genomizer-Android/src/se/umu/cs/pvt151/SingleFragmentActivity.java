@@ -105,7 +105,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			return true;
 			
 		case R.id.btnconvert_main_menu:
-			i = new Intent(this, ConvertActivity.class);
+			i = new Intent(this, ConverterActivity.class);
 			startActivity(i);
 			return true;
 			

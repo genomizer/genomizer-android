@@ -20,6 +20,7 @@ public class ConversionParameter {
 	String name;
 	String presentValue;
 	String parameterType;
+	String hint;
 	int selectedSpinnerVal;
 	boolean checked;
 	boolean enabled;
@@ -166,6 +167,20 @@ public class ConversionParameter {
 	 */
 	public void setCheckBox(CheckBox checkBox) {
 		this.checkBox = checkBox;
+	}
+
+	/**
+	 * @return the hint
+	 */
+	public String getHint() {
+		return hint;
+	}
+
+	/**
+	 * @param hint the hint to set
+	 */
+	public void setHint(String hint) {
+		this.hint = hint;
 	}
 	
 }

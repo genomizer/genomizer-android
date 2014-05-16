@@ -55,7 +55,7 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<GeneFile> profileToConv = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionToConv = new ArrayList<GeneFile>();
 	
-	private String place;
+	private boolean defaultSettings;
 	private String getAnnotations;
 	private ArrayList<String> storedAnnotations = new ArrayList<String>();
 	
@@ -72,7 +72,7 @@ public class ExperimentListFragment extends Fragment {
 		annotation = getActivity().getIntent().getExtras().getStringArrayList("Annotations");
 		searchInfo = (HashMap<String, String>) getActivity().getIntent()
 				.getExtras().getSerializable("searchMap");
-		place = getActivity().getIntent().getStringExtra("from");
+		//defaultSettings = getActivity().getIntent().getBooleanExtra("default");
 	}
 	
 	@Override
@@ -82,6 +82,7 @@ public class ExperimentListFragment extends Fragment {
 		try {
 			/*Information sent to server and receiving a
 			 * list with all experiments available*/
+			
 			forExperiments = startSearch.execute((Void) null).get();
 			//forExperiments = startSearch.execute((Void) null).get();
 		} catch (InterruptedException e) {
@@ -119,6 +120,38 @@ public class ExperimentListFragment extends Fragment {
 		//list.setSelector(R.drawable.explist_selector);
 		
 		return v;
+	}
+	
+	private void getDefaultOrNot() {
+		String savedFile = "DefaultSettings.txt";
+		Context cont = getActivity();
+		String temp2 = "";
+			
+		try {
+			FileInputStream fis = cont.getApplicationContext().openFileInput(savedFile);
+			InputStreamReader is = new InputStreamReader(fis);
+			StringBuilder sb = new StringBuilder();
+			char[] ib = new char[2048];
+			int temp;
+			while((temp = is.read(ib)) != -1) {
+				sb.append(ib, 0, temp);
+			}
+			fis.close();
+				
+			temp2 = sb.toString();
+					
+			} catch (FileNotFoundException e) {
+				temp2 = "";
+			} catch (IOException e) {
+				//makeToast("ERROR: " + e.getMessage(), false);
+				temp2 = "";
+			}
+		
+		if(temp2.equals("true")) {
+			defaultSettings = true;
+		} else if(temp2.equals("false")) {
+			defaultSettings = false;
+		}
 	}
 	
 	/**
@@ -178,21 +211,21 @@ public class ExperimentListFragment extends Fragment {
 	}
 	
 	private void organizeAnnotations() {
+		
 		String[] toSplit = new String[200];
 		storedAnnotations = new ArrayList<String>();
 		
-		if(getAnnotations.length() > 1) {
+		if(!defaultSettings && getAnnotations.length() > 1) {
 			//for(int i = 0; i < getAnnotations.length(); i++) {
 			toSplit = getAnnotations.split(";");
 			//}
-			makeToast("Found Annos" + getAnnotations , false);
 			
 			for(int j = 0; j < toSplit.length; j++) {
 				storedAnnotations.add(toSplit[j].trim());
 			}
-		} else {
-			storedAnnotations.add("pubmedId");
-			storedAnnotations.add("specie");
+		} else if(defaultSettings) {
+			storedAnnotations.add(annotation.get(0));
+			storedAnnotations.add(annotation.get(1));
 		}
 	}
 	
@@ -313,7 +346,7 @@ public class ExperimentListFragment extends Fragment {
 			/*Creating list with right looking information
 			 * used to be displayed in search.*/
 			//infoAnnotations();
-			
+			getDefaultOrNot();
 			getStoredAnnotations();
 			organizeAnnotations();
 			for(int i = 0; i < forExperiments.size(); i++) {

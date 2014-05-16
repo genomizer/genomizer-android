@@ -33,6 +33,7 @@ public class SearchSettingsFragment extends Fragment {
 	private String setting;
 	private String file = "SearchSettings.txt";
 	private HashMap<String, String> searchResults = new HashMap<String, String>();
+	private String file2 = "DefaultSettings.txt";
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -63,6 +64,7 @@ public class SearchSettingsFragment extends Fragment {
 				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
 				intent.putStringArrayListExtra("Annotations", annotations);
 				intent.putExtra("searchMap", searchResults);
+				saveDefaultOrNot("false");
 				startActivity(intent);
 			}
 			
@@ -72,7 +74,11 @@ public class SearchSettingsFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Use default", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
+				intent.putStringArrayListExtra("Annotations", annotations);
+				intent.putExtra("searchMap", searchResults);
+				saveDefaultOrNot("true");
+				startActivity(intent);
 			}
 			
 		});
@@ -94,6 +100,24 @@ public class SearchSettingsFragment extends Fragment {
 		try {
 			FileOutputStream fos = cont.getApplicationContext().openFileOutput(file, Context.MODE_APPEND);
 			fos.write(setting.getBytes());
+			fos.close();
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveDefaultOrNot(String defaultOrNot) {
+		Context cont = getActivity();
+		getActivity().deleteFile(file2);
+		
+		try {
+			FileOutputStream fos = cont.getApplicationContext().openFileOutput(file2, Context.MODE_APPEND);
+			fos.write(defaultOrNot.getBytes());
 			fos.close();
 		
 		} catch (FileNotFoundException e) {

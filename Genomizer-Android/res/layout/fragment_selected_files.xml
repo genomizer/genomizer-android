@@ -38,7 +38,7 @@
                         android:id="@+id/raw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="21"
+                        android:layout_weight="1"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
@@ -47,7 +47,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="horizontal"
                         android:gravity="bottom" >
 
@@ -71,7 +70,7 @@
                         android:id="@+id/profile"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
-                        android:layout_weight="17"
+                        android:layout_weight="1"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
@@ -80,7 +79,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="horizontal"
                         android:gravity="bottom" >
 
@@ -103,7 +101,7 @@
                         android:id="@+id/region"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
-                        android:layout_weight="17"
+                        android:layout_weight="1"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
@@ -112,7 +110,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="horizontal"
                         android:gravity="bottom" >
 
@@ -143,7 +140,7 @@
                         android:id="@+id/result"
                         android:layout_width="match_parent"
                         android:layout_height="114dp"
-                        android:layout_weight="17"
+                        android:layout_weight="1"
                         android:background="#F5F5F5"
                         android:choiceMode="multipleChoice"
                         android:dividerHeight="1dp" >
@@ -152,7 +149,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="horizontal"
                         android:gravity="bottom" >
 

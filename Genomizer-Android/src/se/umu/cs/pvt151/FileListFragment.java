@@ -68,9 +68,10 @@ public class FileListFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-		selectedRawDataFiles = new ArrayList<String>();
-		selectedProfileDataFiles = new ArrayList<String>();
-		selectedRegionDataFiles = new ArrayList<String>();
+		rawSelected = new ArrayList<GeneFile>();
+		profileSelected = new ArrayList<GeneFile>();
+		regionSelected = new ArrayList<GeneFile>();
+		
 		raw = getActivity().getIntent().getExtras().getStringArrayList("raw");
 		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
 		region = getActivity().getIntent().getExtras().getStringArrayList("region");

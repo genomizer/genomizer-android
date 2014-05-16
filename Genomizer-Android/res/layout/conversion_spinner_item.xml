@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="8dp"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/lbl_conversion_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        />
 
     <LinearLayout
+        android:id="@+id/drpdwn_search_layout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent"
+        android:paddingRight="8dp"
+        android:orientation="horizontal" >
 
         <Spinner
             android:id="@+id/spinner_conversion_item"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:inputType="text"
-            android:ems="10" >
-
-        </Spinner>
+            android:layout_weight="5" 
+            android:layout_marginRight="8dp"/>
 
         <CheckBox
             android:id="@+id/checkbox_conversion_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             />
-
     </LinearLayout>
 
 </LinearLayout>

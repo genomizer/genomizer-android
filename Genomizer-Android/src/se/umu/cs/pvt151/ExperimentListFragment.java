@@ -239,7 +239,6 @@ public class ExperimentListFragment extends Fragment {
 			for(int j = 0; j < annos.size(); j++) {
 				if(storedAnnotations.get(i).equals(annos.get(j).getName())) {
 					//if(storedAnnotations.contains(annos.get(i))) {
-					makeToast("Found specie " , false);
 					temp = temp + annos.get(j).getName() + " " + annos.get(j).getValue().toString() + "\n";
 				}
 			}
@@ -315,7 +314,10 @@ public class ExperimentListFragment extends Fragment {
 			intent.putStringArrayListExtra("raw", rawDataFiles);
 			intent.putStringArrayListExtra("profile", profileDataFiles);
 			intent.putStringArrayListExtra("region", regionDataFiles);
+			intent.putStringArrayListExtra("Annotations", annotation);
+			intent.putExtra("searchMap", searchInfo);
 			startActivity(intent);
+			getActivity().finish();
 		}
 	}
 	
@@ -334,8 +336,8 @@ public class ExperimentListFragment extends Fragment {
 		try {
 			/*Sending HashMap with annotation, value for search to ComHandler,
 			 * receiving a list with experiments matching the search*/
-			
-			forExperiments = ComHandler.search(searchInfo);
+				
+				forExperiments = ComHandler.search(searchInfo);
 			} catch (IOException e) {
 				makeToast("ERROR: " + e.getMessage(), false);
 			} 

@@ -278,6 +278,8 @@ public class ConvertFragment extends Fragment {
 		CheckBox checkBox;
 		Spinner spinner;
 		int spinnerSelection;
+		
+		
 	}
 
 	/**

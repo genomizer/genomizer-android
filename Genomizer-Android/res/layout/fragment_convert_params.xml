@@ -37,15 +37,18 @@
 
         <TextView
             android:id="@+id/lbl_convert_samtogff"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
              />
 
         <ToggleButton
             android:id="@+id/toggle_convert_samtogff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
              />
+
     </LinearLayout>
 
     <LinearLayout
@@ -54,14 +57,16 @@
 
         <TextView
             android:id="@+id/lbl_convert_gfftosgr"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
              />
 
         <ToggleButton
             android:id="@+id/toggle_convert_gfftosgr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
              />
     </LinearLayout>
 
@@ -76,8 +81,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10" >
-
-        <requestFocus />
     </EditText>
 
     <TextView
@@ -98,14 +101,16 @@
 
         <TextView
             android:id="@+id/lbl_convert_ratiocalc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
              />
 
         <ToggleButton
             android:id="@+id/toggle_convert_ratiocalc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
              />
     </LinearLayout>
 

@@ -184,7 +184,7 @@ public class ConverterFragment extends Fragment{
 		sp = (Spinner) viewList.get(1);
 		
 		sp.setAdapter(adapter);
-		sp.setOnItemSelectedListener(new itemListener(3));
+		sp.setOnItemSelectedListener(new itemListener(1));
 		sp.setEnabled(false);
 	}
 
@@ -259,6 +259,10 @@ public class ConverterFragment extends Fragment{
 					viewList.get(i).setEnabled(isChecked);
 				}
 			}
+			
+			if (id == 6) {
+				viewList.get(id + 2).setEnabled(isChecked);
+			}
 		}
 	}
 
@@ -322,7 +326,7 @@ public class ConverterFragment extends Fragment{
 					} else if (i == 2 || i == 3) {
 						tb = (ToggleButton) viewList.get(i);
 						processParameters.add("y");
-					} else {
+					} else if (i == 1) {
 						sp = (Spinner) viewList.get(i);
 						processParameters.add(sp.getSelectedItem().toString());
 					}
@@ -333,7 +337,7 @@ public class ConverterFragment extends Fragment{
 			
 			Log.d("smurf", "ProcessList:\n" + processParameters);
 			
-//			new ConvertTask().execute();
+			new ConvertTask().execute();
 	
 		}
 	

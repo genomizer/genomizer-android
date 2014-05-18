@@ -69,6 +69,11 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		if(fragmentClassSimpleName.equals("SettingsFragment")) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.settings, menu);
+		} else if(fragmentClassSimpleName.equals("SearchListFragment")) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.search_menu, menu);
+		} else if(fragmentClassSimpleName.equals("SearchPubmedFragment")) {
+			//Do not inflate menu if in Search menu
 		} else if (inflateMenu) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.main_menu, menu);

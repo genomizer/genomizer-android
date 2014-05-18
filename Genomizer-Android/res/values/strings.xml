@@ -40,10 +40,11 @@
     <string name="select_searchsettings">Select annotations to display in search results</string>
     <string name="save_settings">Save settings</string>
     <string name="use_default">Use default</string>
-    
+    <string name="action_search_editPub">Edit pubmed string</string>
     <string name="search_button_text">Search</string>
     <string name="free_text_pubmed">Pubmed Query</string>
     
+    <!-- <Start> Settings activity/fragment -->
     <string name="action_settings">Settings</string>
     <string name="action_settings_add">Add new URL</string>
     <string name="action_settings_remove">Remove selected URL</string>
@@ -56,7 +57,14 @@
         <item>http://scratchy.cs.umu.se:8050/</item>
         <item>http://scratchy.cs.umu.se:60000/</item>
     </string-array>
-
+  
+    <string name="settings_fileAnchor">Settings</string>
+    <string name="settings_serverSelectedURLAnchor">selectedURL</string>
+    <string name="settings_serverALLURLAnchor">savedURLs</string>
+    	
+	 <!-- <End> Settings activity/fragment -->
+	 
     <string name="title_activity_search_settings">SearchSettingsActivity</string>
+    <string name="title_activity_search_pubmed">SearchPubmedActivity</string>
 
 </resources>

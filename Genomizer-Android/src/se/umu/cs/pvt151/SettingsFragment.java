@@ -1,6 +1,7 @@
 package se.umu.cs.pvt151;
 
 import java.util.ArrayList;
+
 import se.umu.cs.pvt151.com.ComHandler;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,8 +22,6 @@ import android.widget.Toast;
 public class SettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
 	private Spinner spinner;
-	private final String settingsURLanchor = "selectedURL";
-	private final String settingsAllURLsAnchor = "savedURLs";
 	private ArrayList<String> mSavedURLsList = new ArrayList<String>();
 	private boolean devMode = false;
 	private Button addURLButton = null;
@@ -72,6 +71,25 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}	
 	
 	public void onMenuItemPress(String menuString) {
+		if(devMode) {
+			if(menuString.equals("Dev mode")) {
+				devMode = false;
+				fetchSavedURLs();
+				createAdapter();
+			} else {
+				Toast.makeText(getActivity(), "Dev servers not editable...", Toast.LENGTH_SHORT).show();
+			}
+			
+			return; 
+		}
+		if(menuString.equals("Dev mode")) {
+			devMode = true;					
+							
+			createAdapter();
+		
+		}
+		
+
 		
 		if(menuString.equals("Add new URL")) {
 			toggleEditMode();
@@ -89,19 +107,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 					break;
 				}
 			}
-		} else if(menuString.equals("Dev mode")) {
-			devMode = !devMode;
-			mSavedURLsList.clear();
-			
-			if(!devMode) {		
-				fetchSavedURLs();
-				createAdapter();
-			} else {
-				markCurrentlyUsedURL();
-			}
-			
-			//markCurrentlyUsedURL();
-		}
+		} 
 		
 	}
 	
@@ -146,7 +152,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
 	private void markCurrentlyUsedURL() {
 		String currentURL = getCurrentlySelectedURL();
-		if(devMode) {
+	/*	if(devMode) {
 			String[] servers = getResources().getStringArray(R.array.server_list);
 			for (int i = 0; i < servers.length; i++) {
 				mSavedURLsList.add(servers[i]);				
@@ -157,13 +163,13 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 					spinner.setSelection(i);					
 				}
 			}
-		} else {
+		} else { */
 			for(int i = 0; i < mSavedURLsList.size(); i++) {
 				if(currentURL.equals(mSavedURLsList.get(i))) {
 					spinner.setSelection(i);
 				}
 			}
-		}
+	//	}
 		
 	}
 	
@@ -177,12 +183,11 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 	
 	private void saveCurrentlySelectedURL(String url) {
-		if(!devMode) {
-			SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);		
-			SharedPreferences.Editor prefEditor = settings.edit();		
-			prefEditor.putString(settingsURLanchor, url);
-			prefEditor.commit();			
-		}
+
+		SharedPreferences settings = getActivity().getSharedPreferences(getResources().getString(R.string.settings_fileAnchor) ,Context.MODE_PRIVATE);	
+		SharedPreferences.Editor prefEditor = settings.edit();		
+		prefEditor.putString(getResources().getString(R.string.settings_serverSelectedURLAnchor), url);
+		prefEditor.commit();			
 		
 		if(!urlExists(url) && !devMode) {
 			mSavedURLsList.add(url);
@@ -190,13 +195,13 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 	
 	private String getCurrentlySelectedURL() {
-		SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);		
-		return settings.getString(settingsURLanchor, ComHandler.getServerURL());
+		SharedPreferences settings = getActivity().getSharedPreferences(getResources().getString(R.string.settings_fileAnchor) ,Context.MODE_PRIVATE);	
+		return settings.getString(getResources().getString(R.string.settings_serverSelectedURLAnchor), ComHandler.getServerURL());
 	}
 	
 	private void fetchSavedURLs() {		
-		SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);
-		String savedURLsWithDelimiters = settings.getString(settingsAllURLsAnchor, "#");
+		SharedPreferences settings = getActivity().getSharedPreferences(getResources().getString(R.string.settings_fileAnchor) ,Context.MODE_PRIVATE);
+		String savedURLsWithDelimiters = settings.getString(getResources().getString(R.string.settings_serverALLURLAnchor), "#");
 		String[] savedURLs = savedURLsWithDelimiters.split("#");
 		for(String url : savedURLs) {
 			mSavedURLsList.add(url);
@@ -210,7 +215,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 
 	public void saveMultipleURLs() {
-		SharedPreferences settings = getActivity().getSharedPreferences("Settings", 0);		
+		SharedPreferences settings = getActivity().getSharedPreferences(getResources().getString(R.string.settings_fileAnchor), Context.MODE_PRIVATE);	
 		SharedPreferences.Editor prefEditor = settings.edit();
 		
 		StringBuilder sb = new StringBuilder();
@@ -219,15 +224,14 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			sb.append('#');
 		}
 		if(!devMode) {
-			prefEditor.putString(settingsAllURLsAnchor, sb.toString());
+			prefEditor.putString(getResources().getString(R.string.settings_serverALLURLAnchor), sb.toString());
 			prefEditor.commit();
 		}
 		
 	}
 
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int position,
-			long arg3) {
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		String serverURL = (String) spinner.getSelectedItem();
 		ComHandler.setServerURL(serverURL);
 		spinner.setSelection(position);

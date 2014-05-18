@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
@@ -22,15 +21,14 @@ public class ComHandler {
 
 	private static String serverURL = "http://genomizer.apiary-mock.com/";
 	
-	
 	/**
 	 * Used to change the targeted server URL.
 	 * 
 	 * @param serverURL The URL of the server.
 	 */
-	public static void setServerURL(String serverURL) {
-		ComHandler.serverURL = serverURL;
-
+	public static void setServerURL(String serverURL) {		
+		ComHandler.serverURL = serverURL;		
+		Communicator.initCommunicator(serverURL);
 	}
 	
 	
@@ -39,7 +37,7 @@ public class ComHandler {
 	 * 
 	 * @return serverURL The URL of the server.
 	 */
-	public static String getServerURL() {
+	public static String getServerURL() {		
 		return ComHandler.serverURL;
 	}
 	
@@ -57,17 +55,14 @@ public class ComHandler {
 	public static boolean login(String username, String password) throws IOException {
 		
 		try {
-			Communicator communicator = new Communicator(serverURL + "login");
+			JSONObject msg = MsgFactory.createLogin(username, password);			
 			
-			JSONObject msg = MsgFactory.createLogin(username, password);
-			communicator.setupConnection("POST");
-			
-			GenomizerHttpPackage loginResponse = communicator.sendRequest(msg);
+			GenomizerHttpPackage loginResponse = Communicator.sendHTTPRequest(msg, "POST", "login");
 
 			if (loginResponse.getCode() == 200) {
-				String jsonString = loginResponse.getBody();
-				JSONObject jsonPackage = new JSONObject(jsonString);
-				communicator.setToken(jsonPackage.get("token").toString());
+				String jsonString = loginResponse.getBody();				
+				JSONObject jsonPackage = new JSONObject(jsonString);				
+				Communicator.setToken(jsonPackage.get("token").toString());
 				return true;
 				
 			} else {
@@ -75,7 +70,7 @@ public class ComHandler {
 			}
 		} catch (JSONException e) {
 			//This is only an issue if the server is changed.
-			throw new IOException("JSONException. Has the server changed?");
+			throw new IOException("JSONException on response body. Has the server API changed?");
 		}
 	}
 	
@@ -90,17 +85,12 @@ public class ComHandler {
 	 */
 	public static ArrayList<Experiment> search(HashMap<String, String> annotations) throws IOException {
 		
-		try {
-			Communicator communicator = new Communicator(serverURL + "search/?annotations="+generatePubmedQuery(annotations));
-			communicator.setupConnection("GET");
-			
+		try {						
 			JSONObject msg = MsgFactory.createRegularPackage();
-
-			GenomizerHttpPackage searchResponse = communicator.sendRequest(msg);
+			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
 
 			if (searchResponse.getCode() == 200) {
-				String jsonString = searchResponse.getBody();
-				JSONArray jsonPackage = new JSONArray(jsonString);
+				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
 				return MsgDeconstructor.deconSearch(jsonPackage);
 				
 			} else if (searchResponse.getCode() == 204) { 
@@ -125,12 +115,8 @@ public class ComHandler {
 	public static ArrayList<Annotation> getServerAnnotations() throws IOException {
 		
 		try {
-
-			Communicator communicator = new Communicator(serverURL + "annotation");
-			communicator.setupConnection("GET");
 			JSONObject msg = MsgFactory.createRegularPackage();
-
-			GenomizerHttpPackage annotationResponse = communicator.sendRequest(msg);
+			GenomizerHttpPackage annotationResponse = Communicator.sendHTTPRequest(msg, "GET", "annotation");
 
 			if (annotationResponse.getCode() == 200) {
 				String jsonString = annotationResponse.getBody();
@@ -182,15 +168,11 @@ public class ComHandler {
 	 */
 	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, String meta, String release) throws IOException {
 
-		try {
-			Communicator communicator = new Communicator(serverURL + "process/rawtoprofile");
-			communicator.setupConnection("PUT");
-			
+		try {						
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
-			GenomizerHttpPackage response = communicator.sendRequest(msg);
+			GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, "PUT", "process/rawtoprofile");
 
 			return response.getCode() == 201;
-
 		} catch (JSONException e) {
 			//This is only an issue if the server is changed.
 			throw new IOException("JSONException. Has the server changed?");
@@ -200,12 +182,8 @@ public class ComHandler {
 	
 	public static ArrayList<GenomeRelease> getGenomeReleases() throws IOException {
 		try {
-
-			Communicator communicator = new Communicator(serverURL + "genomeRelease");
-			communicator.setupConnection("GET");
 			JSONObject msg = MsgFactory.createRegularPackage();
-
-			GenomizerHttpPackage genomeResponse = communicator.sendRequest(msg);
+			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "genomeRelease");
 
 			if (genomeResponse.getCode() == 200) {
 				String jsonString = genomeResponse.getBody();
@@ -224,12 +202,8 @@ public class ComHandler {
 	
 	public static ArrayList<String> getProcesses() throws IOException {
 		try {
-
-			Communicator communicator = new Communicator(serverURL + "process");
-			communicator.setupConnection("GET");
 			JSONObject msg = MsgFactory.createRegularPackage();
-
-			GenomizerHttpPackage genomeResponse = communicator.sendRequest(msg);
+			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");
 
 			if (genomeResponse.getCode() == 200) {
 				String jsonString = genomeResponse.getBody();

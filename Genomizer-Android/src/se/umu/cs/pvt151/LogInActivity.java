@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
+import android.view.MenuItem;
 import android.view.View;
 /**
  * Activity which creates a LogInFragment and handles some of the logic involved in the process
@@ -29,12 +30,13 @@ public class LogInActivity extends SingleFragmentActivity {
 		return fragment;
 	}
 
+	
 	/**
 	 * Fetch serverURL string from phone storage. Update ComHandler server with url.
 	 */
 	private void getSavedServerURL() {
-		SharedPreferences settings = this.getSharedPreferences("Settings",Context.MODE_PRIVATE);
-		ComHandler.setServerURL(settings.getString("url", ComHandler.getServerURL()));
+		SharedPreferences settings = this.getSharedPreferences(getResources().getString(R.string.settings_fileAnchor), Context.MODE_PRIVATE);
+		ComHandler.setServerURL(settings.getString(getResources().getString(R.string.settings_serverSelectedURLAnchor), ComHandler.getServerURL()));
 		
 	}
 	
@@ -65,5 +67,18 @@ public class LogInActivity extends SingleFragmentActivity {
 		} else {
 			fragment.makeToast(INTERNET_ACCESS_DENIED, true);
 		}
+	}
+	
+	/**
+	 * Used to automatically login using fake user name and password.
+	 * @deprecated Should be hidden in customer version.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getTitle().equals("Dev login")) {
+			fragment.devLogin();
+			login(fragment.getView());
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

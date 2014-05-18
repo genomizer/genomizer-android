@@ -1,7 +1,6 @@
 package se.umu.cs.pvt151;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,8 +46,7 @@ public class SettingsActivity extends SingleFragmentActivity  {
 	public void onBackPressed() {		
 		if(settingsFragment.isInEditMode()) {
 			settingsFragment.toggleEditMode();			
-		} else {
-						
+		} else {						
 			settingsFragment.saveMultipleURLs();
 			finish();
 		}				

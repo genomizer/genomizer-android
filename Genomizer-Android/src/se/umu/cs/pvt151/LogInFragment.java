@@ -71,27 +71,22 @@ public class LogInFragment extends Fragment {
 	 * ComHandler. The ComHandler receives a token identifier if the user gets
 	 * access, and is needed throughout the session.
 	 */
-	private void sendLoginRequest() {
+	private boolean sendLoginRequest() {
 		String uname = userName.getText().toString();
 		String password = userPwd.getText().toString();
 		
 		if (uname.length() < 4 || password.length() < 4) {
 			makeToast(INPUT_MALFORMED, false);
-			return;
+			return false;
 		}
 
 		try {
-			boolean loginOk = ComHandler.login(uname, password);		
+			return ComHandler.login(uname, password);		
 			
-			if (loginOk) {
-				startSearchActivity();
-			} else {
-				makeToast(INPUT_WRONG, false);
-			}
-
 		} catch (IOException e) {
 			makeToast(CONNECTION_ERROR, false);
 		}
+		return false;
 	}
 
 	/**
@@ -134,19 +129,35 @@ public class LogInFragment extends Fragment {
 	 * focus is returned to the callee. 
 	 *
 	 */
-	private class LoginTask extends AsyncTask<Void, Void, Void> {
+	private class LoginTask extends AsyncTask<Void, Void, Boolean> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
-			sendLoginRequest();
-			return null;
+		protected Boolean doInBackground(Void... params) {
+			
+			return sendLoginRequest();
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			button.setEnabled(true);
+		protected void onPostExecute(Boolean result) {
+			if (result.booleanValue()) {
+				startSearchActivity();
+			} else {
+				makeToast(INPUT_WRONG, false);
+				button.setEnabled(true);
+			}
+			
 			progress.dismiss();
 		}
+	}
+
+	/**
+	 * Used to login with dev account without any typing! 
+	 * @deprecated Should not be included in customer version.
+	 * 
+	 */
+	public void devLogin() {
+		userName.setText("AndroidDev");
+		userPwd.setText("#YOLO");
+		
 	}
 }

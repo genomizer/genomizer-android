@@ -3,6 +3,8 @@ package se.umu.cs.pvt151;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
+import android.view.MenuItem;
 
 /**
  * Activity class to start up the SearchListFragment in the Genomizer
@@ -18,10 +20,30 @@ public class SearchActivity extends SingleFragmentActivity {
 	private static final String POSITIVE_RESPONSE = "Yes";
 	private static final String EXIT = "Exit";
 	private static final String EXIT_QUERY = "Are you sure you want to exit?";
+	private SearchListFragment searchListFrag;
+	private Menu menu;
 
 	@Override
 	protected Fragment createFragment() {	
-		return new SearchListFragment();
+		searchListFrag = new SearchListFragment();
+		return searchListFrag; 
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		if(item.getTitle().toString().equals(getString(R.string.action_search_editPub))) {
+			searchListFrag.onMenuItemPress(item.getTitle().toString());
+		} 
+		
+		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu) {
+		this.menu  = menu;
+		return super.onMenuOpened(featureId, menu);
 	}
 	
 	/**

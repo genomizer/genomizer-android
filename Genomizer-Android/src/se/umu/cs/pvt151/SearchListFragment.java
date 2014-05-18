@@ -1,6 +1,7 @@
 package se.umu.cs.pvt151;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,6 +65,17 @@ public class SearchListFragment extends ListFragment {
 		new AnnotationsTask().execute();
 	}
 	
+	public void onMenuItemPress(String string) {
+		if(string.equals(getString(R.string.action_search_editPub))) {
+			Intent intent = new Intent(getActivity(),
+					SearchPubmedActivity.class);
+			intent.putExtra("PubmedQuery", generateSearchString());
+			intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
+			intent.putExtra(SEARCH_MAP_EXTRA, generateSearchMap());
+			startActivity(intent);	
+		}
+	}
+	
 	/**
 	 * Initializes a new SearchListAdapter for the listView in the fragment 
 	 * containing the generated annotations from the database and
@@ -92,32 +104,8 @@ public class SearchListFragment extends ListFragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(),
 						ExperimentListActivity.class);
-				String key = null;
-				String value = null;
 
-				HashMap<String, String> search = new HashMap<String, String>();
-
-				for (SearchViewHolder vh : mViewHolderList) {
-					if (vh.isChecked && vh.isDropDown) {
-						key = vh.textView.getText().toString();
-						for (Annotation annotation : mAnnotations) {
-							if (annotation.getName().equals(key)) {
-								value = annotation.getValue().get(
-										vh.selectedPosition);
-							}
-						}
-
-					} else if (vh.isChecked) {
-						if (vh.freetext != null && vh.freetext.length() > 0) {
-							key = vh.textView.getText().toString();
-							value = vh.freetext;
-
-						}
-					}
-					if (key != null && value != null) {
-						search.put(key, value);
-					}
-				}
+				HashMap<String, String> search = generateSearchMap();
 				
 				if (search.isEmpty()) {
 					toastMessage(NO_SEARCH_VALUES);
@@ -130,6 +118,45 @@ public class SearchListFragment extends ListFragment {
 
 			}
 		});
+	}
+	
+	private HashMap<String, String> generateSearchMap() {
+		String key = null;
+		String value = null;
+		
+		HashMap<String, String> search = new HashMap<String, String>();
+
+		for (SearchViewHolder vh : mViewHolderList) {
+			if (vh.isChecked && vh.isDropDown) {
+				key = vh.textView.getText().toString();
+				for (Annotation annotation : mAnnotations) {
+					if (annotation.getName().equals(key)) {
+						value = annotation.getValue().get(
+								vh.selectedPosition);
+					}
+				}
+
+			} else if (vh.isChecked) {
+				if (vh.freetext != null && vh.freetext.length() > 0) {
+					key = vh.textView.getText().toString();
+					value = vh.freetext;
+
+				}
+			}
+			if (key != null && value != null) {
+				search.put(key, value);
+			}
+		}
+		return search;
+	}
+	
+	private String generateSearchString() {
+		try {
+			return ComHandler.generatePubmedQuery(generateSearchMap());
+		} catch (UnsupportedEncodingException e) {		
+			e.printStackTrace();
+		}
+		return "0o unsupportedEncoding";
 	}
 
 	/**

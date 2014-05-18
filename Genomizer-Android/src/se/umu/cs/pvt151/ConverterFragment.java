@@ -5,15 +5,19 @@ package se.umu.cs.pvt151;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
+import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +29,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -35,209 +40,160 @@ import android.widget.ToggleButton;
  */
 public class ConverterFragment extends Fragment{
 
-	private ArrayList<View> viewList;
-	private ArrayList<View> enableList;
-	private String[] headers = new String[] { "Bowtie", "Geneome version",
+	private static final String RAW_TO_PROFILE = "raw";
+	private static final String FILES = "files";
+	private static final String TYPE = "type";
+	
+	private final String[] headers = new String[] { "Bowtie", "Geneome version",
 			"SAM to GFF", "GFF to SGR", "Smoothing", "Stepsize",
 			"Ratio calculation", "Ratio", "Smoothing" };
-	private String[] hints = new String[] { "-a -m 1 --best -p 10 -v 2 -q -S",
+	private final String[] hints = new String[] { "-a -m 1 --best -p 10 -v 2 -q -S",
 			"10 1 5 0 0", "y 10", "single 4 0", "150 1 7 0 0" };
-	private Spinner spinnerGeneVer;
+	
 	private Button convertButton;
 	private HashMap<String, Integer> viewMap;
+	private ArrayList<View> headerList;
+	private ArrayList<View> viewList;
+	private ArrayList<GeneFile> processList;
+	private String processType;
+	private ArrayList<String> processParameters;
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		Bundle b = getActivity().getIntent().getExtras();
+		
+		if (b != null) {
+			processType = (String) b.get(TYPE);
+			processList = (ArrayList<GeneFile>) b.get(FILES);
+		}
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_convert_params, container, false);
 
-		spinnerGeneVer = (Spinner) v.findViewById(R.id.spinner_convert_geneversion);
-
-		viewList = new ArrayList<View>();
-		viewList = setupTextViews(v, viewList);
-		viewList = setupEditTexts(v, viewList);
-		viewList = setupToggleButtons(v, viewList);
-		convertButton = setupButton(v);
-		enableList = sortListForLayout(viewList);
-		viewMap = mapWidgets();
-
-		new GetGeneReleaseTask().execute();
-
+		if (true) {
+			headerList = setupHeaders(v);
+			viewList = setupWidgetsForLayout(v);
+			convertButton = setupButton(v);
+			new GetGeneReleaseTask().execute();
+		}
+		
 		return v;
 	}
 
 
 
+	private ArrayList<View> setupHeaders(View v) {
+		ArrayList<View> tempList = new ArrayList<View>();
+		TextView tw;
+		
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_bowtie));
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_geneversion));
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_samtogff));	
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_gfftosgr));
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_smoothing));
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_stepsize));
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_ratiocalc));
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_ratio));
+		tempList.add((TextView) v.findViewById(R.id.lbl_convert_ratiosmooth));
+		
+		for (int i = 0; i < tempList.size(); i++) {
+			tw = (TextView) tempList.get(i);
+			tw.setText(headers[i]);
+		}
+		
+		return tempList;
+	}
+
+	private ArrayList<View> setupWidgetsForLayout(View v) {
+		int etCount = 0;
+		EditText et;
+		ToggleButton tb;
+		ArrayList<View> tempList = new ArrayList<View>();
+		
+		tempList.add((EditText) v.findViewById(R.id.edit_convert_bowtie));
+		tempList.add((Spinner) v.findViewById(R.id.spinner_convert_geneversion));
+		tempList.add((ToggleButton) v.findViewById(R.id.toggle_convert_samtogff));
+		tempList.add((ToggleButton) v.findViewById(R.id.toggle_convert_gfftosgr));
+		tempList.add((EditText) v.findViewById(R.id.edit_convert_smoothing));
+		tempList.add((EditText) v.findViewById(R.id.edit_convert_stepsize));
+		tempList.add((ToggleButton) v.findViewById(R.id.toggle_convert_ratiocalc));
+		tempList.add((EditText) v.findViewById(R.id.edit_convert_ratio));	
+		tempList.add((EditText) v.findViewById(R.id.edit_convert_ratiosmooth));
+		
+		
+		for (int i = 0; i < tempList.size(); i++) {
+			
+			if (i == 0 || i == 4 || i == 5 || i == 7 || i  == 8) {
+				et = (EditText) tempList.get(i);
+				et.setText(hints[etCount]);
+				et.addTextChangedListener(new TextWatch(i));
+				et.setEnabled(false);
+				etCount++;
+				
+			} else if (i == 2 || i == 3 || i == 6) {
+				tb = (ToggleButton) tempList.get(i);
+				tb.setOnCheckedChangeListener(new CheckerChange(i));
+				tb.setEnabled(false);
+				
+			} 
+			
+		}
+		
+		tempList.get(0).setEnabled(true);
+		
+		return tempList;
+	}
+
 	/**
 	 * 
 	 * @param v
-	 * @param viewList2
 	 * @return
 	 */
-	private ArrayList<View> setupTextViews(View v, ArrayList<View> viewList2) {
-		TextView tw;
-
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_bowtie));
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_geneversion));
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_samtogff));	
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_gfftosgr));
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_smoothing));
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_stepsize));
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_ratiocalc));
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_ratio));
-		viewList2.add((TextView) v.findViewById(R.id.lbl_convert_ratiosmooth));
-
-		for (int i = 0; i < headers.length; i++) {
-			tw = (TextView) viewList2.get(i);
-			tw.setText(headers[i]);
-		}
-
-		return viewList2;
-	}
-
-
-
-	/**
-	 * @param v
-	 * @param viewList2 
-	 * @return 
-	 */
-	private ArrayList<View> setupEditTexts(View v, ArrayList<View> viewList2) {
-		EditText et;
-		int i = viewList2.size();
-		int j = viewList2.size();
-
-		viewList2.add((EditText) v.findViewById(R.id.edit_convert_bowtie));
-		viewList2.add((EditText) v.findViewById(R.id.edit_convert_smoothing));
-		viewList2.add((EditText) v.findViewById(R.id.edit_convert_stepsize));
-		viewList2.add((EditText) v.findViewById(R.id.edit_convert_ratio));
-		viewList2.add((EditText) v.findViewById(R.id.edit_convert_ratiosmooth));
-
-		for (String s : hints) {
-			et = (EditText) viewList2.get(i);
-			et.setHint(s);
-			et.addTextChangedListener(new TextWatch(i));
-			if (i > j) {
-				et.setEnabled(false);
-			}
-			i++;
-		}
-		return viewList2;
-	}
-
-
-
-	/**
-	 * @param v
-	 * @param viewList2 
-	 * @return 
-	 */
-	private ArrayList<View> setupToggleButtons(View v, ArrayList<View> viewList2) {
-		int i = viewList2.size();
-		ToggleButton tb;
-
-		viewList2.add((ToggleButton) v.findViewById(R.id.toggle_convert_samtogff));
-		viewList2.add((ToggleButton) v.findViewById(R.id.toggle_convert_gfftosgr));
-		viewList2.add((ToggleButton) v.findViewById(R.id.toggle_convert_ratiocalc));
-
-		for (int j = i; j < viewList2.size(); j++) {
-			tb = (ToggleButton) viewList2.get(j);
-			tb.setOnCheckedChangeListener(new CheckerChange(j));
-			tb.setEnabled(false);
-		}
-
-		return viewList2;
-	}
-
-
-
-	/**
-	 * @param v
-	 * @return 
-	 */
 	private Button setupButton(View v) {
-		Button button = (Button) v.findViewById(R.id.btn_convert_convertbutton);
-		button.setText("Convert");
-		button.setOnClickListener(new buttonListener());
-
-		return button;
-	}
-
-	private ArrayList<View> sortListForLayout(ArrayList<View> viewList2) {
-		ArrayList<View> temp = new ArrayList<View>();
+		Button tempButton = (Button) v.findViewById(R.id.btn_convert_convertbutton);
+		tempButton.setText("CONVERT");
+		tempButton.setOnClickListener(new buttonListener());
 		
-		temp.add(viewList2.get(0));
-		temp.add(viewList2.get(9));
-		temp.add(viewList2.get(1));
-		temp.add(viewList2.get(17));
-		temp.add(viewList2.get(2));
-		temp.add(viewList2.get(14));
-		temp.add(viewList2.get(3));
-		temp.add(viewList2.get(15));
-		temp.add(viewList2.get(4));
-		temp.add(viewList2.get(10));
-		temp.add(viewList2.get(5));
-		temp.add(viewList2.get(11));
-		temp.add(viewList2.get(6));
-		temp.add(viewList2.get(16));
-		temp.add(viewList2.get(7));
-		temp.add(viewList2.get(12));
-		temp.add(viewList2.get(8));
-		temp.add(viewList2.get(13));
-		return temp;
+		return tempButton;
 	}
-
-
-
-	private HashMap<String, Integer> mapWidgets() {
-		HashMap<String, Integer> temp = new HashMap<String, Integer>();
-
-		temp.put("Bowtie header", 0);
-		temp.put("GeneVersion header", 1);
-		temp.put("SamToGff header", 2);
-		temp.put("GffToSSgr", 3);
-		temp.put("Smoothing header", 4);
-		temp.put("StepSize header", 5);
-		temp.put("RatioCalc header", 6);
-		temp.put("Ratio header", 7);
-		temp.put("RatioSmoothing header", 8);
-		temp.put("Bowtie edit", 9);
-		temp.put("Smoothing edit", 10);
-		temp.put("StepSize edit", 11);
-		temp.put("Ratio edit", 12);
-		temp.put("RatioSmoothing edit", 13);
-		temp.put("SamToGff toggle", 14);
-		temp.put("GffToSgr toggle", 15);
-		temp.put("RatioCalc toggle", 16);
-		temp.put("GeneVer spinner", 17);
-
-		return temp;
-	}
-
-
 
 	/**
 	 * 
 	 * @param geneRelList
 	 */
 	private void setupSpinner(ArrayList<GenomeRelease> geneRelList) {
+		Spinner sp;
 		ArrayAdapter<String> adapter;
 		ArrayList<String> geneList = new ArrayList<String>();
 
 		geneList.add("");
+		
 		for (GenomeRelease genomeRelease : geneRelList) {
 			geneList.add(genomeRelease.getGenomeVersion());
 		}
 
-		adapter = new ArrayAdapter<String>(getActivity()
-				,
+		adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_spinner_item, geneList);
-		spinnerGeneVer.setAdapter(adapter);
-		spinnerGeneVer.setOnItemSelectedListener(new itemListener());
-		spinnerGeneVer.setEnabled(false);
-		viewList.add(spinnerGeneVer);
+
+		sp = (Spinner) viewList.get(1);
+		
+		sp.setAdapter(adapter);
+		sp.setOnItemSelectedListener(new itemListener(3));
+		sp.setEnabled(false);
 	}
 
+	
+	/**
+	 * 
+	 * @author Anders
+	 *
+	 */
 	private class TextWatch implements TextWatcher {
 		private int id;
 
@@ -261,39 +217,25 @@ public class ConverterFragment extends Fragment{
 		@Override
 		public void afterTextChanged(Editable s) {
 			boolean enable = s.length() > 0;
-
-			switch (id) {
-			case 9:
-				viewList.get(viewMap.get("GeneVer spinner")).setEnabled(enable);
-				break;
-			case 10:
-				viewList.get(viewMap.get("StepSize edit")).setEnabled(enable);
-				break;
-			case 11:
-				viewList.get(viewMap.get("RatioCalc toggle")).setEnabled(enable);
-				break;
-			case 12:
+			
+			if (enable) {
 				
-				break;
-			case 13:
-
-				break;
-
-			default:
-				break;
+				if ((id + 1) < viewList.size()) {
+					viewList.get(id + 1).setEnabled(enable);
+				}
+				
+			} else {
+		
+				for (int i = (id + 1); i < viewList.size(); i++) {
+					viewList.get(i).setEnabled(enable);
+				}
 			}
-
-
-
-
-
-			if (s.length() > 0 && id == 0) {
-
-			} 
+				
 		}
 
 	}
 
+	
 	/**
 	 * 
 	 * @author Anders
@@ -309,33 +251,42 @@ public class ConverterFragment extends Fragment{
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
-
-			switch (id) {
-			case 14:
-				viewList.get(viewMap.get("GffToSgr toggle")).setEnabled(isChecked);
-				break;
-			case 15:
-				viewList.get(viewMap.get("Smoothing edit")).setEnabled(isChecked);
-				break;
-			case 16:
-				viewList.get(viewMap.get("Ratio edit")).setEnabled(isChecked);
-				viewList.get(viewMap.get("RatioSmoothing edit")).setEnabled(isChecked);
-				break;
-
-			default:
-				break;
+			
+			if (isChecked && (id + 1) < viewList.size()) {
+				viewList.get(id + 1).setEnabled(isChecked);
+			} else {
+				for (int i = (id + 1); i < viewList.size(); i++) {
+					viewList.get(i).setEnabled(isChecked);
+				}
 			}
-			// TODO Auto-generated method stub
-
 		}
 	}
 
+	
+	/**
+	 * 
+	 * @author Anders
+	 *
+	 */
 	private class itemListener implements OnItemSelectedListener {
-
+		private int index;
+		
+		public itemListener(int id) {
+			this.index = id;
+		}
+		
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
-			viewList.get(viewMap.get("SamToGff toggle")).setEnabled(id > 0);
+			
+			if (id == 0) {
+				for (int i = (index + 1); i < viewList.size(); i++) {
+					viewList.get(i).setEnabled(false);
+				}
+			} else {
+				viewList.get(index + 1).setEnabled(true);
+			}
+			
 		}
 
 		@Override
@@ -346,6 +297,7 @@ public class ConverterFragment extends Fragment{
 
 	}
 
+	
 	/**
 	 * 
 	 * @author Anders
@@ -355,12 +307,39 @@ public class ConverterFragment extends Fragment{
 	
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
+			processParameters = new ArrayList<String>();
+			EditText et;
+			ToggleButton tb;
+			Spinner sp;
+			
+			for (int i = 0; i < viewList.size(); i++) {
+				
+				if (viewList.get(i).isEnabled()) {
+					
+					if (i == 0 || i == 4 || i == 5 || i == 7 || i  == 8) {
+						et = (EditText) viewList.get(i);
+						processParameters.add(et.getText().toString());
+					} else if (i == 2 || i == 3) {
+						tb = (ToggleButton) viewList.get(i);
+						processParameters.add("y");
+					} else {
+						sp = (Spinner) viewList.get(i);
+						processParameters.add(sp.getSelectedItem().toString());
+					}
+				} else {
+					processParameters.add("");
+				}
+			}
+			
+			Log.d("smurf", "ProcessList:\n" + processParameters);
+			
+//			new ConvertTask().execute();
 	
 		}
 	
 	}
 
+	
 	/**
 	 * 
 	 * @author Anders
@@ -389,5 +368,32 @@ public class ConverterFragment extends Fragment{
 		}
 
 	}
+	
+	
+	private class ConvertTask extends AsyncTask<Void, Void, Void> {
 
+		@Override
+		protected Void doInBackground(Void... params) {
+			ProcessingParameters parameters = new ProcessingParameters();
+			String meta = "";
+			String release = processParameters.get(1);
+			
+			processParameters.set(1, "");
+			
+			for (String s : processParameters) {
+				parameters.addParameter(s);
+			}
+			
+			try {
+				ComHandler.rawToProfile(processList.get(0), parameters, meta, release);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+		
+	}
+	
 }

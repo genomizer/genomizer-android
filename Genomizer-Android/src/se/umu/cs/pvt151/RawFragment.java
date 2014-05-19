@@ -58,7 +58,7 @@ public class RawFragment extends Fragment {
 				
 				if (selectedRaw.size() > 0) {
 					Intent intent = new Intent(getActivity(),
-							ConvertActivity.class);
+							ConverterActivity.class);
 					
 					intent.putExtra("type", "raw");
 					intent.putExtra("files", selectedRaw);

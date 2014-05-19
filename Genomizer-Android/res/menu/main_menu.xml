@@ -25,9 +25,8 @@
     
     <item 
         android:id="@+id/btnprocesses_main_menu"
-        android:icon="@drawable/search"
         android:title="@string/btnprocesses_main_menu"
-        android:showAsAction="always"
+        android:showAsAction="never"
         />
     
     <item android:id="@+id/btnconvert_main_menu"

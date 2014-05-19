@@ -22,6 +22,8 @@ import android.widget.TextView;
 public class ProcessFragment extends Fragment {
 
 	private ListView processList;
+	
+	private Button refreshButton;
 
 	private ArrayList<Process> processes;
 
@@ -37,6 +39,17 @@ public class ProcessFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_process, parent, false);
 
 		processList = (ListView) v.findViewById(R.id.processList);
+		
+		refreshButton = (Button) v.findViewById(R.id.process_button);
+		
+		refreshButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				processes.clear();
+				new ProcessTask().execute();
+			}
+		});
 
 		return v;
 	}

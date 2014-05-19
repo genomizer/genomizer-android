@@ -174,7 +174,7 @@ public class MsgDeconstructor {
 			
 			process.setTimeAdded(obj.getLong("timeAdded"));
 			process.setTimeStarted(obj.getLong("timeStarted"));
-			process.setTimeFinnished(obj.getLong("timeFinnished"));
+			process.setTimeFinnished(obj.getLong("timeFinished"));
 			
 			JSONArray outputFiles = obj.getJSONArray("outputFiles");
 			String[] files = new String[outputFiles.length()];

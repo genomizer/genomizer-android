@@ -99,12 +99,16 @@ public class FileListFragment extends Fragment {
 				ArrayList<GeneFile> tempRaw = new ArrayList<GeneFile>();
 				ArrayList<GeneFile> tempRegion = new ArrayList<GeneFile>();
 				ArrayList<GeneFile> tempProfile = new ArrayList<GeneFile>();
+				ArrayList<String> isInRaw = new ArrayList<String>();
 				
 				if(!rawSelected.isEmpty()) {
 					if(!DataStorage.getFileList("raw").isEmpty()) {
 						tempRaw = DataStorage.getFileList("raw");
+						for(int i = 0; i < tempRaw.size(); i++) {
+							isInRaw.add(tempRaw.get(i).getName());
+						}
 						for(int j=0; j < rawSelected.size(); j++) {
-							if(!tempRaw.contains(rawSelected.get(j))) {
+							if(!tempRaw.contains(rawSelected.get(j)) && !isInRaw.contains(rawSelected.get(j).getName())) {
 								//rawSelected.remove(j);
 								tempRaw.add(rawSelected.get(j));
 							}	

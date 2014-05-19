@@ -12,6 +12,7 @@ import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
+import se.umu.cs.pvt151.model.Process;
 
 public class MsgDeconstructor {
 
@@ -159,7 +160,33 @@ public class MsgDeconstructor {
 	}
 
 
-	public static ArrayList<String> deconProcessPackage(JSONArray jsonPackage) {
-		return null;
+	public static ArrayList<Process> deconProcessPackage(JSONArray json) throws JSONException {
+		ArrayList<Process> processes = new ArrayList<Process>();
+
+		for (int i = 0; i < json.length(); i++) {
+			JSONObject obj = (JSONObject) json.get(i);
+			
+			Process process = new Process();
+			
+			process.setExperimentName(obj.getString("experimentName"));
+			process.setStatus(obj.getString("status"));
+			process.setAuthor(obj.getString("author"));
+			
+			process.setTimeAdded(obj.getLong("timeAdded"));
+			process.setTimeStarted(obj.getLong("timeStarted"));
+			process.setTimeFinnished(obj.getLong("timeFinnished"));
+			
+			JSONArray outputFiles = obj.getJSONArray("outputFiles");
+			String[] files = new String[outputFiles.length()];
+			
+			for (int j = 0; j < files.length; j++) {
+				files[j] = outputFiles.getString(j);
+			}
+			
+			process.setOutputFiles(files);
+			
+			processes.add(process);
+		}
+		return processes;
 	}
 }

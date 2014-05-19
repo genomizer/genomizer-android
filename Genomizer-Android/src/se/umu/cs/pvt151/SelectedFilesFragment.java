@@ -15,6 +15,8 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 
 	private TabHost tabHost;
 	private ViewPager viewPager;
+	private LayoutInflater inflater = null;
+	private ViewGroup parent = null;
 
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,15 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
+		this.inflater = inflater;
+		this.parent = parent;
+		View v = initView();
+
+		return v;
+	}
+
+
+	private View initView() {
 		View v = inflater.inflate(R.layout.fragment_selected_files_swipe, parent, false);
 
 		TabsPagerAdapter adapter = new TabsPagerAdapter(getActivity().getSupportFragmentManager());
@@ -37,14 +48,16 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 		initializeTabs();
 		
 		tabHost.setCurrentTab(1);
-
 		return v;
 	}
 	
 	
+	
+	
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		tabHost.setCurrentTab(0);	}
+		tabHost.setCurrentTab(0);	
+	}
 	
 	
 	private void initializeTabs() {

@@ -173,7 +173,7 @@ public class ComHandler {
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
 			GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, "PUT", "process/rawtoprofile");
 
-			return response.getCode() == 201;
+			return response.getCode() == 200;
 		} catch (JSONException e) {
 			//This is only an issue if the server is changed.
 			throw new IOException("JSONException. Has the server changed?");

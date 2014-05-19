@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
@@ -192,6 +193,13 @@ public class ConverterFragment extends Fragment{
 	}
 
 	
+	private void toastUser(String response) {
+		Toast.makeText(getActivity().getApplicationContext(), response,
+				Toast.LENGTH_SHORT).show();
+
+	}
+
+
 	/**
 	 * 
 	 * @author Anders
@@ -379,6 +387,8 @@ public class ConverterFragment extends Fragment{
 	
 	private class ConvertTask extends AsyncTask<Void, Void, Void> {
 
+		private boolean processResult;
+		private IOException caughtException = null;
 		@Override
 		protected Void doInBackground(Void... params) {
 			ProcessingParameters parameters = new ProcessingParameters();
@@ -392,13 +402,32 @@ public class ConverterFragment extends Fragment{
 			}
 			
 			try {
-				ComHandler.rawToProfile(processList.get(0), parameters, meta, release);
+				processResult = ComHandler.rawToProfile(processList.get(0), parameters, meta, release);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				caughtException = e;
 			}
 			
 			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			
+			String response;
+			
+			if (caughtException == null) {
+				if (processResult) {
+					response = "Conversion started successfully";
+				} else {
+					response = "Conversion malfunction";
+				}
+			} else {
+				response = "IO Exception from ComHandler";
+			}
+			toastUser(response);
+			
 		}
 		
 	}

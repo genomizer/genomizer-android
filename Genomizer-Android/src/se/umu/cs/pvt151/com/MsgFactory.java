@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 
@@ -54,9 +56,9 @@ public class MsgFactory {
 		JSONObject obj = new JSONObject();
 		
 		obj.put("expid", file.getExpId());
-		
+		Log.d("smurf", "Before parameters to json");
 		obj.put("parameters", parametersToJson(param));
-		
+		Log.d("smurf", "After parameters to json");
 		obj.put("metadata", metadata);
 		obj.put("genomeVersion", genomeRelease);
 		obj.put("author", file.getAuthor());
@@ -74,17 +76,13 @@ public class MsgFactory {
 	 * @throws JSONException
 	 */
 	private static JSONArray parametersToJson(ProcessingParameters param) throws JSONException {
-		String parameterString = "[";
-		
+
+		JSONArray json = new JSONArray();
 		for (int i = 0; i < param.size(); i++) {
-			if (i != 0) {
-				parameterString += ",";
-			}
-			parameterString += param.getParameter(i);
+
+			json.put(param.getParameter(i));
+
 		}
-		parameterString += "]";
-		
-		JSONArray json = new JSONArray(parameterString);
 		
 		return json;
 	}

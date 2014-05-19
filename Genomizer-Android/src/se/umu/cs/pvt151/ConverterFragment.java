@@ -107,6 +107,9 @@ public class ConverterFragment extends Fragment{
 			tw.setText(headers[i]);
 		}
 		
+		tw = (TextView) v.findViewById(R.id.lbl_convert_header);
+		tw.setText("RAW -> PROFILE");
+		
 		return tempList;
 	}
 

@@ -61,6 +61,8 @@ public class ExperimentListFragment extends Fragment {
 	
 	private ArrayList<String> annotation = new ArrayList<String>();
 	
+	private String searchString;
+	
 	//TODO: Some way to deal with supressedwarnings?
 	@SuppressWarnings("unchecked")
 	@Override

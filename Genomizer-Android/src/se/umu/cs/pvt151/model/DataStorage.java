@@ -18,26 +18,27 @@ public class DataStorage {
 
 	public static void appendFileList(String key, ArrayList<GeneFile> files) {
 
-		for (int i = 0; i < files.size(); i++) {
+		/*for (int i = 0; i < files.size(); i++) {
 			Log.d("HEJ", "add files: " + files.get(i).getName());
-		}
+		}*/
+		//ArrayList<GeneFile> currentFiles = fileMap.get(key);
+		fileMap.put(key, files);
+		Log.d("HEJ", "added file " + files.size());
 
-		ArrayList<GeneFile> currentFiles = fileMap.get(key);
-
-		if (currentFiles == null) {
+		/*if (currentFiles == null) {
 			fileMap.put(key, files);
 		} else {
 			for (int i = 0; i < files.size(); i++) {
 				GeneFile file = files.get(i);
 				currentFiles.add(file);
-				Log.d("HEJ", "added file");
+				Log.d("HEJ", "added file " + files.size());
 			}
 			fileMap.put(key, currentFiles);
 		}
 
 		for (int i = 0; i < fileMap.get(key).size(); i++) {
 			Log.d("HEJ", "Efter add files: " + fileMap.get(key).get(i).getName());
-		}
+		}*/
 	}
 
 	public static ArrayList<GeneFile> getFileList(String key) {

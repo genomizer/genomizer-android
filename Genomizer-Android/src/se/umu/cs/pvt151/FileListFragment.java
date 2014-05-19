@@ -16,6 +16,7 @@ import se.umu.cs.pvt151.model.GeneFile;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -95,19 +96,66 @@ public class FileListFragment extends Fragment {
 			
 			@Override
 			public void onClick(View arg0) {
+				ArrayList<GeneFile> tempRaw = new ArrayList<GeneFile>();
+				ArrayList<GeneFile> tempRegion = new ArrayList<GeneFile>();
+				ArrayList<GeneFile> tempProfile = new ArrayList<GeneFile>();
 				
-				//Toast.makeText(getActivity().getApplicationContext(), "Added " + tempprofile, Toast.LENGTH_SHORT).show();
-				/*Toast.makeText(getActivity().getApplicationContext(), "Added " + rawSelected.size() + "  raw file(s)"
-						+ "and " + profileSelected.size() + "profile file(s) and " 
-						+ regionSelected.size() + " region file(s) added to selection", Toast.LENGTH_SHORT).show();*/
-				if(sent == 0) {
-					DataStorage.appendFileList("raw", rawSelected);
-					DataStorage.appendFileList("profile", profileSelected);
-					DataStorage.appendFileList("region", regionSelected);
-					sent = 1;
-				} else if(sent == 1) {
-					Toast.makeText(getActivity().getApplicationContext(), "Files already sent", Toast.LENGTH_SHORT).show();
+				if(!rawSelected.isEmpty()) {
+					if(!DataStorage.getFileList("raw").isEmpty()) {
+						tempRaw = DataStorage.getFileList("raw");
+						for(int j=0; j < rawSelected.size(); j++) {
+							if(!tempRaw.contains(rawSelected.get(j))) {
+								//rawSelected.remove(j);
+								tempRaw.add(rawSelected.get(j));
+							}	
+						}
+						DataStorage.appendFileList("raw", tempRaw);
+						Toast.makeText(getActivity(), "Adding into stored files",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getActivity(), "Selected files but no stored",
+								Toast.LENGTH_SHORT).show();
+						DataStorage.appendFileList("raw", rawSelected);
+					}		
+				} 
+				if(!regionSelected.isEmpty()) {
+					if(!DataStorage.getFileList("region").isEmpty()) {
+						tempRegion = DataStorage.getFileList("region");
+						for(int j=0; j < regionSelected.size(); j++) {
+							if(!tempRegion.contains(regionSelected.get(j))) {
+								//rawSelected.remove(j);
+								tempRegion.add(regionSelected.get(j));
+							}	
+						}
+						DataStorage.appendFileList("region", tempRegion);
+						Toast.makeText(getActivity(), "Adding into stored files",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getActivity(), "Selected files but no stored",
+								Toast.LENGTH_SHORT).show();
+						DataStorage.appendFileList("region", regionSelected);
+					}	
 				}
+				if(!profileSelected.isEmpty()) {
+					if(!DataStorage.getFileList("profile").isEmpty()) {
+						tempProfile = DataStorage.getFileList("profile");
+						for(int j=0; j < profileSelected.size(); j++) {
+							if(!tempProfile.contains(profileSelected.get(j))) {
+								//rawSelected.remove(j);
+								tempProfile.add(profileSelected.get(j));
+							}	
+						}
+						DataStorage.appendFileList("profile", tempProfile);
+						Toast.makeText(getActivity(), "Adding into stored files",
+								Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getActivity(), "Selected files but no stored",
+								Toast.LENGTH_SHORT).show();
+						DataStorage.appendFileList("profile", profileSelected);
+					}	
+				}
+				
+				Toast.makeText(getActivity().getApplicationContext(), "Clicking!!", Toast.LENGTH_SHORT).show();
 			}
 			
 		});
@@ -227,11 +275,11 @@ public class FileListFragment extends Fragment {
 								selectedRawDataFiles.add(raw.get(getPos));
 								rawSelected.add(allRawFiles.get(getPos));
 								buttonHolder.fileCheckBox.setChecked(true);
-								Toast.makeText(getActivity(), "Already added: " + allRawFiles.get(getPos).getName(),
-										Toast.LENGTH_SHORT).show();
+								/*Toast.makeText(getActivity(), "Already: " + allRawFiles.get(getPos).getName(),
+										Toast.LENGTH_SHORT).show();*/
 							} else {
-								Toast.makeText(getActivity(), "Already added: " + raw.get(getPos),
-										Toast.LENGTH_SHORT).show();
+								/*Toast.makeText(getActivity(), "Already added: " + raw.get(getPos),
+										Toast.LENGTH_SHORT).show();*/
 							}
 							
 						} else if(data.equals("profile")) {
@@ -239,8 +287,8 @@ public class FileListFragment extends Fragment {
 							//if(!selectedProfileDataFiles.contains(profile.get(getPos))) {
 								selectedProfileDataFiles.add(profile.get(getPos));
 								profileSelected.add(allProfileFiles.get(getPos));
-								Toast.makeText(getActivity(), "Already added: " + allProfileFiles.get(getPos).getName(),
-										Toast.LENGTH_SHORT).show();
+								/*Toast.makeText(getActivity(), "Already added: " + allProfileFiles.get(getPos).getName(),
+										Toast.LENGTH_SHORT).show();*/
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 
 							
@@ -249,8 +297,8 @@ public class FileListFragment extends Fragment {
 							if(!regionSelected.contains(allRegionFiles.get(getPos))) {
 								selectedRegionDataFiles.add(region.get(getPos));
 								regionSelected.add(allRegionFiles.get(getPos));
-								Toast.makeText(getActivity(), "Already added: " + allRegionFiles.get(getPos).getName(),
-										Toast.LENGTH_SHORT).show();
+								/*Toast.makeText(getActivity(), "Already added: " + allRegionFiles.get(getPos).getName(),
+										Toast.LENGTH_SHORT).show();*/
 								buttonHolder.fileCheckBox.setChecked(true);
 							}
 						}

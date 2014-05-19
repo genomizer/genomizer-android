@@ -38,8 +38,6 @@ public class ProcessFragment extends Fragment {
 
 		processList = (ListView) v.findViewById(R.id.processList);
 
-		setButtonListeners(v);
-
 		return v;
 	}
 	
@@ -48,19 +46,6 @@ public class ProcessFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		new ProcessTask().execute();
-	}
-
-
-	private void setButtonListeners(View v) {
-		Button convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
-
-		convertRawButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
 	}
 
 
@@ -136,7 +121,6 @@ public class ProcessFragment extends Fragment {
 				except = e;
 			}
 			return null;
-			
 		}
 		
 		@Override

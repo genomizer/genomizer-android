@@ -23,6 +23,13 @@
         android:showAsAction="always"
         />
     
+    <item 
+        android:id="@+id/btnprocesses_main_menu"
+        android:icon="@drawable/search"
+        android:title="@string/btnprocesses_main_menu"
+        android:showAsAction="always"
+        />
+    
     <item android:id="@+id/btnconvert_main_menu"
         android:title="Convert"
         android:showAsAction="never"

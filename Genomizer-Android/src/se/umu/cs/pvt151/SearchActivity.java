@@ -32,8 +32,7 @@ public class SearchActivity extends SingleFragmentActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		if(item.getTitle().toString().equals(getString(R.string.action_search_editPub))) {
+		if(item.getTitle().toString().equals(getString(R.string.action_search_editPub))) {			
 			searchListFrag.onMenuItemPress(item.getTitle().toString());
 		} 
 		

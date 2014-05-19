@@ -66,19 +66,16 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
 		
-		if(fragmentClassSimpleName.equals("SettingsFragment")) {
-			MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getMenuInflater();
+		if(fragmentClassSimpleName.equals("SettingsFragment")) {			
 			inflater.inflate(R.menu.settings, menu);
-		} else if(fragmentClassSimpleName.equals("SearchListFragment")) {
-			MenuInflater inflater = getMenuInflater();
+		} else if(fragmentClassSimpleName.equals("SearchListFragment")) {			
 			inflater.inflate(R.menu.search_menu, menu);
 		} else if(fragmentClassSimpleName.equals("SearchPubmedFragment")) {
-			//Do not inflate menu if in Search menu
-		} else if (inflateMenu) {
-			MenuInflater inflater = getMenuInflater();
+			//Do not inflate menu if in edit pubmed search fragment
+		} else if (inflateMenu) {			
 			inflater.inflate(R.menu.main_menu, menu);
-		} else {
-			MenuInflater inflater = getMenuInflater();
+		} else {			
 			inflater.inflate(R.menu.main, menu);
 		}
 		return true;

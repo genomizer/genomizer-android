@@ -10,7 +10,7 @@ public class SearchPubmedActivity extends SingleFragmentActivity {
 
 	@Override
 	protected Fragment createFragment() {		
-		searchPubmedFragment = new SearchPubmedFragment();		
+		searchPubmedFragment = new SearchPubmedFragment();	
 		return searchPubmedFragment;
 	}
 	

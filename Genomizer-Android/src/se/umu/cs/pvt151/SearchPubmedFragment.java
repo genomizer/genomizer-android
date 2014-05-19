@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class SearchPubmedFragment extends Fragment {
@@ -138,13 +139,19 @@ public class SearchPubmedFragment extends Fragment {
 				ExperimentListActivity.class);
 		
 		substituteLowerCaseConnectives();
-		
-		String editedPubstring = recreateSearchQueryFromUserInput();
+		String editedPubstring = null;
+		try {
+		editedPubstring = recreateSearchQueryFromUserInput();
+		} catch(StringIndexOutOfBoundsException e) {
+			Toast.makeText(getActivity(), "Malformed pubmed Query! Did you remove logical connectives?", Toast.LENGTH_LONG).show();
+			return;
+		}
 		Log.d("SearchPubmedFragment", "Original pubstr: " + origionalPubquery);
 		Log.d("SearchPubmedFragment", "New pubstr: " + editedPubstring);
 		Log.d("SearchPubmedFragment", "New vs Original pubstr (str compare): " + origionalPubquery.compareTo(editedPubstring));
-		
-		intent.putExtra("PubmedQuery", recreateSearchQueryFromUserInput());
+		if(editedPubstring != null) {
+			intent.putExtra("PubmedQuery", editedPubstring);
+		}
 		intent.putExtra("Annotations", annotation);
 		intent.putExtra("searchMap", searchResults);
 		

@@ -22,6 +22,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	private boolean inflateMenu = false;
 	private String fragmentClassSimpleName = "";
+	private static boolean devModeEnabled = false;
 	
 	/**
 	 * For use with the Genomizer Android application.
@@ -75,10 +76,21 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			//Do not inflate menu if in edit pubmed search fragment
 		} else if (inflateMenu) {			
 			inflater.inflate(R.menu.main_menu, menu);
-		} else {			
+		} else {						
 			inflater.inflate(R.menu.main, menu);
 		}
+		if(!devModeEnabled) {
+			hideDevOptions(menu);
+		}
 		return true;
+	}
+	
+	private void hideDevOptions(Menu menu) {
+		for(int i = 0; i < menu.size(); i++) {
+			if(menu.getItem(i).getTitle().toString().contains("Dev")) {
+				menu.getItem(i).setVisible(false);
+			}
+		}
 	}
 	
 	/**

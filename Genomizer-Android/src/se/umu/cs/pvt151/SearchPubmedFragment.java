@@ -151,6 +151,8 @@ public class SearchPubmedFragment extends Fragment {
 		Log.d("SearchPubmedFragment", "New vs Original pubstr (str compare): " + origionalPubquery.compareTo(editedPubstring));
 		if(editedPubstring != null) {
 			intent.putExtra("PubmedQuery", editedPubstring);
+		} else {
+			intent.putExtra("PubmedQuery", origionalPubquery);
 		}
 		intent.putExtra("Annotations", annotation);
 		intent.putExtra("searchMap", searchResults);

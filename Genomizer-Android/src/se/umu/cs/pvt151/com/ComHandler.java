@@ -15,6 +15,7 @@ import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
+import se.umu.cs.pvt151.model.Process;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 
 public class ComHandler {
@@ -200,7 +201,7 @@ public class ComHandler {
 	}
 	
 	
-	public static ArrayList<String> getProcesses() throws IOException {
+	public static ArrayList<Process> getProcesses() throws IOException {
 		try {
 			JSONObject msg = MsgFactory.createRegularPackage();
 			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");

@@ -1,8 +1,11 @@
 package se.umu.cs.pvt151;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Process;
@@ -11,6 +14,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -166,14 +170,10 @@ public class ProcessFragment extends Fragment {
 		}
 	}
 
-
 	private String timeInterpreter(long seconds) {
-		if (seconds == 0) {
-			return "Pending...";
-		} else {
-			Date date = new Date(seconds);
-			return date.toString();
-		}
+		Date date = new Date(seconds);
+        return SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, 
+        		SimpleDateFormat.SHORT, Locale.ENGLISH).format(date);
 	}
 	
 	

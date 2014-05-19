@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.5" icons="false" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="se.umu.cs.pvt151.ExperimentListActivity" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/ExperimentListActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="718" y="320"/>    
+  <class id="1" language="java" name="se.umu.cs.pvt151.SearchSettingsFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchSettingsFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="318" width="283" x="895" y="565"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="se.umu.cs.pvt151.FileListActivity" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/FileListActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="903" y="116"/>    
+  <class id="2" language="java" name="se.umu.cs.pvt151.SearchListFragment.TheTextWatcher" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="126" width="256" x="2131" y="565"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="se.umu.cs.pvt151.SingleFragmentActivity" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/SingleFragmentActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="450" y="96"/>    
+  <class id="3" language="java" name="se.umu.cs.pvt151.SearchPubmedFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchPubmedFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="222" width="371" x="1344" y="565"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="se.umu.cs.pvt151.SearchActivity" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="452" y="319"/>    
+  <class id="4" language="java" name="se.umu.cs.pvt151.SettingsFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SettingsFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="478" width="283" x="1200" y="1767"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,143 +39,522 @@
   </class>  
   <class id="5" language="java" name="se.umu.cs.pvt151.LogInActivity" project="Genomizer-Android" 
     file="/Genomizer-Android/src/se/umu/cs/pvt151/LogInActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="154" y="321"/>    
+    <position height="-1" width="-1" x="738" y="-4"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="se.umu.cs.pvt151.ExperimentListFragment.ListHandler" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/ExperimentListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="955" y="318"/>    
+  <class id="6" language="java" name="se.umu.cs.pvt151.SearchActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="222" width="220" x="1818" y="1505"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="se.umu.cs.pvt151.SearchListFragment.SearchListAdapter" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="551" y="810"/>    
+  <class id="7" language="java" name="se.umu.cs.pvt151.SettingsActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SettingsActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="190" width="220" x="1200" y="1505"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="se.umu.cs.pvt151.SearchListFragment" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="556" y="580"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="9" language="java" name="se.umu.cs.pvt151.ExperimentListFragment" project="Genomizer-Android" 
-    file="/Genomizer-Android/src/se/umu/cs/pvt151/ExperimentListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="972" y="604"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="10" language="java" name="se.umu.cs.pvt151.LogInFragment" project="Genomizer-Android" 
+  <class id="8" language="java" name="se.umu.cs.pvt151.LogInFragment.LoginTask" project="Genomizer-Android" 
     file="/Genomizer-Android/src/se/umu/cs/pvt151/LogInFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="154" y="700"/>    
+    <position height="110" width="171" x="591" y="923"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="se.umu.cs.pvt151.FileListFragment.ListHandler" project="Genomizer-Android" 
+  <class id="9" language="java" name="se.umu.cs.pvt151.SingleFragmentActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SingleFragmentActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="974" y="-264"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="se.umu.cs.pvt151.SearchListFragment.AnnotationsTask" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="126" width="153" x="1820" y="319"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="se.umu.cs.pvt151.ProcessFragment.ProcessListAdapter" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/ProcessFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="158" width="217" x="402" y="1505"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="se.umu.cs.pvt151.ProcessActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/ProcessActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="498" y="-52"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="se.umu.cs.pvt151.SearchSettingsFragment.SearchSettingAdapter" 
+    project="Genomizer-Android" file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchSettingsFragment.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="126" width="216" x="895" y="923"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="se.umu.cs.pvt151.ProcessFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/ProcessFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="206" width="283" x="228" y="565"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="se.umu.cs.pvt151.ExperimentListFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/ExperimentListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3000" y="38"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="se.umu.cs.pvt151.LogInFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/LogInFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="302" width="283" x="551" y="565"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="se.umu.cs.pvt151.FileListFragment.FileListAdapter" project="Genomizer-Android" 
     file="/Genomizer-Android/src/se/umu/cs/pvt151/FileListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1268" y="442"/>    
+    <position height="142" width="212" x="1460" y="1505"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="se.umu.cs.pvt151.FileListFragment" project="Genomizer-Android" 
+  <class id="18" language="java" name="se.umu.cs.pvt151.SearchPubmedActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchPubmedActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="142" width="148" x="1344" y="319"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="se.umu.cs.pvt151.ExperimentListFragment.ListHandler" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/ExperimentListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="94" width="248" x="1532" y="319"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="se.umu.cs.pvt151.ExperimentListFragment.SearchHandler" 
+    project="Genomizer-Android" file="/Genomizer-Android/src/se/umu/cs/pvt151/ExperimentListFragment.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="110" width="242" x="1323" y="-55"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="se.umu.cs.pvt151.FileListFragment.listViewHolder" project="Genomizer-Android" 
     file="/Genomizer-Android/src/se/umu/cs/pvt151/FileListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1271" y="142"/>    
+    <position height="142" width="156" x="1693" y="1767"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="13">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="14" name="fragment"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="16">    
-    <end type="SOURCE" refId="12"/>    
+  <class id="22" language="java" name="se.umu.cs.pvt151.SearchListFragment.SearchViewHolder" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="238" width="120" x="2309" y="923"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="se.umu.cs.pvt151.FileListFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/FileListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="542" width="298" x="1499" y="923"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="se.umu.cs.pvt151.SelectedFilesActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SelectedFilesActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="94" width="148" x="797" y="1505"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="se.umu.cs.pvt151.SearchListFragment.SearchListAdapter" 
+    project="Genomizer-Android" file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchListFragment.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="126" width="311" x="2055" y="319"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="se.umu.cs.pvt151.ExperimentListActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/ExperimentListActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="206" width="220" x="1239" y="923"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="se.umu.cs.pvt151.SearchListFragment" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="334" width="239" x="2055" y="-55"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="se.umu.cs.pvt151.FileListActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/FileListActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="158" width="208" x="1755" y="565"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="se.umu.cs.pvt151.SearchSettingsFragment.listViewHolder" 
+    project="Genomizer-Android" file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchSettingsFragment.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="126" width="175" x="985" y="1505"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="se.umu.cs.pvt151.SearchSettingsActivity" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/SearchSettingsActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="972" y="-37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="se.umu.cs.pvt151.ProcessFragment.ProcessTask" project="Genomizer-Android" 
+    file="/Genomizer-Android/src/se/umu/cs/pvt151/ProcessFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="126" width="153" x="228" y="923"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="32">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <nesting id="33">    
+    <bendpoint x="411" y="923"/>    
+    <end type="SOURCE" refId="14"/>    
     <end type="TARGET" refId="11"/>  
   </nesting>  
-  <dependency id="17">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <nesting id="18">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </nesting>  
-  <association id="19">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="20" name="fragment"/>      
-      <multiplicity id="21" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="22">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <generalization id="23">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="24">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="26">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="27" name="fragment"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="29">    
+  <generalization id="34">    
+    <bendpoint x="1827" y="923"/>    
+    <bendpoint x="1313" y="565"/>    
+    <bendpoint x="1271" y="319"/>    
     <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <generalization id="35">    
+    <bendpoint x="1250" y="565"/>    
+    <bendpoint x="1250" y="319"/>    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <dependency id="36">    
+    <bendpoint x="2100" y="565"/>    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="37">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <nesting id="38">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="25"/>  
+  </nesting>  
+  <nesting id="39">    
+    <bendpoint x="2438" y="319"/>    
+    <bendpoint x="2438" y="565"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="22"/>  
+  </nesting>  
+  <association id="40">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="41" name="fragment"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <bendpoint x="2417" y="319"/>    
+    <bendpoint x="2417" y="565"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="44" name="mViewHolderList"/>      
+      <multiplicity id="45" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="46">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="47">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="48">    
+    <bendpoint x="1229" y="565"/>    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="30"/>  
+  </dependency>  
+  <association id="49">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="50" name="settingsFragment"/>      
+      <multiplicity id="51" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="52">    
+    <end type="SOURCE" refId="25"/>    
     <end type="TARGET" refId="2"/>  
   </dependency>  
-  <generalization id="30">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="3"/>  
+  <generalization id="53">    
+    <bendpoint x="1208" y="923"/>    
+    <bendpoint x="1208" y="565"/>    
+    <bendpoint x="1208" y="319"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
   </generalization>  
-  <nesting id="31">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="6"/>  
+  <nesting id="54">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="13"/>  
   </nesting>  
-  <dependency id="32">    
-    <end type="SOURCE" refId="4"/>    
+  <dependency id="55">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="24"/>  
+  </dependency>  
+  <nesting id="56">    
+    <bendpoint x="2396" y="319"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <generalization id="57">    
+    <bendpoint x="1313" y="319"/>    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <dependency id="58">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <dependency id="60">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <nesting id="61">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <association id="62">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="63" name="fragment"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="66">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="67" name="startSearch"/>      
+      <multiplicity id="68" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="69">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="70" name="setSearch"/>      
+      <multiplicity id="71" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="72">    
+    <end type="SOURCE" refId="16"/>    
     <end type="TARGET" refId="8"/>  
+  </nesting>  
+  <nesting id="73">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="31"/>  
+  </nesting>  
+  <dependency id="74">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="75">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="76">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <generalization id="77">    
+    <bendpoint x="864" y="923"/>    
+    <bendpoint x="864" y="565"/>    
+    <bendpoint x="864" y="319"/>    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <dependency id="78">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <nesting id="79">    
+    <bendpoint x="1595" y="-55"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="19"/>  
+  </nesting>  
+  <dependency id="80">    
+    <bendpoint x="2003" y="319"/>    
+    <bendpoint x="2003" y="565"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <nesting id="81">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="17"/>  
+  </nesting>  
+  <nesting id="82">    
+    <bendpoint x="1702" y="1505"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="21"/>  
+  </nesting>  
+  <association id="83">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="84" name="viewHolder"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <bendpoint x="2024" y="923"/>    
+    <bendpoint x="2024" y="565"/>    
+    <bendpoint x="2024" y="319"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="87" name="searchListFrag"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="89">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <nesting id="90">    
+    <bendpoint x="1141" y="923"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="29"/>  
+  </nesting>  
+  <association id="91">    
+    <bendpoint x="1292" y="565"/>    
+    <bendpoint x="1292" y="319"/>    
+    <bendpoint x="1292" y="-55"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="92" name="fragment"/>      
+      <multiplicity id="93" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="94">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <nesting id="95">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="20"/>  
+  </nesting>  
+  <association id="96">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="97" name="searchPubmedFragment"/>      
+      <multiplicity id="98" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="99">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <dependency id="100">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <dependency id="101">    
+    <bendpoint x="560" y="923"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="24"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    

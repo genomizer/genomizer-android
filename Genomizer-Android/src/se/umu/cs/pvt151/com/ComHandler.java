@@ -20,7 +20,7 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
 
 public class ComHandler {
 
-	private static String serverURL = "http://genomizer.apiary-mock.com/";
+	private static String serverURL = "http://itchy.cs.umu.se:7000/";
 	
 	/**
 	 * Used to change the targeted server URL.
@@ -198,7 +198,6 @@ public class ComHandler {
 	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, String meta, String release) throws IOException {
 
 		try {			
-			System.out.println("STARTING RAW TO PROFILES");
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
 			GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, "PUT", "process/rawtoprofile");
 

@@ -76,7 +76,7 @@ public class Communicator {
 				out = new DataOutputStream(connection.getOutputStream());						
 				byte[] pack = jsonPackage.toString().getBytes("UTF-8");							
 				out.write(pack);
-				out.flush();
+				out.flush();				
 			}
 			
 			int responseCode = connection.getResponseCode();

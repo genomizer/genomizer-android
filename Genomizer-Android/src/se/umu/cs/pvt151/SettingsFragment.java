@@ -36,8 +36,9 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		View view = inflater.inflate(R.layout.fragment_settings, container, false);
 		fetchSavedURLs();
 		this.view = view;
+		fetchViewItems();
 		createSpinner();
-		fetchViewItems();				
+						
 		markCurrentlyUsedURL();		
 		return view;
 	}
@@ -209,9 +210,14 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		for(String url : savedURLs) {
 			mSavedURLsList.add(url);
 		}
+		
 		String currentURL = getCurrentlySelectedURL();
 		if(!urlExists(currentURL)) {
 			mSavedURLsList.add(currentURL);
+		}
+		String comURL = ComHandler.getServerURL();
+		if(!urlExists(comURL)) {
+			mSavedURLsList.add(comURL);
 		}
 		
 		

@@ -60,6 +60,10 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 */
 	protected abstract Fragment createFragment();
 	
+	@Override
+	public abstract void onBackPressed();
+	
+	
 	/**
 	 * Inflates the global menu for use in the Genomizer Android application.
 	 */

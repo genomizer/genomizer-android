@@ -1,9 +1,6 @@
 package se.umu.cs.pvt151;
 import android.support.v4.app.Fragment;
 
-/**
- * 
- */
 
 /**
  * @author Anders
@@ -15,6 +12,13 @@ public class ConverterActivity extends SingleFragmentActivity{
 	protected Fragment createFragment() {
 		// TODO Auto-generated method stub
 		return new ConverterFragment();
+	}
+
+	//TODO ADDED AFTER ABSTRACT METHOD DECLARATION
+	@Override
+	public void onBackPressed() {
+		finish();
+		
 	}
 
 }

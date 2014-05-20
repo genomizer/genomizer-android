@@ -13,4 +13,11 @@ public class ProcessActivity extends SingleFragmentActivity{
 		return new ProcessFragment();
 	}
 
+	//TODO ADDED AFTER ABSTRACT METHOD DECLARATION
+	@Override
+	public void onBackPressed() {
+		finish();
+		
+	}
+
 }

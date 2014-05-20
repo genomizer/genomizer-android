@@ -39,7 +39,7 @@ public class FileListActivity extends SingleFragmentActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
+	//	super.onBackPressed();//TODO ADDED AFTER ABSTRACT METHOD DECLARATION
 		Intent intent = new Intent(FileListActivity.this, ExperimentListActivity.class);
 		intent.putStringArrayListExtra("Annotations", annotation);
 		intent.putExtra("searchMap", searchResults);

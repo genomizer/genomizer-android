@@ -81,4 +81,10 @@ public class LogInActivity extends SingleFragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	//TODO ADDED AFTER ABSTRACT METHOD DECLARATION
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 }

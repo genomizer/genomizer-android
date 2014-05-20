@@ -96,7 +96,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
+//		super.onBackPressed(); //TODO ADDED AFTER ABSTRACT METHOD DECLARATION
 		finish();
 	}
 

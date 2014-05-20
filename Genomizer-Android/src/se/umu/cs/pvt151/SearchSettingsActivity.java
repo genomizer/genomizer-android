@@ -14,4 +14,11 @@ public class SearchSettingsActivity extends SingleFragmentActivity {
 		return setSearch;
 	}
 
+	//TODO ADDED AFTER ABSTRACT METHOD DECLARATION
+	@Override
+	public void onBackPressed() {
+		finish();
+		
+	}
+
 }

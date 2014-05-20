@@ -171,7 +171,11 @@ public class ProcessFragment extends Fragment {
 	}
 
 	private String timeInterpreter(long seconds) {
-		Date date = new Date(seconds);
+		if(seconds == 0) {
+			return "Pending...";
+		}
+		
+		Date date = new Date(seconds);		
         return SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, 
         		SimpleDateFormat.SHORT, Locale.ENGLISH).format(date);
 	}

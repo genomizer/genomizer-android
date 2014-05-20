@@ -1,5 +1,8 @@
 package se.umu.cs.pvt151;
 
+import java.util.ArrayList;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +23,8 @@ import android.view.MenuItem;
  */
 public abstract class SingleFragmentActivity extends FragmentActivity {
 	
+	private static ArrayList<Activity> activityList = new ArrayList<Activity>();
+	
 	private boolean inflateMenu = false;
 	private String fragmentClassSimpleName = "";
 	private static boolean devModeEnabled = false;
@@ -34,7 +39,8 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_activity);
-
+		activityList.add(this);
+		
 		FragmentManager fm = getSupportFragmentManager();
 
 		Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
@@ -50,6 +56,12 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			inflateMenu  = false;
 		}
 		
+	}
+	
+	public void exit() {
+		for (Activity act : activityList) {
+			act.finish();
+		}
 	}
 	
 	/**

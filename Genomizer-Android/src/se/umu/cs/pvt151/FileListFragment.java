@@ -15,6 +15,7 @@ import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.MediaStore.Files;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -96,95 +97,19 @@ public class FileListFragment extends Fragment {
 			
 			@Override
 			public void onClick(View arg0) {
-				ArrayList<GeneFile> tempRaw = new ArrayList<GeneFile>();
-				ArrayList<GeneFile> tempRegion = new ArrayList<GeneFile>();
-				ArrayList<GeneFile> tempProfile = new ArrayList<GeneFile>();
-				ArrayList<String> isInRaw = new ArrayList<String>();
-				ArrayList<String> isInProfile = new ArrayList<String>();
-				ArrayList<String> isInRegion = new ArrayList<String>();
 				
-				if(!rawSelected.isEmpty()) {
-					if(!DataStorage.getFileList("raw").isEmpty()) {
-						tempRaw = DataStorage.getFileList("raw");
-						for(int i = 0; i < tempRaw.size(); i++) {
-							isInRaw.add(tempRaw.get(i).getName());
-						}
-						for(int j=0; j < rawSelected.size(); j++) {
-							if(!tempRaw.contains(rawSelected.get(j)) && !isInRaw.contains(rawSelected.get(j).getName())) {
-								//rawSelected.remove(j);
-								tempRaw.add(rawSelected.get(j));
-							}	
-						}
-						DataStorage.appendFileList("raw", tempRaw);
-						Toast.makeText(getActivity(), "Adding into stored files",
-								Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(getActivity(), "Selected files but no stored",
-								Toast.LENGTH_SHORT).show();
-						DataStorage.appendFileList("raw", rawSelected);
-					}		
-				} 
-				if(!regionSelected.isEmpty()) {
-					if(!DataStorage.getFileList("region").isEmpty()) {
-						tempRegion = DataStorage.getFileList("region");
-						for(int i = 0; i < tempRegion.size(); i++) {
-							isInRegion.add(tempRegion.get(i).getName());
-						}
-						for(int j=0; j < regionSelected.size(); j++) {
-							if(!tempRegion.contains(regionSelected.get(j)) && !isInRegion.contains(regionSelected.get(j).getName())) {
-								//rawSelected.remove(j);
-								tempRegion.add(regionSelected.get(j));
-							}	
-						}
-						DataStorage.appendFileList("region", tempRegion);
-						Toast.makeText(getActivity(), "Adding into stored files",
-								Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(getActivity(), "Selected files but no stored",
-								Toast.LENGTH_SHORT).show();
-						DataStorage.appendFileList("region", regionSelected);
-					}	
-				}
-				if(!profileSelected.isEmpty()) {
-					if(!DataStorage.getFileList("profile").isEmpty()) {
-						tempProfile = DataStorage.getFileList("profile");
-						for(int i = 0; i < tempProfile.size(); i++) {
-							isInProfile.add(tempProfile.get(i).getName());
-						}
-						
-						for(int j=0; j < profileSelected.size(); j++) {
-							if(!tempProfile.contains(profileSelected.get(j)) && !isInProfile.contains(profileSelected.get(j).getName())) {
-								//rawSelected.remove(j);
-								tempProfile.add(profileSelected.get(j));
-							}	
-						}
-						DataStorage.appendFileList("profile", tempProfile);
-						Toast.makeText(getActivity(), "Adding into stored files",
-								Toast.LENGTH_SHORT).show();
-					} else {
-						Toast.makeText(getActivity(), "Selected files but no stored",
-								Toast.LENGTH_SHORT).show();
-						DataStorage.appendFileList("profile", profileSelected);
-					}	
-				}
+				sendDataFiles("raw", rawSelected);
+				sendDataFiles("profile", profileSelected);
+				sendDataFiles("region", regionSelected);
 				
 				Toast.makeText(getActivity().getApplicationContext(), "Clicking!!", Toast.LENGTH_SHORT).show();
 			}
 			
 		});
 		
-		
-		//Filling of temp arraylists to display data
-		for(int i=0; i<5; i++) {
-			String temp = "DataFile" + i + ".wig " + "2014-04-29 " + "Yuri";
-			rawData.add(temp);
-			profileData.add(temp);
-			regionData.add(temp);
-		}
-		
 		//Used to set tempdata to array for checked values
 		//TODO: adapt to right array sizes
-		fillData();
+		//fillData();
 		
 		//Set adapter to listview for rawdata
 		rawInfo = "raw";
@@ -207,12 +132,40 @@ public class FileListFragment extends Fragment {
 	/**
 	 * Temp method to fill array with values
 	 */
-	private void fillData() {
-		for(int i = 0; i < rawData.size(); i++) {
+	private void fillData(ArrayList<String> data) {
+		for(int i = 0; i < data.size(); i++) {
 			forChecks.add(false);
 		}
 	}
 	
+	private void sendDataFiles(String type, ArrayList<GeneFile> selected) {
+		ArrayList<GeneFile> temp = new ArrayList<GeneFile>();
+		ArrayList<String> names = new ArrayList<String>();
+		
+		if(!selected.isEmpty()) {
+			if(!DataStorage.getFileList(type).isEmpty()) {
+				temp = DataStorage.getFileList(type);
+				for(int i = 0; i < temp.size(); i++) {
+					names.add(temp.get(i).getName());
+				}
+				for(int j=0; j < selected.size(); j++) {
+					if(!temp.contains(selected.get(j)) && !names.contains(selected.get(j).getName())) {
+						//rawSelected.remove(j);
+						temp.add(selected.get(j));
+					}	
+				}
+				DataStorage.appendFileList(type, temp);
+				Toast.makeText(getActivity(), "Adding into stored files",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getActivity(), "Selected files but no stored",
+						Toast.LENGTH_SHORT).show();
+				DataStorage.appendFileList(type, selected);
+			}		
+		} 
+	}
+	
+
 	/**
 	 * Used to create holder for
 	 * values used in getview
@@ -237,6 +190,7 @@ public class FileListFragment extends Fragment {
 
 		public FileListAdapter(ArrayList<String> fileInfo, String dataType) {
 				super(getActivity(), 0, fileInfo);
+				fillData(fileInfo);
 				forShow = fileInfo;
 				data = dataType;
 				selectedItem = new boolean[fileInfo.size()];

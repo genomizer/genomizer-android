@@ -233,25 +233,7 @@ public class ExperimentListFragment extends Fragment {
 		
 		displaySearchResults.add(toDisplay + temp);
 	}
-	
-	/**
-	 * Method used to make strings with right
-	 * look to display search results in view.
-	 */
-	//TODO: get right information from annotations to display
-	private void infoAnnotations() {
-		String displayString = "";
-		for(int i=0; i<forExperiments.size(); i++) {
-			displayString = "Experiment: " + forExperiments.get(i).getName() + "\n";
-			//displaySearchResults.add("Experiment: " + forExperiments.get(i).getName() + "\n" );
-			if(forExperiments.get(i).getAnnotations().get(0).getName() != null) {
-				displayString = displayString + "Experiment: " + forExperiments.get(i).getAnnotations().get(0).getValue() + "\n" ;
-			}
-			
-			displaySearchResults.add(displayString);
-		}
-	}
-	
+
 	/**
 	 * Creates an android toast (small unintrusive text popup).
 	 * @param msg
@@ -335,7 +317,6 @@ public class ExperimentListFragment extends Fragment {
 		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
 			/*Creating list with right looking information
 			 * used to be displayed in search.*/
-			//infoAnnotations();
 			getDefaultOrNot();
 			getStoredAnnotations();
 			organizeAnnotations();

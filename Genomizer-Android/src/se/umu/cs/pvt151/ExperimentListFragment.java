@@ -102,25 +102,7 @@ public class ExperimentListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_experiment_list, parent, false);
-		//Creating listview from xml view
-		
 		list = (ListView) v.findViewById(R.id.listView1);
-		
-		
-		
-		/*for(int i = 0; i < forExperiments.size(); i++) {
-			getDisplayValues(forExperiments.get(i));
-		}
-		//Creating adapter for displaying search results
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-				R.layout.list_view_textbox, R.id.listText11, displaySearchResults);	
-		//Setting adapter to view
-		list.setAdapter(adapter);
-		//Set onItemclicklistener to list, used to detect clicks
-		list.setOnItemClickListener(new ListHandler());*/
-		//Set selector to view to change looks on view when item is clicked
-		
-		//list.setSelector(R.drawable.explist_selector);
 		
 		return v;
 	}
@@ -339,8 +321,11 @@ public class ExperimentListFragment extends Fragment {
 		try {
 			/*Sending HashMap with annotation, value for search to ComHandler,
 			 * receiving a list with experiments matching the search*/
-				
-				forExperiments = ComHandler.search(searchInfo);
+				if(searchString == null) {
+					forExperiments = ComHandler.search(searchInfo);
+				} else {
+					forExperiments = ComHandler.search(searchString);
+				}
 			} catch (IOException e) {
 				makeToast("ERROR: " + e.getMessage(), false);
 			} 

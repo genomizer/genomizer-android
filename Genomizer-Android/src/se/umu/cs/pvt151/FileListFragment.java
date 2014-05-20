@@ -54,7 +54,6 @@ public class FileListFragment extends Fragment {
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
 	private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
 	
-	private String tempprofile = "";
 	
 	
 	@Override

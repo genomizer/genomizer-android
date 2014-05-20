@@ -186,7 +186,7 @@ public class ExperimentListFragment extends Fragment {
 				
 		} catch (FileNotFoundException e) {
 			getAnnotations = "";
-			makeToast("Anno " + getAnnotations.length(), false);
+		
 		} catch (IOException e) {
 			//makeToast("ERROR: " + e.getMessage(), false);
 			getAnnotations = "";

@@ -79,9 +79,9 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		} else if(fragmentClassSimpleName.equals("SearchPubmedFragment")) {
 			//Do not inflate menu if in edit pubmed search fragment
 		} else if (inflateMenu) {			
-			inflater.inflate(R.menu.main_menu, menu);
+			inflater.inflate(R.menu.main_menu, menu);			
 		} else {						
-			inflater.inflate(R.menu.main, menu);
+			inflater.inflate(R.menu.main, menu);			
 		}
 		if(!devModeEnabled) {
 			hideDevOptions(menu);

@@ -29,7 +29,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	private final static int visibilityHide = 4;
 	private final static int visibilityShow = 0;
 	private View view = null;
-
+	private TextView textView = null;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_settings, container, false);
@@ -43,9 +44,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
 	private void createSpinner() {		
 		spinner = (Spinner) view.findViewById(R.id.spinner1);
-		((TextView) view.findViewById(R.id.settings_textview))
-				.setText("Select server url");
-		
+		textView = ((TextView) view.findViewById(R.id.settings_textview));
+		textView.setText("Select a server url");
 		createAdapter();		
 		spinner.setOnItemSelectedListener(this);				
 	}
@@ -117,13 +117,16 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		if(!isInEditMode()) {
 			addURLButton.setVisibility(visibilityShow);
 			urlEdit.setVisibility(visibilityShow);
+			textView.setText("Enter a new server URL.");
 			spinner.setVisibility(visibilityHide);
+			
 			urlEdit.setSelection(urlEdit.getText().length());			
 			inputMethod.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
 		} else {
 			addURLButton.setVisibility(visibilityHide);
 			urlEdit.setVisibility(visibilityHide);
-			spinner.setVisibility(visibilityShow);			
+			spinner.setVisibility(visibilityShow);		
+			textView.setText("Select server url");
 			inputMethod.hideSoftInputFromWindow(urlEdit.getWindowToken(), 0);
 			urlEdit.setText("http://");
 			((SettingsActivity) getActivity()).restoreMenuItems();

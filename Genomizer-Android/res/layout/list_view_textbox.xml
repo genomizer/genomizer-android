@@ -9,7 +9,7 @@
         android:id="@+id/listText11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="left"
         android:text="@string/hello_world"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />

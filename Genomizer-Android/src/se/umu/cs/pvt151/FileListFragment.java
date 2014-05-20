@@ -100,6 +100,8 @@ public class FileListFragment extends Fragment {
 				ArrayList<GeneFile> tempRegion = new ArrayList<GeneFile>();
 				ArrayList<GeneFile> tempProfile = new ArrayList<GeneFile>();
 				ArrayList<String> isInRaw = new ArrayList<String>();
+				ArrayList<String> isInProfile = new ArrayList<String>();
+				ArrayList<String> isInRegion = new ArrayList<String>();
 				
 				if(!rawSelected.isEmpty()) {
 					if(!DataStorage.getFileList("raw").isEmpty()) {
@@ -125,8 +127,11 @@ public class FileListFragment extends Fragment {
 				if(!regionSelected.isEmpty()) {
 					if(!DataStorage.getFileList("region").isEmpty()) {
 						tempRegion = DataStorage.getFileList("region");
+						for(int i = 0; i < tempRegion.size(); i++) {
+							isInRegion.add(tempRegion.get(i).getName());
+						}
 						for(int j=0; j < regionSelected.size(); j++) {
-							if(!tempRegion.contains(regionSelected.get(j))) {
+							if(!tempRegion.contains(regionSelected.get(j)) && !isInRegion.contains(regionSelected.get(j).getName())) {
 								//rawSelected.remove(j);
 								tempRegion.add(regionSelected.get(j));
 							}	
@@ -143,8 +148,12 @@ public class FileListFragment extends Fragment {
 				if(!profileSelected.isEmpty()) {
 					if(!DataStorage.getFileList("profile").isEmpty()) {
 						tempProfile = DataStorage.getFileList("profile");
+						for(int i = 0; i < tempProfile.size(); i++) {
+							isInProfile.add(tempProfile.get(i).getName());
+						}
+						
 						for(int j=0; j < profileSelected.size(); j++) {
-							if(!tempProfile.contains(profileSelected.get(j))) {
+							if(!tempProfile.contains(profileSelected.get(j)) && !isInProfile.contains(profileSelected.get(j).getName())) {
 								//rawSelected.remove(j);
 								tempProfile.add(profileSelected.get(j));
 							}	

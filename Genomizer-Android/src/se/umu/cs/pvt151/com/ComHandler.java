@@ -106,6 +106,32 @@ public class ComHandler {
 		}
 	}
 	
+	/**
+	 * Search with existing Pubmed Query String
+	 * @param pubmedQuery
+	 * @return
+	 * @throws IOException
+	 */
+	public static ArrayList<Experiment> search(String pubmedQuery) throws IOException {
+		try {						
+			JSONObject msg = MsgFactory.createRegularPackage();
+			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + pubmedQuery);
+
+			if (searchResponse.getCode() == 200) {
+				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
+				return MsgDeconstructor.deconSearch(jsonPackage);
+				
+			} else if (searchResponse.getCode() == 204) { 
+				//If the search yields no result.
+				JSONArray jsonPackage = new JSONArray();
+				return MsgDeconstructor.deconSearch(jsonPackage);
+			} else {
+				return null;
+			}
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 
 	/**
 	 * Returns the Annotations of the server.
@@ -156,6 +182,8 @@ public class ComHandler {
 		}
 		return URLEncoder.encode(pubmedQuery, "UTF-8");
 	}
+	
+	
 
 
 	/**
@@ -169,7 +197,8 @@ public class ComHandler {
 	 */
 	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, String meta, String release) throws IOException {
 
-		try {						
+		try {			
+			System.out.println("STARTING RAW TO PROFILES");
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
 			GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, "PUT", "process/rawtoprofile");
 

@@ -339,7 +339,7 @@ public class ConverterFragment extends Fragment{
 			Spinner sp;
 
 			for (int i = 0; i < viewList.size(); i++) {
-
+				if(i == 6) continue;
 				if (viewList.get(i).isEnabled()) {
 
 					if (i == 0 || i == 4 || i == 5 || i == 7 || i  == 8) {

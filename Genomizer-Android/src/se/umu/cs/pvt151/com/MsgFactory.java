@@ -59,9 +59,9 @@ public class MsgFactory {
 		Log.d("smurf", "Before parameters to json");
 		obj.put("parameters", parametersToJson(param));
 		Log.d("smurf", "After parameters to json");
-		obj.put("metadata", metadata);
+		obj.put("metadata", "asddd");
 		obj.put("genomeVersion", genomeRelease);
-		obj.put("author", file.getAuthor());
+		obj.put("author", "asd");
 		
 		return obj;
 	}

@@ -47,7 +47,7 @@ public class Communicator {
 		
 		connection = (HttpURLConnection) url.openConnection();
 		
-		if (requestType.equals("POST")) {
+		if (!requestType.equals("GET")) {
 			connection.setDoOutput(true);
 		}
 		
@@ -73,7 +73,7 @@ public class Communicator {
 		GenomizerHttpPackage httpResponse = null;
 		try {
 			if (connection.getDoOutput()) {
-				out = new DataOutputStream(connection.getOutputStream());		
+				out = new DataOutputStream(connection.getOutputStream());						
 				byte[] pack = jsonPackage.toString().getBytes("UTF-8");							
 				out.write(pack);
 				out.flush();
@@ -88,10 +88,11 @@ public class Communicator {
 				StringBuffer response = new StringBuffer();
 				String inputLine;
 				
+				
 				while ((inputLine = in.readLine()) != null) {
 					response.append(inputLine);
 				}				
-
+				
 				httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
 			} else {
 				httpResponse = new GenomizerHttpPackage(responseCode, "");

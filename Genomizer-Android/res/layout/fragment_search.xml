@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/searchFreeText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/free_text_pubmed" />
+    
+    <Button
+       android:id="@+id/searchButton"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="@string/search_button_text"
+       android:layout_alignParentBottom="true" />
 
     <ListView
         android:id="@+id/searchListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" >
+       	android:layout_alignParentTop="true"
+       	android:layout_above="@id/searchButton">
     </ListView>
 
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/search_button_text" />
-
-</LinearLayout>
+</RelativeLayout>

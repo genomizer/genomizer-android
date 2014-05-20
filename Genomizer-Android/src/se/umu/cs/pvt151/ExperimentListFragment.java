@@ -74,6 +74,7 @@ public class ExperimentListFragment extends Fragment {
 		annotation = getActivity().getIntent().getExtras().getStringArrayList("Annotations");
 		searchInfo = (HashMap<String, String>) getActivity().getIntent()
 				.getExtras().getSerializable("searchMap");
+		searchString = getActivity().getIntent().getStringExtra("PubmedQuery");
 		//defaultSettings = getActivity().getIntent().getBooleanExtra("default");
 	}
 	

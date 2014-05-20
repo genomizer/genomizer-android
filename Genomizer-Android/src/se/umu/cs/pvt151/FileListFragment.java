@@ -9,15 +9,10 @@ package se.umu.cs.pvt151;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import se.umu.cs.pvt151.SearchListFragment.SearchViewHolder;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore.Files;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,9 +30,6 @@ public class FileListFragment extends Fragment {
 	private ListView listRaw;
 	private ListView listProfile;
 	private ListView listRegion;
-	private ArrayList<String> rawData = new ArrayList<String>();
-	private ArrayList<String> profileData = new ArrayList<String>();
-	private ArrayList<String> regionData = new ArrayList<String>();
 	private ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
 	private Button sendButton;
 	
@@ -101,8 +92,6 @@ public class FileListFragment extends Fragment {
 				sendDataFiles("raw", rawSelected);
 				sendDataFiles("profile", profileSelected);
 				sendDataFiles("region", regionSelected);
-				
-				Toast.makeText(getActivity().getApplicationContext(), "Clicking!!", Toast.LENGTH_SHORT).show();
 			}
 			
 		});
@@ -114,13 +103,10 @@ public class FileListFragment extends Fragment {
 		//Set adapter to listview for rawdata
 		rawInfo = "raw";
 		listRaw.setAdapter(new FileListAdapter(raw, rawInfo));
-		//listRaw.setAdapter(new FileListAdapter(rawData, rawInfo));
 		
-		//TODO: Is listener for listview an idea or just for checkboxes enough?
 		//Set adapter to listview for profiledata
 		profileInfo = "profile";
 		listProfile.setAdapter(new FileListAdapter(profile, profileInfo));
-		//listProfile.setAdapter(new FileListAdapter(profileData));
 		
 		//Set adapter for regiondata
 		regionInfo = "region";
@@ -155,10 +141,10 @@ public class FileListFragment extends Fragment {
 					}	
 				}
 				DataStorage.appendFileList(type, temp);
-				Toast.makeText(getActivity(), "Adding into stored files",
+				Toast.makeText(getActivity(), "Adding files",
 						Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(getActivity(), "Selected files but no stored",
+				Toast.makeText(getActivity(), "Adding files",
 						Toast.LENGTH_SHORT).show();
 				DataStorage.appendFileList(type, selected);
 			}		

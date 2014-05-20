@@ -31,7 +31,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
- * @author Anders
+ * ConvertFragment handles the different parameters of a conversion in the
+ * Genomizer Android application. Will present the user with inputfields 
+ * for all the types of parameters that is required for the conversion from
+ * Raw to Profile -data.
+ * 
+ * @author Anders Lundberg, dv12alg
  *
  */
 public class ConverterFragment extends Fragment{
@@ -63,6 +68,9 @@ public class ConverterFragment extends Fragment{
 	}
 
 	
+	/**
+	 * When created, retrieves 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +94,11 @@ public class ConverterFragment extends Fragment{
 	}
 
 
-
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
 	private ArrayList<View> setupHeaders(View v) {
 		ArrayList<View> tempList = new ArrayList<View>();
 		TextView tw;
@@ -111,7 +123,12 @@ public class ConverterFragment extends Fragment{
 
 		return tempList;
 	}
-
+	
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
 	private ArrayList<View> setupWidgetsForLayout(View v) {
 		int etCount = 0;
 		EditText et;
@@ -148,6 +165,7 @@ public class ConverterFragment extends Fragment{
 		}
 
 		tempList.get(0).setEnabled(true);
+		tempList.get(2).setEnabled(true);
 
 		return tempList;
 	}
@@ -174,8 +192,6 @@ public class ConverterFragment extends Fragment{
 		ArrayAdapter<String> adapter;
 		ArrayList<String> geneList = new ArrayList<String>();
 
-		geneList.add("");
-
 		for (GenomeRelease genomeRelease : geneRelList) {
 			geneList.add(genomeRelease.getGenomeVersion());
 		}
@@ -187,7 +203,7 @@ public class ConverterFragment extends Fragment{
 
 		sp.setAdapter(adapter);
 		sp.setOnItemSelectedListener(new itemListener(1));
-		sp.setEnabled(false);
+		sp.setEnabled(true);
 	}
 
 	/**
@@ -222,13 +238,20 @@ public class ConverterFragment extends Fragment{
 		 */
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-
+			int start;
+			
 			EditText et = (EditText) viewList.get(index);
 
 			if (et.getText().length() > 0 && (index + 1) < viewList.size()) {
 				viewList.get(index + 1).setEnabled(true);
 			} else {
-				for (int i = (index + 1); i < viewList.size(); i++) {
+				if (index == 1) {
+					start = index + 2;
+				} else {
+					start = index + 1;
+				}
+				
+				for (int i = start; i < viewList.size(); i++) {
 					viewList.get(i).setEnabled(false);
 				}
 			}
@@ -299,14 +322,15 @@ public class ConverterFragment extends Fragment{
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
-
-			if (id == 0) {
-				for (int i = (index + 1); i < viewList.size(); i++) {
-					viewList.get(i).setEnabled(false);
-				}
-			} else {
-				viewList.get(index + 1).setEnabled(true);
-			}
+			
+			
+//			if (id == 0) {
+//				for (int i = (index + 1); i < viewList.size(); i++) {
+//					viewList.get(i).setEnabled(false);
+//				}
+//			} else {
+//				viewList.get(index + 1).setEnabled(true);
+//			}
 
 		}
 		

@@ -85,30 +85,19 @@ public class FileListFragment extends Fragment {
 		
 		sendButton.setOnClickListener(new OnClickListener () {
 			
-			
 			@Override
 			public void onClick(View arg0) {
-				
 				sendDataFiles("raw", rawSelected);
 				sendDataFiles("profile", profileSelected);
 				sendDataFiles("region", regionSelected);
 			}
-			
 		});
 		
-		//Used to set tempdata to array for checked values
-		//TODO: adapt to right array sizes
-		//fillData();
-		
-		//Set adapter to listview for rawdata
+		//Set adapter to listview for raw-, profile-, and regiondata
 		rawInfo = "raw";
 		listRaw.setAdapter(new FileListAdapter(raw, rawInfo));
-		
-		//Set adapter to listview for profiledata
 		profileInfo = "profile";
 		listProfile.setAdapter(new FileListAdapter(profile, profileInfo));
-		
-		//Set adapter for regiondata
 		regionInfo = "region";
 		listRegion.setAdapter(new FileListAdapter(region, regionInfo));
 		
@@ -116,7 +105,11 @@ public class FileListFragment extends Fragment {
 	}
 	
 	/**
-	 * Temp method to fill array with values
+	 * Method used to fill boolean array with false
+	 * for right size, will be used to organize
+	 * right checked boxes on scroll.
+	 * @param ArrayList with file names, used to
+	 * set right size on boolean array.
 	 */
 	private void fillData(ArrayList<String> data) {
 		for(int i = 0; i < data.size(); i++) {
@@ -136,7 +129,6 @@ public class FileListFragment extends Fragment {
 				}
 				for(int j=0; j < selected.size(); j++) {
 					if(!temp.contains(selected.get(j)) && !names.contains(selected.get(j).getName())) {
-						//rawSelected.remove(j);
 						temp.add(selected.get(j));
 					}	
 				}
@@ -169,7 +161,6 @@ public class FileListFragment extends Fragment {
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<String> {
-		//TODO: Use same adapter for all three listviews, or need to make 3 differents ones?
 		ArrayList<String> forShow = new ArrayList<String>();
 		boolean[] selectedItem;
 		String data;
@@ -283,7 +274,6 @@ public class FileListFragment extends Fragment {
 				}
 				
 			});
-			
 			
 			convertView.setTag(viewHolder);
 			convertView.setTag(R.id.textView1, viewHolder.fileInfo);

@@ -217,12 +217,7 @@ public class FileListFragment extends Fragment {
 								selectedRawDataFiles.add(raw.get(getPos));
 								rawSelected.add(allRawFiles.get(getPos));
 								buttonHolder.fileCheckBox.setChecked(true);
-								/*Toast.makeText(getActivity(), "Already: " + allRawFiles.get(getPos).getName(),
-										Toast.LENGTH_SHORT).show();*/
-							} else {
-								/*Toast.makeText(getActivity(), "Already added: " + raw.get(getPos),
-										Toast.LENGTH_SHORT).show();*/
-							}
+							} 
 							
 						} else if(data.equals("profile")) {
 							if(!profileSelected.contains(allProfileFiles.get(getPos))) {

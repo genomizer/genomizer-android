@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
+    <Button
+        android:id="@+id/logInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|top"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="115dp"
-            android:layout_height="181dp"
-            android:layout_marginBottom="30dp"
-            android:paddingTop="80dp"
-            android:src="@drawable/login_icon" />
+        android:layout_margin="15dp"
+        android:onClick="login"
+        android:layout_alignParentBottom="true"
+        android:text="@string/sign_in" />
+    
+    
+     <LinearLayout
+        android:id="@+id/inputfield"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@id/logInButton" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
             android:layout_marginLeft="13dp"
             android:text="@string/username" />
 
@@ -32,12 +35,14 @@
             android:ems="10"
             android:hint="@string/enter_username"
             android:maxLength="20"
-            android:singleLine="true" />
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
             android:layout_marginLeft="13dp"
             android:text="@string/password" />
 
@@ -50,14 +55,34 @@
             android:inputType="textPassword"
             android:maxLength="20"
             android:singleLine="true" />
-
-        <Button
-            android:id="@+id/logInButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:onClick="login"
-            android:text="@string/sign_in" />
     </LinearLayout>
+    
+    
+    
+    
 
-</ScrollView>
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/inputfield" >
+
+       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|top"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="115dp"
+            android:layout_height="181dp"
+            android:layout_marginBottom="30dp"
+            android:paddingTop="80dp"
+            android:src="@drawable/login_icon" />
+    </LinearLayout>
+    </ScrollView>
+
+   
+
+</RelativeLayout>

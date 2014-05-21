@@ -84,13 +84,9 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			return; 
 		}
 		if(menuString.equals("Dev mode")) {
-			devMode = true;					
-							
+			devMode = true;												
 			createAdapter();
-		
 		}
-		
-
 		
 		if(menuString.equals("Add new URL")) {
 			toggleEditMode();
@@ -148,7 +144,9 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		} else {
 			mSavedURLsList.add(newURL);
 			Toast.makeText(getActivity(), newURL + " has been added!", Toast.LENGTH_SHORT).show();
-			toggleEditMode();									
+			toggleEditMode();
+			saveCurrentlySelectedURL(newURL);
+			markCurrentlyUsedURL();
 		}	
 		
 	}
@@ -156,25 +154,12 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
 	private void markCurrentlyUsedURL() {
 		String currentURL = getCurrentlySelectedURL();
-	/*	if(devMode) {
-			String[] servers = getResources().getStringArray(R.array.server_list);
-			for (int i = 0; i < servers.length; i++) {
-				mSavedURLsList.add(servers[i]);				
+
+		for(int i = 0; i < mSavedURLsList.size(); i++) {
+			if(currentURL.equals(mSavedURLsList.get(i))) {
+				spinner.setSelection(i);
 			}
-			createSpinner();
-			for (int i = 0; i < servers.length; i++) {				
-				if (servers[i].compareTo(currentURL) == 0) {
-					spinner.setSelection(i);					
-				}
-			}
-		} else { */
-			for(int i = 0; i < mSavedURLsList.size(); i++) {
-				if(currentURL.equals(mSavedURLsList.get(i))) {
-					spinner.setSelection(i);
-				}
-			}
-	//	}
-		
+		}
 	}
 	
 	private boolean urlExists(String url) {		

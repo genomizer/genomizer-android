@@ -7,14 +7,14 @@
     
     <item 
         android:id="@+id/btnworkspace_main_menu	"
-        android:icon="@drawable/workspace"
+        android:icon="@drawable/briefcase"
         android:title="@string/btnworkspace_main_menu"
         android:showAsAction="always"
         />
     
     <item 
         android:id="@+id/btnsearch_main_menu"
-        android:icon="@drawable/search"
+        android:icon="@drawable/zoom"
         android:title="@string/btnsearch_search_menu"
         android:showAsAction="always"
         />

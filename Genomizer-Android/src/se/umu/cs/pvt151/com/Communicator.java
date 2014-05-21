@@ -64,7 +64,7 @@ public class Communicator {
 		connection.setChunkedStreamingMode(100);
 
 		connection.setConnectTimeout(4000);
-		connection.setReadTimeout(30000);
+		connection.setReadTimeout(15000);
 	}	
 
 	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage) throws IOException {

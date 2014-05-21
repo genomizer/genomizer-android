@@ -81,7 +81,11 @@ public class LogInFragment extends Fragment {
 		}
 
 		try {
-			return ComHandler.login(uname, password);		
+			if(!ComHandler.login(uname, password)) {
+				makeToast(INPUT_WRONG, false);
+				return false;
+			} 
+			return true;
 			
 		} catch (IOException e) {
 			makeToast(CONNECTION_ERROR, false);
@@ -141,11 +145,10 @@ public class LogInFragment extends Fragment {
 		protected void onPostExecute(Boolean result) {
 			if (result.booleanValue()) {
 				startSearchActivity();
-			} else {
-				makeToast(INPUT_WRONG, false);
-				button.setEnabled(true);
-			}
+			}				
 			
+			button.setEnabled(true);
+					
 			progress.dismiss();
 		}
 	}

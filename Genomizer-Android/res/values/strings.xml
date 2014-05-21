@@ -37,7 +37,7 @@
     <string name="hello_world">Hello world</string>
     <string name="search_settings">Search settings</string>
     <string name="btnworkspace_main_menu">Selected files</string>
-    <string name="btnprocesses_main_menu">Processes</string>
+    <string name="btnprocesses_main_menu">Process Status</string>
     <string name="select_searchsettings">Select annotations to display in search results</string>
     <string name="save_settings">Save settings</string>
     <string name="use_default">Use default</string>

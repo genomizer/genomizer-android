@@ -3,6 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="se.umu.cs.pvt151.SearchActivity" >
 
+    <item 
+        android:id="@+id/btnworkspace_main_menu	"
+        android:icon="@drawable/briefcase"
+        android:title="@string/btnworkspace_main_menu"
+        android:showAsAction="always"
+        />
+    
+    <item 
+        android:id="@+id/btnsearch_main_menu"
+        android:icon="@drawable/zoom"
+        android:title="@string/btnsearch_search_menu"
+        android:showAsAction="always"
+        />
       <item
         android:id="@+id/action_search_editPub"
         android:orderInCategory="100"

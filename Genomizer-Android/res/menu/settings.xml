@@ -7,13 +7,15 @@
         android:id="@+id/action_settings_add"
         android:orderInCategory="100"
         android:title="@string/action_settings_add"
-        app:showAsAction="never"/>
+        android:icon="@drawable/plus"
+        app:showAsAction="always"/>
       
        <item
         android:id="@+id/action_settings_remove"
         android:orderInCategory="100"
         android:title="@string/action_settings_remove"
-        app:showAsAction="never"/>
+        android:icon="@drawable/cross"
+        app:showAsAction="always"/>
        
        <item
         android:id="@+id/action_settings_dev"

@@ -1,5 +1,6 @@
 package se.umu.cs.pvt151;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
 
 /**
  * Abstract FragmentActivity class for managing fragments into the empty
@@ -75,7 +77,27 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	@Override
 	public abstract void onBackPressed();
 	
-	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu)
+	{
+	    if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
+	        if(menu.getClass().getSimpleName().equals("MenuBuilder")){
+	            try{
+	                Method m = menu.getClass().getDeclaredMethod(
+	                    "setOptionalIconsVisible", Boolean.TYPE);
+	                m.setAccessible(true);
+	                m.invoke(menu, true);
+	            }
+	            catch(NoSuchMethodException e){
+	                Log.e("ASD", "onMenuOpened", e);
+	            }
+	            catch(Exception e){
+	                throw new RuntimeException(e);
+	            }
+	        }
+	    }
+	    return super.onMenuOpened(featureId, menu);
+	}
 	/**
 	 * Inflates the global menu for use in the Genomizer Android application.
 	 */
@@ -92,6 +114,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			//Do not inflate menu if in edit pubmed search fragment
 		} else if (inflateMenu) {			
 			inflater.inflate(R.menu.main_menu, menu);			
+			
 		} else {						
 			inflater.inflate(R.menu.main, menu);			
 		}

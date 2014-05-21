@@ -4,6 +4,13 @@
     tools:context="se.umu.cs.pvt151.SearchActivity" >
 
     <item 
+        android:id="@+id/btnprocesses_main_menu"
+        android:title="@string/btnprocesses_main_menu"
+        android:icon="@drawable/process"
+        android:showAsAction="always"
+        />
+    
+    <item 
         android:id="@+id/btnworkspace_main_menu	"
         android:icon="@drawable/briefcase"
         android:title="@string/btnworkspace_main_menu"

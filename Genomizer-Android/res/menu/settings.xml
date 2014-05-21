@@ -8,14 +8,14 @@
         android:orderInCategory="100"
         android:title="@string/action_settings_add"
         android:icon="@drawable/plus"
-        app:showAsAction="always"/>
+        android:showAsAction="always"/>
       
        <item
         android:id="@+id/action_settings_remove"
         android:orderInCategory="100"
         android:title="@string/action_settings_remove"
         android:icon="@drawable/cross"
-        app:showAsAction="always"/>
+        android:showAsAction="always"/>
        
        <item
         android:id="@+id/action_settings_dev"

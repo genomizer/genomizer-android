@@ -8,7 +8,7 @@
         android:id="@+id/logInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="15dp"       
         android:onClick="login"
         android:layout_alignParentBottom="true"
         android:text="@string/sign_in" />
@@ -35,6 +35,7 @@
             android:ems="10"
             android:hint="@string/enter_username"
             android:maxLength="20"
+            android:inputType="textNoSuggestions"
             android:singleLine="true" >
 
             <requestFocus />
@@ -62,9 +63,10 @@
     
 
     <ScrollView
-        android:id="@+id/scrollView1"
+        android:id="@+id/scrollLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_above="@id/inputfield" >
 
        <LinearLayout
@@ -75,10 +77,9 @@
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="115dp"
-            android:layout_height="181dp"
-            android:layout_marginBottom="30dp"
-            android:paddingTop="80dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"    
+            android:paddingTop="90dp"                   
             android:src="@drawable/login_icon" />
     </LinearLayout>
     </ScrollView>

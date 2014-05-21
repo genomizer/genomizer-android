@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 /**
@@ -45,10 +47,35 @@ public class LogInFragment extends Fragment {
 	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);
-		userName = (EditText) v.findViewById(R.id.editTextUser);
+		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);				
+		userName = (EditText) v.findViewById(R.id.editTextUser);		
 		userPwd = (EditText) v.findViewById(R.id.editTextPwd);
+		setScrollDownOnEditTextSelection(v);
 		return v;
+	}
+	
+	
+	private void setScrollDownOnEditTextSelection(final View v) {
+		final ScrollView sc = (ScrollView) v.findViewById(R.id.scrollLogin);
+		userName.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				final Handler handler = new Handler();
+		        new Thread(new Runnable() {
+		            @Override
+		            public void run() {
+		                try {Thread.sleep(100);} catch (InterruptedException e) {}
+		                handler.post(new Runnable() {
+		                    @Override
+		                    public void run() {	          
+		                         sc.scrollTo(0, sc.getBottom());
+		                    }
+		                });
+		            }
+		        }).start(); 
+				return false;
+			}
+		});
 	}
 
 	/**

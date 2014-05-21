@@ -3,12 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="se.umu.cs.pvt151.FileListActivity" >
 
+     <item 
+        android:id="@+id/btnprocesses_main_menu"
+        android:title="@string/btnprocesses_main_menu"
+        android:icon="@drawable/process"
+        android:showAsAction="always"
+        />
     
     <item
         android:id="@+id/search_settings"
         android:orderInCategory="99"
         android:title="@string/search_settings"
-        android:showAsAction="never"/>
+        android:icon="@drawable/search_settings"
+        android:showAsAction="always"/>
     
     <item 
         android:id="@+id/btnworkspace_main_menu	"

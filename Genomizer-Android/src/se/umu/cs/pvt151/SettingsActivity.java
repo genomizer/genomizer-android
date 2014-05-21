@@ -15,12 +15,18 @@ public class SettingsActivity extends SingleFragmentActivity  {
 		settingsFragment = new SettingsFragment();		
 		return settingsFragment;
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.menu = menu;
+		return super.onCreateOptionsMenu(menu);
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().toString().equals("Add new URL")) {
 			menu.clear();
 		} 
+		
 		settingsFragment.onMenuItemPress(item.getTitle().toString());
 		return super.onOptionsItemSelected(item);
 	}

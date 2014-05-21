@@ -8,7 +8,7 @@
         android:orderInCategory="100"
         android:icon="@drawable/tools"
         android:title="@string/action_settings"        
-        app:showAsAction="always"/>
+        android:showAsAction="always"/>
     
    
     

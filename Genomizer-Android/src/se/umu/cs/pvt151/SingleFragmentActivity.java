@@ -78,8 +78,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	public abstract void onBackPressed();
 	
 	@Override
-	public boolean onMenuOpened(int featureId, Menu menu)
-	{
+	public boolean onMenuOpened(int featureId, Menu menu) {
 	    if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
 	        if(menu.getClass().getSimpleName().equals("MenuBuilder")){
 	            try{
@@ -88,8 +87,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	                m.setAccessible(true);
 	                m.invoke(menu, true);
 	            }
-	            catch(NoSuchMethodException e){
-	                Log.e("ASD", "onMenuOpened", e);
+	            catch(NoSuchMethodException e){	                
 	            }
 	            catch(Exception e){
 	                throw new RuntimeException(e);
@@ -98,6 +96,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	    }
 	    return super.onMenuOpened(featureId, menu);
 	}
+	
 	/**
 	 * Inflates the global menu for use in the Genomizer Android application.
 	 */
@@ -110,9 +109,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			inflater.inflate(R.menu.settings, menu);
 		} else if(fragmentClassSimpleName.equals("SearchListFragment")) {			
 			inflater.inflate(R.menu.search_menu, menu);
-		} else if(fragmentClassSimpleName.equals("SearchPubmedFragment")) {
-			//Do not inflate menu if in edit pubmed search fragment
-		} else if (inflateMenu) {			
+		}  else if (inflateMenu) {			
 			inflater.inflate(R.menu.main_menu, menu);			
 			
 		} else {						

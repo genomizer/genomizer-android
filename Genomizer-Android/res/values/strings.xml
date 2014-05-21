@@ -73,5 +73,14 @@
     <string name="title_activity_search_result">Search Results</string>
     <string name="title_activity_work_space">Selected Files</string>
 	<!--  <End> Activty header strings -->
+	
+	<!-- <Start> Process activity/fragment -->
+    <string name="process_expname">Experiment: </string>
+    <string name="process_author">Author: </string>
+    <string name="process_status">Status: </string>
+    <string name="process_added">Process added: </string>
+    <string name="process_started">Process started: </string>
+    <string name="process_finished">Process finished: </string>
+	 <!-- <End> Process activity/fragment -->
 
 </resources>

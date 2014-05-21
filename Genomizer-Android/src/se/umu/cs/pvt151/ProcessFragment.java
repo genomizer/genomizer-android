@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Process;
@@ -14,15 +13,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -108,23 +104,22 @@ public class ProcessFragment extends Fragment {
 				TextView timeFinishedView = (TextView) view.findViewById(R.id.timeFinishedTextView);
 				TextView statusView = (TextView) view.findViewById(R.id.statusTextView);
 
-
 				expNameView.setText(process.getExperimentName());
-				authorView.setText("Author: " + process.getAuthor());
+				authorView.setText(process.getAuthor());
 
-				timeAddedView.setText("Request sent: " + timeInterpreter(process.getTimeAdded()));
-				timeStartedView.setText("Process started: " + timeInterpreter(process.getTimeStarted()));
-				timeFinishedView.setText("Process finished: " + timeInterpreter(process.getTimeFinnished()));
-
-				statusView.setText("Status: " + process.getStatus());
+				timeAddedView.setText(timeInterpreter(process.getTimeAdded()));
+				timeStartedView.setText(timeInterpreter(process.getTimeStarted()));
+				timeFinishedView.setText(timeInterpreter(process.getTimeFinnished()));
+				
+				statusView.setText(process.getStatus());
 				setStatusColor(statusView);
 
 				view.setTag(expNameView);
 				view.setTag(authorView);
+				view.setTag(statusView);
 				view.setTag(timeAddedView);
 				view.setTag(timeStartedView);
 				view.setTag(timeFinishedView);
-				view.setTag(statusView);
 			}
 			return view;
 		}

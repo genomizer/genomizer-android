@@ -66,7 +66,7 @@ public class ProcessFragment extends Fragment {
 
 
 	/**
-	 * Adapter used for listviews
+	 * Adapter used for listviews. Creates a list of Process objects.
 	 *
 	 */
 	private class ProcessListAdapter extends ArrayAdapter<Process> {
@@ -138,7 +138,8 @@ public class ProcessFragment extends Fragment {
 
 
 	/**
-	 * 
+	 * This class extends AsyncTask, its only purpose is to get the status of
+	 * any number of processes from a server and save it in an ArrayList.
 	 * 
 	 * @author Rickard
 	 *

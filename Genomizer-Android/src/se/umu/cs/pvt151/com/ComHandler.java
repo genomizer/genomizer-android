@@ -99,10 +99,10 @@ public class ComHandler {
 				JSONArray jsonPackage = new JSONArray();
 				return MsgDeconstructor.deconSearch(jsonPackage);
 			} else {
-				return null;
+				return new ArrayList<Experiment>();
 			}
 		} catch (JSONException e) {
-			return null;
+			return new ArrayList<Experiment>();
 		}
 	}
 	
@@ -126,10 +126,10 @@ public class ComHandler {
 				JSONArray jsonPackage = new JSONArray();
 				return MsgDeconstructor.deconSearch(jsonPackage);
 			} else {
-				return null;
+				return new ArrayList<Experiment>();
 			}
 		} catch (JSONException e) {
-			return null;
+			return new ArrayList<Experiment>();
 		}
 	}
 

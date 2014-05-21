@@ -22,35 +22,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/process_expname"
+            android:text="@string/process_author"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#000000" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/process_expname"
+            android:text="@string/process_status"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#000000" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/process_expname"
+            android:text="@string/process_added"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#000000" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/process_expname"
+            android:text="@string/process_started"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#000000" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/process_expname"
+            android:text="@string/process_finished"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#000000" />
     </LinearLayout>

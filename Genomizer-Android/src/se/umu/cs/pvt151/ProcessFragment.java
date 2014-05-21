@@ -137,9 +137,15 @@ public class ProcessFragment extends Fragment {
 	}
 
 
+	/**
+	 * 
+	 * 
+	 * @author Rickard
+	 *
+	 */
 	private class ProcessTask extends AsyncTask<Void, Void, Void> {
 
-		private IOException except;
+		private IOException exception;
 
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -148,7 +154,7 @@ public class ProcessFragment extends Fragment {
 				processes = ComHandler.getProcesses();
 
 			} catch (IOException e) {
-				except = e;
+				exception = e;
 			}
 			return null;
 		}
@@ -156,15 +162,23 @@ public class ProcessFragment extends Fragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			if (except == null) {
+			if (exception == null) {
 				processList.setAdapter(new ProcessListAdapter(processes));
 			} else {
-				except.printStackTrace();
-				except = null;
+				exception = null;
 			}	
 		}
 	}
 
+	
+	/**
+	 * Converts a long variable from seconds 
+	 * counted from 1 january 1970 to a date and returns it
+	 * as a String.
+	 * 
+	 * @param seconds
+	 * @return
+	 */
 	private String timeInterpreter(long seconds) {
 		if(seconds == 0) {
 			return "Pending...";
@@ -176,6 +190,11 @@ public class ProcessFragment extends Fragment {
 	}
 	
 	
+	/**
+	 * Sets the color of the current process status.
+	 * 
+	 * @param statusView
+	 */
 	private void setStatusColor(TextView statusView) {
 		String status = (String) statusView.getText();
 		

@@ -113,7 +113,6 @@ public class MsgDeconstructor {
 
 			experiments.add(experiment);
 		}
-		Log.d("TestLog", "DECON");
 		return experiments;
 	}
 

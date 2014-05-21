@@ -59,9 +59,9 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	}
 	
 	public void exit() {
-		for (Activity act : activityList) {
-			act.finish();
-		}
+//		for (Activity act : activityList) {
+//			act.finish();
+//		}
 	}
 	
 	/**
@@ -120,17 +120,20 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		switch (item.getItemId()) {
 		case R.id.btnsearch_main_menu:
 			i = new Intent(this, SearchActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			return true;
 		
 		case R.id.btnworkspace_main_menu:
-			Intent intent = new Intent(this,
+			i = new Intent(this,
 					SelectedFilesActivity.class);
-			startActivity(intent);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i);
 			return true;
 			
 		case R.id.action_settings:
 			i = new Intent(this, SettingsActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			return true;
 			
@@ -138,6 +141,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		
 		case R.id.btnprocesses_main_menu:
 			i = new Intent(this, ProcessActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			return true;
 			

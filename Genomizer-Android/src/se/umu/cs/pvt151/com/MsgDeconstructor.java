@@ -80,7 +80,7 @@ public class MsgDeconstructor {
 			file.setDate(obj.getString("date"));
 			file.setUrl(obj.getString("url"));
 			file.setPath(obj.getString("path"));
-			//grVersion
+			file.setGrVersion(obj.getString("grVersion"));
 
 			files.add(file);
 		}

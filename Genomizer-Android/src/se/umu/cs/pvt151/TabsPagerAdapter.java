@@ -19,8 +19,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 			return new ProfileFragment();
 		case 2:
 			return new RegionFragment();
-		case 3:
-			return new ResultFragment();
 		}
 
 		return null;
@@ -28,7 +26,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 4;
+		return 3;
 	}
 
 }

@@ -26,11 +26,11 @@ public class RegionFragment extends Fragment {
 
 	private ArrayList<GeneFile> region;
 	private ArrayList<GeneFile> selectedRegion;
-	
+
 	private FileListAdapter adapter;
-	
+
 	private Button removeButton;
-	
+
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,47 +44,47 @@ public class RegionFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_region, parent, false);
 
 		listRegion = (ListView) v.findViewById(R.id.region);
-		
+
 		adapter = new FileListAdapter(region, "region");
-		
+
 		listRegion.setAdapter(adapter);
-		
+
 		setButtonListeners(v);
 
 		return v;
 	}
-	
-	
+
+
 	private void setButtonListeners(View v) {
-		removeButton = (Button) v.findViewById(R.id.convert_raw_button);
-		
+		removeButton = (Button) v.findViewById(R.id.remove_region_button);
+
 		removeButton.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			for (int i = 0; i < selectedRegion.size(); i++) {
-				adapter.remove(selectedRegion.get(i));
-				region.remove(selectedRegion.get(i));
+
+			@Override
+			public void onClick(View v) {
+				for (int i = 0; i < selectedRegion.size(); i++) {
+					adapter.remove(selectedRegion.get(i));
+					region.remove(selectedRegion.get(i));
+				}
+				selectedRegion.clear();
+				adapter.notifyDataSetChanged();
+				setButtonsStatus();
 			}
-			selectedRegion.clear();
-			adapter.notifyDataSetChanged();
-			setButtonsStatus();
-		}
-	});
-	setButtonsStatus();
+		});
+		setButtonsStatus();
 	}
-	
-	
+
+
 	private void appendSelectedFile(GeneFile file) {
 		selectedRegion.add(file);
 	}
-	
-	
+
+
 	private void removeSelectedFile(GeneFile file) {
 		selectedRegion.remove(file);
 	}
-	
-	
+
+
 	private ArrayList<GeneFile> getSelectedFiles() {
 		return selectedRegion;
 	}
@@ -112,7 +112,7 @@ public class RegionFragment extends Fragment {
 
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
-			
+
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_checkbox, null);
@@ -123,45 +123,47 @@ public class RegionFragment extends Fragment {
 			if (file != null) {
 				TextView textView = (TextView) view.findViewById(R.id.textView1);
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
-				
+
 				checkBox.setTag(position);
 
 				textView.setText(file.getName());
-				
+
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						
+
 						int position = (Integer) buttonView.getTag();
-						
+
 						if (isChecked) {
 							appendSelectedFile(forShow.get(position));
 						} else {
 							removeSelectedFile(forShow.get(position));
 						}
+
+						setButtonsStatus();
 					}
 				});
-				
+
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}
 			return view;
 		}
-		
-		
+
+
 		@Override
-        public boolean hasStableIds() {
-          return true;
-        }
+		public boolean hasStableIds() {
+			return true;
+		}
 
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
 		}
 	}
-	
-	
+
+
 	private void setButtonsStatus() {
 		if (selectedRegion.size() > 0) {
 			removeButton.setEnabled(true);

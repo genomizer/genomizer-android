@@ -27,6 +27,10 @@ public class ProfileFragment extends Fragment {
 	private ArrayList<GeneFile> profile;
 	private ArrayList<GeneFile> selectedProfile;
 	
+	private FileListAdapter adapter;
+	
+	private Button removeButton;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +44,10 @@ public class ProfileFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
 
 		listProfile = (ListView) v.findViewById(R.id.profile);
-		listProfile.setAdapter(new FileListAdapter(profile, "profile"));
+		
+		adapter = new FileListAdapter(profile, "profile");
+		
+		listProfile.setAdapter(adapter);
 		
 		setButtonListeners(v);
 
@@ -49,21 +56,22 @@ public class ProfileFragment extends Fragment {
 	
 	
 	private void setButtonListeners(View v) {
-//		Button convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
-//		
-//		convertRawButton.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent(getActivity(),
-//						ConvertActivity.class);
-//				
-//				intent.putExtra("type", "raw");
-//				intent.putExtra("files", getSelectedFiles());
-//				
-//				startActivity(intent);
-//			}
-//		});
+		removeButton = (Button) v.findViewById(R.id.remove_profile_button);
+
+		removeButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				for (int i = 0; i < selectedProfile.size(); i++) {
+					adapter.remove(selectedProfile.get(i));
+					profile.remove(selectedProfile.get(i));
+				}
+				selectedProfile.clear();
+				adapter.notifyDataSetChanged();
+				setButtonsStatus();
+			}
+		});
+		setButtonsStatus();
 	}
 	
 	
@@ -132,6 +140,7 @@ public class ProfileFragment extends Fragment {
 						} else {
 							removeSelectedFile(forShow.get(position));
 						}
+						setButtonsStatus();
 					}
 				});
 				
@@ -150,6 +159,15 @@ public class ProfileFragment extends Fragment {
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
+		}
+	}
+	
+	
+	private void setButtonsStatus() {
+		if (selectedProfile.size() > 0) {
+			removeButton.setEnabled(true);
+		} else {
+			removeButton.setEnabled(false);
 		}
 	}
 }

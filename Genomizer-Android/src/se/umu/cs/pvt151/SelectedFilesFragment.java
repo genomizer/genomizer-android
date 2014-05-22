@@ -79,10 +79,12 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 		spec.setIndicator("REGION");
 		tabHost.addTab(spec);
 
-		spec = tabHost.newTabSpec("RESULT");
-		spec.setContent(R.id.viewpagerSwipe);
-		spec.setIndicator("RESULT");
-		tabHost.addTab(spec);
+		//Add new arbitrary tabs here
+		
+//		spec = tabHost.newTabSpec("RESULT");
+//		spec.setContent(R.id.viewpagerSwipe);
+//		spec.setIndicator("RESULT");
+//		tabHost.addTab(spec);
 	}
 
 

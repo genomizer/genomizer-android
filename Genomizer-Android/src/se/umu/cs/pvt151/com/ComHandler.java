@@ -117,14 +117,10 @@ public class ComHandler {
 			JSONObject msg = MsgFactory.createRegularPackage();
 			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + pubmedQuery);
 
-			if (searchResponse.getCode() == 200) {
+			if (searchResponse.getCode() >= 200 && searchResponse.getCode() < 300) {
 				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
 				return MsgDeconstructor.deconSearch(jsonPackage);
 				
-			} else if (searchResponse.getCode() == 204) { 
-				//If the search yields no result.
-				JSONArray jsonPackage = new JSONArray();
-				return MsgDeconstructor.deconSearch(jsonPackage);
 			} else {
 				return new ArrayList<Experiment>();
 			}

@@ -25,6 +25,7 @@ public class GeneFile implements Parcelable {
 	private String path;
 	private String url;
 	private String date;
+	private String grVersion;
 	
 	public GeneFile() {
 		
@@ -41,6 +42,7 @@ public class GeneFile implements Parcelable {
 		path = in.readString();
 		url = in.readString();
 		date = in.readString();
+		grVersion = in.readString();
 	}
 
 	public String getPath() {
@@ -57,6 +59,10 @@ public class GeneFile implements Parcelable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	public void setGrVersion(String grVersion) {
+		this.grVersion = grVersion;
 	}
 
 	public String getDate() {
@@ -140,6 +146,7 @@ public class GeneFile implements Parcelable {
 		out.writeString(path);
 		out.writeString(url);
 		out.writeString(date);
+		out.writeString(grVersion);
 	}
 
 

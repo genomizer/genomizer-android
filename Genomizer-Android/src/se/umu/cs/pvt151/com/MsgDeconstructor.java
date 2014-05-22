@@ -80,6 +80,7 @@ public class MsgDeconstructor {
 			file.setDate(obj.getString("date"));
 			file.setUrl(obj.getString("url"));
 			file.setPath(obj.getString("path"));
+			//grVersion
 
 			files.add(file);
 		}
@@ -103,7 +104,7 @@ public class MsgDeconstructor {
 			JSONObject jsonExperiment = (JSONObject) json.get(i);
 
 			experiment.setName(jsonExperiment.getString("name"));
-			experiment.setCreatedBy(jsonExperiment.getString("created by"));
+		//	experiment.setCreatedBy(jsonExperiment.getString("created by"));
 
 			JSONArray files = jsonExperiment.getJSONArray("files");
 			JSONArray annotations = jsonExperiment.getJSONArray("annotations");

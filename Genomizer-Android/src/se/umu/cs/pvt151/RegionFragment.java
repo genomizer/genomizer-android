@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -82,11 +81,6 @@ public class RegionFragment extends Fragment {
 
 	private void removeSelectedFile(GeneFile file) {
 		selectedRegion.remove(file);
-	}
-
-
-	private ArrayList<GeneFile> getSelectedFiles() {
-		return selectedRegion;
 	}
 
 

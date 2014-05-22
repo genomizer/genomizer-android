@@ -3,7 +3,9 @@ package se.umu.cs.pvt151;
 import java.util.ArrayList;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -94,16 +96,29 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			if(mSavedURLsList.size() == 1) {
 				Toast.makeText(getActivity(), "Please add a new server URL before you remove a server.", Toast.LENGTH_SHORT).show();
 				return;
-			} 
-			String urlToRemove = spinner.getSelectedItem().toString();
-			for(int i = 0; i < mSavedURLsList.size(); i++) {
-				if(mSavedURLsList.get(i).equals(urlToRemove)) {					
-					mSavedURLsList.remove(i);
-					createAdapter();
-					spinner.setSelection(0);
-					break;
-				}
+			} else {
+				new AlertDialog.Builder(getActivity()).setIcon(android.R.drawable.ic_dialog_alert)
+				.setTitle("Remove URL")
+				.setMessage("Are you sure you want to remove \n" + spinner.getSelectedItem().toString() + " ?")
+				.setPositiveButton("Yes",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int which) {
+							String urlToRemove = spinner.getSelectedItem().toString();
+							for(int i = 0; i < mSavedURLsList.size(); i++) {
+								if(mSavedURLsList.get(i).equals(urlToRemove)) {					
+									mSavedURLsList.remove(i);
+									createAdapter();
+									spinner.setSelection(0);
+									break;
+								}
+							}
+							
+						}
+					}).setNegativeButton("No", null).show();
 			}
+			
 		} 
 		
 	}
@@ -112,7 +127,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		InputMethodManager inputMethod = (InputMethodManager) getActivity().getSystemService(
 			      Context.INPUT_METHOD_SERVICE);
 		if(!isInEditMode()) {
-			addURLButton.setVisibility(visibilityShow);
+			//addURLButton.setVisibility(visibilityShow);
+			addURLButton.setText("Add URL");
 			urlEdit.setVisibility(visibilityShow);
 			textView.setText("Enter a new server URL.");
 			spinner.setVisibility(visibilityHide);
@@ -120,7 +136,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			urlEdit.setSelection(urlEdit.getText().length());			
 			inputMethod.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
 		} else {
-			addURLButton.setVisibility(visibilityHide);
+			//addURLButton.setVisibility(visibilityHide);
+			addURLButton.setText("Save Settings");
 			urlEdit.setVisibility(visibilityHide);
 			spinner.setVisibility(visibilityShow);		
 			textView.setText("Select server url");
@@ -135,19 +152,24 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 	
 	public void onAddNewURLButtonClick() {
-		String newURL = urlEdit.getText().toString();
-		if(!newURL.endsWith("/") ) {			
-			newURL += "/";
-		}
-		if(urlExists(newURL) ) {
-			Toast.makeText(getActivity(), newURL + " already exists!", Toast.LENGTH_SHORT).show();
+		if(addURLButton.getText() == "Add URL") {
+			String newURL = urlEdit.getText().toString();
+			if(!newURL.endsWith("/") ) {			
+				newURL += "/";
+			}
+			if(urlExists(newURL) ) {
+				Toast.makeText(getActivity(), newURL + " already exists!", Toast.LENGTH_SHORT).show();
+			} else {
+				mSavedURLsList.add(newURL);
+				Toast.makeText(getActivity(), newURL + " has been added!", Toast.LENGTH_SHORT).show();
+				toggleEditMode();
+				saveCurrentlySelectedURL(newURL);
+				markCurrentlyUsedURL();
+			}	
 		} else {
-			mSavedURLsList.add(newURL);
-			Toast.makeText(getActivity(), newURL + " has been added!", Toast.LENGTH_SHORT).show();
-			toggleEditMode();
-			saveCurrentlySelectedURL(newURL);
-			markCurrentlyUsedURL();
-		}	
+			getActivity().onBackPressed();
+		}
+		
 		
 	}
 	

@@ -153,12 +153,11 @@ public class FileListFragment extends Fragment {
 	private void displayExtraFileInfo(GeneFile file) {
 		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
 		String moreInfo;
-		moreInfo= "File id: " + file.getFileId() + "\n" + "Exp id: " + file.getExpId()
-				+ "\n" + "Author: " + file.getAuthor() + "\n" + "Uploaded by: "
-				+ file.getUploadedBy() + "\n" + "Date: " 
-				+ file.getDate() + "\n" + "Type: " + file.getType() + "\n"
-				+ "Private: " + file.getIsPrivate() + "\n" + "Path: "
-				+ file.getPath() + "\n" + "URL: " + file.getUrl();
+		//TODO: Get right file information
+		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " + file.getType() + "\n"
+				+ "Author: " + file.getAuthor() + "\n" + "Uploaded by: "
+				+ file.getUploadedBy();
+		
 		build.setTitle(file.getName());
 		build.setMessage(moreInfo);
 		build.setNeutralButton("OK", null);
@@ -296,13 +295,13 @@ public class FileListFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
+					
 					if(v.isShown()) {
 						int getPos = (Integer) v.getTag();
 					}
 					
 					if(data.equals("raw")) {
-						Toast.makeText(getActivity(), allRawFiles.get(getPos).getName(),
-								Toast.LENGTH_SHORT).show();
+						displayExtraFileInfo(allRawFiles.get(getPos));
 					}
 					
 				}
@@ -314,6 +313,9 @@ public class FileListFragment extends Fragment {
 			convertView.setTag(R.id.textForBox, viewHolder.fileCheckBox);
 			
 			viewHolder.fileCheckBox.setTag(position);
+			//TODO: check if settag for this needed...
+			viewHolder.fileInfo.setTag(position);
+			
 			if(!forChecks.isEmpty()) {
 				viewHolder.fileCheckBox.setChecked(forChecks.get(position));
 			}

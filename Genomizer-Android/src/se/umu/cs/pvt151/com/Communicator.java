@@ -9,19 +9,21 @@ import java.net.URL;
 
 import org.json.JSONObject;
 
+import android.util.Log;
 
 public class Communicator {
-
 
 	private static HttpURLConnection connection;
 	private static String urlString;
 	private static String token = "";
 	private static Communicator staticSelfReference = null;
 	
+
 	private Communicator(String urlString) {		
 		Communicator.urlString = urlString;
 	}
-	
+
+
 	public static Communicator initCommunicator(String serverURL) {
 		if(staticSelfReference == null) {
 			staticSelfReference = new Communicator(serverURL);
@@ -32,45 +34,49 @@ public class Communicator {
 		}
 	}
 
+
 	public static void setToken(String token) {
 		Communicator.token = token;
 	}
-	
+
+
 	public static GenomizerHttpPackage sendHTTPRequest(JSONObject jsonPackage, String requestType, String urlPostfix) throws IOException {
 		setupConnection(requestType, urlPostfix);
 		return sendRequest(jsonPackage);
 	}
-	
+
 
 	private static void setupConnection(String requestType, String urlPostfix) throws IOException  {
 		URL url = new URL(urlString + urlPostfix);
-		
+
 		connection = (HttpURLConnection) url.openConnection();
-		
+
 		if (!requestType.equals("GET")) {
 			connection.setDoOutput(true);
 		}
-		
+
 		connection.setDoInput (true);
 
 		connection.setUseCaches(false);
 		connection.setRequestMethod(requestType);
 		connection.setRequestProperty("Content-Type", "application/json");
-		
+
 		if (!urlPostfix.equals("login")) {			
 			connection.setRequestProperty("Authorization", token);
 		}
-		
+
 		connection.setChunkedStreamingMode(100);
 
 		connection.setConnectTimeout(4000);
 		connection.setReadTimeout(15000);
 	}	
 
+
 	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage) throws IOException {
 		DataOutputStream out = null;
 		BufferedReader in = null;
 		GenomizerHttpPackage httpResponse = null;
+		
 		try {
 			if (connection.getDoOutput()) {
 				out = new DataOutputStream(connection.getOutputStream());						
@@ -78,21 +84,26 @@ public class Communicator {
 				out.write(pack);
 				out.flush();				
 			}
-			
-			int responseCode = connection.getResponseCode();
-			
+
+			int responseCode = -1;
+			//Android throws an exception when the response is 401.
+			try {
+				responseCode = connection.getResponseCode();
+			} catch(Exception e) {
+				return new GenomizerHttpPackage(401, "");
+			}
+
 			if (responseCode < 300 && responseCode >= 200) {
 				in = new BufferedReader(
 						new InputStreamReader(connection.getInputStream()));
 
 				StringBuffer response = new StringBuffer();
 				String inputLine;
-				
-				
+
 				while ((inputLine = in.readLine()) != null) {
 					response.append(inputLine);
 				}				
-				
+
 				httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
 			} else {
 				httpResponse = new GenomizerHttpPackage(responseCode, "");
@@ -107,7 +118,6 @@ public class Communicator {
 				out.close();
 			}
 		}
-		
 		return httpResponse;
 	}
 }

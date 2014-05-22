@@ -156,7 +156,9 @@ public class FileListFragment extends Fragment {
 		//TODO: Get right file information
 		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " + file.getType() + "\n"
 				+ "Author: " + file.getAuthor() + "\n" + "Uploaded by: "
-				+ file.getUploadedBy();
+				+ file.getUploadedBy() + "\n" + "Date: " + file.getDate() + "\n"
+				+ "GR Version: " + file.getGrVersion() + "\n"
+				+ "Path: " + file.getPath();
 		
 		build.setTitle(file.getName());
 		build.setMessage(moreInfo);

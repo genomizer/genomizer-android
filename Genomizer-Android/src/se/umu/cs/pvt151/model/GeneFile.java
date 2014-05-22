@@ -64,6 +64,10 @@ public class GeneFile implements Parcelable {
 	public void setGrVersion(String grVersion) {
 		this.grVersion = grVersion;
 	}
+	
+	public String getGrVersion() {
+		return grVersion;
+	}
 
 	public String getDate() {
 		return date;

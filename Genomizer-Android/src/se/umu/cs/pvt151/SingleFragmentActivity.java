@@ -172,4 +172,12 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+	public void relogin() {
+		Intent i = new Intent(this, LogInActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		overridePendingTransition(0,0);
+	}
 }

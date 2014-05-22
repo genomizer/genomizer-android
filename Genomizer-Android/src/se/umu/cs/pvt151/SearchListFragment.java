@@ -447,6 +447,8 @@ public class SearchListFragment extends ListFragment {
 				
 			} catch (IOException e) {
 				except = e;
+				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+				act.relogin();
 			}
 			return null;
 			

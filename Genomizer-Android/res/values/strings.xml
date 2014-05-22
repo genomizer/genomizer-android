@@ -82,5 +82,10 @@
     <string name="process_started">Process started: </string>
     <string name="process_finished">Process finished: </string>
 	 <!-- <End> Process activity/fragment -->
+	 
+	 <!-- <Start> Process activity/fragment -->
+    <string name="selected_raw_convert">Convert to Profile</string>
+    <string name="selected_remove">Remove Marked Files</string>
+	 <!-- <End> Process activity/fragment -->
 
 </resources>

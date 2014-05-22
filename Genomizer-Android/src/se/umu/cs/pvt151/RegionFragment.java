@@ -27,6 +27,10 @@ public class RegionFragment extends Fragment {
 	private ArrayList<GeneFile> region;
 	private ArrayList<GeneFile> selectedRegion;
 	
+	private FileListAdapter adapter;
+	
+	private Button removeButton;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +44,10 @@ public class RegionFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_region, parent, false);
 
 		listRegion = (ListView) v.findViewById(R.id.region);
-		listRegion.setAdapter(new FileListAdapter(region, "region"));
+		
+		adapter = new FileListAdapter(region, "region");
+		
+		listRegion.setAdapter(adapter);
 		
 		setButtonListeners(v);
 
@@ -49,21 +56,22 @@ public class RegionFragment extends Fragment {
 	
 	
 	private void setButtonListeners(View v) {
-//		Button convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
-//		
-//		convertRawButton.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent(getActivity(),
-//						ConvertActivity.class);
-//				
-//				intent.putExtra("type", "raw");
-//				intent.putExtra("files", getSelectedFiles());
-//				
-//				startActivity(intent);
-//			}
-//		});
+		removeButton = (Button) v.findViewById(R.id.convert_raw_button);
+		
+		removeButton.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			for (int i = 0; i < selectedRegion.size(); i++) {
+				adapter.remove(selectedRegion.get(i));
+				region.remove(selectedRegion.get(i));
+			}
+			selectedRegion.clear();
+			adapter.notifyDataSetChanged();
+			setButtonsStatus();
+		}
+	});
+	setButtonsStatus();
 	}
 	
 	
@@ -150,6 +158,15 @@ public class RegionFragment extends Fragment {
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
+		}
+	}
+	
+	
+	private void setButtonsStatus() {
+		if (selectedRegion.size() > 0) {
+			removeButton.setEnabled(true);
+		} else {
+			removeButton.setEnabled(false);
 		}
 	}
 }

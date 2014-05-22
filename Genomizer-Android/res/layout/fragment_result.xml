@@ -22,18 +22,11 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/do_something_button"
+            android:id="@+id/remove_raw_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Do something.." />
-
-        <Button
-            android:id="@+id/analyze_result_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Analyze" />
+            android:text="@string/selected_remove" />
     </LinearLayout>
 
 </LinearLayout>

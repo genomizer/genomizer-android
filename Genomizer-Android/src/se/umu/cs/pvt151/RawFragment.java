@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +28,11 @@ public class RawFragment extends Fragment {
 	private ArrayList<GeneFile> raw;
 	private ArrayList<GeneFile> selectedRaw;
 	
+	private FileListAdapter adapter;
+	
+	private Button convertRawButton;
+	private Button removeRawButton;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,10 +44,9 @@ public class RawFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_raw, parent, false);
-
 		listRaw = (ListView) v.findViewById(R.id.raw);
-		listRaw.setAdapter(new FileListAdapter(raw, "raw"));
-		
+		adapter = new FileListAdapter(raw, "raw");
+		listRaw.setAdapter(adapter);
 		setButtonListeners(v);
 
 		return v;
@@ -49,7 +54,8 @@ public class RawFragment extends Fragment {
 	
 	
 	private void setButtonListeners(View v) {
-		Button convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
+		convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
+		removeRawButton = (Button) v.findViewById(R.id.remove_raw_button);
 		
 		convertRawButton.setOnClickListener(new OnClickListener() {
 			
@@ -64,11 +70,24 @@ public class RawFragment extends Fragment {
 					intent.putExtra("files", selectedRaw);
 					
 					startActivity(intent);
-				} else {
-					
-				}
+				} 
 			}
 		});
+		
+		removeRawButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				for (int i = 0; i < selectedRaw.size(); i++) {
+					adapter.remove(selectedRaw.get(i));
+					raw.remove(selectedRaw.get(i));
+				}
+				selectedRaw.clear();
+				adapter.notifyDataSetChanged();
+				setButtonsStatus();
+			}
+		});
+		setButtonsStatus();
 	}
 	
 	
@@ -117,7 +136,6 @@ public class RawFragment extends Fragment {
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
 				
 				checkBox.setTag(position);
-
 				textView.setText(file.getName());
 				
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -132,6 +150,8 @@ public class RawFragment extends Fragment {
 						} else {
 							removeSelectedFile(forShow.get(position));
 						}
+						
+						setButtonsStatus();
 					}
 				});
 				
@@ -150,6 +170,17 @@ public class RawFragment extends Fragment {
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
+		}
+	}
+	
+	
+	private void setButtonsStatus() {
+		if (selectedRaw.size() > 0) {
+			convertRawButton.setEnabled(true);
+			removeRawButton.setEnabled(true);
+		} else {
+			convertRawButton.setEnabled(false);
+			removeRawButton.setEnabled(false);
 		}
 	}
 }

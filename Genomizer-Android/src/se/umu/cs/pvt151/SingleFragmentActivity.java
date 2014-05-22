@@ -29,7 +29,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	private boolean inflateMenu = false;
 	private String fragmentClassSimpleName = "";
-	private static boolean devModeEnabled = false;
+	
 	
 	/**
 	 * For use with the Genomizer Android application.
@@ -74,9 +74,14 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 */
 	protected abstract Fragment createFragment();
 	
+	
 	@Override
 	public abstract void onBackPressed();
 	
+	
+	/**
+	 * Icons associated to menu items are set to visible.
+	 */
 	@Override
 	public boolean onMenuOpened(int featureId, Menu menu) {
 	    if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
@@ -115,19 +120,11 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		} else {						
 			inflater.inflate(R.menu.main, menu);			
 		}
-		if(!devModeEnabled) {
-			hideDevOptions(menu);
-		}
+		
 		return true;
 	}
 	
-	private void hideDevOptions(Menu menu) {
-		for(int i = 0; i < menu.size(); i++) {
-			if(menu.getItem(i).getTitle().toString().contains("Dev")) {
-				menu.getItem(i).setVisible(false);
-			}
-		}
-	}
+	
 	
 	/**
 	 * Defines how the different menu options in the global menu is
@@ -142,6 +139,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			i = new Intent(this, SearchActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
+			overridePendingTransition(0,0);
 			return true;
 		
 		case R.id.btnworkspace_main_menu:
@@ -149,12 +147,14 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 					SelectedFilesActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
+			overridePendingTransition(0,0);
 			return true;
 			
 		case R.id.action_settings:
 			i = new Intent(this, SettingsActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
+			overridePendingTransition(0,0);
 			return true;
 			
 		
@@ -163,6 +163,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			i = new Intent(this, ProcessActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
+			overridePendingTransition(0,0);
 			return true;
 			
 		default:

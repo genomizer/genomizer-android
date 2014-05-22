@@ -32,6 +32,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	private final static int visibilityShow = 0;
 	private View view = null;
 	private TextView textView = null;
+	private boolean inEditMode = false; 
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		if(menuString.equals("Add new URL")) {
 			toggleEditMode();
 		} else if(menuString.equals("Edit selected URL")) {
+			inEditMode = true;
 			urlEdit.setText(spinner.getSelectedItem().toString());
 			toggleEditMode();						
 		} else if(menuString.equals("Remove selected URL")) {
@@ -113,7 +115,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		InputMethodManager inputMethod = (InputMethodManager) getActivity().getSystemService(
 			      Context.INPUT_METHOD_SERVICE);
 		if(!isInEditMode()) {
-			//addURLButton.setVisibility(visibilityShow);
 			addURLButton.setText("Add URL");
 			urlEdit.setVisibility(visibilityShow);
 			textView.setText("Enter a new server URL.");
@@ -122,7 +123,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			urlEdit.setSelection(urlEdit.getText().length());			
 			inputMethod.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
 		} else {
-			//addURLButton.setVisibility(visibilityHide);
 			addURLButton.setText("Save Settings");
 			urlEdit.setVisibility(visibilityHide);
 			spinner.setVisibility(visibilityShow);		
@@ -146,6 +146,10 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			if(urlExists(newURL) ) {
 				makeToast(newURL + " already exists!");
 			} else {
+				if(inEditMode) {
+					String strToEdit = spinner.getSelectedItem().toString();
+					mSavedURLsList.remove(strToEdit);
+				}
 				mSavedURLsList.add(newURL);
 				makeToast(newURL + " has been added!");
 				toggleEditMode();

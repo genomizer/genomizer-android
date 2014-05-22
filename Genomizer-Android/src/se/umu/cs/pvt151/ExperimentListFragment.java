@@ -216,8 +216,7 @@ public class ExperimentListFragment extends Fragment {
 	
 	private void getDisplayValues(Experiment experiment) {
 		List<Annotation> annos = experiment.getAnnotations();
-		String toDisplay = "Experiment " + experiment.getName() + "\n"
-				+ "Created by " + experiment.getCreatedBy() + "\n";
+		String toDisplay = "Experiment " + experiment.getName() + "\n";
 		String temp = "";
 		 
 		for(int i = 0; i < storedAnnotations.size(); i++) {

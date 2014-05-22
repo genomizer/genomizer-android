@@ -9,10 +9,13 @@ package se.umu.cs.pvt151;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,7 +56,6 @@ public class FileListFragment extends Fragment {
 	private ArrayList<GeneFile> allRegionFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
 	private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
-	
 	
 	
 	@Override
@@ -139,6 +141,28 @@ public class FileListFragment extends Fragment {
 				DataStorage.appendFileList(type, selected);
 			}		
 		} 
+	}
+	
+	/**
+	 * Method used to create a dialog window with
+	 * more information about a file when textview is
+	 * clicked
+	 * @param GeneFile file that extra information will
+	 * be received from. 
+	 */
+	private void displayExtraFileInfo(GeneFile file) {
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
+		String moreInfo;
+		moreInfo= "File id: " + file.getFileId() + "\n" + "Exp id: " + file.getExpId()
+				+ "\n" + "Author: " + file.getAuthor() + "\n" + "Uploaded by: "
+				+ file.getUploadedBy() + "\n" + "Date: " 
+				+ file.getDate() + "\n" + "Type: " + file.getType() + "\n"
+				+ "Private: " + file.getIsPrivate() + "\n" + "Path: "
+				+ file.getPath() + "\n" + "URL: " + file.getUrl();
+		build.setTitle(file.getName());
+		build.setMessage(moreInfo);
+		build.setNeutralButton("OK", null);
+		build.show();
 	}
 	
 
@@ -264,6 +288,23 @@ public class FileListFragment extends Fragment {
 							}
 						}
 					}
+				}
+				
+			});
+			
+			viewHolder.fileInfo.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					if(v.isShown()) {
+						int getPos = (Integer) v.getTag();
+					}
+					
+					if(data.equals("raw")) {
+						Toast.makeText(getActivity(), allRawFiles.get(getPos).getName(),
+								Toast.LENGTH_SHORT).show();
+					}
+					
 				}
 				
 			});

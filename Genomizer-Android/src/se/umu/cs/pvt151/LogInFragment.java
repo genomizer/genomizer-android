@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -117,6 +118,9 @@ public class LogInFragment extends Fragment {
 			return true;
 			
 		} catch (IOException e) {
+			Log.d("login", "exception: " + e.getStackTrace());
+			Log.d("login", "exception: " + e.getMessage());
+			e.printStackTrace();
 			makeToast(CONNECTION_ERROR, false);
 		}
 		return false;

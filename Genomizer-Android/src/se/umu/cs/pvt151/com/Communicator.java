@@ -69,6 +69,7 @@ public class Communicator {
 
 		connection.setConnectTimeout(4000);
 		connection.setReadTimeout(15000);
+		connection.setRequestProperty("connection", "close");
 	}	
 
 
@@ -114,9 +115,9 @@ public class Communicator {
 			if(in != null) {
 				in.close();
 			}
-			if(out != null) {
-				out.close();
-			}
+//			if(out != null) {
+//				out.close();
+//			}
 		}
 		return httpResponse;
 	}

@@ -417,7 +417,12 @@ public class ConverterFragment extends Fragment{
 		@Override
 		protected void onPostExecute(ArrayList<GenomeRelease> result) {
 			super.onPostExecute(result);
-			setupSpinner(genomeList);
+			if (genomeList == null || genomeList.isEmpty()) {
+				toastUser("Cant retreive Genome Releases from server");
+				getActivity().finish();
+			} else {
+				setupSpinner(genomeList);
+			}
 		}
 
 	}
@@ -429,8 +434,9 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class ConvertTask extends AsyncTask<Void, Void, Void> {
 
-		private boolean processResult;
+		private boolean processResult = true;
 		private IOException caughtException = null;
+		private int failCount = 0;
 		
 		/**
 		 * 
@@ -438,6 +444,7 @@ public class ConverterFragment extends Fragment{
 		@Override
 		protected Void doInBackground(Void... params) {
 			ProcessingParameters parameters = new ProcessingParameters();
+			boolean convertOk;
 			String meta = "";
 			String release = processParameters.get(1);
 
@@ -448,7 +455,15 @@ public class ConverterFragment extends Fragment{
 			}
 
 			try {
-				processResult = ComHandler.rawToProfile(processList.get(0), parameters, meta, release);
+				for (GeneFile geneFile : processList) {
+					convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
+					if (!convertOk) {
+						processResult = false;
+						failCount ++;
+					}
+				}
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 				caughtException = e;
@@ -468,9 +483,19 @@ public class ConverterFragment extends Fragment{
 
 			if (caughtException == null) {
 				if (processResult) {
-					response = "Conversion started successfully";
+					if (processList.size() > 1) {
+						response = processList.size() + " conversions started successfully";
+					} else {
+						response = "Conversion started successfully";		
+					}
+					
 				} else {
-					response = "Conversion malfunction";
+					if (processList.size() > 1) {
+						response = failCount + " conversions failed to start";
+					} else {
+						response = "Conversion malfunction";					
+					}
+					
 				}
 			} else {
 				response = "IO Exception from ComHandler";

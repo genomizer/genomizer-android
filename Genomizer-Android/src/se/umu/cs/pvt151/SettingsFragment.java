@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
 	private Spinner spinner;
 	private ArrayList<String> mSavedURLsList = new ArrayList<String>();
-	private boolean devMode = false;
 	private Button addURLButton = null;
 	private EditText urlEdit = null;
 	private final static int visibilityHide = 4;
@@ -39,9 +39,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		fetchSavedURLs();
 		this.view = view;
 		fetchViewItems();
-		createSpinner();
-						
-		markCurrentlyUsedURL();		
+		createSpinner();						
+		markCurrentlyUsedURL();			
 		return view;
 	}
 
@@ -54,15 +53,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 	
 	private void createAdapter() {
-		ArrayAdapter<?> adapter = null;
-		if(devMode) {
-			adapter = ArrayAdapter.createFromResource(
-				getActivity(), R.array.server_list,
-				android.R.layout.simple_spinner_item);
-		} else {
-			adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mSavedURLsList);
-		}
-		
+		ArrayAdapter<?> adapter = null;		
+		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, mSavedURLsList);
 		adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 		spinner.setAdapter(adapter);
 	}
@@ -70,31 +62,25 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	private void fetchViewItems() {
 		addURLButton = (Button) view.findViewById(R.id.settingsAddButton);
 		urlEdit = (EditText) view.findViewById(R.id.settings_input_field);
-		urlEdit.setText("http://");
-	}	
+		urlEdit.setText("http://");		
+	}
+	
+	private void makeToast(String text) {
+		Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+		toast.setGravity( Gravity.CENTER_VERTICAL, 0, 0);
+		toast.show();
+	}
 	
 	public void onMenuItemPress(String menuString) {
-		if(devMode) {
-			if(menuString.equals("Dev mode")) {
-				devMode = false;
-				fetchSavedURLs();
-				createAdapter();
-			} else {
-				Toast.makeText(getActivity(), "Dev servers not editable...", Toast.LENGTH_SHORT).show();
-			}
-			
-			return; 
-		}
-		if(menuString.equals("Dev mode")) {
-			devMode = true;												
-			createAdapter();
-		}
 		
 		if(menuString.equals("Add new URL")) {
 			toggleEditMode();
+		} else if(menuString.equals("Edit selected URL")) {
+			urlEdit.setText(spinner.getSelectedItem().toString());
+			toggleEditMode();						
 		} else if(menuString.equals("Remove selected URL")) {
 			if(mSavedURLsList.size() == 1) {
-				Toast.makeText(getActivity(), "Please add a new server URL before you remove a server.", Toast.LENGTH_SHORT).show();
+				makeToast("Please add a new server URL before you remove a server.");
 				return;
 			} else {
 				new AlertDialog.Builder(getActivity()).setIcon(android.R.drawable.ic_dialog_alert)
@@ -152,16 +138,16 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	}
 	
 	public void onAddNewURLButtonClick() {
-		if(addURLButton.getText() == "Add URL") {
+		if(addURLButton.getText().equals("Add URL")) {
 			String newURL = urlEdit.getText().toString();
 			if(!newURL.endsWith("/") ) {			
 				newURL += "/";
 			}
 			if(urlExists(newURL) ) {
-				Toast.makeText(getActivity(), newURL + " already exists!", Toast.LENGTH_SHORT).show();
+				makeToast(newURL + " already exists!");
 			} else {
 				mSavedURLsList.add(newURL);
-				Toast.makeText(getActivity(), newURL + " has been added!", Toast.LENGTH_SHORT).show();
+				makeToast(newURL + " has been added!");
 				toggleEditMode();
 				saveCurrentlySelectedURL(newURL);
 				markCurrentlyUsedURL();
@@ -200,7 +186,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		prefEditor.putString(getResources().getString(R.string.settings_serverSelectedURLAnchor), url);
 		prefEditor.commit();			
 		
-		if(!urlExists(url) && !devMode) {
+		if(!urlExists(url)) {
 			mSavedURLsList.add(url);
 		}
 	}
@@ -239,11 +225,9 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			sb.append(url);
 			sb.append('#');
 		}
-		if(!devMode) {
-			prefEditor.putString(getResources().getString(R.string.settings_serverALLURLAnchor), sb.toString());
-			prefEditor.commit();
-		}
 		
+		prefEditor.putString(getResources().getString(R.string.settings_serverALLURLAnchor), sb.toString());
+		prefEditor.commit();				
 	}
 
 	@Override

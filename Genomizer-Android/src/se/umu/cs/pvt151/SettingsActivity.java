@@ -23,7 +23,7 @@ public class SettingsActivity extends SingleFragmentActivity  {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getTitle().toString().equals("Add new URL")) {
+		if(item.getTitle().toString().equals(getResources().getString(R.string.action_settings_edit)) || item.getTitle().toString().equals(getResources().getString(R.string.action_settings_add))) {
 			menu.clear();
 		} 
 		

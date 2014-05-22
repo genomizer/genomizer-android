@@ -42,6 +42,7 @@
                 android:id="@+id/edit_convert_bowtie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
                 android:ems="10" />
 
             <TextView
@@ -97,6 +98,7 @@
                 android:id="@+id/edit_convert_smoothing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
                 android:ems="10" />
 
             <TextView
@@ -108,6 +110,7 @@
                 android:id="@+id/edit_convert_stepsize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
                 android:ems="10" />
 
             <LinearLayout
@@ -136,6 +139,7 @@
                 android:id="@+id/edit_convert_ratio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
                 android:ems="10" />
 
             <TextView
@@ -147,6 +151,7 @@
                 android:id="@+id/edit_convert_ratiosmooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
                 android:ems="10" />
         </LinearLayout>
     </ScrollView>

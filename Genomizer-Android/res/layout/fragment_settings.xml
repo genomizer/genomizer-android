@@ -33,6 +33,7 @@
         android:singleLine="true"
         android:visibility="invisible"
         android:layout_below="@id/settings_textview"
+        android:inputType="textNoSuggestions"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:hint="Small Text"
         />

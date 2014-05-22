@@ -69,20 +69,6 @@ public class LogInActivity extends SingleFragmentActivity {
 		}
 	}
 	
-	/**
-	 * Used to automatically login using fake user name and password.
-	 * @deprecated Should be hidden in customer version.
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getTitle().equals("Dev login")) {
-			fragment.devLogin();
-			login(fragment.getView());
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	//TODO ADDED AFTER ABSTRACT METHOD DECLARATION
 	@Override
 	public void onBackPressed() {
 		finish();

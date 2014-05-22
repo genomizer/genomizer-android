@@ -182,15 +182,4 @@ public class LogInFragment extends Fragment {
 			progress.dismiss();
 		}
 	}
-
-	/**
-	 * Used to login with dev account without any typing! 
-	 * @deprecated Should not be included in customer version.
-	 * 
-	 */
-	public void devLogin() {
-		userName.setText("AndroidDev");
-		userPwd.setText("#YOLO");
-		
-	}
 }

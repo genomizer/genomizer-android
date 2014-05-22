@@ -63,6 +63,8 @@ public class ConverterFragment extends Fragment{
 	private String processType;
 	private ArrayList<String> processParameters;
 	private ProgressDialog progress;
+	private int convertedFiles;
+	private IOException convertException;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -229,6 +231,10 @@ public class ConverterFragment extends Fragment{
 
 	}
 	
+	private void incrementConverted() {
+		convertedFiles++;
+	}
+
 	/**
 	 * 
 	 * @author Anders
@@ -335,15 +341,6 @@ public class ConverterFragment extends Fragment{
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view,
 				int position, long id) {
-			
-			
-//			if (id == 0) {
-//				for (int i = (index + 1); i < viewList.size(); i++) {
-//					viewList.get(i).setEnabled(false);
-//				}
-//			} else {
-//				viewList.get(index + 1).setEnabled(true);
-//			}
 
 		}
 		
@@ -395,6 +392,13 @@ public class ConverterFragment extends Fragment{
 				}
 			}
 			
+			//TODO remove this later, just for test
+//			for (int i = 0; i < 7; i++) {
+//				processList.add(new GeneFile());
+//			}
+			
+			convertedFiles = 0;
+			convertException = null;
 			progress = new ProgressDialog(getActivity());
 			progress.setMessage("Starting conversions");
 			progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -427,7 +431,6 @@ public class ConverterFragment extends Fragment{
 			try {
 				genomeList = ComHandler.getGenomeReleases();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -457,11 +460,6 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class ConvertTask extends AsyncTask<GeneFile, Void, Boolean> {
 
-		private boolean processResult = true;
-		private IOException caughtException = null;
-		private int failCount = 0;
-		private int testInt = 0;
-		private boolean convertOk;
 		
 		/**
 		 * 
@@ -481,20 +479,10 @@ public class ConverterFragment extends Fragment{
 			}
 
 			try {
-//				for (GeneFile geneFile : processList) {
-					convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
-//					if (!convertOk) {
-//						processResult = false;
-//						failCount ++;
-//					}
-//					testInt ++;
-					Log.d("Convert", "ConvertFragment part1, ConvertOk: " + convertOk);
-//				}
-				
-				
+				convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
 			} catch (IOException e) {
 				e.printStackTrace();
-				caughtException = e;
+				convertException = e;
 			}
 
 			return convertOk;
@@ -509,31 +497,23 @@ public class ConverterFragment extends Fragment{
 			super.onPostExecute(result);
 			boolean convert = Boolean.valueOf(result);
 
-			String response = "";
-			if (caughtException == null) {
-				Log.d("Convert", "ConvertFragment part2, convert: " + convert);
+			if (convertException == null) {
+				
 				if (convert) {
-					progress.incrementProgressBy(1);
-					if (progress.getProgress() == progress.getMax()) {
-						progress.dismiss();
-					}
-					
-					
-				} else {
-					if (processList.size() > 1) {
-						response = failCount + " conversions failed to start";
-					} else {
-						response = "Conversion malfunction";					
-					}
-					
+					incrementConverted();
 				}
+				
+				progress.incrementProgressBy(1);
+				if (progress.getProgress() == progress.getMax()) {
+					progress.dismiss();
+					toastUser(convertedFiles + " files converted successfully");
+				}
+				
 			} else {
 				progress.dismiss();
-				response = "Server not responding";
+				toastUser("Server not responding");
 			}
-			if (response.length() > 0) {
-				toastUser(response);
-			}
+			
 
 		}
 

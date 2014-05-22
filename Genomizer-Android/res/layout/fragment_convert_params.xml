@@ -42,10 +42,7 @@
                 android:id="@+id/edit_convert_bowtie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10" >
-
-                <requestFocus />
-            </EditText>
+                android:ems="10" />
 
             <TextView
                 android:id="@+id/lbl_convert_geneversion"

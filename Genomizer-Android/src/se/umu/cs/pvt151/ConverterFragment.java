@@ -9,9 +9,11 @@ import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessingParameters;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,6 +62,7 @@ public class ConverterFragment extends Fragment{
 	private ArrayList<GeneFile> processList;
 	private String processType;
 	private ArrayList<String> processParameters;
+	private ProgressDialog progress;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -363,6 +366,8 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class buttonListener implements OnClickListener {
 		
+		
+
 		/**
 		 * 
 		 */
@@ -390,7 +395,15 @@ public class ConverterFragment extends Fragment{
 				}
 			}
 			
-			new ConvertTask().execute();
+			progress = new ProgressDialog(getActivity());
+			progress.setMessage("Starting conversions");
+			progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			progress.setMax(processList.size());
+			progress.show();
+			
+			for (int i = 0; i < processList.size(); i++) {
+				new ConvertTask().execute(processList.get(i));
+			}
 
 		}
 
@@ -442,19 +455,22 @@ public class ConverterFragment extends Fragment{
 	 * @author Anders
 	 *
 	 */
-	private class ConvertTask extends AsyncTask<Void, Void, Void> {
+	private class ConvertTask extends AsyncTask<GeneFile, Void, Boolean> {
 
 		private boolean processResult = true;
 		private IOException caughtException = null;
 		private int failCount = 0;
+		private int testInt = 0;
+		private boolean convertOk;
 		
 		/**
 		 * 
 		 */
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Boolean doInBackground(GeneFile... params) {
+			GeneFile geneFile = params[0];
 			ProcessingParameters parameters = new ProcessingParameters();
-			boolean convertOk;
+			boolean convertOk = false;
 			String meta = "";
 			String release = processParameters.get(1);
 
@@ -465,13 +481,15 @@ public class ConverterFragment extends Fragment{
 			}
 
 			try {
-				for (GeneFile geneFile : processList) {
+//				for (GeneFile geneFile : processList) {
 					convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
-					if (!convertOk) {
-						processResult = false;
-						failCount ++;
-					}
-				}
+//					if (!convertOk) {
+//						processResult = false;
+//						failCount ++;
+//					}
+//					testInt ++;
+					Log.d("Convert", "ConvertFragment part1, ConvertOk: " + convertOk);
+//				}
 				
 				
 			} catch (IOException e) {
@@ -479,25 +497,27 @@ public class ConverterFragment extends Fragment{
 				caughtException = e;
 			}
 
-			return null;
+			return convertOk;
 		}
 		
+
 		/**
 		 * 
 		 */
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
+			boolean convert = Boolean.valueOf(result);
 
-			String response;
-
+			String response = "";
 			if (caughtException == null) {
-				if (processResult) {
-					if (processList.size() > 1) {
-						response = processList.size() + " conversions started successfully";
-					} else {
-						response = "Conversion started successfully";		
+				Log.d("Convert", "ConvertFragment part2, convert: " + convert);
+				if (convert) {
+					progress.incrementProgressBy(1);
+					if (progress.getProgress() == progress.getMax()) {
+						progress.dismiss();
 					}
+					
 					
 				} else {
 					if (processList.size() > 1) {
@@ -508,9 +528,12 @@ public class ConverterFragment extends Fragment{
 					
 				}
 			} else {
-				response = "IO Exception from ComHandler";
+				progress.dismiss();
+				response = "Server not responding";
 			}
-			toastUser(response);
+			if (response.length() > 0) {
+				toastUser(response);
+			}
 
 		}
 

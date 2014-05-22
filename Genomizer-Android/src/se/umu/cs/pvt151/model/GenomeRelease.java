@@ -5,7 +5,7 @@ public class GenomeRelease {
 	private String genomeVersion;
 	private String specie;
 	private String path;
-	private String fileName;
+//	private String fileName;
 	
 	public GenomeRelease() {
 		
@@ -35,12 +35,12 @@ public class GenomeRelease {
 		this.path = path;
 	}
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+//	public String getFileName() {
+//		return fileName;
+//	}
+//
+//	public void setFileName(String fileName) {
+//		this.fileName = fileName;
+//	}
 	
 }

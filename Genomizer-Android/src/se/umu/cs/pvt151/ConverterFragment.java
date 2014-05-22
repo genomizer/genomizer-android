@@ -95,9 +95,11 @@ public class ConverterFragment extends Fragment{
 
 
 	/**
+	 * Setup the headers for the different parameter-fields in the conversion
+	 * page. 
 	 * 
-	 * @param v
-	 * @return
+	 * @param v the view where the textfields used as headers is contained. 
+	 * @return ArrayList<View> with all the textFields used as headers.
 	 */
 	private ArrayList<View> setupHeaders(View v) {
 		ArrayList<View> tempList = new ArrayList<View>();
@@ -125,9 +127,14 @@ public class ConverterFragment extends Fragment{
 	}
 	
 	/**
+	 * Sets up the different widgets for the conversion parameter page
+	 * presented for the user. Sets onTouchListeners on the editTextFields and
+	 * onCheckedChangeListeners on the toggleButtons. Also disables all the
+	 * widgets except for the first 2 that are mandatory for conversion. 
 	 * 
-	 * @param v
-	 * @return
+	 * @param v the view where the widgets are contained in.
+	 * @return ArrayList<View> with the different widgets in the order that 
+	 * they appear on the screen
 	 */
 	private ArrayList<View> setupWidgetsForLayout(View v) {
 		int etCount = 0;
@@ -151,21 +158,24 @@ public class ConverterFragment extends Fragment{
 				et = (EditText) tempList.get(i);
 				et.setText(hints[etCount]);
 				et.setOnTouchListener(new TextSelector(i));
-				//				et.addTextChangedListener(new TextWatch(i));
-				et.setEnabled(false);
+				if (i != 0) {
+					et.setEnabled(false);
+				}
 				etCount++;
 
 			} else if (i == 2 || i == 3 || i == 6) {
 				tb = (ToggleButton) tempList.get(i);
 				tb.setOnCheckedChangeListener(new CheckerChange(i));
-				tb.setEnabled(false);
+				if (i != 2) {
+					tb.setEnabled(false);
+				}
 
 			} 
 
 		}
 
-		tempList.get(0).setEnabled(true);
-		tempList.get(2).setEnabled(true);
+//		tempList.get(0).setEnabled(true);
+//		tempList.get(2).setEnabled(true);
 
 		return tempList;
 	}

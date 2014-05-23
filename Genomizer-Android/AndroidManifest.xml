@@ -66,7 +66,8 @@
         <activity
             android:name="se.umu.cs.pvt151.ConverterActivity"
             android:label=""
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name="se.umu.cs.pvt151.SearchPubmedActivity"

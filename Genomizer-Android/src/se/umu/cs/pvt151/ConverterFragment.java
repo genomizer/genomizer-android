@@ -392,10 +392,10 @@ public class ConverterFragment extends Fragment{
 				}
 			}
 			
-			//TODO remove this later, just for test
-//			for (int i = 0; i < 7; i++) {
-//				processList.add(new GeneFile());
-//			}
+//			TODO remove this later, just for test
+			for (int i = 0; i < 7; i++) {
+				processList.add(new GeneFile());
+			}
 			
 			convertedFiles = 0;
 			convertException = null;

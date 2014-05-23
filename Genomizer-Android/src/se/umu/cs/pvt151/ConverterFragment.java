@@ -253,6 +253,7 @@ public class ConverterFragment extends Fragment{
 			
 			for (GeneFile g : failedConversions) {
 				message += g.getName() + "\n";
+				Log.d("Convert", "GeneFile: " + g);
 			}
 			
 			AlertDialog alert = new AlertDialog.Builder(getActivity()).create();

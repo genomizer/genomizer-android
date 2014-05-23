@@ -141,10 +141,10 @@ public class GeneFile implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
-		out.writeString(name);
 		out.writeString(fileId);
 		out.writeString(expId);
 		out.writeString(type);
+		out.writeString(name);
 		out.writeString(author);
 		out.writeString(uploadedBy);
 		out.writeString(isPrivate);

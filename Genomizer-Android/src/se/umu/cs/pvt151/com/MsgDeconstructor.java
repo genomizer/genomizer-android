@@ -159,7 +159,7 @@ public class MsgDeconstructor {
 			
 			release.setGenomeVersion(obj.getString("genomeVersion"));
 			release.setSpecie(obj.getString("specie"));
-			release.setPath(obj.getString("path"));
+			release.setPath(obj.getString("folderPath"));
 //			release.setFileName(obj.getString("fileName"));
 			
 			genomeReleases.add(release);

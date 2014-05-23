@@ -460,13 +460,14 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class GetGeneReleaseTask extends AsyncTask<Void, Void, ArrayList<GenomeRelease>> {
 
-		private ArrayList<GenomeRelease> genomeList;
 		
 		/**
 		 * 
 		 */
 		@Override
 		protected ArrayList<GenomeRelease> doInBackground(Void... params) {
+			ArrayList<GenomeRelease> genomeList = null;
+			
 			try {
 				genomeList = ComHandler.getGenomeReleases();
 			} catch (IOException e) {
@@ -489,7 +490,7 @@ public class ConverterFragment extends Fragment{
 				toastUser("No Gemome releases found on server");
 				getActivity().finish();
 			} else {
-				setupSpinner(genomeList);
+				setupSpinner(result);
 			}
 		}
 

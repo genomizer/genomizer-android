@@ -4,7 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="se.umu.cs.pvt151.WorkSpaceActivity$PlaceholderFragment" >
-
+	<LinearLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:background="#FFFFFF">
+    	
+	     <TextView
+	        android:id="@+id/listText2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="6dp"
+	        android:background="#FFFFFF"
+	        android:text="@string/selected_str"        
+	        android:textSize="16sp"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:textColor="#000000"        
+	        android:textStyle="bold" />
+	        
+		<TextView      
+	      android:id="@+id/divider"    
+	      android:layout_width="fill_parent" 
+	      android:layout_height="7dp" 
+	      android:background="#DADADA" />
+    </LinearLayout>
     <TabHost
         android:id="@+id/tabhostSwipe"
         android:layout_width="match_parent"
@@ -14,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-
+			
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
@@ -27,7 +52,7 @@
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
-
+				
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpagerSwipe"
                     android:layout_width="fill_parent"

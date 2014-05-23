@@ -21,10 +21,13 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
+    <string name="selected_str">SELECTED FILES</string>
+    <string name="process_str">PROCESS STATUS</string>
     <string name="exp_info">EXPERIMENT FILES</string>
     <string name="raw_data">RAW DATA</string>
     <string name="profile_data">PROFILE DATA</string>
     <string name="region_data">REGION DATA</string>
+    <string name="search_str">SEARCH FILES</string>
     <string name="enter_username">Enter username</string>
     <string name="convert">Add to selection</string>
     <string name="password_dots">••••••</string>

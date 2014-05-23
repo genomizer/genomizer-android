@@ -145,6 +145,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			}
 			if(urlExists(newURL) ) {
 				makeToast(newURL + " already exists!");
+				toggleEditMode();
 			} else {
 				if(inEditMode) {
 					String strToEdit = spinner.getSelectedItem().toString();

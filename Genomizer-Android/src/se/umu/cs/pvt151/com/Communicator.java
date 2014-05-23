@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import org.json.JSONObject;
@@ -104,12 +105,13 @@ public class Communicator {
 				while ((inputLine = in.readLine()) != null) {
 					response.append(inputLine);
 				}				
-
+				Log.d("RESPONSE: ", response.toString());
 				httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
 			} else {
 				httpResponse = new GenomizerHttpPackage(responseCode, "");
 			}
-		} catch(IOException ioe) {
+		} 		
+		catch(IOException ioe) {			
 			throw ioe;
 		} finally {
 			if(in != null) {

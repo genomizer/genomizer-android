@@ -67,24 +67,32 @@ public class MsgDeconstructor {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 
 		for (int i = 0; i < json.length(); i++) {
-
+			
 			JSONObject obj = (JSONObject) json.get(i);
 			GeneFile file = new GeneFile();
 
-			file.setFileId(obj.getString("id"));
-			file.setExpId(obj.getString("expId"));
-			file.setType(obj.getString("type"));
-			file.setName(obj.getString("filename"));
-			file.setAuthor(obj.getString("author"));
-			file.setUploadedBy(obj.getString("uploader"));
-			file.setDate(obj.getString("date"));
-			file.setUrl(obj.getString("url"));
-			file.setPath(obj.getString("path"));
-			file.setGrVersion(obj.getString("grVersion"));
+			file.setFileId(getStringFromJObj(obj, "id"));
+			file.setExpId(getStringFromJObj(obj, "expId"));
+			file.setType(getStringFromJObj(obj, "type"));
+			file.setName(getStringFromJObj(obj, "filename"));
+			file.setAuthor(getStringFromJObj(obj, "author"));
+			file.setUploadedBy(getStringFromJObj(obj, "uploader"));
+			file.setDate(getStringFromJObj(obj, "date"));
+			file.setUrl(getStringFromJObj(obj, "url"));
+			file.setPath(getStringFromJObj(obj, "path"));
+			file.setGrVersion(getStringFromJObj(obj, "grVersion"));
 
 			files.add(file);
 		}
 		return files;
+	}
+	
+	private static String getStringFromJObj(JSONObject obj, String str) {
+		try {
+			return obj.getString(str);
+		} catch (JSONException e) {
+			return "Missing value";
+		}
 	}
 
 

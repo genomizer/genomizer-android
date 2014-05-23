@@ -16,8 +16,8 @@ import android.view.View;
 public class LogInActivity extends SingleFragmentActivity {
 	
 	private static final String INTERNET_ACCESS_DENIED = "Internet access unavailable.";
-	private static final String CONNECT_MESSAGE = "Connecting to Genomizer server";
-	private static final String CONNECT = "Connect";
+	private static final String CONNECT_MESSAGE = "Connecting to Genomizer server: \n";
+	private static final String CONNECT = "Connecting";
 	LogInFragment fragment;
 
 	/**
@@ -40,17 +40,7 @@ public class LogInActivity extends SingleFragmentActivity {
 		
 	}
 	
-	/**
-	 * Verify that the phone currently have an internet connection.
-	 * @return true if online false otherwise
-	 */
-	private boolean isOnline() {
-	    ConnectivityManager cm =
-	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-	    return cm.getActiveNetworkInfo() != null && 
-	       cm.getActiveNetworkInfo().isConnected();
-	}
+	
 	
 	/**
 	 * Method is called when pressing the "Sign in" button in the user
@@ -58,10 +48,10 @@ public class LogInActivity extends SingleFragmentActivity {
 	 * @param v
 	 */
 	public void login(View v) {
-		if(isOnline()) {
+		if(ComHandler.isOnline(this)) {
 			ProgressDialog progress = new ProgressDialog(this);
 			progress.setTitle(CONNECT);
-			progress.setMessage(CONNECT_MESSAGE);
+			progress.setMessage(CONNECT_MESSAGE + ComHandler.getServerURL());
 			progress.show();
 			fragment.login(progress);
 		} else {

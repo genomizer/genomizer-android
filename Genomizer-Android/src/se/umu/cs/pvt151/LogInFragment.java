@@ -1,6 +1,7 @@
 package se.umu.cs.pvt151;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import android.app.ProgressDialog;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,14 +52,15 @@ public class LogInFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);				
 		userName = (EditText) v.findViewById(R.id.editTextUser);		
 		userPwd = (EditText) v.findViewById(R.id.editTextPwd);
-		setScrollDownOnEditTextSelection(v);
+		setScrollDownOnEditTextSelection(v, userName);
+		setScrollDownOnEditTextSelection(v, userPwd);
 		return v;
 	}
 	
 	
-	private void setScrollDownOnEditTextSelection(final View v) {
+	private void setScrollDownOnEditTextSelection(final View v, EditText editTextItem) {
 		final ScrollView sc = (ScrollView) v.findViewById(R.id.scrollLogin);
-		userName.setOnTouchListener(new OnTouchListener() {
+		editTextItem.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				final Handler handler = new Handler();
@@ -118,9 +121,8 @@ public class LogInFragment extends Fragment {
 			return true;
 			
 		} catch (IOException e) {
-			Log.d("login", "exception: " + e.getStackTrace());
-			Log.d("login", "exception: " + e.getMessage());
-			e.printStackTrace();
+			Log.d("login", "exception: " + Arrays.toString(e.getStackTrace()));
+			Log.d("login", "exception: " + e.getMessage());			
 			makeToast(CONNECTION_ERROR, false);
 		}
 		return false;
@@ -136,15 +138,20 @@ public class LogInFragment extends Fragment {
 	 *            seconds) otherwise it is displayed for 2 seconds.
 	 */
 	protected void makeToast(final String msg, final boolean longToast) {
+		
 		getActivity().runOnUiThread(new Thread() {
 			public void run() {
+				Toast t = null;
 				if (longToast) {
-					Toast.makeText(getActivity().getApplicationContext(), msg,
-							Toast.LENGTH_LONG).show();
+					t = Toast.makeText(getActivity().getApplicationContext(), msg,
+							Toast.LENGTH_LONG);
+					
 				} else {
-					Toast.makeText(getActivity().getApplicationContext(), msg,
-							Toast.LENGTH_SHORT).show();
+					t = Toast.makeText(getActivity().getApplicationContext(), msg,
+							Toast.LENGTH_SHORT);
 				}
+				t.setGravity( Gravity.CENTER_VERTICAL, 0, 0);
+				t.show();
 			}
 		});
 

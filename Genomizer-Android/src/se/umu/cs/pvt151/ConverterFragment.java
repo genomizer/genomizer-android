@@ -5,10 +5,15 @@ package se.umu.cs.pvt151;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessingParameters;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,6 +67,7 @@ public class ConverterFragment extends Fragment{
 	private ArrayList<GeneFile> processList;
 	private String processType;
 	private ArrayList<String> processParameters;
+	private ArrayList<GeneFile> failedConversions;
 	private ProgressDialog progress;
 	private int convertedFiles;
 	private IOException convertException;
@@ -231,8 +237,34 @@ public class ConverterFragment extends Fragment{
 
 	}
 	
-	private void incrementConverted() {
-		convertedFiles++;
+	private void incrementConverted(boolean result, GeneFile geneFile) {
+		if (result) {
+			convertedFiles++;
+			failedConversions.add(geneFile);
+		} else {
+			failedConversions.add(geneFile);
+		}
+	}
+
+	private void conversionSummary() {
+		String message = "";
+		
+		if (!failedConversions.isEmpty()) {
+			
+			for (GeneFile g : failedConversions) {
+				message += g.getName() + "\n";
+			}
+			
+			AlertDialog alert = new AlertDialog.Builder(getActivity()).create();
+			alert.setTitle("Conversions NOT started");
+			alert.setMessage(message);
+			alert.setCancelMessage(null);
+			alert.show();
+		}
+		
+		progress.dismiss();
+		toastUser(convertedFiles + " file-conversions started successfully");
+		
 	}
 
 	/**
@@ -397,6 +429,7 @@ public class ConverterFragment extends Fragment{
 				processList.add(new GeneFile());
 			}
 			
+			failedConversions = new ArrayList<GeneFile>();
 			convertedFiles = 0;
 			convertException = null;
 			progress = new ProgressDialog(getActivity());
@@ -434,7 +467,7 @@ public class ConverterFragment extends Fragment{
 				e.printStackTrace();
 			}
 
-			return null;
+			return genomeList;
 		}
 		
 		/**
@@ -443,8 +476,11 @@ public class ConverterFragment extends Fragment{
 		@Override
 		protected void onPostExecute(ArrayList<GenomeRelease> result) {
 			super.onPostExecute(result);
-			if (genomeList == null || genomeList.isEmpty()) {
+			if (result == null) {
 				toastUser("Cant retreive Genome Releases from server");
+				getActivity().finish();
+			} else if (result.isEmpty()) {
+				toastUser("No Gemome releases found on server");
 				getActivity().finish();
 			} else {
 				setupSpinner(genomeList);
@@ -458,15 +494,17 @@ public class ConverterFragment extends Fragment{
 	 * @author Anders
 	 *
 	 */
-	private class ConvertTask extends AsyncTask<GeneFile, Void, Boolean> {
-
+	private class ConvertTask extends AsyncTask<GeneFile, Void, HashMap<Boolean, GeneFile>> {
+		
+		
 		
 		/**
 		 * 
 		 */
 		@Override
-		protected Boolean doInBackground(GeneFile... params) {
+		protected HashMap<Boolean, GeneFile> doInBackground(GeneFile... params) {
 			GeneFile geneFile = params[0];
+			HashMap<Boolean, GeneFile> map = new HashMap<Boolean, GeneFile>();
 			ProcessingParameters parameters = new ProcessingParameters();
 			boolean convertOk = false;
 			String meta = "";
@@ -480,12 +518,13 @@ public class ConverterFragment extends Fragment{
 
 			try {
 				convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
+				map.put(convertOk, geneFile);
 			} catch (IOException e) {
 				e.printStackTrace();
 				convertException = e;
 			}
 
-			return convertOk;
+			return map;
 		}
 		
 
@@ -493,20 +532,17 @@ public class ConverterFragment extends Fragment{
 		 * 
 		 */
 		@Override
-		protected void onPostExecute(Boolean result) {
+		protected void onPostExecute(HashMap<Boolean, GeneFile> result) {
 			super.onPostExecute(result);
-			boolean convert = Boolean.valueOf(result);
-
+			boolean convert = result.containsKey(true);
+			GeneFile geneFile = result.get(convert);
+		
 			if (convertException == null) {
-				
-				if (convert) {
-					incrementConverted();
-				}
-				
+				incrementConverted(convert, geneFile);
 				progress.incrementProgressBy(1);
+				
 				if (progress.getProgress() == progress.getMax()) {
-					progress.dismiss();
-					toastUser(convertedFiles + " files converted successfully");
+					conversionSummary();
 				}
 				
 			} else {

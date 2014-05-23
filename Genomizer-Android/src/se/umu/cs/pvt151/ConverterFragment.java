@@ -15,6 +15,7 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -256,10 +257,14 @@ public class ConverterFragment extends Fragment{
 				Log.d("Convert", "GeneFile: " + g);
 			}
 			
-			AlertDialog alert = new AlertDialog.Builder(getActivity()).create();
-			alert.setTitle("Conversions NOT started");
-			alert.setMessage(message);
-			alert.setCancelMessage(null);
+			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+			
+			
+			alertBuilder.setTitle("Conversions NOT started");
+			alertBuilder.setMessage(message);
+			alertBuilder.setPositiveButton("OK", null);
+			
+			AlertDialog alert = alertBuilder.create();
 			alert.show();
 		}
 		

@@ -241,7 +241,7 @@ public class ConverterFragment extends Fragment{
 	private void incrementConverted(boolean result, GeneFile geneFile) {
 		if (result) {
 			convertedFiles++;
-			failedConversions.add(geneFile);
+//			failedConversions.add(geneFile);
 		} else {
 			failedConversions.add(geneFile);
 		}
@@ -431,9 +431,9 @@ public class ConverterFragment extends Fragment{
 			}
 			
 //			TODO remove this later, just for test
-			for (int i = 0; i < 7; i++) {
-				processList.add(new GeneFile());
-			}
+//			for (int i = 0; i < 7; i++) {
+//				processList.add(new GeneFile());
+//			}
 			
 			failedConversions = new ArrayList<GeneFile>();
 			convertedFiles = 0;

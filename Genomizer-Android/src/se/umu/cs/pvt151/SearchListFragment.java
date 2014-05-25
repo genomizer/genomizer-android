@@ -85,6 +85,7 @@ public class SearchListFragment extends ListFragment {
 		ArrayAdapter<String> adapter;
 		View footer = generateFooter();
 		generateSearchButton(footer);
+		generateHeader();
 		adapter = new SearchListAdapter(mAnnotationNamesList);
 		adapter.setNotifyOnChange(true);
 		setListAdapter(adapter);
@@ -167,9 +168,19 @@ public class SearchListFragment extends ListFragment {
 	private View generateFooter() {
 		ListView listView = getListView();
 		View footer = getActivity().getLayoutInflater().inflate(
-				R.layout.searchlist_footer, null);
+				R.layout.searchlist_footer, null);		
 		listView.addFooterView(footer);
 		return footer;
+	}
+	
+	/**
+	 * Generates a header view for the searchList Fragment.
+	 */
+	private void generateHeader() {
+		ListView listView = getListView();
+		View header = getActivity().getLayoutInflater().inflate(
+				R.layout.searchlist_header, null);		
+		listView.addHeaderView(header);
 	}
 	
 	/**

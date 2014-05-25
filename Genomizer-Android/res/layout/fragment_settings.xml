@@ -14,15 +14,15 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_alignParentTop="true"
-        android:text="Small Text"
+        
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Spinner
         android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/settings_textview"
-        android:layout_marginLeft="4dp"
+        android:layout_margin="4dp"
         android:entries="@array/server_list" />
     
     <EditText 
@@ -35,7 +35,7 @@
         android:layout_below="@id/settings_textview"
         android:inputType="textNoSuggestions"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:hint="Small Text"
+        
         />
     
        
@@ -49,7 +49,7 @@
         android:onClick="onClickaddNewURL"
         android:textSize="12sp"  
         android:visibility="visible"      
-        android:text="Save Settings" />
+         />
        
     
     

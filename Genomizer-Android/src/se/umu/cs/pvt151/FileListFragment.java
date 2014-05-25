@@ -304,6 +304,10 @@ public class FileListFragment extends Fragment {
 					
 					if(data.equals("raw")) {
 						displayExtraFileInfo(allRawFiles.get(getPos));
+					} else if(data.equals("profile")) {
+						displayExtraFileInfo(allProfileFiles.get(getPos));
+					} else if(data.equals("region")) {
+						displayExtraFileInfo(allRegionFiles.get(getPos));
 					}
 					
 				}

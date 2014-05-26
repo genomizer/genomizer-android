@@ -30,7 +30,6 @@ import android.widget.Toast;
 public class LogInFragment extends Fragment {
 
 	private static final String CONNECTION_ERROR = "Error. Could not connect to the server.";
-	private static final String INPUT_WRONG = "Wrong username or password.";
 	private static final String INPUT_MALFORMED = "Minimum length for username and password is 4 letters.";
 	private EditText userName;
 	private EditText userPwd;
@@ -114,11 +113,7 @@ public class LogInFragment extends Fragment {
 		}		
 
 		try {
-			if(!ComHandler.login(uname, password)) {
-				makeToast(INPUT_WRONG, false);
-				return false;
-			} 
-			return true;
+			return ComHandler.login(uname, password);		
 			
 		} catch (IOException e) {
 			Log.d("login", "exception: " + Arrays.toString(e.getStackTrace()));

@@ -6,10 +6,12 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import se.umu.cs.pvt151.Genomizer;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
@@ -20,7 +22,6 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
 public class ComHandler {
 
 	private static String serverURL = "http://itchy.cs.umu.se:7000/";
-	
 	/**
 	 * Used to change the targeted server URL.
 	 * 
@@ -31,7 +32,6 @@ public class ComHandler {
 		Communicator.initCommunicator(serverURL);
 	}
 	
-	
 	/**
 	 * Returns the targeted URL
 	 * 
@@ -40,9 +40,36 @@ public class ComHandler {
 	public static String getServerURL() {		
 		return ComHandler.serverURL;
 	}
-	
 
-	
+	private static void responseDecode(String requestType, int responseCode) {
+		switch(responseCode) {		
+		case 204: 
+			Genomizer.makeToast(requestType + ": No Content.");
+			break;
+		case 400:
+			Genomizer.makeToast(requestType + ": Bad Request.");
+			break;
+		case 401:
+			Genomizer.makeToast(requestType + ": Unauthorized.");
+			break;
+		case 403:
+			Genomizer.makeToast(requestType + ": Forbidden - access denied.");
+			break;
+		case 404:
+			Genomizer.makeToast(requestType + ": Not Found - resource was not found.");
+			break;
+		case 405:
+			Genomizer.makeToast(requestType + ": Method Not Allowed - requested method is not supported for resource.");
+			break;
+		case 429:
+			Genomizer.makeToast(requestType + ": Too Many Requests - please try again later.");
+			break;
+		case 503:
+			Genomizer.makeToast(requestType + ": Service Unavailable - service is temporarily unavailable.");
+			break;
+		}
+		
+	}
 	
 	/**
 	 * Sends a login request to the server.
@@ -59,8 +86,7 @@ public class ComHandler {
 		try {
 			JSONObject msg = MsgFactory.createLogin(username, password);			
 			
-			GenomizerHttpPackage loginResponse = Communicator.sendHTTPRequest(msg, "POST", "login");
-
+			GenomizerHttpPackage loginResponse = Communicator.sendHTTPRequest(msg, "POST", "login");	
 			if (loginResponse.getCode() == 200) {
 				String jsonString = loginResponse.getBody();				
 				JSONObject jsonPackage = new JSONObject(jsonString);				
@@ -68,6 +94,7 @@ public class ComHandler {
 				return true;
 				
 			} else {
+				responseDecode("Login response", loginResponse.getCode());
 				return false;
 			}
 		} catch (JSONException e) {
@@ -91,13 +118,14 @@ public class ComHandler {
 			
 			JSONObject msg = MsgFactory.createRegularPackage();
 			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
-
+			
 			if (searchResponse.getCode() == 200) {
 				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
 				return MsgDeconstructor.deconSearch(jsonPackage);
 				
 			} else if (searchResponse.getCode() == 204) { 
 				//If the search yields no result.
+				responseDecode("Search response", searchResponse.getCode());
 				JSONArray jsonPackage = new JSONArray();
 				return MsgDeconstructor.deconSearch(jsonPackage);
 			} 
@@ -125,6 +153,7 @@ public class ComHandler {
 				return MsgDeconstructor.deconSearch(jsonPackage);
 				
 			} else {
+				responseDecode("Search response", searchResponse.getCode());
 				return new ArrayList<Experiment>();
 			}
 		} catch (JSONException e) {
@@ -150,6 +179,7 @@ public class ComHandler {
 				
 				return MsgDeconstructor.deconAnnotations(jsonPackage);
 			} else {
+				responseDecode("Requesting database annotations", annotationResponse.getCode());
 				return null;
 			}
 
@@ -200,7 +230,12 @@ public class ComHandler {
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
 			GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, "PUT", "process/rawtoprofile");
 
-			return response.getCode() == 200;
+			if(response.getCode() == 200) {
+				return true;
+			} else {
+				responseDecode("Raw to profile", response.getCode());
+				return false;
+			}
 		} catch (JSONException e) {
 			//This is only an issue if the server is changed.
 			throw new IOException("JSONException. Has the server changed?");
@@ -219,6 +254,7 @@ public class ComHandler {
 				
 				return MsgDeconstructor.deconGenomeReleases(jsonPackage);
 			} else {
+				responseDecode("Requesting genome releases", genomeResponse.getCode());
 				return null;
 			}
 
@@ -239,6 +275,7 @@ public class ComHandler {
 				
 				return MsgDeconstructor.deconProcessPackage(jsonPackage);
 			} else {
+				responseDecode("Requesting status of processes", genomeResponse.getCode());
 				return null;
 			}
 

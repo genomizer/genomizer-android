@@ -3,6 +3,7 @@ package se.umu.cs.pvt151;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -182,7 +183,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 * Verify that the phone currently have an internet connection.
 	 * @return true if online false otherwise
 	 */
-	public boolean isOnline() {		
+	public boolean isOnline() {				
 		connectManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 		
 	    return connectManager.getActiveNetworkInfo() != null && 

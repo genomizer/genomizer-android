@@ -53,7 +53,6 @@ public class FileListFragment extends Fragment {
 	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> allRegionFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
-	//private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
 	
 	
 	@Override
@@ -115,16 +114,28 @@ public class FileListFragment extends Fragment {
 		}
 	}
 	
+	/**
+	 * Method used to send right data files
+	 * to selected files.
+	 * @param type of data to be sent
+	 * @param selected files to be sent
+	 */
 	private void sendDataFiles(String type, ArrayList<GeneFile> selected) {
 		ArrayList<GeneFile> temp = new ArrayList<GeneFile>();
 		ArrayList<String> names = new ArrayList<String>();
 		
+		/*Check if some files already has been selected and if so
+		 * check to avoid duplicates of files. If no files has
+		 * been selected before add them to list directly.
+		 * */
 		if(!selected.isEmpty()) {
 			if(!DataStorage.getFileList(type).isEmpty()) {
 				temp = DataStorage.getFileList(type);
+				//Getting names of previously stored files
 				for(int i = 0; i < temp.size(); i++) {
 					names.add(temp.get(i).getName());
 				}
+				//Check for duplicates, if none then adding file. 
 				for(int j=0; j < selected.size(); j++) {
 					if(!temp.contains(selected.get(j)) && !names.contains(selected.get(j).getName())) {
 						temp.add(selected.get(j));
@@ -143,15 +154,15 @@ public class FileListFragment extends Fragment {
 	
 	/**
 	 * Method used to create a dialog window with
-	 * more information about a file when textview is
+	 * more information about a file when text view is
 	 * clicked
-	 * @param GeneFile file that extra information will
+	 * @param file that extra information will
 	 * be received from. 
 	 */
 	private void displayExtraFileInfo(GeneFile file) {
 		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
 		String moreInfo;
-		//TODO: Get right file information
+		//Information to be displayed in dialogue about the file
 		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " + file.getType() + "\n"
 				+ "Author: " + file.getAuthor() + "\n" + "Uploaded by: "
 				+ file.getUploadedBy() + "\n" + "Date: " + file.getDate() + "\n"
@@ -164,6 +175,16 @@ public class FileListFragment extends Fragment {
 		build.show();
 	}
 	
+	/**
+	 * Method used to handle check boxes, that
+	 * right data is added if a check box is checked. 
+	 * @param selectedData containing names of
+	 * selected files
+	 * @param all, all available files of a type.
+	 * @param data containing names of files
+	 * @param dataSelected containing selected files
+	 * @param getPos, the position number in list
+	 */
 	private void addSelected(ArrayList<String> selectedData, ArrayList<GeneFile> all, 
 			ArrayList<String> data, ArrayList<GeneFile> dataSelected, int getPos) {
 		if(!dataSelected.contains(all.get(getPos))) {
@@ -172,6 +193,15 @@ public class FileListFragment extends Fragment {
 		} 
 	}
 	
+	/**
+	 * Method used to handle check boxes, that right
+	 * data is removed if a check box is unchecked.
+	 * @param dataSelected containing selected files
+	 * @param selectedData containing names of selected
+	 * files
+	 * @param data containing names of files
+	 * @param getPos, the position number in list
+	 */
 	private void removeSelected(ArrayList<GeneFile> dataSelected, ArrayList<String> selectedData, 
 			ArrayList<String> data, int getPos) {
 		for(int i = 0; i < selectedData.size(); i++) {

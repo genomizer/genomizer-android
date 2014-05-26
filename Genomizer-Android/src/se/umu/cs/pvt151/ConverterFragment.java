@@ -6,28 +6,21 @@ package se.umu.cs.pvt151;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -169,7 +162,9 @@ public class ConverterFragment extends Fragment{
 			if (i == 0 || i == 4 || i == 5 || i == 7 || i  == 8) {
 				et = (EditText) tempList.get(i);
 				et.setText(hints[etCount]);
-				et.setOnTouchListener(new TextSelector(i));
+//				et.setOnTouchListener(new TextSelector(i));
+				et.addTextChangedListener(new textListener(i));
+				et.setOnClickListener(new textClickWatch(i));
 				if (i != 0) {
 					et.setEnabled(false);
 				}
@@ -224,7 +219,7 @@ public class ConverterFragment extends Fragment{
 		sp = (Spinner) viewList.get(1);
 
 		sp.setAdapter(adapter);
-		sp.setOnItemSelectedListener(new itemListener(1));
+//		sp.setOnItemSelectedListener(new itemListener(1));
 		sp.setEnabled(true);
 	}
 
@@ -254,7 +249,6 @@ public class ConverterFragment extends Fragment{
 			
 			for (GeneFile g : failedConversions) {
 				message += g.getName() + "\n";
-				Log.d("Convert", "GeneFile: " + g);
 			}
 			
 			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
@@ -271,51 +265,6 @@ public class ConverterFragment extends Fragment{
 		progress.dismiss();
 		toastUser(convertedFiles + " file-conversions started successfully");
 		
-	}
-
-	/**
-	 * 
-	 * @author Anders
-	 *
-	 */
-	private class TextSelector implements OnTouchListener {
-
-		private int index;
-		
-		/**
-		 * 
-		 * @param index
-		 */
-		public TextSelector(int index) {
-			this.index = index;
-		}
-		
-		/**
-		 * 
-		 */
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			int start;
-			
-			EditText et = (EditText) viewList.get(index);
-
-			if (et.getText().length() > 0 && (index + 1) < viewList.size()) {
-				viewList.get(index + 1).setEnabled(true);
-			} else {
-				if (index == 1) {
-					start = index + 2;
-				} else {
-					start = index + 1;
-				}
-				
-				for (int i = start; i < viewList.size(); i++) {
-					viewList.get(i).setEnabled(false);
-				}
-			}
-
-			return false;
-		}
-
 	}
 
 	/**
@@ -341,9 +290,14 @@ public class ConverterFragment extends Fragment{
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
 			ToggleButton tb;
-
+			EditText et;
+			
 			if (isChecked && (id + 1) < viewList.size()) {
 				viewList.get(id + 1).setEnabled(isChecked);
+				if (viewList.get(id + 1) instanceof EditText) {
+					et = (EditText) viewList.get(id + 1);
+					et.performClick();
+				}
 			} else {
 				for (int i = (id + 1); i < viewList.size(); i++) {
 					viewList.get(i).setEnabled(isChecked);
@@ -361,37 +315,37 @@ public class ConverterFragment extends Fragment{
 	}
 
 
-	/**
-	 * 
-	 * @author Anders
-	 *
-	 */
-	private class itemListener implements OnItemSelectedListener {
-		private int index;
-
-		public itemListener(int id) {
-			this.index = id;
-		}
-		
-		/**
-		 * 
-		 */
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
-
-		}
-		
-		/**
-		 * 
-		 */
-		@Override
-		public void onNothingSelected(AdapterView<?> parent) {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
+//	/**
+//	 * 
+//	 * @author Anders
+//	 *
+//	 */
+//	private class itemListener implements OnItemSelectedListener {
+//		private int index;
+//
+//		public itemListener(int id) {
+//			this.index = id;
+//		}
+//		
+//		/**
+//		 * 
+//		 */
+//		@Override
+//		public void onItemSelected(AdapterView<?> parent, View view,
+//				int position, long id) {
+//
+//		}
+//		
+//		/**
+//		 * 
+//		 */
+//		@Override
+//		public void onNothingSelected(AdapterView<?> parent) {
+//			// TODO Auto-generated method stub
+//
+//		}
+//
+//	}
 
 
 	/**
@@ -556,10 +510,100 @@ public class ConverterFragment extends Fragment{
 				progress.dismiss();
 				toastUser("Server not responding");
 			}
-			
-
 		}
+	}
+	
+	/**
+	 * 
+	 * @author Anders
+	 *
+	 */
+	private class textListener implements TextWatcher {
+	
+		private int index;
+		private ToggleButton tb;
 
+		public textListener(int index) {
+			this.index = index;
+		}
+		
+		/**
+		 * Unimplemented
+		 */
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			
+		}
+		
+		/**
+		 * 
+		 */
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			
+			if (s.length() < 1) {
+				if (viewList.size() > (index + 2)) {
+					for (int i = index + 1; i < viewList.size(); i++) {
+						viewList.get(i).setEnabled(false);
+						if (viewList.get(i) instanceof ToggleButton) {
+							tb = (ToggleButton) viewList.get(i);
+							tb.setChecked(false);
+						}
+					}	
+				}
+			} else if (s.length() > 0) {
+				viewList.get(index + 1).setEnabled(true);
+				if (viewList.get(index + 1) instanceof EditText) {
+					viewList.get(index + 1).performClick();
+				}
+			}
+		}
+		
+		/**
+		 * Unimplemented
+		 */
+		@Override
+		public void afterTextChanged(Editable s) {
+			
+			
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @author Anders
+	 *
+	 */
+	private class textClickWatch implements OnClickListener {
+		
+		private int index;
+		private EditText et;
+
+		public textClickWatch(int index) {
+			this.index = index;
+		}
+		
+		/**
+		 * 
+		 */
+		@Override
+		public void onClick(View v) {
+			if (viewList.size() > (index + 1)) {
+				et = (EditText) viewList.get(index);
+				if (et.getText().length() > 0) {
+					if (viewList.get(index + 1) instanceof EditText) {
+						et = (EditText) viewList.get(index + 1);
+						et.performClick();
+					}
+					viewList.get(index + 1).setEnabled(true);
+				}
+			}
+			
+		}
+		
 	}
 
 }

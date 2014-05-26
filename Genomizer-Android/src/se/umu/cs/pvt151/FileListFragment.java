@@ -27,35 +27,42 @@ import android.widget.Toast;
 
 public class FileListFragment extends Fragment {
 	
+	//Views for the three lists
 	private ListView listRaw;
 	private ListView listProfile;
 	private ListView listRegion;
+	//Array to handle check boxes on scroll
 	private ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
+	//Button to send files to selected files
 	private Button sendButton;
-	
-	//testarrays to see if transfer works
+	//Used to store file names
 	private ArrayList<String> raw = new ArrayList<String>();
 	private ArrayList<String> profile = new ArrayList<String>();
 	private ArrayList<String> region = new ArrayList<String>();
-	
+	//Arrays that store names on selected files
 	private ArrayList<String> selectedRawDataFiles = new ArrayList<String>();
 	private ArrayList<String> selectedProfileDataFiles = new ArrayList<String>();
 	private ArrayList<String> selectedRegionDataFiles = new ArrayList<String>();
+	//Arrays that store all files, one for each datatype
 	private ArrayList<GeneFile> allRawFiles = new ArrayList<GeneFile>();
-	private ArrayList<GeneFile> rawSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> allProfileFiles = new ArrayList<GeneFile>();
-	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> allRegionFiles = new ArrayList<GeneFile>();
+	//Arrays used to store selected GeneFile objects, one for each datatype
+	private ArrayList<GeneFile> rawSelected = new ArrayList<GeneFile>();
+	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
 	
 	
+	/**
+	 * OnCreate for fragment, setting values from
+	 * previous activity/datastorage.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		rawSelected = new ArrayList<GeneFile>();
 		profileSelected = new ArrayList<GeneFile>();
 		regionSelected = new ArrayList<GeneFile>();
-		
 		raw = getActivity().getIntent().getExtras().getStringArrayList("raw");
 		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
 		region = getActivity().getIntent().getExtras().getStringArrayList("region");
@@ -64,20 +71,28 @@ public class FileListFragment extends Fragment {
 		allRegionFiles = DataStorage.getRegionDataFiles();
 	}
 	
-	
+	/**
+	 * OnCreateView 
+	 * Initiates the list views, sets
+	 * listener to button sending values to
+	 * selected files and set adapters to
+	 * the views. 
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_file_list, parent, false);
 		listRaw = (ListView) v.findViewById(R.id.listView1);
+		listProfile = (ListView) v.findViewById(R.id.listView2);
+		listRegion = (ListView) v.findViewById(R.id.listView3);
+		sendButton = (Button) v.findViewById(R.id.sendBtn);
 		//Strings showing type of data.
 		String rawInfo = "raw";
 		String profileInfo = "profile";
 		String regionInfo = "region";
-	
-		listProfile = (ListView) v.findViewById(R.id.listView2);
-		listRegion = (ListView) v.findViewById(R.id.listView3);
-		sendButton = (Button) v.findViewById(R.id.sendBtn);
 		
+		/*Sets onClickListener to button, used to
+		 * send selected data files to selected
+		 * files.*/
 		sendButton.setOnClickListener(new OnClickListener () {
 			
 			@Override
@@ -88,7 +103,7 @@ public class FileListFragment extends Fragment {
 			}
 		});
 		
-		//Set adapter to listview for raw-, profile-, and regiondata
+		//Set adapter to list view for raw-, profile-, and region data
 		listRaw.setAdapter(new FileListAdapter(raw, rawInfo));
 		listProfile.setAdapter(new FileListAdapter(profile, profileInfo));
 		listRegion.setAdapter(new FileListAdapter(region, regionInfo));
@@ -206,6 +221,28 @@ public class FileListFragment extends Fragment {
 			}
 		}
 	}
+	
+	/**
+	 * Method used to handle removing 
+	 * files if they are not checked 
+	 * @param data stating what type of
+	 * data to be handled
+	 * @param getPos position in list of files
+	 */
+	private void removeIfNotChecked(String data, int getPos) {
+		if(data.equals("raw")) {
+			
+			removeSelected(rawSelected, selectedRawDataFiles, 
+					raw, getPos);
+		} else if(data.equals("profile")) {
+			
+			removeSelected(profileSelected, selectedProfileDataFiles, 
+					profile, getPos);
+		} else if(data.equals("region")) {
+			removeSelected(regionSelected, selectedRegionDataFiles, 
+					region, getPos);
+		}
+	}
 
 	/**
 	 * Used to create holder for
@@ -220,14 +257,26 @@ public class FileListFragment extends Fragment {
 	}
 	
 	/**
-	 * Adapter used for listviews
+	 * Adapter used for list views.
+	 * Got onClick for check boxes that
+	 * detects and add/remove files depending on
+	 * if box is checked or not. Got onclick for
+	 * text view used to display extra information
+	 * about a file in the list if it's clicked. 
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<String> {
 		ArrayList<String> forShow = new ArrayList<String>();
 		boolean[] selectedItem;
 		String data;
-
+		
+		/**
+		 * Constructor for the FileListAdapter
+		 * @param fileInfo with the values to
+		 * be displayed in list view. 
+		 * @param dataType (raw, profile, region) used
+		 * to decide which list view to work with.
+		 */
 		public FileListAdapter(ArrayList<String> fileInfo, String dataType) {
 				super(getActivity(), 0, fileInfo);
 				fillData(fileInfo);
@@ -257,6 +306,9 @@ public class FileListFragment extends Fragment {
 			viewHolder.fileInfo = (TextView) convertView.findViewById(R.id.textView1);
 			viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(R.id.textForBox);
 			final listViewHolder buttonHolder = viewHolder;
+			/*Set onclicklistener to check box to detect if a box
+			 * is checked or not, adding a file to selected if the box is
+			 * checked and removing if unchecked. */
 			viewHolder.fileCheckBox.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -265,7 +317,7 @@ public class FileListFragment extends Fragment {
 						int getPosition = (Integer) v.getTag();
 						
 						if(!forChecks.isEmpty()) {
-							//Adding values if checkbox is checked
+							//Adding values if check box is checked
 							forChecks.set(getPosition,((CompoundButton) v).isChecked());
 							selectedItem[getPosition] = ((CompoundButton) v).isChecked();
 							
@@ -277,7 +329,6 @@ public class FileListFragment extends Fragment {
 					
 					if(buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
-							
 							if(!rawSelected.contains(allRawFiles.get(getPos))) {
 						
 								addSelected(selectedRawDataFiles, allRawFiles, 
@@ -285,47 +336,31 @@ public class FileListFragment extends Fragment {
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 	
 						} else if(data.equals("profile")) {
-							
 							if(!profileSelected.contains(allProfileFiles.get(getPos))) {
+								
 								addSelected(selectedProfileDataFiles, allProfileFiles, 
 										profile, profileSelected, getPos);
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 	
 						} else if(data.equals("region")) {
 							if(!regionSelected.contains(allRegionFiles.get(getPos))) {
+								
 								addSelected(selectedRegionDataFiles, allRegionFiles, 
 										region, regionSelected, getPos);
-								/*selectedRegionDataFiles.add(region.get(getPos));
-								regionSelected.add(allRegionFiles.get(getPos));*/
-								
 								buttonHolder.fileCheckBox.setChecked(true);
 							}
 						}
 					} else if(!buttonHolder.fileCheckBox.isChecked()) {
 						
-						if(data.equals("raw")) {
-							
-							removeSelected(rawSelected, selectedRawDataFiles, 
-									raw, getPos);
-						} else if(data.equals("profile")) {
-							
-							removeSelected(profileSelected, selectedProfileDataFiles, 
-									profile, getPos);
-						} else if(data.equals("region")) {
-							removeSelected(regionSelected, selectedRegionDataFiles, 
-									region, getPos);
-							/*for(int j = 0; j < selectedRegionDataFiles.size(); j++) {
-								if(selectedRegionDataFiles.get(j).equals(region.get(getPos))) {
-									selectedRegionDataFiles.remove(j);
-									regionSelected.remove(j);
-								}
-							}*/
-						}
+						removeIfNotChecked(data, getPos);
 					}
 				}
 				
 			});
 			
+			/*Setting onclick listener to text view, used to display
+			 * additional information about a file if it's clicked on
+			 * in the list.*/
 			viewHolder.fileInfo.setOnClickListener(new OnClickListener() {
 
 				@Override

@@ -182,15 +182,5 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		overridePendingTransition(0,0);
 	}
 	
-	/**
-	 * Verify that the phone currently have an internet connection.
-	 * @return true if online false otherwise
-	 */
-	/*public boolean isOnline() {				
-		connectManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-		
-	    return connectManager.getActiveNetworkInfo() != null && 
-	       connectManager.getActiveNetworkInfo().isConnected();
-	}*/
 	
 }

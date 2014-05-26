@@ -50,34 +50,45 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> rawDataFiles = new ArrayList<String>();
 	private ArrayList<String> profileDataFiles = new ArrayList<String>();
 	private ArrayList<String> regionDataFiles = new ArrayList<String>();
-	
+	//Lists used for storing files to send to selected files
 	private ArrayList<GeneFile> rawToConv = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> profileToConv = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionToConv = new ArrayList<GeneFile>();
-	
+	//Boolean to check if default settings should be used or not
 	private boolean defaultSettings;
+	//Used to get annotations to display
 	private String getAnnotations;
 	private ArrayList<String> storedAnnotations = new ArrayList<String>();
-	
 	private ArrayList<String> annotation = new ArrayList<String>();
-	
+	//Used to get pubmed string if used in search
 	private String searchString;
 	
-	//TODO: Some way to deal with supressedwarnings?
+	/**
+	 * onCreate
+	 * Retreives right values from 
+	 * previous activity
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
 		/*Getting search information from SearchListFragment.
 		 * Information is stored in a HashMap with annotations
-		 * as key and values as value.*/
-		annotation = getActivity().getIntent().getExtras().getStringArrayList("Annotations");
+		 * as key and values as value. Get a string in pubmed
+		 * format if user chose to search using that functionality*/
+		annotation = getActivity().getIntent().getExtras().getStringArrayList(
+				"Annotations");
 		searchInfo = (HashMap<String, String>) getActivity().getIntent()
 				.getExtras().getSerializable("searchMap");
 		searchString = getActivity().getIntent().getStringExtra("PubmedQuery");
-		//defaultSettings = getActivity().getIntent().getBooleanExtra("default");
 	}
 	
+	/**
+	 * onActivityCreated
+	 * Handles receiving rearch results from 
+	 * server.
+	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -85,9 +96,8 @@ public class ExperimentListFragment extends Fragment {
 		try {
 			/*Information sent to server and receiving a
 			 * list with all experiments available*/
-			
 			forExperiments = startSearch.execute((Void) null).get();
-			//forExperiments = startSearch.execute((Void) null).get();
+
 		} catch (InterruptedException e) {
 			Toast.makeText(getActivity(), "ERROR: " + e.getMessage(), 
 					Toast.LENGTH_SHORT).show();
@@ -98,22 +108,33 @@ public class ExperimentListFragment extends Fragment {
 		
 	}
 	
-	
+	/**
+	 * onCreateView
+	 * Inflates the view
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_experiment_list, parent, false);
+		View v = inflater.inflate(R.layout.fragment_experiment_list, parent,
+				false);
 		list = (ListView) v.findViewById(R.id.listView1);
 		
 		return v;
 	}
 	
+	/**
+	 * Method used to check text file
+	 * on internal storage if user has
+	 * chosen to use default settings or
+	 * not.
+	 */
 	private void getDefaultOrNot() {
 		String savedFile = "DefaultSettings.txt";
 		Context cont = getActivity();
 		String temp2 = "";
 			
 		try {
-			FileInputStream fis = cont.getApplicationContext().openFileInput(savedFile);
+			FileInputStream fis = cont.getApplicationContext().openFileInput(
+					savedFile);
 			InputStreamReader is = new InputStreamReader(fis);
 			StringBuilder sb = new StringBuilder();
 			char[] ib = new char[2048];
@@ -128,7 +149,6 @@ public class ExperimentListFragment extends Fragment {
 			} catch (FileNotFoundException e) {
 				temp2 = "";
 			} catch (IOException e) {
-				//makeToast("ERROR: " + e.getMessage(), false);
 				temp2 = "";
 			}
 		
@@ -142,11 +162,12 @@ public class ExperimentListFragment extends Fragment {
 	/**
 	 * Method to get all different data files in separate lists
 	 * used to pass to FileListActivity
-	 * @param selectedExperiment int for experiment chosen
+	 * @param selectedExperiment position for experiment chosen
 	 */
 	private void getExperimentFiles(int selectedExperiment) {
 		//Getting all files for a selected experiment
-		List<GeneFile> files = forExperiments.get(selectedExperiment).getFiles();
+		List<GeneFile> files = forExperiments.get(
+				selectedExperiment).getFiles();
 		rawDataFiles = new ArrayList<String>();
 		profileDataFiles = new ArrayList<String>();
 		regionDataFiles = new ArrayList<String>();
@@ -166,44 +187,53 @@ public class ExperimentListFragment extends Fragment {
 		}
 	}
 	
+	/**
+	 * Method used to check text file
+	 * in internal storage if there are
+	 * some previous search result display
+	 * options chosen.
+	 */
 	private void getStoredAnnotations() {
 		getAnnotations = "";
 		String savedFile = "SearchSettings.txt";
 		Context cont = getActivity();
 		
 		try {
-			FileInputStream fis = cont.getApplicationContext().openFileInput(savedFile);
+			FileInputStream fis = cont.getApplicationContext().openFileInput(
+					savedFile);
 			InputStreamReader is = new InputStreamReader(fis);
 			StringBuilder sb = new StringBuilder();
 			char[] ib = new char[2048];
 			int temp;
+			
 			while((temp = is.read(ib)) != -1) {
 				sb.append(ib, 0, temp);
 			}
 			fis.close();
-			
 			getAnnotations = sb.toString();
 				
 		} catch (FileNotFoundException e) {
 			getAnnotations = "";
 		
 		} catch (IOException e) {
-			//makeToast("ERROR: " + e.getMessage(), false);
 			getAnnotations = "";
 		}
-	
-		//return getAnnotations = "";
 	}
 	
+	/**
+	 * Method used to organize
+	 * the annotations to make sure that
+	 * right information is displayed 
+	 * depending on if default settings is
+	 * chosen or not. 
+	 */
 	private void organizeAnnotations() {
 		
 		String[] toSplit = new String[200];
 		storedAnnotations = new ArrayList<String>();
 		
 		if(!defaultSettings && getAnnotations.length() > 1) {
-			//for(int i = 0; i < getAnnotations.length(); i++) {
 			toSplit = getAnnotations.split(";");
-			//}
 			
 			for(int j = 0; j < toSplit.length; j++) {
 				storedAnnotations.add(toSplit[j].trim());
@@ -214,6 +244,13 @@ public class ExperimentListFragment extends Fragment {
 		}
 	}
 	
+	/**
+	 * Method used to get right
+	 * annotation values from a specific
+	 * experiment
+	 * @param experiment to get more
+	 * information about.
+	 */
 	private void getDisplayValues(Experiment experiment) {
 		List<Annotation> annos = experiment.getAnnotations();
 		String toDisplay = "Experiment " + experiment.getName() + "\n";
@@ -222,24 +259,19 @@ public class ExperimentListFragment extends Fragment {
 		for(int i = 0; i < storedAnnotations.size(); i++) {
 			for(int j = 0; j < annos.size(); j++) {
 				if(storedAnnotations.get(i).equals(annos.get(j).getName())) {
-					//if(storedAnnotations.contains(annos.get(i))) {
-					temp = temp + annos.get(j).getName() + " " + annos.get(j).getValue().toString() + "\n";
+					temp = temp + annos.get(j).getName() + " " 
+							+ annos.get(j).getValue().toString() + "\n";
 				}
 			}
-			
 		}
-		
-		
 		displaySearchResults.add(toDisplay + temp);
 	}
 
 	/**
 	 * Creates an android toast (small unintrusive text popup).
-	 * @param msg
-	 *            The message that should be displayed.
-	 * @param longToast
-	 *            True if the toast should be displayed for a long time (3.5
-	 *            seconds) otherwise it is displayed for 2 seconds.
+	 * @param msg The message that should be displayed.
+	 * @param longToast True if the toast should be displayed for a long time 
+	 * (3.5 seconds) otherwise it is displayed for 2 seconds.
 	 *@author Rickard
 	 */
 	protected void makeToast(final String msg, final boolean longToast) {
@@ -296,7 +328,8 @@ public class ExperimentListFragment extends Fragment {
 	 * @author Cecilia Lindmark
 	 *
 	 */
-	public class SearchHandler extends AsyncTask<Void, Void, ArrayList<Experiment>> {
+	public class SearchHandler extends AsyncTask<Void, Void, 
+		ArrayList<Experiment>> {
 
 		//@Override
 		protected ArrayList<Experiment> doInBackground(Void...arg0) {
@@ -310,7 +343,8 @@ public class ExperimentListFragment extends Fragment {
 					forExperiments = ComHandler.search(searchString);
 				}
 			} catch (IOException e) {
-				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+				SingleFragmentActivity act = (
+						SingleFragmentActivity) getActivity();
 				act.relogin();
 			} 
 			return forExperiments;
@@ -326,8 +360,10 @@ public class ExperimentListFragment extends Fragment {
 				getDisplayValues(forExperiments.get(i));
 			}
 			//Creating adapter for displaying search results
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), 
-					R.layout.list_view_textbox, R.id.listText11, displaySearchResults);	
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+					getActivity().getApplicationContext(), 
+					R.layout.list_view_textbox, R.id.listText11, 
+					displaySearchResults);	
 			//Setting adapter to view
 			list.setAdapter(adapter);
 			adapter.notifyDataSetChanged();

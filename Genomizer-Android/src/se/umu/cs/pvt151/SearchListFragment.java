@@ -67,12 +67,20 @@ public class SearchListFragment extends ListFragment {
 	
 	public void onMenuItemPress(String string) {
 		if(string.equals(getString(R.string.action_search_editPub))) {
-			Intent intent = new Intent(getActivity(),
-					SearchPubmedActivity.class);
-			intent.putExtra("PubmedQuery", generateSearchString());
-			intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
-			intent.putExtra(SEARCH_MAP_EXTRA, generateSearchMap());
-			startActivity(intent);	
+			if(Genomizer.isOnline()) {
+				Intent intent = new Intent(getActivity(),
+						SearchPubmedActivity.class);
+				intent.putExtra("PubmedQuery", generateSearchString());
+				intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
+				intent.putExtra(SEARCH_MAP_EXTRA, generateSearchMap());
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);												
+				startActivity(intent);
+				getActivity().overridePendingTransition(0,0);	
+			} else {				
+				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+				act.relogin();
+			}
+			
 		}
 	}
 	
@@ -109,12 +117,18 @@ public class SearchListFragment extends ListFragment {
 				HashMap<String, String> search = generateSearchMap();
 				
 				if (search.isEmpty()) {
-					toastMessage(NO_SEARCH_VALUES);
+					Genomizer.makeToast(NO_SEARCH_VALUES);
 				} else {
-					intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
-					intent.putExtra(SEARCH_MAP_EXTRA, search);
-					startActivity(intent);
-					
+					if(Genomizer.isOnline()) {
+						intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
+						intent.putExtra(SEARCH_MAP_EXTRA, search);
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);												
+						startActivity(intent);
+						getActivity().overridePendingTransition(0,0);
+					} else {						
+						SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+						act.relogin();
+					}									
 				}
 
 			}
@@ -188,10 +202,10 @@ public class SearchListFragment extends ListFragment {
 	 * 
 	 * @param text the string that needs to be displayed.
 	 */
-	private void toastMessage(String text) {
+	/*private void toastMessage(String text) {
 		Toast.makeText(getActivity().getApplicationContext(), text,
 				Toast.LENGTH_SHORT).show();
-	}
+	} */
 	
 	/**
 	 * Static searchViewHolder class for keeping items in the searchList in 
@@ -457,7 +471,7 @@ public class SearchListFragment extends ListFragment {
 				}
 				
 			} catch (IOException e) {
-				except = e;
+				except = e;				
 				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
 				act.relogin();
 			}
@@ -475,7 +489,7 @@ public class SearchListFragment extends ListFragment {
 			if (except == null) {
 				setupListView();
 			} else {
-				toastMessage(CONNECTION_ERROR);
+				//Genomizer.makeToast(CONNECTION_ERROR);
 				except.printStackTrace();
 				except = null;
 			}

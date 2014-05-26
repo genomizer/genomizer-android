@@ -38,25 +38,17 @@ public class LogInActivity extends SingleFragmentActivity {
 		
 	}
 	
-	public boolean isOnline() {
-		return super.isOnline();
-	}
-	
 	/**
 	 * Method is called when pressing the "Sign in" button in the user
 	 * interface. Starts a background thread which starts the log in process.
 	 * @param v
 	 */
-	public void login(View v) {
-		if(super.isOnline()) {
-			ProgressDialog progress = new ProgressDialog(this);
-			progress.setTitle(CONNECT);
-			progress.setMessage(CONNECT_MESSAGE + ComHandler.getServerURL());
-			progress.show();
-			fragment.login(progress);
-		} else {
-			fragment.makeToast(INTERNET_ACCESS_DENIED, true);
-		}
+	public void login(View v) {		
+		ProgressDialog progress = new ProgressDialog(this);
+		progress.setTitle(CONNECT);
+		progress.setMessage(CONNECT_MESSAGE + ComHandler.getServerURL());
+		progress.show();
+		fragment.login(progress);
 	}
 	
 	@Override

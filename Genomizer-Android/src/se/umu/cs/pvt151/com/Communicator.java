@@ -49,6 +49,7 @@ public class Communicator {
 	}
 
 	private static void setupConnection(String requestType, String urlPostfix) throws IOException  {
+		Log.d("Communicator", "url: " +requestType + urlPostfix);
 		URL url = new URL(urlString + urlPostfix);
 
 		connection = (HttpURLConnection) url.openConnection();

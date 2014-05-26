@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -173,6 +176,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	
 	public void relogin() {
+		Genomizer.makeToast("Internet has been dropped. Please login again.");
 		Intent i = new Intent(this, LogInActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
@@ -183,11 +187,11 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 * Verify that the phone currently have an internet connection.
 	 * @return true if online false otherwise
 	 */
-	public boolean isOnline() {				
+	/*public boolean isOnline() {				
 		connectManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 		
 	    return connectManager.getActiveNetworkInfo() != null && 
 	       connectManager.getActiveNetworkInfo().isConnected();
-	}
+	}*/
 	
 }

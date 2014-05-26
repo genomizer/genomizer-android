@@ -282,7 +282,9 @@ public class ExperimentListFragment extends Fragment {
 			intent.putStringArrayListExtra("region", regionDataFiles);
 			intent.putStringArrayListExtra("Annotations", annotation);
 			intent.putExtra("searchMap", searchInfo);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);												
 			startActivity(intent);
+			getActivity().overridePendingTransition(0,0);
 			getActivity().finish();
 		}
 	}
@@ -308,7 +310,8 @@ public class ExperimentListFragment extends Fragment {
 					forExperiments = ComHandler.search(searchString);
 				}
 			} catch (IOException e) {
-				makeToast("ERROR: " + e.getMessage(), false);
+				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+				act.relogin();
 			} 
 			return forExperiments;
 		}

@@ -145,7 +145,7 @@ public class ProcessFragment extends Fragment {
 		@Override
 		protected Void doInBackground(Void... params) {
 
-			try {
+			try {				
 				processes = ComHandler.getProcesses();
 
 			} catch (IOException e) {
@@ -160,6 +160,8 @@ public class ProcessFragment extends Fragment {
 			if (exception == null) {
 				processList.setAdapter(new ProcessListAdapter(processes));
 			} else {
+				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+				act.relogin();
 				exception = null;
 			}	
 		}

@@ -2,7 +2,10 @@ package se.umu.cs.pvt151;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -33,5 +36,17 @@ public class Genomizer extends Application {
     	};
     	toastHandler.post(toastRunnable);
     }
+    
+    /**
+	 * Verify that the phone currently have an internet connection.
+	 * @return true if online false otherwise
+	 */
+    public static boolean isOnline() {
+    	ConnectivityManager connectManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		
+	    return connectManager.getActiveNetworkInfo() != null && 
+	       connectManager.getActiveNetworkInfo().isConnected();
+    }
+     
     
 }

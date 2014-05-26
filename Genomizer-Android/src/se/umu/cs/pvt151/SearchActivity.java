@@ -45,7 +45,6 @@ public class SearchActivity extends SingleFragmentActivity {
 	}
 	
 
-
 	/**
 	 * Handles the backbutton for the fragment, will ask the user if they
 	 * want to quit. If so the application will exit.

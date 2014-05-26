@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
 import se.umu.cs.pvt151.Genomizer;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
@@ -71,6 +72,13 @@ public class ComHandler {
 		
 	}
 	
+	private static boolean verifiyConnection() {
+		if(!Genomizer.isOnline()) {			
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * Sends a login request to the server.
 	 * 
@@ -82,7 +90,10 @@ public class ComHandler {
 	 * @throws ConnectionException 
 	 */
 	public static boolean login(String username, String password) throws IOException {
-		
+		if(!verifiyConnection()) {
+			Genomizer.makeToast("Internet access unavailable.");
+			return false;
+		}
 		try {
 			JSONObject msg = MsgFactory.createLogin(username, password);			
 			
@@ -113,6 +124,9 @@ public class ComHandler {
 	 * @throws IOException
 	 */
 	public static ArrayList<Experiment> search(HashMap<String, String> annotations) throws IOException {
+		if(!verifiyConnection()) {
+			throw new IOException("Internet access unavailable.");
+		}
 		
 		try {					
 			
@@ -123,18 +137,16 @@ public class ComHandler {
 				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
 				return MsgDeconstructor.deconSearch(jsonPackage);
 				
-			} else if (searchResponse.getCode() == 204) { 
+			} else { 
 				//If the search yields no result.
 				responseDecode("Search response", searchResponse.getCode());
-				JSONArray jsonPackage = new JSONArray();
-				return MsgDeconstructor.deconSearch(jsonPackage);
+				return new ArrayList<Experiment>();
 			} 
 			
 			
 		} catch (JSONException e) {
-			return new ArrayList<Experiment>();
-		}
-		return new ArrayList<Experiment>();
+			throw new IOException("Unable to understand server response. Has response messages been modified?");
+		}		
 	}
 	
 	/**
@@ -144,6 +156,9 @@ public class ComHandler {
 	 * @throws IOException
 	 */
 	public static ArrayList<Experiment> search(String pubmedQuery) throws IOException {
+		if(!verifiyConnection()) {
+			throw new IOException("Internet access unavailable.");
+		}
 		try {						
 			JSONObject msg = MsgFactory.createRegularPackage();
 			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + pubmedQuery);
@@ -157,7 +172,7 @@ public class ComHandler {
 				return new ArrayList<Experiment>();
 			}
 		} catch (JSONException e) {
-			return new ArrayList<Experiment>();
+			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
 		}
 	}
 
@@ -168,6 +183,9 @@ public class ComHandler {
 	 * @throws IOException If communication with the server fails.
 	 */
 	public static ArrayList<Annotation> getServerAnnotations() throws IOException {
+		if(!verifiyConnection()) {
+			throw new IOException("Internet connection unavailable.");
+		}
 		
 		try {
 			JSONObject msg = MsgFactory.createRegularPackage();
@@ -179,12 +197,13 @@ public class ComHandler {
 				
 				return MsgDeconstructor.deconAnnotations(jsonPackage);
 			} else {
-				responseDecode("Requesting database annotations", annotationResponse.getCode());
-				return null;
+				responseDecode("Requesting database annotations", annotationResponse.getCode());				
+				return new ArrayList<Annotation>();
 			}
 
 		} catch (JSONException e) {
-			return null;
+			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
+			
 		}
 	}
 	
@@ -225,7 +244,10 @@ public class ComHandler {
 	 * @throws IOException
 	 */
 	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, String meta, String release) throws IOException {
-
+		if(!verifiyConnection()) {
+			throw new IOException("Internet connection unavailable.");
+		}
+		
 		try {			
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
 			GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, "PUT", "process/rawtoprofile");
@@ -238,12 +260,15 @@ public class ComHandler {
 			}
 		} catch (JSONException e) {
 			//This is only an issue if the server is changed.
-			throw new IOException("JSONException. Has the server changed?");
+			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
 		}
 	}
 	
 	
 	public static ArrayList<GenomeRelease> getGenomeReleases() throws IOException {
+		if(!verifiyConnection()) {
+			throw new IOException("Internet connection unavailable.");
+		}
 		try {
 			JSONObject msg = MsgFactory.createRegularPackage();
 			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "genomeRelease");
@@ -255,16 +280,20 @@ public class ComHandler {
 				return MsgDeconstructor.deconGenomeReleases(jsonPackage);
 			} else {
 				responseDecode("Requesting genome releases", genomeResponse.getCode());
-				return null;
+				return new ArrayList<GenomeRelease>();
 			}
 
 		} catch (JSONException e) {
-			return null;
+			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
 		}
 	}
 	
 	
 	public static ArrayList<Process> getProcesses() throws IOException {
+		if(!verifiyConnection()) {
+			throw new IOException("Internet connection unavailable.");
+		}
+		
 		try {
 			JSONObject msg = MsgFactory.createRegularPackage();
 			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");
@@ -275,12 +304,12 @@ public class ComHandler {
 				
 				return MsgDeconstructor.deconProcessPackage(jsonPackage);
 			} else {
-				responseDecode("Requesting status of processes", genomeResponse.getCode());
-				return null;
+				responseDecode("Requesting status of processes", genomeResponse.getCode());				
+				return new ArrayList<Process>();
 			}
 
 		} catch (JSONException e) {
-			return null;
+			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
 		}
 	}
 }

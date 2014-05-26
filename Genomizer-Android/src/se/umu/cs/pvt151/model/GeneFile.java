@@ -153,22 +153,6 @@ public class GeneFile implements Parcelable {
 		out.writeString(grVersion);
 	}
 	
-	@Override
-	public String toString() {
-		String s = "FileID: " + fileId + "\n";
-		s += "ExpID: " + expId + "\n";
-		s += "Type: " + type + "\n";
-		s += "Name: " + name + "\n";
-		s += "Author: " + author + "\n";
-		s += "Uploaded by: " + uploadedBy + "\n";
-		s += "Is private: " + isPrivate + "\n";
-		s += "Path: " + path + "\n";
-		s += "URL: " + url + "\n";
-		s += "Date: " + date + "\n";
-		s += "GR-version: " + grVersion + "\n";
-		
-		return s;
-	}
 
 	public static final Parcelable.Creator<GeneFile> CREATOR
 	= new Parcelable.Creator<GeneFile>() {
@@ -180,6 +164,4 @@ public class GeneFile implements Parcelable {
 			return new GeneFile[size];
 		}
 	};
-	
-	
 }

@@ -138,6 +138,12 @@ public class RegionFragment extends Fragment {
 						setButtonsStatus();
 					}
 				});
+				
+				if (!selectedRegion.contains(file)) {
+					if (checkBox.isChecked()) {
+						checkBox.toggle();
+					}
+				}
 
 				view.setTag(textView);
 				view.setTag(checkBox);

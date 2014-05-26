@@ -138,6 +138,12 @@ public class ProfileFragment extends Fragment {
 					}
 				});
 				
+				if (!selectedProfile.contains(file)) {
+					if (checkBox.isChecked()) {
+						checkBox.toggle();
+					}
+				}
+				
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}

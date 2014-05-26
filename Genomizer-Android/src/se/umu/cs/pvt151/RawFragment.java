@@ -26,12 +26,12 @@ public class RawFragment extends Fragment {
 
 	private ArrayList<GeneFile> raw;
 	private ArrayList<GeneFile> selectedRaw;
-	
+
 	private FileListAdapter adapter;
-	
+
 	private Button convertRawButton;
 	private Button removeRawButton;
-	
+
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,36 +50,37 @@ public class RawFragment extends Fragment {
 
 		return v;
 	}
-	
-	
+
+
 	private void setButtonListeners(View v) {
 		convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
 		removeRawButton = (Button) v.findViewById(R.id.remove_raw_button);
-		
+
 		convertRawButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
+
 				if (selectedRaw.size() > 0) {
 					Intent intent = new Intent(getActivity(),
 							ConverterActivity.class);
-					
+
 					intent.putExtra("type", "raw");
 					intent.putExtra("files", selectedRaw);
-					
+
 					startActivity(intent);
 				} 
 			}
 		});
-		
+
 		removeRawButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				for (int i = 0; i < selectedRaw.size(); i++) {
-					adapter.remove(selectedRaw.get(i));
-					raw.remove(selectedRaw.get(i));
+					GeneFile file = selectedRaw.get(i);
+					adapter.remove(file);
+					raw.remove(file);
 				}
 				selectedRaw.clear();
 				adapter.notifyDataSetChanged();
@@ -90,13 +91,14 @@ public class RawFragment extends Fragment {
 	}
 	
 	
-	private void appendSelectedFile(GeneFile file) {
-		selectedRaw.add(file);
-	}
-	
-	
-	private void removeSelectedFile(GeneFile file) {
-		selectedRaw.remove(file);
+	private void setButtonsStatus() {
+		if (selectedRaw.size() > 0) {
+			convertRawButton.setEnabled(true);
+			removeRawButton.setEnabled(true);
+		} else {
+			convertRawButton.setEnabled(false);
+			removeRawButton.setEnabled(false);
+		}
 	}
 
 
@@ -122,7 +124,7 @@ public class RawFragment extends Fragment {
 
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
-			
+
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_checkbox, null);
@@ -133,53 +135,48 @@ public class RawFragment extends Fragment {
 			if (file != null) {
 				TextView textView = (TextView) view.findViewById(R.id.textView1);
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
-				
+
 				checkBox.setTag(position);
 				textView.setText(file.getName());
-				
+
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						
+
 						int position = (Integer) buttonView.getTag();
-						
+
 						if (isChecked) {
-							appendSelectedFile(forShow.get(position));
+							selectedRaw.add(forShow.get(position));
 						} else {
-							removeSelectedFile(forShow.get(position));
+							selectedRaw.remove(forShow.get(position));
 						}
-						
+
 						setButtonsStatus();
 					}
 				});
 				
+				if (!selectedRaw.contains(file)) {
+					if (checkBox.isChecked()) {
+						checkBox.toggle();
+					}
+				}
+
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}
 			return view;
 		}
-		
-		
+
+
 		@Override
-        public boolean hasStableIds() {
-          return true;
-        }
+		public boolean hasStableIds() {
+			return true;
+		}
 
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
-		}
-	}
-	
-	
-	private void setButtonsStatus() {
-		if (selectedRaw.size() > 0) {
-			convertRawButton.setEnabled(true);
-			removeRawButton.setEnabled(true);
-		} else {
-			convertRawButton.setEnabled(false);
-			removeRawButton.setEnabled(false);
 		}
 	}
 }

@@ -39,11 +39,6 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> profile = new ArrayList<String>();
 	private ArrayList<String> region = new ArrayList<String>();
 	
-	//Strings showing type of data.
-	private String rawInfo;
-	private String profileInfo;
-	private String regionInfo;
-	
 	private ArrayList<String> selectedRawDataFiles = new ArrayList<String>();
 	private ArrayList<String> selectedProfileDataFiles = new ArrayList<String>();
 	private ArrayList<String> selectedRegionDataFiles = new ArrayList<String>();
@@ -75,6 +70,10 @@ public class FileListFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_file_list, parent, false);
 		listRaw = (ListView) v.findViewById(R.id.listView1);
+		//Strings showing type of data.
+		String rawInfo = "raw";
+		String profileInfo = "profile";
+		String regionInfo = "region";
 	
 		listProfile = (ListView) v.findViewById(R.id.listView2);
 		listRegion = (ListView) v.findViewById(R.id.listView3);
@@ -91,11 +90,8 @@ public class FileListFragment extends Fragment {
 		});
 		
 		//Set adapter to listview for raw-, profile-, and regiondata
-		rawInfo = "raw";
 		listRaw.setAdapter(new FileListAdapter(raw, rawInfo));
-		profileInfo = "profile";
 		listProfile.setAdapter(new FileListAdapter(profile, profileInfo));
-		regionInfo = "region";
 		listRegion.setAdapter(new FileListAdapter(region, regionInfo));
 		
 		return v;

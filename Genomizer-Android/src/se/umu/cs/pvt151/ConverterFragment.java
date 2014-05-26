@@ -12,6 +12,7 @@ import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -72,7 +73,7 @@ public class ConverterFragment extends Fragment{
 
 	}
 
-	
+
 	/**
 	 * When created, retrieves 
 	 */
@@ -130,7 +131,7 @@ public class ConverterFragment extends Fragment{
 
 		return tempList;
 	}
-	
+
 	/**
 	 * Sets up the different widgets for the conversion parameter page
 	 * presented for the user. Sets onTouchListeners on the editTextFields and
@@ -162,7 +163,6 @@ public class ConverterFragment extends Fragment{
 			if (i == 0 || i == 4 || i == 5 || i == 7 || i  == 8) {
 				et = (EditText) tempList.get(i);
 				et.setText(hints[etCount]);
-//				et.setOnTouchListener(new TextSelector(i));
 				et.addTextChangedListener(new textListener(i));
 				et.setOnClickListener(new textClickWatch(i));
 				if (i != 0) {
@@ -228,6 +228,11 @@ public class ConverterFragment extends Fragment{
 
 	}
 	
+	/**
+	 * 
+	 * @param result
+	 * @param geneFile
+	 */
 	private void incrementConverted(boolean result, GeneFile geneFile) {
 		if (result) {
 			convertedFiles++;
@@ -235,30 +240,40 @@ public class ConverterFragment extends Fragment{
 			failedConversions.add(geneFile);
 		}
 	}
-
+	
+	/**
+	 * 
+	 */
 	private void conversionSummary() {
 		String message = "";
 		AlertDialog.Builder alertBuilder;
 		AlertDialog alert;
-		
+		Intent i;
+
 		if (!failedConversions.isEmpty()) {
-			
+
 			for (GeneFile g : failedConversions) {
 				message += g.getName() + "\n";
 			}
-			
+
 			alertBuilder = new AlertDialog.Builder(getActivity());
 			alertBuilder.setTitle("Conversions NOT started");
 			alertBuilder.setMessage(message);
 			alertBuilder.setPositiveButton("OK", null);
-			
+
 			alert = alertBuilder.create();
 			alert.show();
 		}
-		
+
 		progress.dismiss();
 		toastUser(convertedFiles + " file-conversions started successfully");
 		
+		i = new Intent(getActivity(), ProcessActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
+		getActivity().overridePendingTransition(0,0);
+		getActivity().finish();
+			
 	}
 
 	/**
@@ -268,7 +283,7 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class CheckerChange implements OnCheckedChangeListener {
 		private int id;
-		
+
 		/**
 		 * 
 		 * @param id
@@ -276,7 +291,7 @@ public class ConverterFragment extends Fragment{
 		public CheckerChange(int id) {
 			this.id = id;
 		}
-		
+
 		/**
 		 * 
 		 */
@@ -285,7 +300,7 @@ public class ConverterFragment extends Fragment{
 				boolean isChecked) {
 			ToggleButton tb;
 			EditText et;
-			
+
 			if (isChecked && (id + 1) < viewList.size()) {
 				viewList.get(id + 1).setEnabled(isChecked);
 				if (viewList.get(id + 1) instanceof EditText) {
@@ -314,7 +329,7 @@ public class ConverterFragment extends Fragment{
 	 *
 	 */
 	private class buttonListener implements OnClickListener {
-		
+
 		/**
 		 * 
 		 */
@@ -341,18 +356,23 @@ public class ConverterFragment extends Fragment{
 					processParameters.add("");
 				}
 			}
-			
-			failedConversions = new ArrayList<GeneFile>();
-			convertedFiles = 0;
-			convertException = null;
-			progress = new ProgressDialog(getActivity());
-			progress.setMessage("Starting conversions");
-			progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			progress.setMax(processList.size());
-			progress.show();
-			
-			for (int i = 0; i < processList.size(); i++) {
-				new ConvertTask().execute(processList.get(i));
+
+		
+
+			if (processParameters.get(0).length() < 1) {
+				Genomizer.makeToast(headers[0] + " must be filled out");
+			} else {
+				failedConversions = new ArrayList<GeneFile>();
+				convertedFiles = 0;
+				convertException = null;
+				progress = new ProgressDialog(getActivity());
+				progress.setMessage("Starting conversions");
+				progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				progress.setMax(processList.size());
+				progress.show();
+				for (int i = 0; i < processList.size(); i++) {
+					new ConvertTask().execute(processList.get(i));
+				}
 			}
 
 		}
@@ -367,14 +387,14 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class GetGeneReleaseTask extends AsyncTask<Void, Void, ArrayList<GenomeRelease>> {
 
-		
+
 		/**
 		 * 
 		 */
 		@Override
 		protected ArrayList<GenomeRelease> doInBackground(Void... params) {
 			ArrayList<GenomeRelease> genomeList = null;
-			
+
 			try {
 				genomeList = ComHandler.getGenomeReleases();
 			} catch (IOException e) {
@@ -383,7 +403,7 @@ public class ConverterFragment extends Fragment{
 
 			return genomeList;
 		}
-		
+
 		/**
 		 * 
 		 */
@@ -409,9 +429,9 @@ public class ConverterFragment extends Fragment{
 	 *
 	 */
 	private class ConvertTask extends AsyncTask<GeneFile, Void, HashMap<Boolean, GeneFile>> {
-		
-		
-		
+
+
+
 		/**
 		 * 
 		 */
@@ -419,7 +439,7 @@ public class ConverterFragment extends Fragment{
 		protected HashMap<Boolean, GeneFile> doInBackground(GeneFile... params) {
 			GeneFile geneFile = params[0];
 			HashMap<Boolean, GeneFile> map = new HashMap<Boolean, GeneFile>();
-			
+
 			ProcessingParameters parameters = new ProcessingParameters();
 			boolean convertOk = false;
 			String meta = "";
@@ -432,7 +452,7 @@ public class ConverterFragment extends Fragment{
 					parameters.addParameter(processParameters.get(i));
 				}
 			}
-			
+
 			try {
 				convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
 				map.put(convertOk, geneFile);
@@ -443,7 +463,7 @@ public class ConverterFragment extends Fragment{
 
 			return map;
 		}
-		
+
 
 		/**
 		 * 
@@ -453,52 +473,52 @@ public class ConverterFragment extends Fragment{
 			super.onPostExecute(result);
 			boolean convert = result.containsKey(true);
 			GeneFile geneFile = result.get(convert);
-		
+
 			if (convertException == null) {
 				incrementConverted(convert, geneFile);
 				progress.incrementProgressBy(1);
-				
+
 				if (progress.getProgress() == progress.getMax()) {
 					conversionSummary();
 				}
-				
+
 			} else {
 				progress.dismiss();
 				toastUser("Server not responding");
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @author Anders
 	 *
 	 */
 	private class textListener implements TextWatcher {
-	
+
 		private int index;
 		private ToggleButton tb;
 
 		public textListener(int index) {
 			this.index = index;
 		}
-		
+
 		/**
 		 * Unimplemented
 		 */
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
-			
+
 		}
-		
+
 		/**
 		 * 
 		 */
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			
+
 			if (s.length() < 1) {
 				if (viewList.size() > (index + 2)) {
 					for (int i = index + 1; i < viewList.size(); i++) {
@@ -516,32 +536,32 @@ public class ConverterFragment extends Fragment{
 				}
 			}
 		}
-		
+
 		/**
 		 * Unimplemented
 		 */
 		@Override
 		public void afterTextChanged(Editable s) {
-			
-			
+
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @author Anders
 	 *
 	 */
 	private class textClickWatch implements OnClickListener {
-		
+
 		private int index;
 		private EditText et;
 
 		public textClickWatch(int index) {
 			this.index = index;
 		}
-		
+
 		/**
 		 * 
 		 */
@@ -557,9 +577,9 @@ public class ConverterFragment extends Fragment{
 					viewList.get(index + 1).setEnabled(true);
 				}
 			}
-			
+
 		}
-		
+
 	}
 
 }

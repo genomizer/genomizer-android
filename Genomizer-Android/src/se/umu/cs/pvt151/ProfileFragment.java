@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
 		
 		listProfile.setAdapter(adapter);
 		
-		setButtonListeners(v);
+		setRemoveButtonListener(v);
 
 		return v;
 	}
@@ -62,7 +62,12 @@ public class ProfileFragment extends Fragment {
 	}
 	
 	
-	private void setButtonListeners(View v) {
+	/**
+	 * Implements a buttonlistener for the remove button.
+	 * 
+	 * @param v
+	 */
+	private void setRemoveButtonListener(View v) {
 		removeButton = (Button) v.findViewById(R.id.remove_profile_button);
 
 		removeButton.setOnClickListener(new OnClickListener() {
@@ -80,20 +85,11 @@ public class ProfileFragment extends Fragment {
 		});
 		setButtonsStatus();
 	}
-	
-	
-	private void appendSelectedFile(GeneFile file) {
-		selectedProfile.add(file);
-	}
-	
-	
-	private void removeSelectedFile(GeneFile file) {
-		selectedProfile.remove(file);
-	}
 
 
 	/**
-	 * Adapter used for listviews
+	 * Adapter used for listviews. Its purpose is to store and view
+	 * GeneFile objects graphically.
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
@@ -142,7 +138,7 @@ public class ProfileFragment extends Fragment {
 								selectedProfile.add(forShow.get(position));
 							}
 						} else {
-							removeSelectedFile(forShow.get(position));
+							selectedProfile.remove(forShow.get(position));
 						}
 						DataStorage.appendFileList("profileSelected", selectedProfile);
 						setButtonsStatus();

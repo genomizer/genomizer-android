@@ -6,11 +6,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
+	
+	/**
+	 * Creates a new TabsPagerAdapter object.
+	 * 
+	 * @param fm
+	 */
 	public TabsPagerAdapter(FragmentManager fm) {
 		super(fm);
 	}
 
-	@Override
+	
+	/**
+	 * Returns a new instance of a fragment on specified
+	 * position.
+	 */
 	public Fragment getItem(int position) {
 		switch (position) {
 		case 0:
@@ -24,7 +34,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 		return null;
 	}
 
-	@Override
+
+	/**
+	 * Returns the number of tabs.
+	 */
 	public int getCount() {
 		return 3;
 	}

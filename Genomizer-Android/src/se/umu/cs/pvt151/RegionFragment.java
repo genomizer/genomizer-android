@@ -62,6 +62,11 @@ public class RegionFragment extends Fragment {
 	}
 
 
+	/**
+	 * Implements a buttonlistener for the remove button.
+	 * 
+	 * @param v
+	 */
 	private void setButtonListeners(View v) {
 		removeButton = (Button) v.findViewById(R.id.remove_region_button);
 
@@ -82,18 +87,9 @@ public class RegionFragment extends Fragment {
 	}
 
 
-	private void appendSelectedFile(GeneFile file) {
-		selectedRegion.add(file);
-	}
-
-
-	private void removeSelectedFile(GeneFile file) {
-		selectedRegion.remove(file);
-	}
-
-
 	/**
-	 * Adapter used for listviews
+	 * Adapter used for listviews. Its purpose is to store and view
+	 * GeneFile objects graphically.
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
@@ -142,7 +138,7 @@ public class RegionFragment extends Fragment {
 								selectedRegion.add(forShow.get(position));
 							}
 						} else {
-							removeSelectedFile(forShow.get(position));
+							selectedRegion.remove(forShow.get(position));
 						}
 						DataStorage.appendFileList("regionSelected", selectedRegion);
 						setButtonsStatus();

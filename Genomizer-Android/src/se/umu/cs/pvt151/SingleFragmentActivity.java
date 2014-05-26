@@ -169,7 +169,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	
 	public void relogin() {
-		Genomizer.makeToast("Internet has been dropped. Please login again.");
+		Genomizer.makeToast("Connection to server lost. Please login again.");
 		Intent i = new Intent(this, LogInActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);

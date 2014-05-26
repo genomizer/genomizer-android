@@ -8,7 +8,6 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
-
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.app.AlertDialog;
@@ -278,25 +277,20 @@ public class FileListFragment extends Fragment {
 					
 					if(buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
+							
 							if(!rawSelected.contains(allRawFiles.get(getPos))) {
 						
 								addSelected(selectedRawDataFiles, allRawFiles, 
 										raw, rawSelected, getPos);
-								/*selectedRawDataFiles.add(raw.get(getPos));
-								rawSelected.add(allRawFiles.get(getPos));*/
 								buttonHolder.fileCheckBox.setChecked(true);
-							} 
-							
+							} 	
 						} else if(data.equals("profile")) {
+							
 							if(!profileSelected.contains(allProfileFiles.get(getPos))) {
 								addSelected(selectedProfileDataFiles, allProfileFiles, 
 										profile, profileSelected, getPos);
-								/*selectedProfileDataFiles.add(profile.get(getPos));
-								profileSelected.add(allProfileFiles.get(getPos));*/
-							
 								buttonHolder.fileCheckBox.setChecked(true);
-							} 
-							
+							} 	
 						} else if(data.equals("region")) {
 							if(!regionSelected.contains(allRegionFiles.get(getPos))) {
 								addSelected(selectedRegionDataFiles, allRegionFiles, 
@@ -308,24 +302,15 @@ public class FileListFragment extends Fragment {
 							}
 						}
 					} else if(!buttonHolder.fileCheckBox.isChecked()) {
+						
 						if(data.equals("raw")) {
+							
 							removeSelected(rawSelected, selectedRawDataFiles, 
 									raw, getPos);
-							/*for(int i = 0; i < selectedRawDataFiles.size(); i++) {
-								if(selectedRawDataFiles.get(i).equals(raw.get(getPos))) {
-									selectedRawDataFiles.remove(i);
-									rawSelected.remove(i);
-								}
-							}*/
 						} else if(data.equals("profile")) {
+							
 							removeSelected(profileSelected, selectedProfileDataFiles, 
 									profile, getPos);
-							/*for(int j = 0; j < selectedProfileDataFiles.size(); j++) {
-								if(selectedProfileDataFiles.get(j).equals(profile.get(getPos))) {
-									selectedProfileDataFiles.remove(j);
-									profileSelected.remove(j);
-								}
-							}*/
 						} else if(data.equals("region")) {
 							removeSelected(regionSelected, selectedRegionDataFiles, 
 									region, getPos);

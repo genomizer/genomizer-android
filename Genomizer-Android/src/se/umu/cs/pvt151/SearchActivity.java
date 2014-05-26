@@ -67,8 +67,7 @@ public class SearchActivity extends SingleFragmentActivity {
 						}).setNegativeButton(NEGATIVE_RESPONSE, null).show();
 	}
 
-	private void finishSystem() {
-		super.exit();
+	private void finishSystem() {		
 		System.exit(0);
 	}
 }

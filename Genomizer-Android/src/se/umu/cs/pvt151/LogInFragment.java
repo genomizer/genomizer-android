@@ -111,7 +111,7 @@ public class LogInFragment extends Fragment {
 		if (uname.length() < 4 || password.length() < 4) {
 			makeToast(INPUT_MALFORMED, false);
 			return false;
-		}
+		}		
 
 		try {
 			if(!ComHandler.login(uname, password)) {

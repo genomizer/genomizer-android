@@ -4,18 +4,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
-import android.net.ConnectivityManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.util.Log;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
@@ -26,7 +20,6 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
 public class ComHandler {
 
 	private static String serverURL = "http://itchy.cs.umu.se:7000/";
-	private static ConnectivityManager connectManager = null;
 	
 	/**
 	 * Used to change the targeted server URL.
@@ -48,25 +41,8 @@ public class ComHandler {
 		return ComHandler.serverURL;
 	}
 	
+
 	
-	/**
-	 * Verify that the phone currently have an internet connection.
-	 * @return true if online false otherwise
-	 */
-	public static boolean isOnline(Context context) {		
-		connectManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		
-	    return connectManager.getActiveNetworkInfo() != null && 
-	       connectManager.getActiveNetworkInfo().isConnected();
-	}
-	
-	private static boolean isOnline() {
-		if(connectManager != null) {
-			return connectManager.getActiveNetworkInfo() != null && 
-				       connectManager.getActiveNetworkInfo().isConnected();
-		}
-		return false;
-	}
 	
 	/**
 	 * Sends a login request to the server.
@@ -112,25 +88,25 @@ public class ComHandler {
 	public static ArrayList<Experiment> search(HashMap<String, String> annotations) throws IOException {
 		
 		try {					
-			if(isOnline()) {
-				JSONObject msg = MsgFactory.createRegularPackage();
-				GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
+			
+			JSONObject msg = MsgFactory.createRegularPackage();
+			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
 
-				if (searchResponse.getCode() == 200) {
-					JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
-					return MsgDeconstructor.deconSearch(jsonPackage);
-					
-				} else if (searchResponse.getCode() == 204) { 
-					//If the search yields no result.
-					JSONArray jsonPackage = new JSONArray();
-					return MsgDeconstructor.deconSearch(jsonPackage);
-				} 
-			}
-			return new ArrayList<Experiment>();
+			if (searchResponse.getCode() == 200) {
+				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
+				return MsgDeconstructor.deconSearch(jsonPackage);
+				
+			} else if (searchResponse.getCode() == 204) { 
+				//If the search yields no result.
+				JSONArray jsonPackage = new JSONArray();
+				return MsgDeconstructor.deconSearch(jsonPackage);
+			} 
+			
 			
 		} catch (JSONException e) {
 			return new ArrayList<Experiment>();
 		}
+		return new ArrayList<Experiment>();
 	}
 	
 	/**

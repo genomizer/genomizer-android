@@ -4,7 +4,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -28,6 +30,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	private boolean inflateMenu = false;
 	private String fragmentClassSimpleName = "";
+	private ConnectivityManager connectManager = null;
 	
 	
 	/**
@@ -59,11 +62,6 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		
 	}
 	
-	public void exit() {
-//		for (Activity act : activityList) {
-//			act.finish();
-//		}
-	}
 	
 	/**
 	 * Needs to be implemented to manage how the fragment is to be
@@ -179,4 +177,16 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		startActivity(i);
 		overridePendingTransition(0,0);
 	}
+	
+	/**
+	 * Verify that the phone currently have an internet connection.
+	 * @return true if online false otherwise
+	 */
+	public boolean isOnline() {		
+		connectManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+		
+	    return connectManager.getActiveNetworkInfo() != null && 
+	       connectManager.getActiveNetworkInfo().isConnected();
+	}
+	
 }

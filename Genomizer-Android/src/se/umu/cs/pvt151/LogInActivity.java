@@ -38,7 +38,9 @@ public class LogInActivity extends SingleFragmentActivity {
 		
 	}
 	
-	
+	public boolean isOnline() {
+		return super.isOnline();
+	}
 	
 	/**
 	 * Method is called when pressing the "Sign in" button in the user
@@ -46,7 +48,7 @@ public class LogInActivity extends SingleFragmentActivity {
 	 * @param v
 	 */
 	public void login(View v) {
-		if(ComHandler.isOnline(this)) {
+		if(super.isOnline()) {
 			ProgressDialog progress = new ProgressDialog(this);
 			progress.setTitle(CONNECT);
 			progress.setMessage(CONNECT_MESSAGE + ComHandler.getServerURL());

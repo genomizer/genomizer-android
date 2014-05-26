@@ -142,14 +142,13 @@ public class ExperimentListFragment extends Fragment {
 				sb.append(ib, 0, temp);
 			}
 			fis.close();
-				
 			temp2 = sb.toString();
 					
-			} catch (FileNotFoundException e) {
-				temp2 = "";
-			} catch (IOException e) {
-				temp2 = "";
-			}
+		} catch (FileNotFoundException e) {
+			temp2 = "";
+		} catch (IOException e) {
+			temp2 = "";
+		}
 		
 		if(temp2.equals("true")) {
 			defaultSettings = true;
@@ -306,8 +305,8 @@ public class ExperimentListFragment extends Fragment {
 			getExperimentFiles(position);
 			//Creating new intent for moving to FileListActivity
 			Intent intent = new Intent(getActivity(), FileListActivity.class);
-			/*Put the lists with file names so they follow and is
-			 * fetchable in FileListFragment*/
+			/*Put the lists with file names so they follow and are
+			 *obtainable in FileListFragment*/
 			intent.putStringArrayListExtra("raw", rawDataFiles);
 			intent.putStringArrayListExtra("profile", profileDataFiles);
 			intent.putStringArrayListExtra("region", regionDataFiles);
@@ -334,8 +333,11 @@ public class ExperimentListFragment extends Fragment {
 		protected ArrayList<Experiment> doInBackground(Void...arg0) {
 		
 		try {
-			/*Sending HashMap with annotation, value for search to ComHandler,
-			 * receiving a list with experiments matching the search*/
+			/*If search string is null Sending HashMap with annotation, 
+			 * value for search to ComHandler, receiving a list with 
+			 * experiments matching the search. If search string
+			 * is valid that string is used for receiving search results
+			 * instead.*/
 				if(searchString == null) {
 					forExperiments = ComHandler.search(searchInfo);
 				} else {

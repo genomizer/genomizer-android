@@ -5,7 +5,6 @@ package se.umu.cs.pvt151.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class to contain experiment info: such as files and annotations related to an

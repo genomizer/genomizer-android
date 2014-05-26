@@ -3,7 +3,6 @@
  */
 package se.umu.cs.pvt151.model;
 
-import android.R.string;
 import android.os.Parcel;
 import android.os.Parcelable;
 

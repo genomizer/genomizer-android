@@ -13,7 +13,6 @@ import android.view.View;
  */
 public class LogInActivity extends SingleFragmentActivity {
 	
-	private static final String INTERNET_ACCESS_DENIED = "Internet access unavailable.";
 	private static final String CONNECT_MESSAGE = "Connecting to Genomizer server: \n";
 	private static final String CONNECT = "Connecting";
 	LogInFragment fragment;

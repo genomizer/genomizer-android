@@ -2,10 +2,8 @@ package se.umu.cs.pvt151;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 

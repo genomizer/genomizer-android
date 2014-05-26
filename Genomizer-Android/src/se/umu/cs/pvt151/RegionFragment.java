@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -110,6 +111,8 @@ public class RegionFragment extends Fragment {
 
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
+			
+			final int pos = position;
 
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -154,6 +157,12 @@ public class RegionFragment extends Fragment {
 						checkBox.toggle();
 					}
 				}
+				
+				view.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						displayExtraFileInfo(forShow.get(pos));
+					}
+				});
 
 				view.setTag(textView);
 				view.setTag(checkBox);
@@ -180,5 +189,29 @@ public class RegionFragment extends Fragment {
 		} else {
 			removeButton.setEnabled(false);
 		}
+	}
+	
+	
+	/**
+	 * Method used to create a dialog window with
+	 * more information about a file when text view is
+	 * clicked
+	 * @param file that extra information will
+	 * be received from. 
+	 */
+	private void displayExtraFileInfo(GeneFile file) {
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
+		String moreInfo;
+		//Information to be displayed in dialogue about the file
+		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
+				+ file.getType() + "\n" + "Author: " + file.getAuthor()
+				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
+				+ "Date: " + file.getDate() + "\n" + "GR Version: "
+				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
+
+		build.setTitle(file.getName());
+		build.setMessage(moreInfo);
+		build.setNeutralButton("OK", null);
+		build.show();
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,18 +44,18 @@ public class RawFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_raw, parent, false);
-		
+
 		listRaw = (ListView) v.findViewById(R.id.raw);
 		adapter = new FileListAdapter(raw, "raw");
 		listRaw.setAdapter(adapter);
-		
+
 		setConvertButtonListener(v);
 		setRemoveButtonListener(v);
 
 		return v;
 	}
-	
-	
+
+
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		selectedRaw = DataStorage.getFileList("rawSelected");
@@ -70,7 +71,7 @@ public class RawFragment extends Fragment {
 	 */
 	private void setConvertButtonListener(View v) {
 		convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
-		
+
 		convertRawButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -88,8 +89,8 @@ public class RawFragment extends Fragment {
 			}
 		});
 	}
-	
-	
+
+
 	/**
 	 * Implements a buttonlistener for the remove button.
 	 * 
@@ -97,7 +98,7 @@ public class RawFragment extends Fragment {
 	 */
 	private void setRemoveButtonListener(View v) {
 		removeRawButton = (Button) v.findViewById(R.id.remove_raw_button);
-		
+
 		removeRawButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -114,8 +115,8 @@ public class RawFragment extends Fragment {
 		});
 		setButtonsStatus();
 	}
-	
-	
+
+
 	/**
 	 * Sets the buttons status based on if there is any marked files
 	 * or not.
@@ -138,7 +139,7 @@ public class RawFragment extends Fragment {
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
-		
+
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
 
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
@@ -149,6 +150,8 @@ public class RawFragment extends Fragment {
 
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
+			
+			final int pos = position;
 
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -163,7 +166,6 @@ public class RawFragment extends Fragment {
 				textView.setText(file.getName());
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						int position = (Integer) buttonView.getTag();
 
@@ -178,7 +180,7 @@ public class RawFragment extends Fragment {
 						setButtonsStatus();
 					}
 				});
-				
+
 				if (selectedRaw.contains(file)) {
 					if (!checkBox.isChecked()) {
 						checkBox.toggle();
@@ -188,6 +190,13 @@ public class RawFragment extends Fragment {
 						checkBox.toggle();
 					}
 				}
+				
+				view.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						displayExtraFileInfo(forShow.get(pos));
+					}
+				});
+				
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}
@@ -202,5 +211,29 @@ public class RawFragment extends Fragment {
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
 		}
+	}
+
+
+	/**
+	 * Method used to create a dialog window with
+	 * more information about a file when text view is
+	 * clicked
+	 * @param file that extra information will
+	 * be received from. 
+	 */
+	private void displayExtraFileInfo(GeneFile file) {
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
+		String moreInfo;
+		//Information to be displayed in dialogue about the file
+		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
+				+ file.getType() + "\n" + "Author: " + file.getAuthor()
+				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
+				+ "Date: " + file.getDate() + "\n" + "GR Version: "
+				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
+
+		build.setTitle(file.getName());
+		build.setMessage(moreInfo);
+		build.setNeutralButton("OK", null);
+		build.show();
 	}
 }

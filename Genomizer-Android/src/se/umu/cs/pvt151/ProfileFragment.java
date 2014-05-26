@@ -54,6 +54,14 @@ public class ProfileFragment extends Fragment {
 	}
 	
 	
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		selectedProfile = DataStorage.getFileList("profileSelected");
+		adapter.notifyDataSetChanged();
+		setButtonsStatus();
+	}
+	
+	
 	private void setButtonListeners(View v) {
 		removeButton = (Button) v.findViewById(R.id.remove_profile_button);
 
@@ -130,16 +138,23 @@ public class ProfileFragment extends Fragment {
 						int position = (Integer) buttonView.getTag();
 						
 						if (isChecked) {
-							appendSelectedFile(forShow.get(position));
+							if (!selectedProfile.contains(forShow.get(position))) {
+								selectedProfile.add(forShow.get(position));
+							}
 						} else {
 							removeSelectedFile(forShow.get(position));
 						}
+						DataStorage.appendFileList("profileSelected", selectedProfile);
 						setButtonsStatus();
 					}
 				});
 				
 				if (!selectedProfile.contains(file)) {
 					if (checkBox.isChecked()) {
+						checkBox.toggle();
+					}
+				} else { 
+					if (!checkBox.isChecked()) {
 						checkBox.toggle();
 					}
 				}

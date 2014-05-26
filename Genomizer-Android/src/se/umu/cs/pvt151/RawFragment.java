@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +50,14 @@ public class RawFragment extends Fragment {
 		setButtonListeners(v);
 
 		return v;
+	}
+	
+	
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		selectedRaw = DataStorage.getFileList("rawSelected");
+		adapter.notifyDataSetChanged();
+		setButtonsStatus();
 	}
 
 
@@ -108,17 +117,10 @@ public class RawFragment extends Fragment {
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
-		boolean[] selectedItem;
 
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
 			super(getActivity(), 0, files);
 			forShow = files;
-			if (files != null) {
-				selectedItem = new boolean[files.size()];
-				for(int i = 0; i<selectedItem.length; i++) {
-					selectedItem[i] = false;
-				}
-			}
 		}
 
 
@@ -147,16 +149,22 @@ public class RawFragment extends Fragment {
 						int position = (Integer) buttonView.getTag();
 
 						if (isChecked) {
-							selectedRaw.add(forShow.get(position));
+							if (!selectedRaw.contains(forShow.get(position))) {
+								selectedRaw.add(forShow.get(position));
+							}
 						} else {
 							selectedRaw.remove(forShow.get(position));
 						}
-
+						DataStorage.appendFileList("rawSelected", selectedRaw);
 						setButtonsStatus();
 					}
 				});
 				
-				if (!selectedRaw.contains(file)) {
+				if (selectedRaw.contains(file)) {
+					if (!checkBox.isChecked()) {
+						checkBox.toggle();
+					}
+				} else { 
 					if (checkBox.isChecked()) {
 						checkBox.toggle();
 					}

@@ -52,6 +52,14 @@ public class RegionFragment extends Fragment {
 
 		return v;
 	}
+	
+	
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		selectedRegion = DataStorage.getFileList("regionSelected");
+		adapter.notifyDataSetChanged();
+		setButtonsStatus();
+	}
 
 
 	private void setButtonListeners(View v) {
@@ -130,17 +138,23 @@ public class RegionFragment extends Fragment {
 						int position = (Integer) buttonView.getTag();
 
 						if (isChecked) {
-							appendSelectedFile(forShow.get(position));
+							if (!selectedRegion.contains(forShow.get(position))) {
+								selectedRegion.add(forShow.get(position));
+							}
 						} else {
 							removeSelectedFile(forShow.get(position));
 						}
-
+						DataStorage.appendFileList("regionSelected", selectedRegion);
 						setButtonsStatus();
 					}
 				});
 				
 				if (!selectedRegion.contains(file)) {
 					if (checkBox.isChecked()) {
+						checkBox.toggle();
+					}
+				} else { 
+					if (!checkBox.isChecked()) {
 						checkBox.toggle();
 					}
 				}

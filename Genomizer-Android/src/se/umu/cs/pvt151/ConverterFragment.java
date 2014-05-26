@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -384,11 +385,6 @@ public class ConverterFragment extends Fragment{
 				}
 			}
 			
-//			TODO remove this later, just for test
-//			for (int i = 0; i < 7; i++) {
-//				processList.add(new GeneFile());
-//			}
-			
 			failedConversions = new ArrayList<GeneFile>();
 			convertedFiles = 0;
 			convertException = null;
@@ -466,18 +462,27 @@ public class ConverterFragment extends Fragment{
 		protected HashMap<Boolean, GeneFile> doInBackground(GeneFile... params) {
 			GeneFile geneFile = params[0];
 			HashMap<Boolean, GeneFile> map = new HashMap<Boolean, GeneFile>();
+			
 			ProcessingParameters parameters = new ProcessingParameters();
 			boolean convertOk = false;
 			String meta = "";
 			String release = processParameters.get(1);
 
-			processParameters.set(1, "");
-
-			for (String s : processParameters) {
-				parameters.addParameter(s);
+			for (int i = 0; i < processParameters.size(); i++) {
+				if (i == 1) {
+					parameters.addParameter("");
+				} else {
+					parameters.addParameter(processParameters.get(i));
+				}
 			}
-
+			
 			try {
+				Log.d("Convert", "*******************************************");
+				Log.d("Convert", "geneFile: " + geneFile.toString());
+				Log.d("Convert", "\nParameters: " + parameters);
+				Log.d("Convert", "\nMetaData: " + meta);
+				Log.d("Convert", "\nGenomeRelease: " + release);
+				Log.d("Convert", "*******************************************");
 				convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
 				map.put(convertOk, geneFile);
 			} catch (IOException e) {

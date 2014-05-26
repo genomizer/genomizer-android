@@ -67,7 +67,6 @@ public class ExperimentListFragment extends Fragment {
 	 * onCreate
 	 * Retreives right values from 
 	 * previous activity
-	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

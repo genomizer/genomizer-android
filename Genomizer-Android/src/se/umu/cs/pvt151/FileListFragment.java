@@ -164,6 +164,13 @@ public class FileListFragment extends Fragment {
 		build.show();
 	}
 	
+	private void addSelected(ArrayList<String> selectedData, ArrayList<GeneFile> all, 
+			ArrayList<String> data, ArrayList<GeneFile> dataSelected, int getPos) {
+		if(!dataSelected.contains(all.get(getPos))) {
+			selectedData.add(data.get(getPos));
+			rawSelected.add(allRawFiles.get(getPos));
+		} 
+	}
 
 	/**
 	 * Used to create holder for
@@ -236,29 +243,31 @@ public class FileListFragment extends Fragment {
 					if(buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
 							if(!rawSelected.contains(allRawFiles.get(getPos))) {
-							//if(!selectedRawDataFiles.contains(raw.get(getPos)) && !rawSelected.contains(allRawFiles.get(getPos))) {
-								selectedRawDataFiles.add(raw.get(getPos));
-								rawSelected.add(allRawFiles.get(getPos));
+						
+								addSelected(selectedRawDataFiles, allRawFiles, 
+										raw, rawSelected, getPos);
+								/*selectedRawDataFiles.add(raw.get(getPos));
+								rawSelected.add(allRawFiles.get(getPos));*/
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 
 							
 						} else if(data.equals("profile")) {
 							if(!profileSelected.contains(allProfileFiles.get(getPos))) {
-							//if(!selectedProfileDataFiles.contains(profile.get(getPos))) {
-								selectedProfileDataFiles.add(profile.get(getPos));
-								profileSelected.add(allProfileFiles.get(getPos));
-								/*Toast.makeText(getActivity(), "Already added: " + allProfileFiles.get(getPos).getName(),
-										Toast.LENGTH_SHORT).show();*/
+								addSelected(selectedProfileDataFiles, allProfileFiles, 
+										profile, profileSelected, getPos);
+								/*selectedProfileDataFiles.add(profile.get(getPos));
+								profileSelected.add(allProfileFiles.get(getPos));*/
+							
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 
 							
 						} else if(data.equals("region")) {
-							//if(!selectedRegionDataFiles.contains(region.get(getPos))) {
 							if(!regionSelected.contains(allRegionFiles.get(getPos))) {
-								selectedRegionDataFiles.add(region.get(getPos));
-								regionSelected.add(allRegionFiles.get(getPos));
-								/*Toast.makeText(getActivity(), "Already added: " + allRegionFiles.get(getPos).getName(),
-										Toast.LENGTH_SHORT).show();*/
+								addSelected(selectedRegionDataFiles, allRegionFiles, 
+										region, regionSelected, getPos);
+								/*selectedRegionDataFiles.add(region.get(getPos));
+								regionSelected.add(allRegionFiles.get(getPos));*/
+								
 								buttonHolder.fileCheckBox.setChecked(true);
 							}
 						}

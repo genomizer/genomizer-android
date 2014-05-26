@@ -3,22 +3,28 @@ import android.support.v4.app.Fragment;
 
 
 /**
- * @author Anders
+ * Activity class to start up the Convert fragment for the Genomizer android
+ * application
+ * 
+ * @author Anders Lundberg, dv12alg
  *
  */
 public class ConverterActivity extends SingleFragmentActivity{
 
+	/**
+	 * Returns a ConverterFragment fragment when called
+	 */
 	@Override
 	protected Fragment createFragment() {
-		// TODO Auto-generated method stub
 		return new ConverterFragment();
 	}
-
-	//TODO ADDED AFTER ABSTRACT METHOD DECLARATION	
+	
+	/**
+	 * OnBackPressed will finish the activity.
+	 */
 	@Override
 	public void onBackPressed() {
 		finish();
-		
 	}
 
 }

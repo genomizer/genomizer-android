@@ -29,7 +29,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
@@ -43,6 +42,7 @@ import android.widget.ToggleButton;
  */
 public class ConverterFragment extends Fragment{
 
+	private static final String CONVERT = "CONVERT";
 	private static final String RAW_TO_PROFILE_PARAMETERS = "Raw to profile parameters";
 	private static final String RAW_TO_PROFILE = "raw";
 	private static final String FILES = "files";
@@ -75,7 +75,9 @@ public class ConverterFragment extends Fragment{
 
 
 	/**
-	 * When created, retrieves 
+	 * When created, retrieves the geneFiles and processingType for the
+	 * conversion to be done. Setup the conversion view for the processingType
+	 * intended for the geneFiles.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -185,21 +187,24 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
+	 * Setup the convert button for the conversion view. Attaches a 
+	 * buttonListener to the button. 
 	 * 
-	 * @param v
-	 * @return
+	 * @param v the view where the button are contained in.
+	 * @return button for starting the conversion
 	 */
 	private Button setupButton(View v) {
 		Button tempButton = (Button) v.findViewById(R.id.btn_convert_convertbutton);
-		tempButton.setText("CONVERT");
+		tempButton.setText(CONVERT);
 		tempButton.setOnClickListener(new buttonListener());
 
 		return tempButton;
 	}
 
 	/**
+	 * Setup the genomeRealease spinner for the conversion view.
 	 * 
-	 * @param geneRelList
+	 * @param geneRelList the list with genomeReleases that is to be displayed
 	 */
 	private void setupSpinner(ArrayList<GenomeRelease> geneRelList) {
 		Spinner sp;
@@ -217,21 +222,15 @@ public class ConverterFragment extends Fragment{
 		sp.setAdapter(adapter);
 		sp.setEnabled(true);
 	}
-
-	/**
-	 * 
-	 * @param response
-	 */
-	private void toastUser(String response) {
-		Toast.makeText(getActivity().getApplicationContext(), response,
-				Toast.LENGTH_SHORT).show();
-
-	}
 	
 	/**
+	 * Increments the number of files where the conversions has started 
+	 * successfully. If the conversion start was failed the geneFile is stored
+	 * in an arrayList for notification to the user about which files 
+	 * that didn't succeed.
 	 * 
-	 * @param result
-	 * @param geneFile
+	 * @param result true if the conversion started, otherwise false
+	 * @param geneFile the geneFile that the boolean value correspond to.
 	 */
 	private void incrementConverted(boolean result, GeneFile geneFile) {
 		if (result) {
@@ -242,7 +241,11 @@ public class ConverterFragment extends Fragment{
 	}
 	
 	/**
-	 * 
+	 * Summarize the conversion done, will display to the user which files
+	 * that not started correct. And display a toast of the total number of
+	 * files that was successfully started for conversion.
+	 * Will also dismiss the current conversion view and startup a
+	 * processFragment to display the conversions started.
 	 */
 	private void conversionSummary() {
 		String message = "";
@@ -266,7 +269,7 @@ public class ConverterFragment extends Fragment{
 		}
 
 		progress.dismiss();
-		toastUser(convertedFiles + " file-conversions started successfully");
+		Genomizer.makeToast(convertedFiles + " file-conversions started successfully");
 		
 		i = new Intent(getActivity(), ProcessActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -277,23 +280,32 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
+	 * OnCheckedChangeListener, customized for the Genomizer android 
+	 * application to be used with the converterFragment on the different
+	 * toggleButtons. 
 	 * 
-	 * @author Anders
+	 * @author Anders Lundberg, dv12alg.
 	 *
 	 */
 	private class CheckerChange implements OnCheckedChangeListener {
 		private int id;
 
 		/**
+		 * Creates a new CheckerChange object with a id set to it.
 		 * 
-		 * @param id
+		 * @param id the index number where the ToggleButtons can be found 
+		 * in the viewList.
 		 */
 		public CheckerChange(int id) {
 			this.id = id;
 		}
 
 		/**
-		 * 
+		 * Manages action if the ToggleButton is changed. If the button is
+		 * activated then the next ToggleButton or EditText in the 
+		 * conversion view will be enabled for edit. If ToggleButton is set
+		 * to off, all widgets after will be disabled.
+		 * The two last fields are connected together for enabling/disabling.
 		 */
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView,
@@ -324,8 +336,10 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
+	 * OnClickListener for the Genomizer Android application, to be used
+	 * with the convertButton in the converterFragment.
 	 * 
-	 * @author Anders
+	 * @author Anders Lundberg, dv12alg
 	 *
 	 */
 	private class buttonListener implements OnClickListener {
@@ -394,11 +408,13 @@ public class ConverterFragment extends Fragment{
 		@Override
 		protected ArrayList<GenomeRelease> doInBackground(Void... params) {
 			ArrayList<GenomeRelease> genomeList = null;
+			SingleFragmentActivity act;
 
 			try {
 				genomeList = ComHandler.getGenomeReleases();
 			} catch (IOException e) {
-				e.printStackTrace();
+				act = (SingleFragmentActivity) getActivity();
+				act.relogin();
 			}
 
 			return genomeList;
@@ -411,10 +427,10 @@ public class ConverterFragment extends Fragment{
 		protected void onPostExecute(ArrayList<GenomeRelease> result) {
 			super.onPostExecute(result);
 			if (result == null) {
-				toastUser("Cant retreive Genome Releases from server");
+				Genomizer.makeToast("Cant retreive Genome Releases from server");
 				getActivity().finish();
 			} else if (result.isEmpty()) {
-				toastUser("No Gemome releases found on server");
+				Genomizer.makeToast("No Gemome releases found on server");
 				getActivity().finish();
 			} else {
 				setupSpinner(result);
@@ -484,7 +500,7 @@ public class ConverterFragment extends Fragment{
 
 			} else {
 				progress.dismiss();
-				toastUser("Server not responding");
+				Genomizer.makeToast("Server not responding");
 			}
 		}
 	}

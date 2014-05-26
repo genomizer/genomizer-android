@@ -52,7 +52,6 @@ public class FileListFragment extends Fragment {
 	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
 	
-	
 	/**
 	 * OnCreate for fragment, setting values from
 	 * previous activity/datastorage.

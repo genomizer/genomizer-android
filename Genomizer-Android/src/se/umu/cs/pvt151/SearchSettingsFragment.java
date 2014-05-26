@@ -1,15 +1,5 @@
 package se.umu.cs.pvt151;
 
-/**
- * SearchSettingsFragment
- * Fragment used to display available
- * annotations in a list with a
- * check box next to each annotation.
- * Used to check and store in internal storage.
- * Default settings is also possible, and then
- * the two first annotations is shown in the
- * search result view.
- */
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,6 +21,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * SearchSettingsFragment
+ * Fragment used to display available
+ * annotations in a list with a
+ * check box next to each annotation.
+ * Used to check and store in internal storage.
+ * Default settings is also possible, and then
+ * the two first annotations is shown in the
+ * search result view.
+ * @author Cecilia Lindmark
+ */
 public class SearchSettingsFragment extends Fragment {
 	
 	private ArrayList<String> annotations = new ArrayList<String>();
@@ -45,6 +46,11 @@ public class SearchSettingsFragment extends Fragment {
 			String>();
 	private String file2 = "DefaultSettings.txt";
 	
+	/**
+	 * onCreate
+	 * Retreives right values
+	 * from previous activity.
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,13 @@ public class SearchSettingsFragment extends Fragment {
 				.getExtras().getSerializable("searchMap");
 	}
 	
+	/**
+	 * onCreateView
+	 * Inflates the view.
+	 * Sets listeners to button to
+	 * save set annotations and to the
+	 * button used to set default settings.
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_search_settings, parent,
@@ -105,6 +118,10 @@ public class SearchSettingsFragment extends Fragment {
 		return v;
 	}
 	
+	/**
+	 * Method used to save set annotations
+	 * settings in internal storage
+	 */
 	private void saveSettings() {
 		setting = "";
 		Context cont = getActivity();
@@ -133,6 +150,12 @@ public class SearchSettingsFragment extends Fragment {
 		}
 	}
 	
+	/**
+	 * Method used to save information
+	 * if default settings should be used or not
+	 * @param defaultOrNot true if defaults settings
+	 * is selected, else false
+	 */
 	private void saveDefaultOrNot(String defaultOrNot) {
 		Context cont = getActivity();
 		getActivity().deleteFile(file2);
@@ -154,7 +177,9 @@ public class SearchSettingsFragment extends Fragment {
 		}
 	}
 	/**
-	 * Temp method to fill array with values
+	 * Method used to set array with
+	 * false values, used to handle check box
+	 * checks on scroll. 
 	 */
 	private void fillData() {
 		for(int i = 0; i < annotations.size(); i++) {
@@ -162,12 +187,25 @@ public class SearchSettingsFragment extends Fragment {
 		}
 	}
 	
+	/**
+	 * Used to create holder for
+	 * values used in getview
+	 *
+	 */
 	static class listViewHolder {
 		protected TextView annotationInfo;
 		protected CheckBox annotationCheckBox;
 		protected ArrayList<String> forBoxChecks;
 	}
 	
+	/**
+	 * Adapter used to handle selection of
+	 * options in the list view. Sets onclick
+	 * listener to list view to detect what happens when
+	 * user checks check boxes. 
+	 * @author Cecilia Lindmark
+	 *
+	 */
 	private class SearchSettingAdapter extends ArrayAdapter<String> {
 		ArrayList<String> forShow = new ArrayList<String>();
 		boolean[] selectedItem;

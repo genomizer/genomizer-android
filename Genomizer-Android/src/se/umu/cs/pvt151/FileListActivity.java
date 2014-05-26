@@ -1,5 +1,9 @@
 package se.umu.cs.pvt151;
 
+/**
+ * Activity used for handling 
+ * all files of an experiment.
+ */
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,12 +17,21 @@ public class FileListActivity extends SingleFragmentActivity {
 	ArrayList<String> annotation = new ArrayList<String>();
 	HashMap<String, String> searchResults = new HashMap<String, String>();
 	
+	/**
+	 * Creates a file list fragment
+	 * that handles the file information
+	 * being displayed.
+	 */
 	@Override
 	protected Fragment createFragment() {
 		fragment = new FileListFragment();
 		return fragment;
 	}
 	
+	/**
+	 *onCreate for activity, getting information
+	 *values from previous activity
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,9 +41,14 @@ public class FileListActivity extends SingleFragmentActivity {
 		 * as key and values as value.*/
 		annotation = getIntent().getExtras().getStringArrayList("Annotations");
 		searchResults = (HashMap<String, String>) getIntent().getExtras().getSerializable("searchMap");
-		//defaultSettings = getActivity().getIntent().getBooleanExtra("default");
 	}
 	
+	/**
+	 * onBackPressed 
+	 * Makes sure that important values
+	 * are sent into previous activity
+	 * when back button is pressed
+	 */
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(FileListActivity.this, ExperimentListActivity.class);

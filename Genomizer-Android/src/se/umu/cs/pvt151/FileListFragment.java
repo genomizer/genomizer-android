@@ -184,7 +184,7 @@ public class FileListFragment extends Fragment {
 			ArrayList<String> data, ArrayList<GeneFile> dataSelected, int getPos) {
 		if(!dataSelected.contains(all.get(getPos))) {
 			selectedData.add(data.get(getPos));
-			rawSelected.add(allRawFiles.get(getPos));
+			dataSelected.add(all.get(getPos));
 		} 
 	}
 	

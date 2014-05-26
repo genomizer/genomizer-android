@@ -8,8 +8,10 @@ import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONObject;
 
+import se.umu.cs.pvt151.Genomizer;
 import android.util.Log;
 
 public class Communicator {
@@ -46,7 +48,6 @@ public class Communicator {
 		return sendRequest(jsonPackage);
 	}
 
-
 	private static void setupConnection(String requestType, String urlPostfix) throws IOException  {
 		URL url = new URL(urlString + urlPostfix);
 
@@ -70,6 +71,7 @@ public class Communicator {
 
 		connection.setConnectTimeout(4000);
 		connection.setReadTimeout(15000);
+		
 		connection.setRequestProperty("connection", "close");
 	}	
 
@@ -110,8 +112,11 @@ public class Communicator {
 			} else {
 				httpResponse = new GenomizerHttpPackage(responseCode, "");
 			}
-		} 		
-		catch(IOException ioe) {			
+		} catch (ConnectTimeoutException e) {
+	       Genomizer.makeToast("Connection timed out. No response from server");
+	    } catch (SocketTimeoutException e) {
+	    	Genomizer.makeToast("Connection timed out. No response from server");
+	    } catch(IOException ioe) {			
 			throw ioe;
 		} finally {
 			if(in != null) {

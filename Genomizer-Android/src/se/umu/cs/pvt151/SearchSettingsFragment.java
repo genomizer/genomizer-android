@@ -1,11 +1,20 @@
 package se.umu.cs.pvt151;
 
+/**
+ * SearchSettingsFragment
+ * Fragment used to display available
+ * annotations in a list with a
+ * check box next to each annotation.
+ * Used to check and store in internal storage.
+ * Default settings is also possible, and then
+ * the two first annotations is shown in the
+ * search result view.
+ */
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -223,7 +232,6 @@ public class SearchSettingsFragment extends Fragment {
 				}
 				
 			});
-			
 			
 			convertView.setTag(viewHolder);
 			convertView.setTag(R.id.textView1, viewHolder.annotationInfo);

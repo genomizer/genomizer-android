@@ -171,6 +171,16 @@ public class FileListFragment extends Fragment {
 			rawSelected.add(allRawFiles.get(getPos));
 		} 
 	}
+	
+	private void removeSelected(ArrayList<GeneFile> dataSelected, ArrayList<String> selectedData, 
+			ArrayList<String> data, int getPos) {
+		for(int i = 0; i < selectedData.size(); i++) {
+			if(selectedData.get(i).equals(data.get(getPos))) {
+				selectedData.remove(i);
+				dataSelected.remove(i);
+			}
+		}
+	}
 
 	/**
 	 * Used to create holder for
@@ -273,27 +283,32 @@ public class FileListFragment extends Fragment {
 						}
 					} else if(!buttonHolder.fileCheckBox.isChecked()) {
 						if(data.equals("raw")) {
-							
-							for(int i = 0; i < selectedRawDataFiles.size(); i++) {
+							removeSelected(rawSelected, selectedRawDataFiles, 
+									raw, getPos);
+							/*for(int i = 0; i < selectedRawDataFiles.size(); i++) {
 								if(selectedRawDataFiles.get(i).equals(raw.get(getPos))) {
 									selectedRawDataFiles.remove(i);
 									rawSelected.remove(i);
 								}
-							}
+							}*/
 						} else if(data.equals("profile")) {
-							for(int j = 0; j < selectedProfileDataFiles.size(); j++) {
+							removeSelected(profileSelected, selectedProfileDataFiles, 
+									profile, getPos);
+							/*for(int j = 0; j < selectedProfileDataFiles.size(); j++) {
 								if(selectedProfileDataFiles.get(j).equals(profile.get(getPos))) {
 									selectedProfileDataFiles.remove(j);
 									profileSelected.remove(j);
 								}
-							}
+							}*/
 						} else if(data.equals("region")) {
-							for(int j = 0; j < selectedRegionDataFiles.size(); j++) {
+							removeSelected(regionSelected, selectedRegionDataFiles, 
+									region, getPos);
+							/*for(int j = 0; j < selectedRegionDataFiles.size(); j++) {
 								if(selectedRegionDataFiles.get(j).equals(region.get(getPos))) {
 									selectedRegionDataFiles.remove(j);
 									regionSelected.remove(j);
 								}
-							}
+							}*/
 						}
 					}
 				}
@@ -326,9 +341,7 @@ public class FileListFragment extends Fragment {
 			convertView.setTag(viewHolder);
 			convertView.setTag(R.id.textView1, viewHolder.fileInfo);
 			convertView.setTag(R.id.textForBox, viewHolder.fileCheckBox);
-			
 			viewHolder.fileCheckBox.setTag(position);
-			//TODO: check if settag for this needed...
 			viewHolder.fileInfo.setTag(position);
 			
 			if(!forChecks.isEmpty()) {

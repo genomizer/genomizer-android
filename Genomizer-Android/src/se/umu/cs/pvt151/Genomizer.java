@@ -27,7 +27,7 @@ public class Genomizer extends Application {
 			@Override
 			public void run() {
 				Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-				toast.setGravity( Gravity.CENTER_VERTICAL, 0, 0);
+				toast.setGravity( Gravity.TOP | Gravity.CENTER_VERTICAL, 0, 0);
 				toast.show();				
 			}
     		

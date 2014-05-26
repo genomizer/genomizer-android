@@ -41,7 +41,8 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> region = new ArrayList<String>();
 	//Arrays that store names on selected files
 	private ArrayList<String> selectedRawDataFiles = new ArrayList<String>();
-	private ArrayList<String> selectedProfileDataFiles = new ArrayList<String>();
+	private ArrayList<String> selectedProfileDataFiles = 
+			new ArrayList<String>();
 	private ArrayList<String> selectedRegionDataFiles = new ArrayList<String>();
 	//Arrays that store all files, one for each datatype
 	private ArrayList<GeneFile> allRawFiles = new ArrayList<GeneFile>();
@@ -51,7 +52,6 @@ public class FileListFragment extends Fragment {
 	private ArrayList<GeneFile> rawSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
-	
 	
 	/**
 	 * OnCreate for fragment, setting values from
@@ -64,8 +64,10 @@ public class FileListFragment extends Fragment {
 		profileSelected = new ArrayList<GeneFile>();
 		regionSelected = new ArrayList<GeneFile>();
 		raw = getActivity().getIntent().getExtras().getStringArrayList("raw");
-		profile = getActivity().getIntent().getExtras().getStringArrayList("profile");
-		region = getActivity().getIntent().getExtras().getStringArrayList("region");
+		profile = getActivity().getIntent().getExtras().getStringArrayList(
+				"profile");
+		region = getActivity().getIntent().getExtras().getStringArrayList(
+				"region");
 		allRawFiles = DataStorage.getRawDataFiles();
 		allProfileFiles = DataStorage.getProfileDataFiles();
 		allRegionFiles = DataStorage.getRegionDataFiles();
@@ -147,7 +149,8 @@ public class FileListFragment extends Fragment {
 				}
 				//Check for duplicates, if none then adding file. 
 				for(int j=0; j < selected.size(); j++) {
-					if(!temp.contains(selected.get(j)) && !names.contains(selected.get(j).getName())) {
+					if(!temp.contains(selected.get(j)) && !names.contains(
+							selected.get(j).getName())) {
 						temp.add(selected.get(j));
 					}	
 				}
@@ -173,11 +176,11 @@ public class FileListFragment extends Fragment {
 		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
 		String moreInfo;
 		//Information to be displayed in dialogue about the file
-		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " + file.getType() + "\n"
-				+ "Author: " + file.getAuthor() + "\n" + "Uploaded by: "
-				+ file.getUploadedBy() + "\n" + "Date: " + file.getDate() + "\n"
-				+ "GR Version: " + file.getGrVersion() + "\n"
-				+ "Path: " + file.getPath();
+		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
+				+ file.getType() + "\n" + "Author: " + file.getAuthor()
+				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
+				+ "Date: " + file.getDate() + "\n" + "GR Version: "
+				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
 		
 		build.setTitle(file.getName());
 		build.setMessage(moreInfo);
@@ -195,8 +198,9 @@ public class FileListFragment extends Fragment {
 	 * @param dataSelected containing selected files
 	 * @param getPos, the position number in list
 	 */
-	private void addSelected(ArrayList<String> selectedData, ArrayList<GeneFile> all, 
-			ArrayList<String> data, ArrayList<GeneFile> dataSelected, int getPos) {
+	private void addSelected(ArrayList<String> selectedData, 
+			ArrayList<GeneFile> all, ArrayList<String> data, 
+			ArrayList<GeneFile> dataSelected, int getPos) {
 		if(!dataSelected.contains(all.get(getPos))) {
 			selectedData.add(data.get(getPos));
 			dataSelected.add(all.get(getPos));
@@ -212,8 +216,9 @@ public class FileListFragment extends Fragment {
 	 * @param data containing names of files
 	 * @param getPos, the position number in list
 	 */
-	private void removeSelected(ArrayList<GeneFile> dataSelected, ArrayList<String> selectedData, 
-			ArrayList<String> data, int getPos) {
+	private void removeSelected(ArrayList<GeneFile> dataSelected, 
+			ArrayList<String> selectedData, ArrayList<String> data, 
+			int getPos) {
 		for(int i = 0; i < selectedData.size(); i++) {
 			if(selectedData.get(i).equals(data.get(getPos))) {
 				selectedData.remove(i);
@@ -303,8 +308,10 @@ public class FileListFragment extends Fragment {
 				
 			}
 			
-			viewHolder.fileInfo = (TextView) convertView.findViewById(R.id.textView1);
-			viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(R.id.textForBox);
+			viewHolder.fileInfo = (TextView) convertView.findViewById(
+					R.id.textView1);
+			viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(
+					R.id.textForBox);
 			final listViewHolder buttonHolder = viewHolder;
 			/*Set onclicklistener to check box to detect if a box
 			 * is checked or not, adding a file to selected if the box is
@@ -318,12 +325,16 @@ public class FileListFragment extends Fragment {
 						
 						if(!forChecks.isEmpty()) {
 							//Adding values if check box is checked
-							forChecks.set(getPosition,((CompoundButton) v).isChecked());
-							selectedItem[getPosition] = ((CompoundButton) v).isChecked();
+							forChecks.set(getPosition,((
+									CompoundButton) v).isChecked());
+							selectedItem[getPosition] = ((
+									CompoundButton) v).isChecked();
 							
 						} else {
-							forChecks.add(getPosition, ((CompoundButton) v).isChecked());
-							selectedItem[getPosition] = ((CompoundButton) v).isChecked();
+							forChecks.add(getPosition, ((
+									CompoundButton) v).isChecked());
+							selectedItem[getPosition] = ((
+									CompoundButton) v).isChecked();
 						} 
 					} 
 					
@@ -336,17 +347,21 @@ public class FileListFragment extends Fragment {
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 	
 						} else if(data.equals("profile")) {
-							if(!profileSelected.contains(allProfileFiles.get(getPos))) {
+							if(!profileSelected.contains(
+									allProfileFiles.get(getPos))) {
 								
-								addSelected(selectedProfileDataFiles, allProfileFiles, 
-										profile, profileSelected, getPos);
+								addSelected(selectedProfileDataFiles, 
+										allProfileFiles, profile, 
+										profileSelected, getPos);
 								buttonHolder.fileCheckBox.setChecked(true);
 							} 	
 						} else if(data.equals("region")) {
-							if(!regionSelected.contains(allRegionFiles.get(getPos))) {
+							if(!regionSelected.contains(
+									allRegionFiles.get(getPos))) {
 								
-								addSelected(selectedRegionDataFiles, allRegionFiles, 
-										region, regionSelected, getPos);
+								addSelected(selectedRegionDataFiles,
+										allRegionFiles, region, regionSelected,
+										getPos);
 								buttonHolder.fileCheckBox.setChecked(true);
 							}
 						}

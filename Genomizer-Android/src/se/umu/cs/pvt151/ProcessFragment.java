@@ -82,12 +82,10 @@ public class ProcessFragment extends Fragment {
 
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
-
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_process, null);
 			}
-
 			Process process = getItem(position);
 
 			if (process != null) {
@@ -100,7 +98,6 @@ public class ProcessFragment extends Fragment {
 
 				expNameView.setText(process.getExperimentName());
 				authorView.setText(process.getAuthor());
-
 				timeAddedView.setText(timeInterpreter(process.getTimeAdded()));
 				timeStartedView.setText(timeInterpreter(process.getTimeStarted()));
 				timeFinishedView.setText(timeInterpreter(process.getTimeFinnished()));
@@ -110,10 +107,10 @@ public class ProcessFragment extends Fragment {
 
 				view.setTag(expNameView);
 				view.setTag(authorView);
-				view.setTag(statusView);
 				view.setTag(timeAddedView);
 				view.setTag(timeStartedView);
 				view.setTag(timeFinishedView);
+				view.setTag(statusView);
 			}
 			return view;
 		}

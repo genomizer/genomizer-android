@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,10 +43,13 @@ public class RawFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_raw, parent, false);
+		
 		listRaw = (ListView) v.findViewById(R.id.raw);
 		adapter = new FileListAdapter(raw, "raw");
 		listRaw.setAdapter(adapter);
-		setButtonListeners(v);
+		
+		setConvertButtonListener(v);
+		setRemoveButtonListener(v);
 
 		return v;
 	}
@@ -61,10 +63,14 @@ public class RawFragment extends Fragment {
 	}
 
 
-	private void setButtonListeners(View v) {
+	/**
+	 * Implements a buttonlistener for the convert button.
+	 * 
+	 * @param v
+	 */
+	private void setConvertButtonListener(View v) {
 		convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
-		removeRawButton = (Button) v.findViewById(R.id.remove_raw_button);
-
+		
 		convertRawButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -81,7 +87,17 @@ public class RawFragment extends Fragment {
 				} 
 			}
 		});
-
+	}
+	
+	
+	/**
+	 * Implements a buttonlistener for the remove button.
+	 * 
+	 * @param v
+	 */
+	private void setRemoveButtonListener(View v) {
+		removeRawButton = (Button) v.findViewById(R.id.remove_raw_button);
+		
 		removeRawButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -100,6 +116,11 @@ public class RawFragment extends Fragment {
 	}
 	
 	
+	/**
+	 * Sets the buttons status based on if there is any marked files
+	 * or not.
+	 * 
+	 */
 	private void setButtonsStatus() {
 		if (selectedRaw.size() > 0) {
 			convertRawButton.setEnabled(true);
@@ -112,10 +133,12 @@ public class RawFragment extends Fragment {
 
 
 	/**
-	 * Adapter used for listviews
+	 * Adapter used for listviews. Its purpose is to store and view
+	 * GeneFile objects graphically.
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
+		
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
 
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
@@ -131,21 +154,17 @@ public class RawFragment extends Fragment {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_checkbox, null);
 			}
-
 			GeneFile file = getItem(position);
 
 			if (file != null) {
 				TextView textView = (TextView) view.findViewById(R.id.textView1);
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
-
 				checkBox.setTag(position);
 				textView.setText(file.getName());
-
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
 						int position = (Integer) buttonView.getTag();
 
 						if (isChecked) {
@@ -169,19 +188,16 @@ public class RawFragment extends Fragment {
 						checkBox.toggle();
 					}
 				}
-
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}
 			return view;
 		}
 
-
 		@Override
 		public boolean hasStableIds() {
 			return true;
 		}
-
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);

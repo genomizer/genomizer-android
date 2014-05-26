@@ -265,6 +265,12 @@ public class ComHandler {
 	}
 	
 	
+	/**
+	 * Gets and returns the genomereleases from the server as an ArrayList.
+	 * 
+	 * @return An ArrayList with GenomeRelease objects
+	 * @throws IOException
+	 */
 	public static ArrayList<GenomeRelease> getGenomeReleases() throws IOException {
 		if(!verifiyConnection()) {
 			throw new IOException("Internet connection unavailable.");
@@ -289,6 +295,13 @@ public class ComHandler {
 	}
 	
 	
+	/**
+	 * Gets and returns the states of all processes that are currently 
+	 * running on the server.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public static ArrayList<Process> getProcesses() throws IOException {
 		if(!verifiyConnection()) {
 			throw new IOException("Internet connection unavailable.");

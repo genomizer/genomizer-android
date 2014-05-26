@@ -1,11 +1,20 @@
 package se.umu.cs.pvt151;
 
+/**
+ * SearchSettingsFragment
+ * Fragment used to display available
+ * annotations in a list with a
+ * check box next to each annotation.
+ * Used to check and store in internal storage.
+ * Default settings is also possible, and then
+ * the two first annotations is shown in the
+ * search result view.
+ */
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,21 +41,24 @@ public class SearchSettingsFragment extends Fragment {
 	private ArrayList<String> newSettings = new ArrayList<String>();
 	private String setting;
 	private String file = "SearchSettings.txt";
-	private HashMap<String, String> searchResults = new HashMap<String, String>();
+	private HashMap<String, String> searchResults = new HashMap<String, 
+			String>();
 	private String file2 = "DefaultSettings.txt";
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
-		annotations = getActivity().getIntent().getExtras().getStringArrayList("Annotations");
+		annotations = getActivity().getIntent().getExtras().getStringArrayList(
+				"Annotations");
 		searchResults = (HashMap<String, String>) getActivity().getIntent()
 				.getExtras().getSerializable("searchMap");
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_search_settings, parent, false);
+		View v = inflater.inflate(R.layout.fragment_search_settings, parent,
+				false);
 		list = (ListView) v.findViewById(R.id.listView1);
 		fillData();
 		list.setAdapter(new SearchSettingAdapter(annotations));
@@ -58,10 +70,12 @@ public class SearchSettingsFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(), "Adding: " + newSettings.toString(), 
+				Toast.makeText(getActivity().getApplicationContext(),
+						"Adding: " + newSettings.toString(), 
 						Toast.LENGTH_SHORT).show();
 				saveSettings();
-				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
+				Intent intent = new Intent(getActivity(), 
+						ExperimentListActivity.class);
 				intent.putStringArrayListExtra("Annotations", annotations);
 				intent.putExtra("searchMap", searchResults);
 				saveDefaultOrNot("false");
@@ -76,7 +90,8 @@ public class SearchSettingsFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(getActivity(), ExperimentListActivity.class);
+				Intent intent = new Intent(getActivity(), 
+						ExperimentListActivity.class);
 				intent.putStringArrayListExtra("Annotations", annotations);
 				intent.putExtra("searchMap", searchResults);
 				saveDefaultOrNot("true");
@@ -102,16 +117,19 @@ public class SearchSettingsFragment extends Fragment {
 		}
 		
 		try {
-			FileOutputStream fos = cont.getApplicationContext().openFileOutput(file, Context.MODE_APPEND);
+			FileOutputStream fos = cont.getApplicationContext().openFileOutput(
+					file, Context.MODE_APPEND);
 			fos.write(setting.getBytes());
 			fos.close();
 		
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Toast.makeText(getActivity().getApplicationContext(),
+					"Could not save info: " + e.getMessage(),
+					Toast.LENGTH_SHORT).show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Toast.makeText(getActivity().getApplicationContext(),
+					"Could not save info: " + e.getMessage(),
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 	
@@ -120,16 +138,19 @@ public class SearchSettingsFragment extends Fragment {
 		getActivity().deleteFile(file2);
 		
 		try {
-			FileOutputStream fos = cont.getApplicationContext().openFileOutput(file2, Context.MODE_APPEND);
+			FileOutputStream fos = cont.getApplicationContext().openFileOutput(
+					file2, Context.MODE_APPEND);
 			fos.write(defaultOrNot.getBytes());
 			fos.close();
 		
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Toast.makeText(getActivity().getApplicationContext(),
+					"Could not save info: " + e.getMessage(),
+					Toast.LENGTH_SHORT).show();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Toast.makeText(getActivity().getApplicationContext(),
+					"Could not save info: " + e.getMessage(),
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 	/**
@@ -148,7 +169,6 @@ public class SearchSettingsFragment extends Fragment {
 	}
 	
 	private class SearchSettingAdapter extends ArrayAdapter<String> {
-		//TODO: Use same adapter for all three listviews, or need to make 3 differents ones?
 		ArrayList<String> forShow = new ArrayList<String>();
 		boolean[] selectedItem;
 
@@ -176,10 +196,13 @@ public class SearchSettingsFragment extends Fragment {
 				
 			}
 			
-			viewHolder.annotationInfo = (TextView) convertView.findViewById(R.id.textView1);
-			viewHolder.annotationCheckBox = (CheckBox) convertView.findViewById(R.id.textForBox);
+			viewHolder.annotationInfo = (TextView) convertView.findViewById(
+					R.id.textView1);
+			viewHolder.annotationCheckBox = (CheckBox) convertView.findViewById(
+					R.id.textForBox);
 			final listViewHolder buttonHolder = viewHolder;
-			viewHolder.annotationCheckBox.setOnClickListener(new OnClickListener() {
+			viewHolder.annotationCheckBox.setOnClickListener(
+					new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -188,12 +211,16 @@ public class SearchSettingsFragment extends Fragment {
 						
 						if(!forBoxChecks.isEmpty()) {
 							//Adding values if checkbox is checked
-							forBoxChecks.set(getPosition,((CompoundButton) v).isChecked());
-							selectedItem[getPosition] = ((CompoundButton) v).isChecked();
+							forBoxChecks.set(getPosition,((
+									CompoundButton) v).isChecked());
+							selectedItem[getPosition] = ((
+									CompoundButton) v).isChecked();
 							
 						} else {
-							forBoxChecks.add(getPosition, ((CompoundButton) v).isChecked());
-							selectedItem[getPosition] = ((CompoundButton) v).isChecked();
+							forBoxChecks.add(getPosition, ((
+									CompoundButton) v).isChecked());
+							selectedItem[getPosition] = ((
+									CompoundButton) v).isChecked();
 						} 
 					} 
 					
@@ -206,14 +233,14 @@ public class SearchSettingsFragment extends Fragment {
 				
 			});
 			
-			
 			convertView.setTag(viewHolder);
 			convertView.setTag(R.id.textView1, viewHolder.annotationInfo);
 			convertView.setTag(R.id.textForBox, viewHolder.annotationCheckBox);
 			
 			viewHolder.annotationCheckBox.setTag(position);
 			if(!forBoxChecks.isEmpty()) {
-				viewHolder.annotationCheckBox.setChecked(forBoxChecks.get(position));
+				viewHolder.annotationCheckBox.setChecked(
+						forBoxChecks.get(position));
 			}
 			viewHolder.annotationInfo.setText(forShow.get(position));
 		

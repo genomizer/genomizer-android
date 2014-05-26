@@ -181,9 +181,6 @@ public class ConverterFragment extends Fragment{
 
 		}
 
-//		tempList.get(0).setEnabled(true);
-//		tempList.get(2).setEnabled(true);
-
 		return tempList;
 	}
 
@@ -217,9 +214,7 @@ public class ConverterFragment extends Fragment{
 				android.R.layout.simple_spinner_item, geneList);
 
 		sp = (Spinner) viewList.get(1);
-
 		sp.setAdapter(adapter);
-//		sp.setOnItemSelectedListener(new itemListener(1));
 		sp.setEnabled(true);
 	}
 
@@ -236,7 +231,6 @@ public class ConverterFragment extends Fragment{
 	private void incrementConverted(boolean result, GeneFile geneFile) {
 		if (result) {
 			convertedFiles++;
-//			failedConversions.add(geneFile);
 		} else {
 			failedConversions.add(geneFile);
 		}
@@ -244,6 +238,8 @@ public class ConverterFragment extends Fragment{
 
 	private void conversionSummary() {
 		String message = "";
+		AlertDialog.Builder alertBuilder;
+		AlertDialog alert;
 		
 		if (!failedConversions.isEmpty()) {
 			
@@ -251,14 +247,12 @@ public class ConverterFragment extends Fragment{
 				message += g.getName() + "\n";
 			}
 			
-			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-			
-			
+			alertBuilder = new AlertDialog.Builder(getActivity());
 			alertBuilder.setTitle("Conversions NOT started");
 			alertBuilder.setMessage(message);
 			alertBuilder.setPositiveButton("OK", null);
 			
-			AlertDialog alert = alertBuilder.create();
+			alert = alertBuilder.create();
 			alert.show();
 		}
 		
@@ -314,40 +308,6 @@ public class ConverterFragment extends Fragment{
 		}
 	}
 
-
-//	/**
-//	 * 
-//	 * @author Anders
-//	 *
-//	 */
-//	private class itemListener implements OnItemSelectedListener {
-//		private int index;
-//
-//		public itemListener(int id) {
-//			this.index = id;
-//		}
-//		
-//		/**
-//		 * 
-//		 */
-//		@Override
-//		public void onItemSelected(AdapterView<?> parent, View view,
-//				int position, long id) {
-//
-//		}
-//		
-//		/**
-//		 * 
-//		 */
-//		@Override
-//		public void onNothingSelected(AdapterView<?> parent) {
-//			// TODO Auto-generated method stub
-//
-//		}
-//
-//	}
-
-
 	/**
 	 * 
 	 * @author Anders
@@ -355,8 +315,6 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class buttonListener implements OnClickListener {
 		
-		
-
 		/**
 		 * 
 		 */
@@ -383,11 +341,6 @@ public class ConverterFragment extends Fragment{
 					processParameters.add("");
 				}
 			}
-			
-//			TODO remove this later, just for test
-//			for (int i = 0; i < 7; i++) {
-//				processList.add(new GeneFile());
-//			}
 			
 			failedConversions = new ArrayList<GeneFile>();
 			convertedFiles = 0;
@@ -466,17 +419,20 @@ public class ConverterFragment extends Fragment{
 		protected HashMap<Boolean, GeneFile> doInBackground(GeneFile... params) {
 			GeneFile geneFile = params[0];
 			HashMap<Boolean, GeneFile> map = new HashMap<Boolean, GeneFile>();
+			
 			ProcessingParameters parameters = new ProcessingParameters();
 			boolean convertOk = false;
 			String meta = "";
 			String release = processParameters.get(1);
 
-			processParameters.set(1, "");
-
-			for (String s : processParameters) {
-				parameters.addParameter(s);
+			for (int i = 0; i < processParameters.size(); i++) {
+				if (i == 1) {
+					parameters.addParameter("");
+				} else {
+					parameters.addParameter(processParameters.get(i));
+				}
 			}
-
+			
 			try {
 				convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
 				map.put(convertOk, geneFile);

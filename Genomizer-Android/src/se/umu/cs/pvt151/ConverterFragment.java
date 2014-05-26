@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -182,9 +181,6 @@ public class ConverterFragment extends Fragment{
 
 		}
 
-//		tempList.get(0).setEnabled(true);
-//		tempList.get(2).setEnabled(true);
-
 		return tempList;
 	}
 
@@ -218,9 +214,7 @@ public class ConverterFragment extends Fragment{
 				android.R.layout.simple_spinner_item, geneList);
 
 		sp = (Spinner) viewList.get(1);
-
 		sp.setAdapter(adapter);
-//		sp.setOnItemSelectedListener(new itemListener(1));
 		sp.setEnabled(true);
 	}
 
@@ -237,7 +231,6 @@ public class ConverterFragment extends Fragment{
 	private void incrementConverted(boolean result, GeneFile geneFile) {
 		if (result) {
 			convertedFiles++;
-//			failedConversions.add(geneFile);
 		} else {
 			failedConversions.add(geneFile);
 		}
@@ -245,6 +238,8 @@ public class ConverterFragment extends Fragment{
 
 	private void conversionSummary() {
 		String message = "";
+		AlertDialog.Builder alertBuilder;
+		AlertDialog alert;
 		
 		if (!failedConversions.isEmpty()) {
 			
@@ -252,14 +247,12 @@ public class ConverterFragment extends Fragment{
 				message += g.getName() + "\n";
 			}
 			
-			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-			
-			
+			alertBuilder = new AlertDialog.Builder(getActivity());
 			alertBuilder.setTitle("Conversions NOT started");
 			alertBuilder.setMessage(message);
 			alertBuilder.setPositiveButton("OK", null);
 			
-			AlertDialog alert = alertBuilder.create();
+			alert = alertBuilder.create();
 			alert.show();
 		}
 		
@@ -315,40 +308,6 @@ public class ConverterFragment extends Fragment{
 		}
 	}
 
-
-//	/**
-//	 * 
-//	 * @author Anders
-//	 *
-//	 */
-//	private class itemListener implements OnItemSelectedListener {
-//		private int index;
-//
-//		public itemListener(int id) {
-//			this.index = id;
-//		}
-//		
-//		/**
-//		 * 
-//		 */
-//		@Override
-//		public void onItemSelected(AdapterView<?> parent, View view,
-//				int position, long id) {
-//
-//		}
-//		
-//		/**
-//		 * 
-//		 */
-//		@Override
-//		public void onNothingSelected(AdapterView<?> parent) {
-//			// TODO Auto-generated method stub
-//
-//		}
-//
-//	}
-
-
 	/**
 	 * 
 	 * @author Anders
@@ -356,8 +315,6 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class buttonListener implements OnClickListener {
 		
-		
-
 		/**
 		 * 
 		 */
@@ -477,12 +434,6 @@ public class ConverterFragment extends Fragment{
 			}
 			
 			try {
-				Log.d("Convert", "*******************************************");
-				Log.d("Convert", "geneFile: " + geneFile.toString());
-				Log.d("Convert", "\nParameters: " + parameters);
-				Log.d("Convert", "\nMetaData: " + meta);
-				Log.d("Convert", "\nGenomeRelease: " + release);
-				Log.d("Convert", "*******************************************");
 				convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
 				map.put(convertOk, geneFile);
 			} catch (IOException e) {

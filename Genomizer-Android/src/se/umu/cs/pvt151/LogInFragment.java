@@ -161,7 +161,7 @@ public class LogInFragment extends Fragment {
 	 * Initiate the activity that will be viewed after the login view.
 	 */
 	private void startSearchActivity() {
-		Intent intent = new Intent(getActivity(), SelectedFilesActivity.class);
+		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 		getActivity().finish();
 	}

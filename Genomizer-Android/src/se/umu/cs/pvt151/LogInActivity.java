@@ -4,9 +4,7 @@ import se.umu.cs.pvt151.com.ComHandler;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
-import android.view.MenuItem;
 import android.view.View;
 /**
  * Activity which creates a LogInFragment and handles some of the logic involved in the process

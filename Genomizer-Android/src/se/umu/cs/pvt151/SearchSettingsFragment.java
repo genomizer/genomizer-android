@@ -65,7 +65,9 @@ public class SearchSettingsFragment extends Fragment {
 				intent.putStringArrayListExtra("Annotations", annotations);
 				intent.putExtra("searchMap", searchResults);
 				saveDefaultOrNot("false");
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
+				getActivity().overridePendingTransition(0,0);				
 			}
 			
 		});
@@ -78,7 +80,9 @@ public class SearchSettingsFragment extends Fragment {
 				intent.putStringArrayListExtra("Annotations", annotations);
 				intent.putExtra("searchMap", searchResults);
 				saveDefaultOrNot("true");
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
+				getActivity().overridePendingTransition(0,0);
 			}
 			
 		});

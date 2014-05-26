@@ -153,8 +153,11 @@ public class SearchPubmedFragment extends Fragment {
 		}
 		intent.putExtra("Annotations", annotation);
 		intent.putExtra("searchMap", searchResults);
-		
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
+		getActivity().overridePendingTransition(0,0);
+		
+		
 		
 	}
 }

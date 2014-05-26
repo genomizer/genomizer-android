@@ -157,7 +157,9 @@ public class LogInFragment extends Fragment {
 	 */
 	private void startSearchActivity() {
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
+		getActivity().overridePendingTransition(0,0);
 		getActivity().finish();
 	}
 

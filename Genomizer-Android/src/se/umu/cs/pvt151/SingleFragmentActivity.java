@@ -34,7 +34,6 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	private boolean inflateMenu = false;
 	private String fragmentClassSimpleName = "";
-	private ConnectivityManager connectManager = null;
 	
 	
 	/**

@@ -3,10 +3,7 @@ package se.umu.cs.pvt151.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.util.Log;
-
 public class DataStorage {
-
 
 	//Hashmap which stores arraylists with GeneFile objects
 	private static HashMap<String, ArrayList<GeneFile>> fileMap = 

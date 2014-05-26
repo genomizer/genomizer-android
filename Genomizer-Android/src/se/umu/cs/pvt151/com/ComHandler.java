@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
 import se.umu.cs.pvt151.Genomizer;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
@@ -42,6 +41,14 @@ public class ComHandler {
 		return ComHandler.serverURL;
 	}
 
+	
+	/**
+	 * Visualizes a toast with a message based on which
+	 * responsecode is given as parameter.
+	 * 
+	 * @param requestType
+	 * @param responseCode
+	 */
 	private static void responseDecode(String requestType, int responseCode) {
 		switch(responseCode) {		
 		case 204: 
@@ -72,12 +79,19 @@ public class ComHandler {
 		
 	}
 	
+	
+	/**
+	 * Checks whether or not a connection is established.
+	 * 
+	 * @return True if a connection is established, otherwise false
+	 */
 	private static boolean verifiyConnection() {
 		if(!Genomizer.isOnline()) {			
 			return false;
 		}
 		return true;
 	}
+	
 	
 	/**
 	 * Sends a login request to the server.

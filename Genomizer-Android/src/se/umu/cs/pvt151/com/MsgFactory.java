@@ -52,7 +52,6 @@ public class MsgFactory {
 	 */
 	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, 
 			String metadata, String genomeRelease) throws JSONException {
-		
 		JSONObject obj = new JSONObject();
 		
 		obj.put("expid", file.getExpId());
@@ -76,14 +75,11 @@ public class MsgFactory {
 	 * @throws JSONException
 	 */
 	private static JSONArray parametersToJson(ProcessingParameters param) throws JSONException {
-
 		JSONArray json = new JSONArray();
 		for (int i = 0; i < param.size(); i++) {
 
 			json.put(param.getParameter(i));
-
 		}
-		
 		return json;
 	}
 }

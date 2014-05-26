@@ -1,13 +1,11 @@
 package se.umu.cs.pvt151.com;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
@@ -87,6 +85,14 @@ public class MsgDeconstructor {
 		return files;
 	}
 	
+	
+	/**
+	 * Returns a value from a JSONObject based on a string.
+	 * 
+	 * @param obj
+	 * @param str
+	 * @return
+	 */
 	private static String getStringFromJObj(JSONObject obj, String str) {
 		try {
 			return obj.getString(str);
@@ -126,29 +132,13 @@ public class MsgDeconstructor {
 
 
 	/**
-	 * Om det skulle vara mšjligt att gšra en generell deconstruct metod fšr alla typer av json objekt.
-	 * @deprecated
+	 * Deconstructs a JSONArray object into an ArrayList with
+	 * GenomeRelease objects and returns it.
+	 * 
 	 * @param json
+	 * @return
+	 * @throws JSONException
 	 */
-	public static void deconstruct(JSONArray json) {
-		for(int i = 0; i < json.length(); i++) {
-			JSONObject o = json.optJSONObject(i);
-			Iterator<String> iterator = o.keys();
-			while(iterator.hasNext()) {
-				String name = iterator.next();
-				Object jo =  o.opt(name);
-
-				if(jo != null) {
-					Log.d("DECON", "Class name: " +jo.getClass().getSimpleName());
-					Log.d("DECON", "Object toString: " + jo.toString());
-				} else {
-					Log.e("DECON", "NULL OBJECT");
-				}
-			}
-		}
-	}
-
-
 	public static ArrayList<GenomeRelease> deconGenomeReleases(JSONArray json) throws JSONException {
 		ArrayList<GenomeRelease> genomeReleases = new ArrayList<GenomeRelease>();
 
@@ -160,7 +150,6 @@ public class MsgDeconstructor {
 			release.setGenomeVersion(obj.getString("genomeVersion"));
 			release.setSpecie(obj.getString("species"));
 			release.setPath(obj.getString("folderPath"));
-//			release.setFileName(obj.getString("fileName"));
 			
 			genomeReleases.add(release);
 		}
@@ -168,6 +157,14 @@ public class MsgDeconstructor {
 	}
 
 
+	/**
+	 * Deconstructs a JSONArray object into an ArrayList with Process objects
+	 * and returns it.
+	 * 
+	 * @param json
+	 * @return
+	 * @throws JSONException
+	 */
 	public static ArrayList<Process> deconProcessPackage(JSONArray json) throws JSONException {
 		ArrayList<Process> processes = new ArrayList<Process>();
 

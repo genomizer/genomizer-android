@@ -22,11 +22,24 @@ public class Communicator {
 	private static Communicator staticSelfReference = null;
 	
 
+	/**
+	 * Creates a new Communicator object.
+	 * 
+	 * @param urlString - the adress to which packages will be sent
+	 */
 	private Communicator(String urlString) {		
 		Communicator.urlString = urlString;
 	}
 
 
+	/**
+	 * Returns a new Communicator object if there are no Communicator
+	 * object created at an earlier stage, otherwise it returns the
+	 * old object.
+	 * 
+	 * @param serverURL
+	 * @return A Communicator object
+	 */
 	public static Communicator initCommunicator(String serverURL) {
 		if(staticSelfReference == null) {
 			staticSelfReference = new Communicator(serverURL);
@@ -38,18 +51,43 @@ public class Communicator {
 	}
 
 
+	/**
+	 * Sets the token which will be sent to the server with each package.
+	 * The token works as an identifier for the server.
+	 * 
+	 * @param token
+	 */
 	public static void setToken(String token) {
 		Communicator.token = token;
 	}
 
 
+	/**
+	 * Sets up a connection and sends a package to the server.
+	 * The response code and body will be returned in the form of a
+	 * GenomizerHttpPackage object if the request succeeds. 
+	 * If the request fails a IOException will be thrown.
+	 * 
+	 * @param jsonPackage
+	 * @param requestType
+	 * @param urlPostfix
+	 * @return Response code and body
+	 * @throws IOException
+	 */
 	public static GenomizerHttpPackage sendHTTPRequest(JSONObject jsonPackage, String requestType, String urlPostfix) throws IOException {
 		setupConnection(requestType, urlPostfix);
 		return sendRequest(jsonPackage);
 	}
 
+	
+	/**
+	 * Sets up a connection to a server.
+	 * 
+	 * @param requestType
+	 * @param urlPostfix
+	 * @throws IOException
+	 */
 	private static void setupConnection(String requestType, String urlPostfix) throws IOException  {
-		Log.d("Communicator", "url: " +requestType + urlPostfix);
 		URL url = new URL(urlString + urlPostfix);
 
 		connection = (HttpURLConnection) url.openConnection();
@@ -59,7 +97,6 @@ public class Communicator {
 		}
 
 		connection.setDoInput (true);
-
 		connection.setUseCaches(false);
 		connection.setRequestMethod(requestType);
 		connection.setRequestProperty("Content-Type", "application/json");
@@ -69,14 +106,20 @@ public class Communicator {
 		}
 
 		connection.setChunkedStreamingMode(100);
-
 		connection.setConnectTimeout(4000);
 		connection.setReadTimeout(15000);
-		
 		connection.setRequestProperty("connection", "close");
 	}	
 
 
+	/**
+	 * Sends a request to the server. A JSON package which has to be
+	 * includes as an parameter will be sent as body.
+	 * 
+	 * @param jsonPackage
+	 * @return GenomizerHttpPackage - The response code and body
+	 * @throws IOException
+	 */
 	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage) throws IOException {
 		DataOutputStream out = null;
 		BufferedReader in = null;
@@ -117,15 +160,12 @@ public class Communicator {
 	       Genomizer.makeToast("Connection timed out. No response from server");
 	    } catch (SocketTimeoutException e) {
 	    	Genomizer.makeToast("Connection timed out. No response from server");
-	    } catch(IOException ioe) {			
+	    } catch(IOException ioe) {
 			throw ioe;
 		} finally {
 			if(in != null) {
 				in.close();
 			}
-//			if(out != null) {
-//				out.close();
-//			}
 		}
 		return httpResponse;
 	}

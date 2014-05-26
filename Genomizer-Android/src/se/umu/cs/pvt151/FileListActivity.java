@@ -6,11 +6,6 @@ import java.util.HashMap;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 public class FileListActivity extends SingleFragmentActivity {
 
@@ -38,12 +33,12 @@ public class FileListActivity extends SingleFragmentActivity {
 	
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
-	//	super.onBackPressed();//TODO ADDED AFTER ABSTRACT METHOD DECLARATION
 		Intent intent = new Intent(FileListActivity.this, ExperimentListActivity.class);
 		intent.putStringArrayListExtra("Annotations", annotation);
 		intent.putExtra("searchMap", searchResults);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);		
 		startActivity(intent);
+		overridePendingTransition(0,0);
 		finish();
 	}
 }

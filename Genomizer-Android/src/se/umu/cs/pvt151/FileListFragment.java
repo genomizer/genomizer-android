@@ -8,14 +8,12 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,7 +53,7 @@ public class FileListFragment extends Fragment {
 	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> allRegionFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
-	private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
+	//private HashMap<String, ArrayList<GeneFile>> filesForConversion = new HashMap<String, ArrayList<GeneFile>>();
 	
 	
 	@Override
@@ -297,9 +295,11 @@ public class FileListFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					
+					int getPos = 0;
 					if(v.isShown()) {
-						int getPos = (Integer) v.getTag();
+						getPos = (Integer) v.getTag();
+					} else {
+						return;
 					}
 					
 					if(data.equals("raw")) {

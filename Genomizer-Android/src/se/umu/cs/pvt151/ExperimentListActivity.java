@@ -54,25 +54,33 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		switch (item.getItemId()) {
 		case R.id.btnsearch_main_menu:
 			i = new Intent(this, SearchActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);			
 			startActivity(i);
+			overridePendingTransition(0,0);
 			return true;
 		
 		case R.id.btnworkspace_main_menu:
 			Intent intent = new Intent(this,
 					SelectedFilesActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);	
 			startActivity(intent);
+			overridePendingTransition(0,0);
 			return true;
 			
 		case R.id.action_settings:
 			i = new Intent(this, SettingsActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);	
 			startActivity(i);
+			overridePendingTransition(0,0);
 			return true;
 			
 		case R.id.search_settings:
 			i = new Intent(this, SearchSettingsActivity.class);
 			i.putStringArrayListExtra("Annotations", annotation);
 			i.putExtra("searchMap", searchResults);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);	
 			startActivity(i);
+			overridePendingTransition(0,0);
 			return true;
 			
 		/*case R.id.btnconvert_main_menu:

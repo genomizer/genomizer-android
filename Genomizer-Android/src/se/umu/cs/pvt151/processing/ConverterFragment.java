@@ -494,16 +494,19 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
+	 * AsyncTask class that sends a convert request for both single and 
+	 * multiple files to the server.
 	 * 
-	 * @author Anders
-	 *
+	 * @author Anders Lundberg, dv12alg
 	 */
 	private class ConvertTask extends AsyncTask<GeneFile, Void, HashMap<Boolean, GeneFile>> {
 
 
 
 		/**
-		 * 
+		 * Takes the conversion parameters chosen and packages them for the
+		 * server, calls the comHandler with the parameters and additional data
+		 * to be sent to the server with conversion request.
 		 */
 		@Override
 		protected HashMap<Boolean, GeneFile> doInBackground(GeneFile... params) {
@@ -537,7 +540,10 @@ public class ConverterFragment extends Fragment{
 
 
 		/**
-		 * 
+		 * After the conversion request is sent, the result of the conversion
+		 * is collected and handled for presentation to the user after
+		 * conversion request is sent.
+		 * Will also dismiss the progressBar for the conversion request sent.
 		 */
 		@Override
 		protected void onPostExecute(HashMap<Boolean, GeneFile> result) {
@@ -561,7 +567,7 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
-	 * 
+	 * TextWatcther for the convertFragments editText fields 
 	 * @author Anders
 	 *
 	 */

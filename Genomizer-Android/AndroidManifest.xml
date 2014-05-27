@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.SearchActivity"
+            android:name="se.umu.cs.pvt151.search.SearchActivity"
             android:label=""
             android:screenOrientation="portrait"            
             android:windowSoftInputMode="adjustPan" >
@@ -59,7 +59,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.SearchSettingsActivity"
+            android:name="se.umu.cs.pvt151.search.SearchSettingsActivity"
             android:label=""
             android:screenOrientation="portrait">
         </activity>
@@ -70,7 +70,7 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.SearchPubmedActivity"
+            android:name="se.umu.cs.pvt151.search.SearchPubmedActivityPubmedActivity"
              android:label=""
             android:screenOrientation="portrait">
         </activity>

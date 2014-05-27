@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.search.SearchActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;

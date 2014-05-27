@@ -3,6 +3,7 @@ package se.umu.cs.pvt151;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import se.umu.cs.pvt151.search.SearchActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

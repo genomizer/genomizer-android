@@ -10,6 +10,8 @@ package se.umu.cs.pvt151;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import se.umu.cs.pvt151.search.SearchActivity;
+import se.umu.cs.pvt151.search.SearchSettingsActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;

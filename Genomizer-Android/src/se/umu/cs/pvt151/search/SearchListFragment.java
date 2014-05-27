@@ -1,10 +1,17 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import se.umu.cs.pvt151.ExperimentListActivity;
+import se.umu.cs.pvt151.Genomizer;
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.SingleFragmentActivity;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
+import se.umu.cs.pvt151.R.string;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Annotation;
 import android.content.Intent;

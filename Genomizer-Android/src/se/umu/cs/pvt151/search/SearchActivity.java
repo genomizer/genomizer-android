@@ -1,5 +1,8 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search;
 
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.SingleFragmentActivity;
+import se.umu.cs.pvt151.R.string;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;

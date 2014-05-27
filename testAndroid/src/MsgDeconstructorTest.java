@@ -17,6 +17,7 @@ import se.umu.cs.pvt151.com.MsgFactory;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
+import se.umu.cs.pvt151.model.Process;
 import junit.framework.TestCase;
 
 
@@ -93,7 +94,30 @@ public class MsgDeconstructorTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void testDeconstructProcessPackage() {
+		try {
+			Communicator.initCommunicator("http://genomizer.apiary-mock.com/");
 
+			JSONObject msg = MsgFactory.createRegularPackage();
+			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");
 
+			String jsonString = genomeResponse.getBody();
+			JSONArray jsonPackage = new JSONArray(jsonString);
 
+			ArrayList<Process> processes = MsgDeconstructor.deconProcessPackage(jsonPackage);
+
+			assertEquals("Exp1", processes.get(0).getExperimentName());
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			fail("Failed because of unsupported encoding");
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail("Failed because of IOException");
+		} catch (JSONException e) {
+			fail("Failed because of JSONException");
+			e.printStackTrace();
+		}
+	}
 }

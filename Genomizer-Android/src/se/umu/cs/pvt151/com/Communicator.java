@@ -12,6 +12,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONObject;
 
 import se.umu.cs.pvt151.model.Genomizer;
+import android.os.Build;
 import android.util.Log;
 
 public class Communicator {
@@ -88,8 +89,12 @@ public class Communicator {
 	 * @throws IOException
 	 */
 	private static void setupConnection(String requestType, String urlPostfix) throws IOException  {
+		if (Build.VERSION.SDK_INT <= 8) {
+			System.setProperty("http.keepAlive", "false");
+		}
+		
 		URL url = new URL(urlString + urlPostfix);
-
+		
 		connection = (HttpURLConnection) url.openConnection();
 
 		if (!requestType.equals("GET")) {
@@ -142,6 +147,9 @@ public class Communicator {
 			}
 
 			if (responseCode < 300 && responseCode >= 200) {
+//				if (out != null) {
+//					out.close();
+//				}
 				in = new BufferedReader(
 						new InputStreamReader(connection.getInputStream()));
 
@@ -165,6 +173,7 @@ public class Communicator {
 			if(in != null) {
 				in.close();
 			}
+			
 		}
 		return httpResponse;
 	}

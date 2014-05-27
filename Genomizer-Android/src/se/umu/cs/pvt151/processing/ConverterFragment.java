@@ -6,6 +6,7 @@ package se.umu.cs.pvt151.processing;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
@@ -47,6 +48,9 @@ import android.widget.ToggleButton;
  */
 public class ConverterFragment extends Fragment{
 
+	private static final String OK = "OK";
+	private static final String CONVERT_FAIL = "Conversions NOT started";
+	private static final String STARTING_CONVERSIONS = "Starting conversions";
 	private static final String CONVERSIONS_STARTED = " file-conversions started successfully";
 	private static final String CONVERT = "CONVERT";
 	private static final String RAW_TO_PROFILE = "raw";
@@ -63,14 +67,15 @@ public class ConverterFragment extends Fragment{
 	@SuppressWarnings("unused")
 	private ArrayList<View> headerList;
 	private ArrayList<View> viewList;
-	private ArrayList<GeneFile> processList;
+	private ArrayList<GeneFile> filesForProcess;
 	private String processType;
-	private ArrayList<String> processParameters;
+	private ArrayList<String> parameterList;
 	private ArrayList<GeneFile> failedConversions;
 	private ProgressDialog progress;
 	private int convertedFiles;
 	private IOException convertException;
 	private ProgressDialog loadScreen;
+	private Stack<GeneFile> processList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +98,7 @@ public class ConverterFragment extends Fragment{
 
 		if (b != null) {
 			processType = (String) b.get(TYPE);
-			processList = (ArrayList<GeneFile>) b.get(FILES);
+			filesForProcess = (ArrayList<GeneFile>) b.get(FILES);
 		}
 
 		if (processType.equals(RAW_TO_PROFILE)) {
@@ -265,6 +270,7 @@ public class ConverterFragment extends Fragment{
 		} else {
 			failedConversions.add(geneFile);
 		}
+		progress.incrementProgressBy(1);
 	}
 	
 	/**
@@ -278,35 +284,40 @@ public class ConverterFragment extends Fragment{
 		String message = "";
 		AlertDialog.Builder alertBuilder;
 		AlertDialog alert;
-		Intent i;
 		
-		progress.dismiss();
-		
-		if (!failedConversions.isEmpty()) {
-
-			for (GeneFile g : failedConversions) {
-				message += g.getName() + "\n";
-			}
-
-			alertBuilder = new AlertDialog.Builder(getActivity());
-			alertBuilder.setTitle("Conversions NOT started");
-			alertBuilder.setMessage(message);
-			alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Genomizer.makeToast(convertedFiles + CONVERSIONS_STARTED);
-					startNext();
-				}
-			});
+		if (processList.isEmpty()) {
 			
-			alert = alertBuilder.create();
-			alert.show();
+			progress.dismiss();
+			
+			if (failedConversions.isEmpty()) {
+				Genomizer.makeToast(convertedFiles + CONVERSIONS_STARTED);
+				startNext();
+				
+			} else {	
+				for (GeneFile g : failedConversions) {
+					message += g.getName() + "\n";
+				}
+
+				alertBuilder = new AlertDialog.Builder(getActivity());
+				alertBuilder.setTitle(CONVERT_FAIL);
+				alertBuilder.setMessage(message);
+				alertBuilder.setPositiveButton(OK, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Genomizer.makeToast(convertedFiles + CONVERSIONS_STARTED);
+						dialog.dismiss();
+						startNext();
+					}
+				});
+				
+				alert = alertBuilder.create();
+				alert.show();
+			}
+			
 		} else {
-			Genomizer.makeToast(convertedFiles + CONVERSIONS_STARTED);
-			startNext();
+			new ConvertTask().execute(processList.pop());
 		}
-		
 			
 	}
 
@@ -320,6 +331,65 @@ public class ConverterFragment extends Fragment{
 		startActivity(i);
 		getActivity().overridePendingTransition(0,0);
 		getActivity().finish();
+	}
+	
+	/**
+	 * Creates a new processList for the geneFiles that is intended for
+	 * conversion starting.
+	 *  
+	 * @param filesForProcess2 the genefiles for conversion
+	 * @return a stack with the genefiles for conversion
+	 */
+	private Stack<GeneFile> setupProcessList(ArrayList<GeneFile> filesForProcess2) {
+		Stack<GeneFile> tempStack = new Stack<GeneFile>();
+		
+		for (GeneFile geneFile : filesForProcess2) {
+			tempStack.push(geneFile);
+		}
+		
+		return tempStack;
+	}
+
+	/**
+	 *  Collects all input data for the conversion parameters selected
+	 * by the user. Will return true if the collecting is correct,
+	 * otherwise false.
+	 * 
+	 * @return true if the fields are correct, otherwise false
+	 */
+	private boolean generateParameterList() {
+		EditText et;
+		Spinner sp;
+		for (int i = 0; i < viewList.size(); i++) {
+			if(i == 6) continue;
+			if (viewList.get(i).isEnabled()) {
+	
+				if (i == 0 || i == 4 || i == 5 || i == 7 || i  == 8) {
+					et = (EditText) viewList.get(i);
+					parameterList.add(et.getText().toString());
+				} else if (i == 2 || i == 3) {
+					parameterList.add("y");
+				} else if (i == 1) {
+					sp = (Spinner) viewList.get(i);
+					parameterList.add(sp.getSelectedItem().toString());
+				}
+			} else {
+				parameterList.add("");
+			}
+		}
+		return parameterList.get(0).length() < 1;
+	}
+
+	/**
+	 * @param size 
+	 * 
+	 */
+	private void showProgressDialog(int size) {
+		progress = new ProgressDialog(getActivity());
+		progress.setMessage(STARTING_CONVERSIONS);
+		progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		progress.setMax(size);
+		progress.show();
 	}
 
 	/**
@@ -387,50 +457,30 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class buttonListener implements OnClickListener {
 
+		private static final String BOWTIE_INCORRECT = " must be filled out";
+
 		/**
 		 * 
 		 */
 		@Override
 		public void onClick(View v) {
-			processParameters = new ArrayList<String>();
-			EditText et;
-			Spinner sp;
+			parameterList = new ArrayList<String>();
+			processList = setupProcessList(filesForProcess);
 
-			for (int i = 0; i < viewList.size(); i++) {
-				if(i == 6) continue;
-				if (viewList.get(i).isEnabled()) {
-
-					if (i == 0 || i == 4 || i == 5 || i == 7 || i  == 8) {
-						et = (EditText) viewList.get(i);
-						processParameters.add(et.getText().toString());
-					} else if (i == 2 || i == 3) {
-						processParameters.add("y");
-					} else if (i == 1) {
-						sp = (Spinner) viewList.get(i);
-						processParameters.add(sp.getSelectedItem().toString());
-					}
-				} else {
-					processParameters.add("");
-				}
-			}
-
-		
-
-			if (processParameters.get(0).length() < 1) {
-				Genomizer.makeToast(headers[0] + " must be filled out");
+			if (generateParameterList()) {
+				Genomizer.makeToast(headers[0] + BOWTIE_INCORRECT);
 			} else {
 				convertButton.setEnabled(false);
 				failedConversions = new ArrayList<GeneFile>();
 				convertedFiles = 0;
 				convertException = null;
-				progress = new ProgressDialog(getActivity());
-				progress.setMessage("Starting conversions");
-				progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-				progress.setMax(processList.size());
-				progress.show();
-				for (int i = 0; i < processList.size(); i++) {
-					new ConvertTask().execute(processList.get(i));
-				}
+				showProgressDialog(processList.size());
+				
+				new ConvertTask().execute(processList.pop());
+				
+//				for (int i = 0; i < filesForProcess.size(); i++) {
+//					new ConvertTask().execute(filesForProcess.get(i));
+//				}
 			}
 
 		}
@@ -512,19 +562,20 @@ public class ConverterFragment extends Fragment{
 		protected HashMap<Boolean, GeneFile> doInBackground(GeneFile... params) {
 			GeneFile geneFile = params[0];
 			HashMap<Boolean, GeneFile> map = new HashMap<Boolean, GeneFile>();
-
 			ProcessingParameters parameters = new ProcessingParameters();
 			boolean convertOk = false;
 			String meta = "";
-			String release = processParameters.get(1);
+			String release = parameterList.get(1);
 
-			for (int i = 0; i < processParameters.size(); i++) {
+			for (int i = 0; i < parameterList.size(); i++) {
 				if (i == 1) {
 					parameters.addParameter("");
 				} else {
-					parameters.addParameter(processParameters.get(i));
+					parameters.addParameter(parameterList.get(i));
 				}
+				meta += parameterList.get(i) + ", ";
 			}
+			
 
 			try {
 				convertOk = ComHandler.rawToProfile(geneFile, parameters, meta, release);
@@ -550,25 +601,16 @@ public class ConverterFragment extends Fragment{
 			super.onPostExecute(result);
 			boolean convert = result.containsKey(true);
 			GeneFile geneFile = result.get(convert);
-
-			if (convertException == null) {
-				incrementConverted(convert, geneFile);
-				progress.incrementProgressBy(1);
-
-				if (progress.getProgress() == progress.getMax()) {
-					conversionSummary();
-				}
-
-			} else {
-				progress.dismiss();
-				Genomizer.makeToast("Server not responding");
-			}
+			
+			incrementConverted(convert, geneFile);
+			conversionSummary();
 		}
 	}
 
 	/**
-	 * TextWatcther for the convertFragments editText fields 
-	 * @author Anders
+	 * TextWatcther for the convertFragments editText fields
+	 * 
+	 * @author Anders Lundberg, dv12alg
 	 *
 	 */
 	private class textListener implements TextWatcher {

@@ -5,14 +5,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/lbl_convert_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout 
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"    	
+    	android:background="#FFFFFF">
+    	
+	     <TextView
+	        android:id="@+id/listText2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="6dp"
+	        android:background="#FFFFFF"
+	        android:text="@string/convert_str"        
+	        android:textSize="16sp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textColor="#000000"        
+	        android:textStyle="bold" />
+	        
+		<TextView      
+	      android:id="@+id/divider"    
+	      android:layout_width="fill_parent" 
+	      android:layout_height="7dp" 
+	      android:background="#DADADA" />
+    </LinearLayout>
+        
 
     <Button
         android:id="@+id/btn_convert_convertbutton"
@@ -26,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/btn_convert_convertbutton"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/lbl_convert_header" >
+        android:layout_below="@id/header" >
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
+import se.umu.cs.pvt151.model.ProcessStatus;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.util.Log;
 import junit.framework.TestCase;
@@ -189,20 +190,34 @@ public class ComHandlerTest extends TestCase {
 	public void testGetGenomeReleases() {
 		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
 		
-		HashMap<String, String> searchValues = new HashMap<String, String>();
-		searchValues.put("Species", "Human");
-		
 		ArrayList<GenomeRelease> gr = new ArrayList<GenomeRelease>();
 		
 		try {
 			ComHandler.login("liveSearchTest", "password");
 			gr = ComHandler.getGenomeReleases();
 			
-			for (int i = 0; i < gr.size(); i++) {
-				Log.d("HEJ", "gr version: " + gr.get(i).getGenomeVersion());
-			}
+			assertNotNull(gr);
+			
 		} catch (IOException e) {
-			Log.d("TestLog", e.getMessage());
+			e.printStackTrace();
+			fail("IOException!");
+		} 
+	}
+	
+	
+	public void testGetProcesses() {
+		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+		
+		
+		ArrayList<ProcessStatus> processes = new ArrayList<ProcessStatus>();
+		
+		try {
+			ComHandler.login("liveSearchTest", "password");
+			processes = ComHandler.getProcesses();
+			
+			assertNotNull(processes);
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 			fail("IOException!");
 		} 

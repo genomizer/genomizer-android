@@ -17,7 +17,7 @@ import se.umu.cs.pvt151.com.MsgFactory;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
-import se.umu.cs.pvt151.model.Process;
+import se.umu.cs.pvt151.model.ProcessStatus;
 import junit.framework.TestCase;
 
 
@@ -106,7 +106,7 @@ public class MsgDeconstructorTest extends TestCase {
 			String jsonString = genomeResponse.getBody();
 			JSONArray jsonPackage = new JSONArray(jsonString);
 
-			ArrayList<Process> processes = MsgDeconstructor.deconProcessPackage(jsonPackage);
+			ArrayList<ProcessStatus> processes = MsgDeconstructor.deconProcessPackage(jsonPackage);
 
 			assertEquals("Exp1", processes.get(0).getExperimentName());
 		} catch (UnsupportedEncodingException e) {

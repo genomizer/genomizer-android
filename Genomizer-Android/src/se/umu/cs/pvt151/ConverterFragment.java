@@ -54,7 +54,6 @@ public class ConverterFragment extends Fragment{
 	private final String[] hints = new String[] { "-a -m 1 --best -p 10 -v 2 -q -S",
 			"10 1 5 0 0", "y 10", "single 4 0", "150 1 7 0 0" };
 
-	@SuppressWarnings("unused")
 	private Button convertButton;
 	@SuppressWarnings("unused")
 	private ArrayList<View> headerList;
@@ -66,6 +65,7 @@ public class ConverterFragment extends Fragment{
 	private ProgressDialog progress;
 	private int convertedFiles;
 	private IOException convertException;
+	private ProgressDialog loadScreen;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -95,10 +95,33 @@ public class ConverterFragment extends Fragment{
 			headerList = setupHeaders(v);
 			viewList = setupWidgetsForLayout(v);
 			convertButton = setupButton(v);
+			showLoadScreen("Downloading genome releases");
 			new GetGeneReleaseTask().execute();
 		}
 
 		return v;
+	}
+	
+	/**
+	 * When coming back to the search view, enables the search button again.
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		convertButton.setEnabled(true);
+	}
+
+	/**
+	 * Displays a loading screen for the user while data is downloaded from
+	 * the server.
+	 * 
+	 * @param msg the message output to the user
+	 */
+	private void showLoadScreen(String msg) {
+		loadScreen = new ProgressDialog(getActivity());
+		loadScreen.setTitle("Loading");
+		loadScreen.setMessage(msg);
+		loadScreen.show();
 	}
 
 
@@ -106,7 +129,7 @@ public class ConverterFragment extends Fragment{
 	 * Setup the headers for the different parameter-fields in the conversion
 	 * page. 
 	 * 
-	 * @param v the view where the textfields used as headers is contained. 
+	 * @param v the view where the textFields used as headers is contained. 
 	 * @return ArrayList<View> with all the textFields used as headers.
 	 */
 	private ArrayList<View> setupHeaders(View v) {
@@ -376,6 +399,7 @@ public class ConverterFragment extends Fragment{
 			if (processParameters.get(0).length() < 1) {
 				Genomizer.makeToast(headers[0] + " must be filled out");
 			} else {
+				convertButton.setEnabled(false);
 				failedConversions = new ArrayList<GeneFile>();
 				convertedFiles = 0;
 				convertException = null;
@@ -426,6 +450,7 @@ public class ConverterFragment extends Fragment{
 		@Override
 		protected void onPostExecute(ArrayList<GenomeRelease> result) {
 			super.onPostExecute(result);
+			loadScreen.dismiss();
 			if (result == null) {
 				Genomizer.makeToast("Cant retreive Genome Releases from server");
 				getActivity().finish();

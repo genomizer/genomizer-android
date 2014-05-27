@@ -51,7 +51,6 @@ public class ConverterFragment extends Fragment{
 
 	private static final String CONVERSIONS_STARTED = " file-conversions started successfully";
 	private static final String CONVERT = "CONVERT";
-	private static final String RAW_TO_PROFILE_PARAMETERS = "Raw to profile parameters";
 	private static final String RAW_TO_PROFILE = "raw";
 	private static final String FILES = "files";
 	private static final String TYPE = "type";
@@ -160,7 +159,6 @@ public class ConverterFragment extends Fragment{
 		}
 
 		tw = (TextView) v.findViewById(R.id.lbl_convert_header);
-		tw.setText(RAW_TO_PROFILE_PARAMETERS);
 
 		return tempList;
 	}

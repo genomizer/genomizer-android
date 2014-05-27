@@ -3,20 +3,39 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#020712"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context="se.umu.cs.pvt151.SearchSettingsActivity$PlaceholderFragment" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="#020712"
-        android:text="@string/select_searchsettings"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#FFFFFF" />
+    <LinearLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:id="@+id/header"
+    	android:background="#FFFFFF">
+    	
+	     <TextView
+	        android:id="@+id/headerText"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="6dp"
+	        android:background="#FFFFFF"
+	        android:text="@string/select_searchsettings"        
+	        android:textSize="16sp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textColor="#000000"        
+	        android:textStyle="bold" />
+	        
+		<TextView      
+	      android:id="@+id/divider"    
+	      android:layout_width="fill_parent" 
+	      android:layout_height="7dp" 
+	      android:background="#DADADA" />
+    </LinearLayout>
+    
+    
 
     <ListView
         android:id="@+id/listView1"
@@ -24,7 +43,7 @@
         android:layout_height="371dp"
         android:layout_above="@+id/save_srcbtn"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/header"
         android:background="#FFFFFF" >
 
     </ListView>
@@ -35,9 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="#202020"
+        
         android:text="@string/save_settings"
-        android:textColor="#FFFFFF" />
+         />
 
     <Button
         android:id="@+id/default_btn"
@@ -45,8 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="#202020"
+        
         android:text="@string/use_default"
-        android:textColor="#FFFFFF" />
+         />
 
 </RelativeLayout>

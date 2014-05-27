@@ -1,11 +1,5 @@
 package se.umu.cs.pvt151.search_result;
 
-/**
- * Fragment used for 
- * ExperimentListActivity.
- * Presents a list over available
- * experiments to the user
- */
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,11 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.DataStorage;
@@ -39,6 +30,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * ExperimentListFragment
+ * Fragment used for 
+ * ExperimentListActivity.
+ * Presents a list over available
+ * experiments to the user
+ * @author Cecilia Lindmark
+ */
 public class ExperimentListFragment extends Fragment {
 	
 	private static final String DOWNLOADING_SEARCH_RESULTS = "Downloading search results";

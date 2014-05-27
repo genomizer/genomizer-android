@@ -28,7 +28,7 @@
       android:layout_width="fill_parent" 
       android:layout_height="7dp" 
       android:layout_below="@id/textFiles"
-      android:background="#DADADA" />
+      android:background="#D3D3D3" />
      
      <TextView
         android:id="@+id/textRaw"
@@ -36,10 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/divider"
-        android:background="#202020"
+        android:background="#D3D3D3"
         android:text="@string/raw_data"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
     <ListView
         android:id="@+id/listView1"
@@ -61,10 +61,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/listView3"
         android:layout_alignParentLeft="true"
-        android:background="#202020"
+        android:background="#D3D3D3"
         android:text="@string/region_data"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#FFFFFF"  />
+        android:textColor="#000000"  />
 
     <ListView
         android:id="@+id/listView3"
@@ -103,9 +103,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/listView2"
         android:layout_alignParentLeft="true"        
-        android:background="#202020"
+        android:background="#D3D3D3"
         android:text="@string/profile_data"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#FFFFFF" />
+        android:textColor="#000000" />
 
 </RelativeLayout>

@@ -7,15 +7,14 @@ public class SelectedFilesActivity extends SingleFragmentActivity {
 	
 	private SelectedFilesFragment selectedFilesFragment = null;
 	
+	
 	public Fragment createFragment() {
-
 		selectedFilesFragment = new SelectedFilesFragment();
 		return selectedFilesFragment;
 	}
 
-	@Override
+
 	public void onBackPressed() {
 		finish();
 	}
-
 }

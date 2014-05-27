@@ -3,8 +3,6 @@ package se.umu.cs.pvt151.selected_files;
 import java.util.ArrayList;
 
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.app.AlertDialog;
@@ -24,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class ProfileFragment extends Fragment {
+	
 
 	private ListView listProfile;
 
@@ -186,6 +185,11 @@ public class ProfileFragment extends Fragment {
 	}
 	
 	
+	/**
+	 * Sets the status on the remove button based on
+	 * if there are any marked checkboxes or not.
+	 * 
+	 */
 	private void setButtonsStatus() {
 		if (selectedProfile.size() > 0) {
 			removeButton.setEnabled(true);
@@ -197,8 +201,7 @@ public class ProfileFragment extends Fragment {
 	
 	/**
 	 * Method used to create a dialog window with
-	 * more information about a file when text view is
-	 * clicked
+	 * more information about a file.
 	 * @param file that extra information will
 	 * be received from. 
 	 */

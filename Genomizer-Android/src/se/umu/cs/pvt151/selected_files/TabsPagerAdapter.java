@@ -30,7 +30,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 		case 2:
 			return new RegionFragment();
 		}
-
 		return null;
 	}
 
@@ -41,5 +40,4 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	public int getCount() {
 		return 3;
 	}
-
 }

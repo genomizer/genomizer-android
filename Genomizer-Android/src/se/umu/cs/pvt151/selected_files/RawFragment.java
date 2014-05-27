@@ -3,8 +3,6 @@ package se.umu.cs.pvt151.selected_files;
 import java.util.ArrayList;
 
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.processing.ConverterActivity;
@@ -220,8 +218,7 @@ public class RawFragment extends Fragment {
 
 	/**
 	 * Method used to create a dialog window with
-	 * more information about a file when text view is
-	 * clicked
+	 * more information about a file.
 	 * @param file that extra information will
 	 * be received from. 
 	 */

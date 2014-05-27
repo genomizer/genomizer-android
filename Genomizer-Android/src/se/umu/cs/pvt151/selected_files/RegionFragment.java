@@ -3,8 +3,6 @@ package se.umu.cs.pvt151.selected_files;
 import java.util.ArrayList;
 
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.app.AlertDialog;
@@ -186,6 +184,11 @@ public class RegionFragment extends Fragment {
 	}
 
 
+	/**
+	 * Sets the status of the remove button based on if
+	 * there are any marked checkboxes or not.
+	 * 
+	 */
 	private void setButtonsStatus() {
 		if (selectedRegion.size() > 0) {
 			removeButton.setEnabled(true);

@@ -2,8 +2,6 @@ package se.umu.cs.pvt151.selected_files;
 
 
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -55,14 +53,18 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 	}
 	
 	
-	
-	
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		tabHost.setCurrentTab(0);	
 	}
 	
 	
+	/**
+	 * Creates and initializes the tabs for the TabHost.
+	 * More tabs may be added by adding them here and in the
+	 * TabsPagerAdapter.
+	 * 
+	 */
 	private void initializeTabs() {
 		tabHost.setOnTabChangedListener(this);
 		tabHost.setup();
@@ -83,34 +85,35 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 		tabHost.addTab(spec);
 
 		//Add new arbitrary tabs here
-		
-//		spec = tabHost.newTabSpec("RESULT");
-//		spec.setContent(R.id.viewpagerSwipe);
-//		spec.setIndicator("RESULT");
-//		tabHost.addTab(spec);
 	}
 
 
-	@Override
 	public void onPageScrollStateChanged(int e) {
 
 	}
 
 
-	@Override
+	/**
+	 * Whenever the ViewPager is changed, notify the 
+	 * TabHost.
+	 * 
+	 */
 	public void onPageScrolled(int e1, float e2, int e3) {
 		int pos = viewPager.getCurrentItem();
 		tabHost.setCurrentTab(pos);
 	}
 
 
-	@Override
 	public void onPageSelected(int e) {
 
 	}
 
 
-	@Override
+	/**
+	 * Whenever the tabs is changed, notify the 
+	 * viewPager.
+	 * 
+	 */
 	public void onTabChanged(String e) {
 		int pos = tabHost.getCurrentTab();
 		viewPager.setCurrentItem(pos);

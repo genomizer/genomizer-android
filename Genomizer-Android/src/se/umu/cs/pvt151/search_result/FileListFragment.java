@@ -1,17 +1,7 @@
 package se.umu.cs.pvt151.search_result;
 
-/**
- * FileListFragment
- * Fragment for FileListActivity.
- * Displays all files that belongs
- * to a certain experiment, displays
- * by data type.
- */
 import java.util.ArrayList;
-
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.app.AlertDialog;
@@ -29,6 +19,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * FileListFragment
+ * Fragment for FileListActivity.
+ * Displays all files that belongs
+ * to a certain experiment, displays
+ * by data type.
+ * @author Cecilia Lindmark
+ */
 public class FileListFragment extends Fragment {
 	
 	//Views for the three lists
@@ -317,7 +315,7 @@ public class FileListFragment extends Fragment {
 			viewHolder.fileCheckBox = (CheckBox) convertView.findViewById(
 					R.id.textForBox);
 			final listViewHolder buttonHolder = viewHolder;
-			/*Set onclicklistener to check box to detect if a box
+			/*Set on click listener to check box to detect if a box
 			 * is checked or not, adding a file to selected if the box is
 			 * checked and removing if unchecked. */
 			viewHolder.fileCheckBox.setOnClickListener(new OnClickListener() {
@@ -377,7 +375,7 @@ public class FileListFragment extends Fragment {
 				
 			});
 			
-			/*Setting onclick listener to text view, used to display
+			/*Setting on click listener to text view, used to display
 			 * additional information about a file if it's clicked on
 			 * in the list.*/
 			viewHolder.fileInfo.setOnClickListener(new OnClickListener() {

@@ -1,9 +1,5 @@
 package se.umu.cs.pvt151.search_result;
 
-/**
- * Activity used for handling 
- * all files of an experiment.
- */
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,6 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+/**
+ * FileListActivity
+ * Activity used for handling 
+ * all files of an experiment, displaying
+ * it to the user organised by data type.
+ * @author Cecilia Lindmark
+ */
 public class FileListActivity extends SingleFragmentActivity {
 
 	FileListFragment fragment;

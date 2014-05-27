@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Process;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -24,9 +25,11 @@ import android.widget.TextView;
 
 public class ProcessFragment extends Fragment {
 
+	private static final String DOWNLOADING_PROCESSING_INFORMATION = "Downloading processing information";
 	private ListView processList;
 	private Button refreshButton;
 	private ArrayList<Process> processes;
+	private ProgressDialog loadScreen;
 
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class ProcessFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				processes.clear();
+				showLoadScreen(DOWNLOADING_PROCESSING_INFORMATION);
 				new ProcessTask().execute();
 			}
 		});
@@ -55,6 +59,7 @@ public class ProcessFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		showLoadScreen(DOWNLOADING_PROCESSING_INFORMATION);
 		new ProcessTask().execute();
 	}
 
@@ -154,6 +159,7 @@ public class ProcessFragment extends Fragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			loadScreen.dismiss();
 			if (exception == null) {
 				processList.setAdapter(new ProcessListAdapter(processes));
 			} else {
@@ -201,5 +207,18 @@ public class ProcessFragment extends Fragment {
 		} else if (status.contains("Waiting")) {
 			statusView.setTextColor(Color.BLUE);
 		}
+	}
+	
+	/**
+	 * Displays a loading screen for the user, while downloading data from the
+	 * server. Must be manually dismissed when data transfer is done.
+	 * 
+	 * @param msg the message to display to the user
+	 */
+	private void showLoadScreen(String msg) {
+		loadScreen = new ProgressDialog(getActivity());
+		loadScreen.setTitle("Loading");
+		loadScreen.setMessage(msg);
+		loadScreen.show();
 	}
 }

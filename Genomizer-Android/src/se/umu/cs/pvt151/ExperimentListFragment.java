@@ -124,12 +124,17 @@ public class ExperimentListFragment extends Fragment {
 		return v;
 	}
 	
+	/**
+	 * Displays a loading screen for the user, while downloading data from the
+	 * server. Must be manually dismissed when data transfer is done.
+	 * 
+	 * @param msg the message to display to the user
+	 */
 	private void showLoadScreen(String msg) {
 		loadScreen = new ProgressDialog(getActivity());
 		loadScreen.setTitle("Loading");
 		loadScreen.setMessage(msg);
 		loadScreen.show();
-		
 	}
 
 	/**

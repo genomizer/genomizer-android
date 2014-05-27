@@ -138,7 +138,7 @@ public class Communicator {
 			try {
 				responseCode = connection.getResponseCode();
 			} catch(Exception e) {
-				return new GenomizerHttpPackage(401, "");
+				return new GenomizerHttpPackage(404, "");
 			}
 
 			if (responseCode < 300 && responseCode >= 200) {

@@ -21,6 +21,16 @@ public class MsgFactoryTest extends TestCase {
 	}
 	
 	
+	public void testCreateRegularPackage() {
+		try {
+			JSONObject msg = MsgFactory.createRegularPackage();
+			assertNotNull(msg);
+		} catch (JSONException e) {
+			fail("JSON exception was thrown");
+		}
+	}
+	
+	
 	public void testCreateConversionRequest() {
 		try {
 			ProcessingParameters parameters = new ProcessingParameters();

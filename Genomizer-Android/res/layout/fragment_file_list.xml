@@ -23,19 +23,14 @@
         android:textColor="#000000"        
         android:textStyle="bold" />
      
-     <TextView      
-      android:id="@+id/divider"    
-      android:layout_width="fill_parent" 
-      android:layout_height="7dp" 
-      android:layout_below="@id/textFiles"
-      android:background="#D3D3D3" />
+
      
      <TextView
         android:id="@+id/textRaw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/divider"
+        android:layout_below="@+id/textFiles"
         android:background="#D3D3D3"
         android:text="@string/raw_data"
         android:textAppearance="?android:attr/textAppearanceSmall"

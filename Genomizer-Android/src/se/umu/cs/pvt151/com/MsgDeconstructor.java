@@ -10,7 +10,7 @@ import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
-import se.umu.cs.pvt151.model.Process;
+import se.umu.cs.pvt151.model.ProcessStatus;
 
 public class MsgDeconstructor {
 
@@ -165,13 +165,13 @@ public class MsgDeconstructor {
 	 * @return
 	 * @throws JSONException
 	 */
-	public static ArrayList<Process> deconProcessPackage(JSONArray json) throws JSONException {
-		ArrayList<Process> processes = new ArrayList<Process>();
+	public static ArrayList<ProcessStatus> deconProcessPackage(JSONArray json) throws JSONException {
+		ArrayList<ProcessStatus> processes = new ArrayList<ProcessStatus>();
 
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			
-			Process process = new Process();
+			ProcessStatus process = new ProcessStatus();
 			
 			process.setExperimentName(obj.getString("experimentName"));
 			process.setStatus(obj.getString("status"));

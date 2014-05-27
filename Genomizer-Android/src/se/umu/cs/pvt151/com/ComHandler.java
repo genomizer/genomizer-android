@@ -16,7 +16,7 @@ import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.Genomizer;
-import se.umu.cs.pvt151.model.Process;
+import se.umu.cs.pvt151.model.ProcessStatus;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 
 public class ComHandler {
@@ -324,7 +324,7 @@ public class ComHandler {
 	 * @return
 	 * @throws IOException
 	 */
-	public static ArrayList<Process> getProcesses() throws IOException {
+	public static ArrayList<ProcessStatus> getProcesses() throws IOException {
 		if(!verifiyConnection()) {
 			throw new IOException("Internet connection unavailable.");
 		}
@@ -340,7 +340,7 @@ public class ComHandler {
 				return MsgDeconstructor.deconProcessPackage(jsonPackage);
 			} else {
 				responseDecode("Requesting status of processes", genomeResponse.getCode());				
-				return new ArrayList<Process>();
+				return new ArrayList<ProcessStatus>();
 			}
 
 		} catch (JSONException e) {

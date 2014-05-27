@@ -11,7 +11,7 @@ import se.umu.cs.pvt151.SingleFragmentActivity;
 import se.umu.cs.pvt151.R.id;
 import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.model.Process;
+import se.umu.cs.pvt151.model.ProcessStatus;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -32,13 +32,13 @@ public class ProcessFragment extends Fragment {
 	private static final String DOWNLOADING_PROCESSING_INFORMATION = "Downloading processing information";
 	private ListView processList;
 	private Button refreshButton;
-	private ArrayList<Process> processes;
+	private ArrayList<ProcessStatus> processes;
 	private ProgressDialog loadScreen;
 
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		processes = new ArrayList<Process>();
+		processes = new ArrayList<ProcessStatus>();
 	}
 
 
@@ -72,11 +72,11 @@ public class ProcessFragment extends Fragment {
 	 * Adapter used for listviews. Creates a list of Process objects.
 	 *
 	 */
-	private class ProcessListAdapter extends ArrayAdapter<Process> {
-		ArrayList<Process> forShow = new ArrayList<Process>();
+	private class ProcessListAdapter extends ArrayAdapter<ProcessStatus> {
+		ArrayList<ProcessStatus> forShow = new ArrayList<ProcessStatus>();
 		boolean[] selectedItem;
 
-		public ProcessListAdapter(ArrayList<Process> processes) {
+		public ProcessListAdapter(ArrayList<ProcessStatus> processes) {
 			super(getActivity(), 0, processes);
 			forShow = processes;
 
@@ -95,7 +95,7 @@ public class ProcessFragment extends Fragment {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_process, null);
 			}
-			Process process = getItem(position);
+			ProcessStatus process = getItem(position);
 
 			if (process != null) {
 				TextView expNameView = (TextView) view.findViewById(R.id.expNameTextView);
@@ -131,7 +131,7 @@ public class ProcessFragment extends Fragment {
 		}
 
 
-		public Process getItem(int position) {
+		public ProcessStatus getItem(int position) {
 			return forShow.get(position);
 		}
 	}

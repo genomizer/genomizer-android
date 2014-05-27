@@ -1,6 +1,6 @@
 package se.umu.cs.pvt151.model;
 
-public class Process {
+public class ProcessStatus {
 	
 	private String experimentName;
 	private String status;
@@ -83,7 +83,7 @@ public class Process {
 	}
 
 
-	public Process() {
+	public ProcessStatus() {
 		
 	}
 

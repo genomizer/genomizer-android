@@ -20,6 +20,7 @@ import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 public class ExperimentListFragment extends Fragment {
 	
+	private static final String DOWNLOADING_SEARCH_RESULTS = "Downloading search results";
 	//ListView used to display search results:
 	private ListView list;
 	//List used to display search results through adapter:
@@ -62,6 +64,7 @@ public class ExperimentListFragment extends Fragment {
 	private ArrayList<String> annotation = new ArrayList<String>();
 	//Used to get pubmed string if used in search
 	private String searchString;
+	private ProgressDialog loadScreen;
 	
 	/**
 	 * onCreate
@@ -95,6 +98,7 @@ public class ExperimentListFragment extends Fragment {
 		try {
 			/*Information sent to server and receiving a
 			 * list with all experiments available*/
+			showLoadScreen(DOWNLOADING_SEARCH_RESULTS);
 			forExperiments = startSearch.execute((Void) null).get();
 
 		} catch (InterruptedException e) {
@@ -120,6 +124,14 @@ public class ExperimentListFragment extends Fragment {
 		return v;
 	}
 	
+	private void showLoadScreen(String msg) {
+		loadScreen = new ProgressDialog(getActivity());
+		loadScreen.setTitle("Loading");
+		loadScreen.setMessage(msg);
+		loadScreen.show();
+		
+	}
+
 	/**
 	 * Method used to check text file
 	 * on internal storage if user has

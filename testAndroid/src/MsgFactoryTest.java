@@ -20,7 +20,6 @@ public class MsgFactoryTest extends TestCase {
 			assertEquals("pass", msg.get("password"));
 		} catch (JSONException e) {
 			fail("JSON exception was thrown");
-			e.printStackTrace();
 		}
 	}
 	

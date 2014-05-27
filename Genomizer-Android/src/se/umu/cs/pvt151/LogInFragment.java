@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import se.umu.cs.pvt151.com.ComHandler;
+import se.umu.cs.pvt151.search.SearchActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,35 +53,17 @@ public class LogInFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);				
 		userName = (EditText) v.findViewById(R.id.editTextUser);		
 		userPwd = (EditText) v.findViewById(R.id.editTextPwd);
-		//setScrollDownOnEditTextSelection(v, userName);
-		//setScrollDownOnEditTextSelection(v, userPwd);
+		
+		if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
+		    userName.setHintTextColor(Color.GRAY);
+		    userPwd.setHintTextColor(Color.GRAY);
+		    userName.setTextColor(Color.BLACK);
+		    userPwd.setTextColor(Color.BLACK);
+		}
 		return v;
 	}
 	
 	
-	private void setScrollDownOnEditTextSelection(final View v, EditText editTextItem) {
-		final ScrollView sc = (ScrollView) v.findViewById(R.id.scrollLogin);
-		editTextItem.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				final Handler handler = new Handler();
-		        new Thread(new Runnable() {
-		            @Override
-		            public void run() {
-		                try {Thread.sleep(100);} catch (InterruptedException e) {}
-		                handler.post(new Runnable() {
-		                    @Override
-		                    public void run() {	          
-		                         sc.scrollTo(0, sc.getBottom());
-		                    }
-		                });
-		            }
-		        }).start(); 
-				return false;
-			}
-		});
-	}
-
 	/**
 	 * Attempts a login with the credentials in the EditTextFields that the
 	 * private attributes userName and userPwd are bound to.

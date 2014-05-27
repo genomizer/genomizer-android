@@ -1,10 +1,15 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import se.umu.cs.pvt151.ExperimentListActivity;
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

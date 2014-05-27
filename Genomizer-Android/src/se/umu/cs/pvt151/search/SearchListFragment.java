@@ -1,12 +1,20 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import se.umu.cs.pvt151.ExperimentListActivity;
+import se.umu.cs.pvt151.Genomizer;
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.SingleFragmentActivity;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
+import se.umu.cs.pvt151.R.string;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Annotation;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +57,7 @@ public class SearchListFragment extends ListFragment {
 	private Button mSearchButton;
 	private ArrayList<Annotation> mAnnotations;
 	private ArrayList<SearchViewHolder> mViewHolderList = new ArrayList<SearchViewHolder>();
+	private ProgressDialog loadScreen;
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +71,7 @@ public class SearchListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		showLoadScreen();
 		new AnnotationsTask().execute();
 	}
 	
@@ -84,6 +94,24 @@ public class SearchListFragment extends ListFragment {
 		}
 	}
 	
+	/**
+	 * When coming back to this view, enable the searchButton
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (mSearchButton != null) {
+			mSearchButton.setEnabled(true);
+		}
+	}
+	
+	private void showLoadScreen() {
+		loadScreen = new ProgressDialog(getActivity());
+		loadScreen.setTitle("Loading");
+		loadScreen.setMessage("Downloading server annotations");
+		loadScreen.show();
+	}
+
 	/**
 	 * Initializes a new SearchListAdapter for the listView in the fragment 
 	 * containing the generated annotations from the database and
@@ -120,6 +148,7 @@ public class SearchListFragment extends ListFragment {
 					Genomizer.makeToast(NO_SEARCH_VALUES);
 				} else {
 					if(Genomizer.isOnline()) {
+						mSearchButton.setEnabled(false);
 						intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
 						intent.putExtra(SEARCH_MAP_EXTRA, search);
 						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);												
@@ -486,10 +515,10 @@ public class SearchListFragment extends ListFragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			loadScreen.dismiss();
 			if (except == null) {
 				setupListView();
 			} else {
-				//Genomizer.makeToast(CONNECTION_ERROR);
 				except.printStackTrace();
 				except = null;
 			}

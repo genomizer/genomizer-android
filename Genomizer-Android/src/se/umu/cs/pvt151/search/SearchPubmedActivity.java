@@ -1,5 +1,6 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search;
 
+import se.umu.cs.pvt151.SingleFragmentActivity;
 import android.support.v4.app.Fragment;
 import android.view.View;
 

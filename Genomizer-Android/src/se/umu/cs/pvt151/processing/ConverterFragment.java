@@ -9,8 +9,6 @@ import java.util.HashMap;
 
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
@@ -312,9 +310,8 @@ public class ConverterFragment extends Fragment{
 			
 	}
 
-
 	/**
-	 * 
+	 * Starts the processFragment and finish the current view.
 	 */
 	private void startNext() {
 		Intent i;
@@ -442,15 +439,23 @@ public class ConverterFragment extends Fragment{
 
 
 	/**
+	 * AsyncTask class for retrieval of genome releases that exist on
+	 * the Genomizer server.
 	 * 
-	 * @author Anders
+	 * @author Anders Lundberg, dv12alg
+	 * @author Erik Åberg, c11eag
 	 *
 	 */
 	private class GetGeneReleaseTask extends AsyncTask<Void, Void, ArrayList<GenomeRelease>> {
 
 
+		private static final String GEN_REL_EMPTY = "No Gemome releases found on server";
+		private static final String GEN_REL_NULL = "Cant retreive Genome Releases from server";
+
 		/**
-		 * 
+		 * Retrieves a new genomeRelease list from the server. If the
+		 * connection to the server goes down the user is sent back to the log
+		 * in screen.
 		 */
 		@Override
 		protected ArrayList<GenomeRelease> doInBackground(Void... params) {
@@ -468,17 +473,18 @@ public class ConverterFragment extends Fragment{
 		}
 
 		/**
-		 * 
+		 * When the download from the server is finished.
+		 * Dismiss the loading screen and setup the GenomeRelease 
 		 */
 		@Override
 		protected void onPostExecute(ArrayList<GenomeRelease> result) {
 			super.onPostExecute(result);
 			loadScreen.dismiss();
 			if (result == null) {
-				Genomizer.makeToast("Cant retreive Genome Releases from server");
+				Genomizer.makeToast(GEN_REL_NULL);
 				getActivity().finish();
 			} else if (result.isEmpty()) {
-				Genomizer.makeToast("No Gemome releases found on server");
+				Genomizer.makeToast(GEN_REL_EMPTY);
 				getActivity().finish();
 			} else {
 				setupSpinner(result);

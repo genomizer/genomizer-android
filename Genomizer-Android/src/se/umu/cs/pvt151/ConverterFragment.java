@@ -43,9 +43,10 @@ import android.widget.ToggleButton;
  */
 public class ConverterFragment extends Fragment{
 
+	private static final String OK = "OK";
+	private static final String CONVERSIONS_NOT_STARTED = "Conversions NOT started";
 	private static final String CONVERSIONS_STARTED = " file-conversions started successfully";
 	private static final String CONVERT = "CONVERT";
-	private static final String RAW_TO_PROFILE_PARAMETERS = "Raw to profile parameters";
 	private static final String RAW_TO_PROFILE = "raw";
 	private static final String FILES = "files";
 	private static final String TYPE = "type";
@@ -152,9 +153,6 @@ public class ConverterFragment extends Fragment{
 			tw = (TextView) tempList.get(i);
 			tw.setText(headers[i]);
 		}
-
-		tw = (TextView) v.findViewById(R.id.lbl_convert_header);
-		tw.setText(RAW_TO_PROFILE_PARAMETERS);
 
 		return tempList;
 	}
@@ -276,7 +274,6 @@ public class ConverterFragment extends Fragment{
 		String message = "";
 		AlertDialog.Builder alertBuilder;
 		AlertDialog alert;
-		Intent i;
 		
 		progress.dismiss();
 		
@@ -287,9 +284,9 @@ public class ConverterFragment extends Fragment{
 			}
 
 			alertBuilder = new AlertDialog.Builder(getActivity());
-			alertBuilder.setTitle("Conversions NOT started");
+			alertBuilder.setTitle(CONVERSIONS_NOT_STARTED);
 			alertBuilder.setMessage(message);
-			alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			alertBuilder.setPositiveButton(OK, new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -386,6 +383,9 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class buttonListener implements OnClickListener {
 
+		private static final String STARTING_CONVERSIONS = "Starting conversions";
+		private static final String EMPTY_BOWTIE = " must be filled out";
+
 		/**
 		 * 
 		 */
@@ -416,14 +416,14 @@ public class ConverterFragment extends Fragment{
 		
 
 			if (processParameters.get(0).length() < 1) {
-				Genomizer.makeToast(headers[0] + " must be filled out");
+				Genomizer.makeToast(headers[0] + EMPTY_BOWTIE);
 			} else {
 				convertButton.setEnabled(false);
 				failedConversions = new ArrayList<GeneFile>();
 				convertedFiles = 0;
 				convertException = null;
 				progress = new ProgressDialog(getActivity());
-				progress.setMessage("Starting conversions");
+				progress.setMessage(STARTING_CONVERSIONS);
 				progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				progress.setMax(processList.size());
 				progress.show();
@@ -444,6 +444,9 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class GetGeneReleaseTask extends AsyncTask<Void, Void, ArrayList<GenomeRelease>> {
 
+
+		private static final String GEN_REL_EMPTY = "No Gemome releases found on server";
+		private static final String GEN_REL_NULL = "Cant retreive Genome Releases from server";
 
 		/**
 		 * 
@@ -471,10 +474,10 @@ public class ConverterFragment extends Fragment{
 			super.onPostExecute(result);
 			loadScreen.dismiss();
 			if (result == null) {
-				Genomizer.makeToast("Cant retreive Genome Releases from server");
+				Genomizer.makeToast(GEN_REL_NULL);
 				getActivity().finish();
 			} else if (result.isEmpty()) {
-				Genomizer.makeToast("No Gemome releases found on server");
+				Genomizer.makeToast(GEN_REL_EMPTY);
 				getActivity().finish();
 			} else {
 				setupSpinner(result);
@@ -490,6 +493,7 @@ public class ConverterFragment extends Fragment{
 	 */
 	private class ConvertTask extends AsyncTask<GeneFile, Void, HashMap<Boolean, GeneFile>> {
 
+		private static final String SERVER_NOT_RESPONDING = "Server not responding";
 
 
 		/**
@@ -545,7 +549,7 @@ public class ConverterFragment extends Fragment{
 
 			} else {
 				progress.dismiss();
-				Genomizer.makeToast("Server not responding");
+				Genomizer.makeToast(SERVER_NOT_RESPONDING);
 			}
 		}
 	}

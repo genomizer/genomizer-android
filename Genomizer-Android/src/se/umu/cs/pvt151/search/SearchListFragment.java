@@ -7,9 +7,6 @@ import java.util.HashMap;
 
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
-import se.umu.cs.pvt151.R.string;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Genomizer;
@@ -30,7 +27,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +44,9 @@ import android.widget.Spinner;
  */
 public class SearchListFragment extends ListFragment {
 
+	private static final String PUBMED_QUERY = "PubmedQuery";
+	private static final String DOWNLOAD_ANNOTATIONS = "Downloading server annotations";
+	private static final String LOADING = "Loading";
 	private static final String ANNOTATIONS_EXTRA = "Annotations";
 	protected static final String SEARCH_MAP_EXTRA = "searchMap";
 	protected static final String CONNECTION_ERROR = "Unable to connect to the remote server";
@@ -57,8 +56,8 @@ public class SearchListFragment extends ListFragment {
 	private Button mSearchButton;
 	private ArrayList<Annotation> mAnnotations;
 	private ArrayList<SearchViewHolder> mViewHolderList = new ArrayList<SearchViewHolder>();
-	private ProgressDialog loadScreen;
-		
+	private ProgressDialog mLoadScreen;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,16 +70,22 @@ public class SearchListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		showLoadScreen();
+		showLoadScreen(DOWNLOAD_ANNOTATIONS);
 		new AnnotationsTask().execute();
 	}
 	
+	/**
+	 * If EditPubMed menu item is pressed the current search is passed on to
+	 * the SearchPubMedFragment for PubMed editing.
+	 *  
+	 * @param string 
+	 */
 	public void onMenuItemPress(String string) {
 		if(string.equals(getString(R.string.action_search_editPub))) {
 			if(Genomizer.isOnline()) {
 				Intent intent = new Intent(getActivity(),
 						SearchPubmedActivity.class);
-				intent.putExtra("PubmedQuery", generateSearchString());
+				intent.putExtra(PUBMED_QUERY, generateSearchString());
 				intent.putExtra(ANNOTATIONS_EXTRA, mAnnotationNamesList);
 				intent.putExtra(SEARCH_MAP_EXTRA, generateSearchMap());
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);												
@@ -105,11 +110,16 @@ public class SearchListFragment extends ListFragment {
 		}
 	}
 	
-	private void showLoadScreen() {
-		loadScreen = new ProgressDialog(getActivity());
-		loadScreen.setTitle("Loading");
-		loadScreen.setMessage("Downloading server annotations");
-		loadScreen.show();
+	/**
+	 * Presents the user with a loading screen while data transfer is 
+	 * occuring in the application. 
+	 * 
+	 */
+	private void showLoadScreen(String msg) {
+		mLoadScreen = new ProgressDialog(getActivity());
+		mLoadScreen.setTitle(LOADING);
+		mLoadScreen.setMessage(msg);
+		mLoadScreen.show();
 	}
 
 	/**
@@ -225,16 +235,6 @@ public class SearchListFragment extends ListFragment {
 				R.layout.searchlist_header, null);		
 		listView.addHeaderView(header);
 	}
-	
-	/**
-	 * Generates toast messages for the searchListFragment
-	 * 
-	 * @param text the string that needs to be displayed.
-	 */
-	/*private void toastMessage(String text) {
-		Toast.makeText(getActivity().getApplicationContext(), text,
-				Toast.LENGTH_SHORT).show();
-	} */
 	
 	/**
 	 * Static searchViewHolder class for keeping items in the searchList in 
@@ -515,7 +515,7 @@ public class SearchListFragment extends ListFragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			loadScreen.dismiss();
+			mLoadScreen.dismiss();
 			if (except == null) {
 				setupListView();
 			} else {

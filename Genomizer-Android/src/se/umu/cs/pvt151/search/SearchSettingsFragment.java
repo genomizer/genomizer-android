@@ -196,7 +196,7 @@ public class SearchSettingsFragment extends Fragment {
 	
 	/**
 	 * Used to create holder for
-	 * values used in getview
+	 * values used in get view
 	 *
 	 */
 	static class listViewHolder {
@@ -207,7 +207,7 @@ public class SearchSettingsFragment extends Fragment {
 	
 	/**
 	 * Adapter used to handle selection of
-	 * options in the list view. Sets onclick
+	 * options in the list view. Sets on click
 	 * listener to list view to detect what happens when
 	 * user checks check boxes. 
 	 * @author Cecilia Lindmark

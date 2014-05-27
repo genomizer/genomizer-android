@@ -3,41 +3,52 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#020712"
     android:orientation="vertical"
     tools:context="se.umu.cs.pvt151.FileListActivity$PlaceholderFragment" >
-
-    <TextView
+    
+     <TextView
         android:id="@+id/textFiles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:layout_marginTop="8dp"
         android:layout_alignParentTop="true"
-		android:layout_marginBottom="8dp"
-        android:layout_centerInParent="true"
-        android:background="#FFFFFF"
+        android:layout_centerHorizontal="true"
+        android:background="#020712"
         android:text="@string/exp_info"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold" />
+     
      <TextView      
       android:id="@+id/divider"    
       android:layout_width="fill_parent" 
       android:layout_height="7dp" 
       android:layout_below="@id/textFiles"
       android:background="#DADADA" />
+     
+     <TextView
+        android:id="@+id/textRaw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textFiles"
+        android:background="#202020"
+        android:text="@string/raw_data"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF" />
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="114dp"
+        android:layout_above="@+id/textProfile"
+        android:layout_below="@id/textRaw"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textRaw"
         android:background="#F5F5F5"
-        android:dividerHeight="1dp"
-        android:choiceMode="multipleChoice" >
+        android:choiceMode="multipleChoice"
+        android:dividerHeight="1dp" >
 
     </ListView>
 
@@ -47,10 +58,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/listView3"
         android:layout_alignParentLeft="true"
-        android:background="#A9A9A9"
+        android:background="#202020"
         android:text="@string/region_data"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#000000" />
+        android:textColor="#FFFFFF"  />
 
     <ListView
         android:id="@+id/listView3"
@@ -67,21 +78,11 @@
         android:id="@+id/sendBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#202020"
+        android:textColor="#FFFFFF"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/convert" />
-
-    <TextView
-        android:id="@+id/textRaw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/listView1"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/divider"
-        android:background="#A9A9A9"
-        android:text="@string/raw_data"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#000000" />
 
     <ListView
         android:id="@+id/listView2"
@@ -89,10 +90,9 @@
         android:layout_height="114dp"
         android:layout_above="@+id/textRegion"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textProfile"
         android:background="#F5F5F5"
-        android:dividerHeight="1dp"
-        android:choiceMode="multipleChoice" >
+        android:choiceMode="multipleChoice"
+        android:dividerHeight="1dp" >
 
     </ListView>
 
@@ -100,11 +100,11 @@
         android:id="@+id/textProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/listView2"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/listView1"
-        android:background="#A9A9A9"
+        android:background="#202020"
         android:text="@string/profile_data"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#000000" />
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

@@ -1,7 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#020712"
+    android:orientation="vertical"
     tools:context="se.umu.cs.pvt151.SearchSettingsActivity$PlaceholderFragment" >
 
     <TextView
@@ -9,10 +12,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:background="#020712"
         android:text="@string/select_searchsettings"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="371dp"
+        android:layout_above="@+id/save_srcbtn"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:background="#FFFFFF" >
+
+    </ListView>
 
     <Button
         android:id="@+id/save_srcbtn"
@@ -20,18 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="@string/save_settings" />
-
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/save_srcbtn"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1" >
-
-    </ListView>
+        android:background="#202020"
+        android:text="@string/save_settings"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/default_btn"
@@ -39,6 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/use_default" />
+        android:background="#202020"
+        android:text="@string/use_default"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

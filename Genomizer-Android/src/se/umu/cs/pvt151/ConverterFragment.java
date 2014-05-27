@@ -500,6 +500,7 @@ public class ConverterFragment extends Fragment{
 			} catch (IOException e) {
 				e.printStackTrace();
 				convertException = e;
+				convertButton.setEnabled(true);
 			}
 
 			return map;

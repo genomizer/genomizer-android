@@ -39,7 +39,7 @@
             android:ems="10"
             android:hint="@string/enter_username"
             android:maxLength="20"
-            android:textColor="#ffffff"
+            android:textColor="#ffffff"            
             android:inputType="textNoSuggestions"
             android:textColorHint="#CFCFCF"
             android:singleLine="true" >

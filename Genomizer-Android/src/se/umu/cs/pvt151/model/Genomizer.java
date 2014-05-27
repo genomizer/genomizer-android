@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.model;
 
 import android.app.Application;
 import android.content.Context;

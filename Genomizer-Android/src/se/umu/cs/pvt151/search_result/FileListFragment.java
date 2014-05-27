@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search_result;
 
 /**
  * FileListFragment
@@ -8,6 +8,10 @@ package se.umu.cs.pvt151;
  * by data type.
  */
 import java.util.ArrayList;
+
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.app.AlertDialog;

@@ -1,14 +1,20 @@
 /**
  * 
  */
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.processing;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.SingleFragmentActivity;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
+import se.umu.cs.pvt151.model.Genomizer;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

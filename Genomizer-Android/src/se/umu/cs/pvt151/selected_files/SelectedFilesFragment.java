@@ -1,6 +1,9 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.selected_files;
 
 
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;

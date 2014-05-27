@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.processing;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.SingleFragmentActivity;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Process;
 import android.app.ProgressDialog;

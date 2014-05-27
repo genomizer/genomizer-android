@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search_result;
 
 /**
  * Fragment used for 
@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.SingleFragmentActivity;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.DataStorage;

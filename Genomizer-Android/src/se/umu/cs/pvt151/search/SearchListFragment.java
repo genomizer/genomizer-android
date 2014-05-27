@@ -5,8 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import se.umu.cs.pvt151.ExperimentListActivity;
-import se.umu.cs.pvt151.Genomizer;
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
 import se.umu.cs.pvt151.R.id;
@@ -14,6 +12,8 @@ import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.R.string;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.Annotation;
+import se.umu.cs.pvt151.model.Genomizer;
+import se.umu.cs.pvt151.search_result.ExperimentListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;

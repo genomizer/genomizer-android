@@ -11,7 +11,7 @@ import java.net.URL;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONObject;
 
-import se.umu.cs.pvt151.Genomizer;
+import se.umu.cs.pvt151.model.Genomizer;
 import android.util.Log;
 
 public class Communicator {

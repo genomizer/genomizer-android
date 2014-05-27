@@ -1,5 +1,6 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.login;
 
+import se.umu.cs.pvt151.SingleFragmentActivity;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;

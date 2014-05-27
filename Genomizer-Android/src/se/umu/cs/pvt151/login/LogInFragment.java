@@ -1,8 +1,11 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.login;
 
 import java.io.IOException;
 import java.util.Arrays;
 
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.search.SearchActivity;
 import android.app.ProgressDialog;

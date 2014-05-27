@@ -14,10 +14,10 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/actionbar_icon"
-        android:name="se.umu.cs.pvt151.Genomizer"
+        android:name="se.umu.cs.pvt151.model.Genomizer"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="se.umu.cs.pvt151.LogInActivity"
+            android:name="se.umu.cs.pvt151.login.LogInActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
@@ -34,37 +34,32 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.SettingsActivity"
+            android:name="se.umu.cs.pvt151.login.SettingsActivity"
             android:label=""
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.ExperimentListActivity"
+            android:name="se.umu.cs.pvt151.search_result.ExperimentListActivity"
             android:label=""
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.FileListActivity"
+            android:name="se.umu.cs.pvt151.search_result.FileListActivity"
             android:label=""
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.SelectedFilesActivity"
+            android:name="se.umu.cs.pvt151.selected_files.SelectedFilesActivity"
              android:label=""          
             android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="se.umu.cs.pvt151.ConvertActivity"
-             android:label=""
-            android:screenOrientation="portrait" >
-        </activity>
+        </activity>        
         <activity
             android:name="se.umu.cs.pvt151.search.SearchSettingsActivity"
             android:label=""
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.ConverterActivity"
+            android:name="se.umu.cs.pvt151.processing.ConverterActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
@@ -75,7 +70,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.ProcessActivity"
+           android:name="se.umu.cs.pvt151.processing.ProcessActivity"
              android:label=""
             android:screenOrientation="portrait">
         </activity>

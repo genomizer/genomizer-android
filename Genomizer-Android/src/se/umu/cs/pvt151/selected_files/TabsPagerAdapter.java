@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.selected_files;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

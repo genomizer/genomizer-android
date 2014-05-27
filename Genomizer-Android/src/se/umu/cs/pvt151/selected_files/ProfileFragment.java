@@ -1,12 +1,14 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.selected_files;
 
 import java.util.ArrayList;
 
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.model.DataStorage;
 import se.umu.cs.pvt151.model.GeneFile;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,94 +23,66 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class RawFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-	private ListView listRaw;
+	private ListView listProfile;
 
-	private ArrayList<GeneFile> raw;
-	private ArrayList<GeneFile> selectedRaw;
-
+	private ArrayList<GeneFile> profile;
+	private ArrayList<GeneFile> selectedProfile;
+	
 	private FileListAdapter adapter;
-
-	private Button convertRawButton;
-	private Button removeRawButton;
-
+	
+	private Button removeButton;
+	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		raw = DataStorage.getFileList("raw");
-		selectedRaw = new ArrayList<GeneFile>();
+		profile = DataStorage.getFileList("profile");
+		selectedProfile = new ArrayList<GeneFile>();
 	}
 
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_raw, parent, false);
+		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
 
-		listRaw = (ListView) v.findViewById(R.id.raw);
-		adapter = new FileListAdapter(raw, "raw");
-		listRaw.setAdapter(adapter);
-
-		setConvertButtonListener(v);
+		listProfile = (ListView) v.findViewById(R.id.profile);
+		
+		adapter = new FileListAdapter(profile, "profile");
+		
+		listProfile.setAdapter(adapter);
+		
 		setRemoveButtonListener(v);
 
 		return v;
 	}
-
-
+	
+	
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		selectedRaw = DataStorage.getFileList("rawSelected");
+		selectedProfile = DataStorage.getFileList("profileSelected");
 		adapter.notifyDataSetChanged();
 		setButtonsStatus();
 	}
-
-
-	/**
-	 * Implements a buttonlistener for the convert button.
-	 * 
-	 * @param v
-	 */
-	private void setConvertButtonListener(View v) {
-		convertRawButton = (Button) v.findViewById(R.id.convert_raw_button);
-
-		convertRawButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				if (selectedRaw.size() > 0) {
-					Intent intent = new Intent(getActivity(),
-							ConverterActivity.class);
-
-					intent.putExtra("type", "raw");
-					intent.putExtra("files", selectedRaw);
-
-					startActivity(intent);
-				} 
-			}
-		});
-	}
-
-
+	
+	
 	/**
 	 * Implements a buttonlistener for the remove button.
 	 * 
 	 * @param v
 	 */
 	private void setRemoveButtonListener(View v) {
-		removeRawButton = (Button) v.findViewById(R.id.remove_raw_button);
+		removeButton = (Button) v.findViewById(R.id.remove_profile_button);
 
-		removeRawButton.setOnClickListener(new OnClickListener() {
+		removeButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				for (int i = 0; i < selectedRaw.size(); i++) {
-					GeneFile file = selectedRaw.get(i);
-					adapter.remove(file);
-					raw.remove(file);
+				for (int i = 0; i < selectedProfile.size(); i++) {
+					adapter.remove(selectedProfile.get(i));
+					profile.remove(selectedProfile.get(i));
 				}
-				selectedRaw.clear();
+				selectedProfile.clear();
 				adapter.notifyDataSetChanged();
 				setButtonsStatus();
 			}
@@ -118,33 +92,23 @@ public class RawFragment extends Fragment {
 
 
 	/**
-	 * Sets the buttons status based on if there is any marked files
-	 * or not.
-	 * 
-	 */
-	private void setButtonsStatus() {
-		if (selectedRaw.size() > 0) {
-			convertRawButton.setEnabled(true);
-			removeRawButton.setEnabled(true);
-		} else {
-			convertRawButton.setEnabled(false);
-			removeRawButton.setEnabled(false);
-		}
-	}
-
-
-	/**
 	 * Adapter used for listviews. Its purpose is to store and view
 	 * GeneFile objects graphically.
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
-
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
+		boolean[] selectedItem;
 
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
 			super(getActivity(), 0, files);
 			forShow = files;
+			if (files != null) {
+				selectedItem = new boolean[files.size()];
+				for(int i = 0; i<selectedItem.length; i++) {
+					selectedItem[i] = false;
+				}
+			}
 		}
 
 
@@ -152,41 +116,47 @@ public class RawFragment extends Fragment {
 			Context cont = getActivity();
 			
 			final int pos = position;
-
+			
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_checkbox, null);
 			}
+
 			GeneFile file = getItem(position);
 
 			if (file != null) {
 				TextView textView = (TextView) view.findViewById(R.id.textView1);
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
+				
 				checkBox.setTag(position);
+
 				textView.setText(file.getName());
+				
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
+					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						
 						int position = (Integer) buttonView.getTag();
-
+						
 						if (isChecked) {
-							if (!selectedRaw.contains(forShow.get(position))) {
-								selectedRaw.add(forShow.get(position));
+							if (!selectedProfile.contains(forShow.get(position))) {
+								selectedProfile.add(forShow.get(position));
 							}
 						} else {
-							selectedRaw.remove(forShow.get(position));
+							selectedProfile.remove(forShow.get(position));
 						}
-						DataStorage.appendFileList("rawSelected", selectedRaw);
+						DataStorage.appendFileList("profileSelected", selectedProfile);
 						setButtonsStatus();
 					}
 				});
-
-				if (selectedRaw.contains(file)) {
-					if (!checkBox.isChecked()) {
+				
+				if (!selectedProfile.contains(file)) {
+					if (checkBox.isChecked()) {
 						checkBox.toggle();
 					}
 				} else { 
-					if (checkBox.isChecked()) {
+					if (!checkBox.isChecked()) {
 						checkBox.toggle();
 					}
 				}
@@ -202,18 +172,29 @@ public class RawFragment extends Fragment {
 			}
 			return view;
 		}
-
+		
+		
 		@Override
-		public boolean hasStableIds() {
-			return true;
-		}
+        public boolean hasStableIds() {
+          return true;
+        }
+
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
 		}
 	}
-
-
+	
+	
+	private void setButtonsStatus() {
+		if (selectedProfile.size() > 0) {
+			removeButton.setEnabled(true);
+		} else {
+			removeButton.setEnabled(false);
+		}
+	}
+	
+	
 	/**
 	 * Method used to create a dialog window with
 	 * more information about a file when text view is

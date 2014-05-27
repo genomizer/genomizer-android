@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search_result;
 
 /**
  * Activity used for handling 
@@ -7,6 +7,7 @@ package se.umu.cs.pvt151;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import se.umu.cs.pvt151.SingleFragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

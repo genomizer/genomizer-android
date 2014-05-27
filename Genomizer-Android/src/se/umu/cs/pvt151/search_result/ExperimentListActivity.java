@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151;
+package se.umu.cs.pvt151.search_result;
 
 /**
  * ExmperimentListActivity
@@ -10,8 +10,14 @@ package se.umu.cs.pvt151;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import se.umu.cs.pvt151.R;
+import se.umu.cs.pvt151.SingleFragmentActivity;
+import se.umu.cs.pvt151.R.id;
+import se.umu.cs.pvt151.R.menu;
+import se.umu.cs.pvt151.login.SettingsActivity;
 import se.umu.cs.pvt151.search.SearchActivity;
 import se.umu.cs.pvt151.search.SearchSettingsActivity;
+import se.umu.cs.pvt151.selected_files.SelectedFilesActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;

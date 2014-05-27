@@ -9,11 +9,8 @@ package se.umu.cs.pvt151.search_result;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.menu;
 import se.umu.cs.pvt151.login.SettingsActivity;
 import se.umu.cs.pvt151.search.SearchActivity;
 import se.umu.cs.pvt151.search.SearchSettingsActivity;
@@ -25,17 +22,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.content.Intent;
 
+/**
+ * ExperimentListActivity
+ * Handles getting search results from
+ * server and displaying it to the user
+ * @author Cecilia Lindmark
+ *
+ */
 public class ExperimentListActivity extends SingleFragmentActivity {
 	ExperimentListFragment fragment;
 	ArrayList<String> annotation = new ArrayList<String>();
 	HashMap<String, String> searchResults = new HashMap<String, String>();
 	
+	/**
+	 * Creates fragment that display
+	 * search results to the user.
+	 */
 	@Override
 	protected Fragment createFragment() {
 		fragment = new ExperimentListFragment();
 		return fragment;
 	}
 	
+	/**
+	 * onCreate
+	 * Gets the right values from
+	 * search activity.
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +68,9 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		return true;
 	}
 	
+	/**
+	 * Handles the action bar options
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent i;
@@ -91,11 +107,6 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 			overridePendingTransition(0,0);
 			return true;
 			
-		/*case R.id.btnconvert_main_menu:
-			i = new Intent(this, ConvertActivity.class);
-			startActivity(i);
-			return true;*/
-			
 		default:
 			break;
 		}
@@ -103,16 +114,21 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Storing annotation information
+	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putStringArrayList("annotations", annotation);
 	}
 	
+	/**
+	 * Finish the activity when
+	 * back button is pressed
+	 */
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
-//		super.onBackPressed(); //TODO ADDED AFTER ABSTRACT METHOD DECLARATION
 		finish();
 	}
 

@@ -366,6 +366,7 @@ public class ExperimentListFragment extends Fragment {
 		protected void onPostExecute(ArrayList<Experiment> forExperiments) {
 			/*Creating list with right looking information
 			 * used to be displayed in search.*/
+			loadScreen.dismiss();
 			getDefaultOrNot();
 			getStoredAnnotations();
 			organizeAnnotations();

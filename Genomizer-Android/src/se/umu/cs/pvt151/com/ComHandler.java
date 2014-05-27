@@ -145,7 +145,8 @@ public class ComHandler {
 		try {					
 			
 			JSONObject msg = MsgFactory.createRegularPackage();
-			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
+			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest
+					(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
 			
 			if (searchResponse.getCode() == 200) {
 				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
@@ -175,7 +176,8 @@ public class ComHandler {
 		}
 		try {						
 			JSONObject msg = MsgFactory.createRegularPackage();
-			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest(msg, "GET", "search/?annotations=" + pubmedQuery);
+			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest
+					(msg, "GET", "search/?annotations=" + pubmedQuery);
 
 			if (searchResponse.getCode() >= 200 && searchResponse.getCode() < 300) {
 				JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
@@ -186,7 +188,8 @@ public class ComHandler {
 				return new ArrayList<Experiment>();
 			}
 		} catch (JSONException e) {
-			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
+			throw new IOException("Unable to understand server response. "
+					+ "Has response messages been modified? " + e.getMessage());
 		}
 	}
 
@@ -216,7 +219,8 @@ public class ComHandler {
 			}
 
 		} catch (JSONException e) {
-			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
+			throw new IOException("Unable to understand server response. "
+					+ "Has response messages been modified? " + e.getMessage());
 			
 		}
 	}
@@ -229,7 +233,8 @@ public class ComHandler {
 	 * @return An encoded pubmed query string based on the parameter.
 	 * @throws UnsupportedEncodingException If the device cannot encode the query.
 	 */
-	public static String generatePubmedQuery(HashMap<String, String> annotations) throws UnsupportedEncodingException {
+	public static String generatePubmedQuery(HashMap<String, String> annotations) 
+			throws UnsupportedEncodingException {
 		String pubmedQuery = "";
 
 		Set<String> ann = annotations.keySet();
@@ -257,7 +262,8 @@ public class ComHandler {
 	 * @return true if the task was recieved and validated by the server, false otherwise
 	 * @throws IOException
 	 */
-	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, String meta, String release) throws IOException {
+	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, 
+			String meta, String release) throws IOException {
 		if(!verifiyConnection()) {
 			throw new IOException("Internet connection unavailable.");
 		}
@@ -274,7 +280,8 @@ public class ComHandler {
 			}
 		} catch (JSONException e) {
 			//This is only an issue if the server is changed.
-			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
+			throw new IOException("Unable to understand server response. "
+					+ "Has response messages been modified? " + e.getMessage());
 		}
 	}
 	
@@ -304,7 +311,8 @@ public class ComHandler {
 			}
 
 		} catch (JSONException e) {
-			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
+			throw new IOException("Unable to understand server response. "
+					+ "Has response messages been modified? " + e.getMessage());
 		}
 	}
 	
@@ -336,7 +344,8 @@ public class ComHandler {
 			}
 
 		} catch (JSONException e) {
-			throw new IOException("Unable to understand server response. Has response messages been modified? " + e.getMessage());
+			throw new IOException("Unable to understand server response. "
+					+ "Has response messages been modified? " + e.getMessage());
 		}
 	}
 }

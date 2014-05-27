@@ -257,8 +257,12 @@ public class ExperimentListFragment extends Fragment {
 				storedAnnotations.add(toSplit[j].trim());
 			}
 		} else if(defaultSettings) {
-			storedAnnotations.add(annotation.get(0));
-			storedAnnotations.add(annotation.get(1));
+			if(annotation.size() > 1) {
+				storedAnnotations.add(annotation.get(0));
+				storedAnnotations.add(annotation.get(1));
+			} else {
+				storedAnnotations.add(annotation.get(0));
+			}
 		}
 	}
 	

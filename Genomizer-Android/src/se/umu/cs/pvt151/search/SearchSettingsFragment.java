@@ -85,20 +85,25 @@ public class SearchSettingsFragment extends Fragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Toast.makeText(getActivity().getApplicationContext(),
-						"Adding: " + newSettings.toString(), 
-						Toast.LENGTH_SHORT).show();
-				saveSettings();
-				Intent intent = new Intent(getActivity(), 
+				if(newSettings.size() != 0) {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Adding: " + newSettings.toString(), 
+							Toast.LENGTH_SHORT).show();
+					saveSettings();
+					Intent intent = new Intent(getActivity(), 
 						ExperimentListActivity.class);
-				intent.putStringArrayListExtra("Annotations", annotations);
-				intent.putExtra("searchMap", searchResults);
-				saveDefaultOrNot("false");
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				getActivity().overridePendingTransition(0,0);				
+					intent.putStringArrayListExtra("Annotations", annotations);
+					intent.putExtra("searchMap", searchResults);
+					saveDefaultOrNot("false");
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+					getActivity().overridePendingTransition(0,0);				
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(),
+							"Please choose settings before saving", 
+							Toast.LENGTH_LONG).show();
+				}
 			}
-			
 		});
 		
 		defaultButton.setOnClickListener(new OnClickListener () {
@@ -133,7 +138,7 @@ public class SearchSettingsFragment extends Fragment {
 			for(int i = 0; i < newSettings.size(); i++) {
 				setting = setting + newSettings.get(i) + ";";
 			}
-		}
+		} 
 		
 		try {
 			FileOutputStream fos = cont.getApplicationContext().openFileOutput(

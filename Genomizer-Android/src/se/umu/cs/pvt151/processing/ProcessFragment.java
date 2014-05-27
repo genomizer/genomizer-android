@@ -8,8 +8,6 @@ import java.util.Locale;
 
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.ProcessStatus;
 import android.app.ProgressDialog;
@@ -27,6 +25,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * This fragment gets the status of a number of relevant processes from a server.
+ * These processes will be listed for the user.
+ * 
+ * @author Rickard
+ *
+ */
 public class ProcessFragment extends Fragment {
 
 	private static final String DOWNLOADING_PROCESSING_INFORMATION = "Downloading processing information";
@@ -60,7 +65,13 @@ public class ProcessFragment extends Fragment {
 	}
 
 
-	@Override
+	/**
+	 * Is called when the acitivity of the fragment is created.
+	 * The method starts a new ProcessTask which in turn will
+	 * get all relevant processes from a server. These processes
+	 * will be presented as a list.
+	 * 
+	 */
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		showLoadScreen(DOWNLOADING_PROCESSING_INFORMATION);

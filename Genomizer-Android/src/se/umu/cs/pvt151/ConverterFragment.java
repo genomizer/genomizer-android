@@ -12,6 +12,7 @@ import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import android.widget.ToggleButton;
  */
 public class ConverterFragment extends Fragment{
 
+	private static final String CONVERSIONS_STARTED = " file-conversions started successfully";
 	private static final String CONVERT = "CONVERT";
 	private static final String RAW_TO_PROFILE_PARAMETERS = "Raw to profile parameters";
 	private static final String RAW_TO_PROFILE = "raw";
@@ -275,7 +277,9 @@ public class ConverterFragment extends Fragment{
 		AlertDialog.Builder alertBuilder;
 		AlertDialog alert;
 		Intent i;
-
+		
+		progress.dismiss();
+		
 		if (!failedConversions.isEmpty()) {
 
 			for (GeneFile g : failedConversions) {
@@ -285,21 +289,36 @@ public class ConverterFragment extends Fragment{
 			alertBuilder = new AlertDialog.Builder(getActivity());
 			alertBuilder.setTitle("Conversions NOT started");
 			alertBuilder.setMessage(message);
-			alertBuilder.setPositiveButton("OK", null);
-
+			alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Genomizer.makeToast(convertedFiles + CONVERSIONS_STARTED);
+					startNext();
+				}
+			});
+			
 			alert = alertBuilder.create();
 			alert.show();
+		} else {
+			Genomizer.makeToast(convertedFiles + CONVERSIONS_STARTED);
+			startNext();
 		}
-
-		progress.dismiss();
-		Genomizer.makeToast(convertedFiles + " file-conversions started successfully");
 		
+			
+	}
+
+
+	/**
+	 * 
+	 */
+	private void startNext() {
+		Intent i;
 		i = new Intent(getActivity(), ProcessActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		getActivity().overridePendingTransition(0,0);
 		getActivity().finish();
-			
 	}
 
 	/**

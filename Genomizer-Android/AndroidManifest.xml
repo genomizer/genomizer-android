@@ -70,7 +70,7 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name="se.umu.cs.pvt151.search.SearchPubmedActivityPubmedActivity"
+            android:name="se.umu.cs.pvt151.search.SearchPubmedActivity"
              android:label=""
             android:screenOrientation="portrait">
         </activity>

@@ -143,7 +143,6 @@ public class ComHandler {
 		}
 		
 		try {					
-			
 			JSONObject msg = MsgFactory.createRegularPackage();
 			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest
 					(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
@@ -157,7 +156,6 @@ public class ComHandler {
 				responseDecode("Search response", searchResponse.getCode());
 				return new ArrayList<Experiment>();
 			} 
-			
 			
 		} catch (JSONException e) {
 			throw new IOException("Unable to understand server response. Has response messages been modified?");
@@ -221,7 +219,6 @@ public class ComHandler {
 		} catch (JSONException e) {
 			throw new IOException("Unable to understand server response. "
 					+ "Has response messages been modified? " + e.getMessage());
-			
 		}
 	}
 	

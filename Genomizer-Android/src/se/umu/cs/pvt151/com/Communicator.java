@@ -151,7 +151,6 @@ public class Communicator {
 				while ((inputLine = in.readLine()) != null) {
 					response.append(inputLine);
 				}				
-				Log.d("RESPONSE: ", response.toString());
 				httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
 			} else {
 				httpResponse = new GenomizerHttpPackage(responseCode, "");

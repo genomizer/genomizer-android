@@ -65,7 +65,6 @@ public class MsgDeconstructor {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 
 		for (int i = 0; i < json.length(); i++) {
-			
 			JSONObject obj = (JSONObject) json.get(i);
 			GeneFile file = new GeneFile();
 
@@ -114,17 +113,14 @@ public class MsgDeconstructor {
 
 		for (int i = 0; i < json.length(); i++) {
 			Experiment experiment = new Experiment();
-
 			JSONObject jsonExperiment = (JSONObject) json.get(i);
 
 			experiment.setName(jsonExperiment.getString("name"));
-
 			JSONArray files = jsonExperiment.getJSONArray("files");
 			JSONArray annotations = jsonExperiment.getJSONArray("annotations");
 
 			experiment.setFiles(deconFiles(files));
 			experiment.setAnnotations(deconAnnotations(annotations));
-
 			experiments.add(experiment);
 		}
 		return experiments;

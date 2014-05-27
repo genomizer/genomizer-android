@@ -3,24 +3,34 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
-
-    <LinearLayout
+   
+    
+    <LinearLayout 
         android:id="@+id/top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp" >
-        
-        <TextView
-            android:id="@+id/lbl_convert_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Conversion parameters"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
-        
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:background="#FFFFFF">
+    	
+	     <TextView
+	        android:id="@+id/lbl_convert_header"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+	        android:layout_marginTop="8dp"
+	        android:layout_marginBottom="6dp"
+	        android:background="#FFFFFF"
+	        android:text="@string/convert_str"        
+	        android:textSize="16sp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textColor="#000000"        
+	        android:textStyle="bold" />
+	        
+		<TextView      
+	      android:id="@+id/divider"    
+	      android:layout_width="fill_parent" 
+	      android:layout_height="7dp" 
+	      android:background="#DADADA" />
     </LinearLayout>
 
     <LinearLayout

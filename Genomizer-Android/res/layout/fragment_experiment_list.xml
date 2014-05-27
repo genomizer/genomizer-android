@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#020712"
+    android:background="#FFFFFF"
     tools:context="se.umu.cs.pvt151.ExperimentListActivity$PlaceholderFragment" >
 
    
@@ -16,11 +16,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="6dp"
-        android:background="#020712"
+        android:background="#FFFFFF"
         android:text="@string/results"
         android:textSize="16sp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FFFFFF"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
         android:textStyle="bold" />
     
      <TextView      

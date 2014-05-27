@@ -3,7 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="#020712"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context="se.umu.cs.pvt151.FileListActivity$PlaceholderFragment" >
     
@@ -13,11 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="#020712"
-        android:text="@string/exp_info"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFFFFF"
+		android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="6dp"
+        android:background="#FFFFFF"
+        android:text="@string/exp_info"        
         android:textSize="16sp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"        
         android:textStyle="bold" />
      
      <TextView      
@@ -32,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textFiles"
+        android:layout_below="@+id/divider"
         android:background="#202020"
         android:text="@string/raw_data"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -77,9 +80,7 @@
     <Button
         android:id="@+id/sendBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#202020"
-        android:textColor="#FFFFFF"
+        android:layout_height="wrap_content"                
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/convert" />
@@ -101,7 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/listView2"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="true"        
         android:background="#202020"
         android:text="@string/profile_data"
         android:textAppearance="?android:attr/textAppearanceSmall"

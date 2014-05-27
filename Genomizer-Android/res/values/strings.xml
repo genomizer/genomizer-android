@@ -28,6 +28,7 @@
     <string name="profile_data">PROFILE DATA</string>
     <string name="region_data">REGION DATA</string>
     <string name="search_str">SEARCH FILES</string>
+    <string name="convert_str">CONVERT TO PROFILE</string>
     <string name="enter_username">Enter username</string>
     <string name="convert">Add to selection</string>
     <string name="password_dots">••••••</string>

@@ -234,6 +234,11 @@ public class RawFragment extends Fragment {
 		}
 		
 
+		/**
+		 * Gets the object at specified position.
+		 * 
+		 * @return GeneFile
+		 */
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
 		}

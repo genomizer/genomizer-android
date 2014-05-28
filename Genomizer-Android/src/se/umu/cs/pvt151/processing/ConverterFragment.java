@@ -73,7 +73,6 @@ public class ConverterFragment extends Fragment{
 	private ArrayList<GeneFile> failedConversions;
 	private ProgressDialog progress;
 	private int convertedFiles;
-	private IOException convertException;
 	private ProgressDialog loadScreen;
 	private Stack<GeneFile> processList;
 
@@ -473,14 +472,9 @@ public class ConverterFragment extends Fragment{
 				convertButton.setEnabled(false);
 				failedConversions = new ArrayList<GeneFile>();
 				convertedFiles = 0;
-				convertException = null;
+				
 				showProgressDialog(processList.size());
-				
 				new ConvertTask().execute(processList.pop());
-				
-//				for (int i = 0; i < filesForProcess.size(); i++) {
-//					new ConvertTask().execute(filesForProcess.get(i));
-//				}
 			}
 
 		}
@@ -582,8 +576,8 @@ public class ConverterFragment extends Fragment{
 				map.put(convertOk, geneFile);
 			} catch (IOException e) {
 				e.printStackTrace();
-				convertException = e;
-				convertButton.setEnabled(true);
+				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+				act.relogin();
 			}
 
 			return map;

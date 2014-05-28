@@ -1,11 +1,6 @@
 package se.umu.cs.pvt151.login;
 
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;

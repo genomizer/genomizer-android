@@ -3,8 +3,8 @@ package se.umu.cs.pvt151.search_result;
 /**
  * ExmperimentListActivity
  * Used to present search results 
- * for user, using a fragment with
- * a listview. 
+ * for the user, using a fragment with
+ * a list view. 
  */
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 	HashMap<String, String> searchResults = new HashMap<String, String>();
 	
 	/**
-	 * Creates fragment that display
+	 * Creates fragment that displays
 	 * search results to the user.
 	 */
 	@Override
@@ -59,6 +59,11 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		
 	}
 	
+	/**
+	 * onCreateOptionsMenu
+	 * Inflates the menu
+	 * @param menu to inflate
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		

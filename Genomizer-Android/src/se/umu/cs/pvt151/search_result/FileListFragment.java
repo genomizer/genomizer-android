@@ -23,8 +23,8 @@ import android.widget.Toast;
  * FileListFragment
  * Fragment for FileListActivity.
  * Displays all files that belongs
- * to a certain experiment, displays
- * by data type.
+ * to a certain experiment by data
+ * type.
  * @author Cecilia Lindmark
  */
 public class FileListFragment extends Fragment {
@@ -46,18 +46,18 @@ public class FileListFragment extends Fragment {
 	private ArrayList<String> selectedProfileDataFiles = 
 			new ArrayList<String>();
 	private ArrayList<String> selectedRegionDataFiles = new ArrayList<String>();
-	//Arrays that store all files, one for each datatype
+	//Arrays that store all files, one for each data type
 	private ArrayList<GeneFile> allRawFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> allProfileFiles = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> allRegionFiles = new ArrayList<GeneFile>();
-	//Arrays used to store selected GeneFile objects, one for each datatype
+	//Arrays used to store selected GeneFile objects, one for each data type
 	private ArrayList<GeneFile> rawSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> profileSelected = new ArrayList<GeneFile>();
 	private ArrayList<GeneFile> regionSelected = new ArrayList<GeneFile>();
 	
 	/**
 	 * OnCreate for fragment, setting values from
-	 * previous activity/datastorage.
+	 * previous activity/data storage.
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -131,8 +131,8 @@ public class FileListFragment extends Fragment {
 	/**
 	 * Method used to send right data files
 	 * to selected files.
-	 * @param type of data to be sent
-	 * @param selected files to be sent
+	 * @param type, the type of data to be sent
+	 * @param selected, selected files to be sent
 	 */
 	private void sendDataFiles(String type, ArrayList<GeneFile> selected) {
 		ArrayList<GeneFile> temp = new ArrayList<GeneFile>();
@@ -253,7 +253,7 @@ public class FileListFragment extends Fragment {
 
 	/**
 	 * Used to create holder for
-	 * values used in getview
+	 * values used in get view method
 	 *
 	 */
 	static class listViewHolder {
@@ -267,7 +267,7 @@ public class FileListFragment extends Fragment {
 	 * Adapter used for list views.
 	 * Got onClick for check boxes that
 	 * detects and add/remove files depending on
-	 * if box is checked or not. Got onclick for
+	 * if box is checked or not. Got onClick for
 	 * text view used to display extra information
 	 * about a file in the list if it's clicked. 
 	 *

@@ -3,16 +3,16 @@ package se.umu.cs.pvt151;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import se.umu.cs.pvt151.login.LogInActivity;
 import se.umu.cs.pvt151.login.SettingsActivity;
-import se.umu.cs.pvt151.model.Genomizer;
 import se.umu.cs.pvt151.processing.ProcessActivity;
 import se.umu.cs.pvt151.search.SearchActivity;
 import se.umu.cs.pvt151.selected_files.SelectedFilesActivity;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,8 +32,6 @@ import android.view.Window;
  *
  */
 public abstract class SingleFragmentActivity extends FragmentActivity {
-	
-	private static final String BROADCAST_ACTION = "com.package.ACTION_LOGOUT";
 
 	private static final String LOST_CONNECTION = "Connection to server lost. Please login again.";
 
@@ -190,16 +188,31 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 * backstack.
 	 */
 	public void relogin() {
-		Genomizer.makeToast(LOST_CONNECTION);
+		new AlertDialog.Builder(this)
+		.setIcon(android.R.drawable.ic_dialog_alert)
+		.setTitle("CONNECTION LOST")
+		.setMessage(LOST_CONNECTION)
+		.setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog,
+							int which) {
+						restartApplication();
+						
+					}
+				}).show();	
+
+	}
+	
+	private void restartApplication() {
 		Intent intent = getBaseContext().getPackageManager()
 	             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
 
 		int mPendingIntentId = 123456;
-		PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId,    intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		AlarmManager mgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
 		System.exit(0); 
-
 	}
 
 }

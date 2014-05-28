@@ -174,6 +174,12 @@ public class SearchListFragment extends ListFragment {
 		});
 	}
 	
+	/**
+	 * Generates a hashMap with the search results. The annotation name is
+	 * the key and the annotation value is the value of the key-value pair.
+	 * 
+	 * @return the generated hashMap
+	 */
 	private HashMap<String, String> generateSearchMap() {
 		String key = null;
 		String value = null;
@@ -204,6 +210,11 @@ public class SearchListFragment extends ListFragment {
 		return search;
 	}
 	
+	/**
+	 * Generates a PubMed search string for the actual search values.
+	 * 
+	 * @return String with the PubMed, otherwise error message
+	 */
 	private String generateSearchString() {
 		try {
 			return ComHandler.generatePubmedQuery(generateSearchMap());

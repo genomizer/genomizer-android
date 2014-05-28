@@ -31,13 +31,18 @@ public class SearchActivity extends SingleFragmentActivity {
 	private static final String EXIT_QUERY = "Are you sure you want to exit?";
 	private BroadcastReceiver broadcastReceiver = null;
 
+	/**
+	 * Returns new SearchListFragment
+	 */
 	@Override
 	protected Fragment createFragment() {	
 		searchListFrag = new SearchListFragment();
 		return searchListFrag; 
 	}
 	
-	
+	/**
+	 * Starts the pubmed search if the menu item for PubMedSearch is pressed.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().toString().equals(getString(R.string.action_search_editPub))) {			
@@ -73,11 +78,19 @@ public class SearchActivity extends SingleFragmentActivity {
 							}
 						}).setNegativeButton(NEGATIVE_RESPONSE, null).show();
 	}
-
+	
+	/**
+	 * Will call the receivers to close the backStack 
+	 */
 	private void finishSystem() {		
 		((SingleFragmentActivity) this).closeBackstack();
 	}
 	
+	/**
+	 * Register a new BroadCastReceiver to the activity that will listen for
+	 * LogOut calls from a sender. When LogOut call received it will finish 
+	 * this activity.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -95,9 +108,11 @@ public class SearchActivity extends SingleFragmentActivity {
 		registerReceiver(broadcastReceiver, intentFilter);
 	}
 	
+	/**
+	 * When stopped unregisters the BroadCastReceiver before finish.
+	 */
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
 		if(broadcastReceiver != null) {
 			unregisterReceiver(broadcastReceiver);

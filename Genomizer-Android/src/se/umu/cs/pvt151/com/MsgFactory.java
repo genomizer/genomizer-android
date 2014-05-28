@@ -9,6 +9,12 @@ import android.util.Log;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 
+/**
+ * MsgFactory can be used to create a number of JSONObjects.
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class MsgFactory {
 
 	/**

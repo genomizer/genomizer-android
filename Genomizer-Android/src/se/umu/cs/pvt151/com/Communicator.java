@@ -14,7 +14,19 @@ import org.json.JSONObject;
 import se.umu.cs.pvt151.model.Genomizer;
 import android.os.Build;
 
+/**
+ * This class handles the core communication with a server.
+ * When a request is to be sent the 'setUpConnection' method
+ * should be called first. This sets up a connection with the server.
+ * To send the package, call the 
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class Communicator {
+	
+	//The number of tries on getting response code
+	private static final int RESPONSE_TRIES = 3;
 
 	private static HttpURLConnection connection;
 	private static String urlString;
@@ -76,7 +88,7 @@ public class Communicator {
 	 */
 	public static GenomizerHttpPackage sendHTTPRequest(JSONObject jsonPackage, String requestType, String urlPostfix) throws IOException {
 		setupConnection(requestType, urlPostfix);
-		return sendRequest(jsonPackage);
+		return sendRequest(jsonPackage, urlPostfix);
 	}
 
 	
@@ -93,7 +105,6 @@ public class Communicator {
 		}
 		
 		URL url = new URL(urlString + urlPostfix);
-		
 		connection = (HttpURLConnection) url.openConnection();
 
 		if (!requestType.equals("GET")) {
@@ -108,7 +119,6 @@ public class Communicator {
 		if (!urlPostfix.equals("login")) {			
 			connection.setRequestProperty("Authorization", token);
 		}
-
 		connection.setChunkedStreamingMode(100);
 		connection.setConnectTimeout(4000);
 		connection.setReadTimeout(15000);
@@ -124,55 +134,19 @@ public class Communicator {
 	 * @return GenomizerHttpPackage - The response code and body
 	 * @throws IOException
 	 */
-	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage) throws IOException {
-		DataOutputStream out = null;
-		BufferedReader in = null;
+	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage, 
+			String urlPostfix) throws IOException {
 		GenomizerHttpPackage httpResponse = null;
+		BufferedReader in = null;
+		int responseCode = -1;
 		
 		try {
-			if (connection.getDoOutput()) {
-				out = new DataOutputStream(connection.getOutputStream());						
-				byte[] pack = jsonPackage.toString().getBytes("UTF-8");							
-				out.write(pack);
-				out.flush();				
-			}
-
-			int responseCode = -1;
-			//Android throws an exception when the response is 401.
-			boolean success = false;
-			for(int i = 0; i < 5; i++) {
-				try {
-					responseCode = connection.getResponseCode();
-					System.err.println("LOOPING, i: " + i + " resp: " + responseCode);
-					if(responseCode != 1) {
-						success = true;
-						break;
-					}
-				} catch(Exception e) {
-					
-				}
-			}
-			if(!success) {
-				//return new GenomizerHttpPackage(401, "Unauthorized");
-				throw new IOException("Server is not respondning.");
-			}
+			writePackage(jsonPackage);
 			
-
-			if (responseCode < 300 && responseCode >= 200) {
-
-				in = new BufferedReader(
-						new InputStreamReader(connection.getInputStream()));
-
-				StringBuffer response = new StringBuffer();
-				String inputLine;
-
-				while ((inputLine = in.readLine()) != null) {
-					response.append(inputLine);
-				}				
-				httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
-			} else {
-				httpResponse = new GenomizerHttpPackage(responseCode, "");
-			}
+			responseCode = recieveResponse(urlPostfix);
+			
+			httpResponse = validateCode(responseCode, in);
+			
 		} catch (ConnectTimeoutException e) {
 	       Genomizer.makeToast("Connection timed out. No response from server");
 	    } catch (SocketTimeoutException e) {
@@ -182,8 +156,95 @@ public class Communicator {
 		} finally {
 			if(in != null) {
 				in.close();
+				
+				connection.disconnect();
 			}
-			
+		}
+		return httpResponse;
+	}
+	
+	
+	/**
+	 * Writes a package to the server. If no working
+	 * connection is established, an IOException will be thrown.
+	 * 
+	 * @param jsonPackage
+	 * @throws IOException
+	 */
+	private static void writePackage(JSONObject jsonPackage) throws IOException {
+		DataOutputStream out = null;
+		if (connection.getDoOutput()) {
+			out = new DataOutputStream(connection.getOutputStream());						
+			byte[] pack = jsonPackage.toString().getBytes("UTF-8");							
+			out.write(pack);
+			out.flush();				
+		}
+	}
+	
+	
+	/**
+	 * Gets and returns a response code from the server.
+	 * If no working connection is established or if no 
+	 * response code is sent from the server, a IOException
+	 * will be thrown.
+	 * 
+	 * @return Response code
+	 * @throws IOException
+	 */
+	private static int recieveResponse(String urlPostfix) throws IOException {
+		int response = -1;
+		
+		//Android throws an exception when the response is 401.
+		boolean success = false;
+		for(int i = 0; i < RESPONSE_TRIES; i++) {
+			try {
+				response = connection.getResponseCode();
+				
+				if(response != -1) {
+					success = true;
+					break;
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(!success) {
+			if (urlPostfix.equals("login")) {
+				return 401;
+			}
+			throw new IOException("Server is not respondning.");
+		}
+		return response;
+	}
+	
+	
+	/**
+	 * Validates a response code and creates a GenomizerHttpPackage
+	 * included response body (if there are any), and returns it.
+	 * 
+	 * @param responseCode
+	 * @param in
+	 * @return HttpPackage response from server
+	 * @throws IOException
+	 */
+	private static GenomizerHttpPackage validateCode(int responseCode, BufferedReader in) throws IOException {
+		GenomizerHttpPackage httpResponse = null;
+		BufferedReader inStream = in;
+		
+		if (responseCode < 300 && responseCode >= 200) {
+			inStream = new BufferedReader(
+					new InputStreamReader(connection.getInputStream()));
+
+			StringBuffer response = new StringBuffer();
+			String inputLine;
+
+			//Read response body
+			while ((inputLine = inStream.readLine()) != null) {
+				response.append(inputLine);
+			}
+			httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
+		} else {
+			httpResponse = new GenomizerHttpPackage(responseCode, "");
 		}
 		return httpResponse;
 	}

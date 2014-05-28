@@ -1,6 +1,3 @@
-/**
- * 
- */
 package se.umu.cs.pvt151.model;
 
 import android.os.Parcel;
@@ -12,7 +9,6 @@ import android.os.Parcelable;
  * @author erik c11ean
  *
  */
-
 public class GeneFile implements Parcelable {
 	
 	private String fileId;

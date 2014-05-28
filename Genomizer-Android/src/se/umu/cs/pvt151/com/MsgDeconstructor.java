@@ -12,6 +12,13 @@ import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessStatus;
 
+/**
+ * MsgDeconstructor can be used to deconstruct a number of
+ * different packages, in the form of JSONArrays.
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class MsgDeconstructor {
 
 

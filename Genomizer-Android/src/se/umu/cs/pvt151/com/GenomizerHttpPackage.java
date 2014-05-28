@@ -1,5 +1,13 @@
 package se.umu.cs.pvt151.com;
 
+/**
+ * This class is a model for a response from the server.
+ * Its purpose is only to store response code and
+ * response body.
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class GenomizerHttpPackage {
 	
 	private int code;

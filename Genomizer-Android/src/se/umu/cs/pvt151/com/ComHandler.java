@@ -19,9 +19,17 @@ import se.umu.cs.pvt151.model.Genomizer;
 import se.umu.cs.pvt151.model.ProcessStatus;
 import se.umu.cs.pvt151.model.ProcessingParameters;
 
+/**
+ * This class takes care of the communication with the server.
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class ComHandler {
 
 	private static String serverURL = "http://itchy.cs.umu.se:7000/";
+	
+	
 	/**
 	 * Used to change the targeted server URL.
 	 * 
@@ -167,6 +175,7 @@ public class ComHandler {
 		}		
 	}
 	
+	
 	/**
 	 * Search with existing Pubmed Query String
 	 * @param pubmedQuery
@@ -196,6 +205,7 @@ public class ComHandler {
 		}
 	}
 
+	
 	/**
 	 * Returns the Annotations of the server.
 	 * 
@@ -225,34 +235,7 @@ public class ComHandler {
 			throw new IOException("Unable to understand server response. "
 					+ "Has response messages been modified? " + e.getMessage());
 		}
-	}
-	
-
-	/**
-	 * Returns a pubmed query string ready to be put in a URL. It is encoded for URLs so it cannot be used elsewhere.
-	 * 
-	 * @param annotations HashMap with the annotation type as key and the value of the annotation as value.
-	 * @return An encoded pubmed query string based on the parameter.
-	 * @throws UnsupportedEncodingException If the device cannot encode the query.
-	 */
-	public static String generatePubmedQuery(HashMap<String, String> annotations) 
-			throws UnsupportedEncodingException {
-		String pubmedQuery = "";
-
-		Set<String> ann = annotations.keySet();
-		int i = 0;
-		for (String searchWord : ann) {
-			String value = annotations.get(searchWord);
-			pubmedQuery += value + "[" + searchWord + "]";
-			i++;
-			if (i != ann.size()) {
-				pubmedQuery+=" AND ";
-			}			
-		}
-		return URLEncoder.encode(pubmedQuery, "UTF-8");
-	}
-	
-	
+	}	
 
 
 	/**
@@ -349,5 +332,30 @@ public class ComHandler {
 			throw new IOException("Unable to understand server response. "
 					+ "Has response messages been modified? " + e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Returns a pubmed query string ready to be put in a URL. It is encoded for URLs so it cannot be used elsewhere.
+	 * 
+	 * @param annotations HashMap with the annotation type as key and the value of the annotation as value.
+	 * @return An encoded pubmed query string based on the parameter.
+	 * @throws UnsupportedEncodingException If the device cannot encode the query.
+	 */
+	public static String generatePubmedQuery(HashMap<String, String> annotations) 
+			throws UnsupportedEncodingException {
+		String pubmedQuery = "";
+
+		Set<String> ann = annotations.keySet();
+		int i = 0;
+		for (String searchWord : ann) {
+			String value = annotations.get(searchWord);
+			pubmedQuery += value + "[" + searchWord + "]";
+			i++;
+			if (i != ann.size()) {
+				pubmedQuery+=" AND ";
+			}			
+		}
+		return URLEncoder.encode(pubmedQuery, "UTF-8");
 	}
 }

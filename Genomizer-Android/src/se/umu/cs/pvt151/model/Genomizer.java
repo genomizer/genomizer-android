@@ -7,6 +7,13 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.widget.Toast;
 
+/**
+ * This class main purpose is to anywhere in the
+ * application be able to create and view new toasts.
+ * 
+ * @author erik c11ean
+ *
+ */
 public class Genomizer extends Application {
 
 	private static Context context;

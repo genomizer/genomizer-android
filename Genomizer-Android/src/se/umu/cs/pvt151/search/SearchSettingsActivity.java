@@ -17,7 +17,7 @@ public class SearchSettingsActivity extends SingleFragmentActivity {
 	SearchSettingsFragment setSearch;
 	
 	/**
-	 * Used to create fragment for
+	 * Creates fragment for
 	 * search settings
 	 */
 	@Override

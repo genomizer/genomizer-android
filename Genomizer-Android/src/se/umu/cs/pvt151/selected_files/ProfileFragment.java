@@ -44,16 +44,17 @@ public class ProfileFragment extends Fragment {
 	}
 
 
+	/**
+	 * Inflates the view of the fragment, including 
+	 * the listview and buttons.
+	 * 
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
-
 		listProfile = (ListView) v.findViewById(R.id.profile);
-
 		adapter = new FileListAdapter(profile, "profile");
-
 		listProfile.setAdapter(adapter);
-
 		setRemoveButtonListener(v);
 
 		return v;
@@ -115,6 +116,12 @@ public class ProfileFragment extends Fragment {
 		}
 
 
+		/**
+		 * Returns the view of an object in the listview at specified position.
+		 * This method is called by the system to build and visualize the
+		 * listview.
+		 * 
+		 */
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
 
@@ -130,11 +137,10 @@ public class ProfileFragment extends Fragment {
 			if (file != null) {
 				TextView textView = (TextView) view.findViewById(R.id.textView1);
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
-
 				checkBox.setTag(position);
-
 				textView.setText(file.getName());
 
+				//When a checkbox is clicked
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override
@@ -170,6 +176,7 @@ public class ProfileFragment extends Fragment {
 					}
 				});
 
+				//Set the view tags
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}

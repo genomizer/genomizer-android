@@ -1,5 +1,9 @@
 package se.umu.cs.pvt151.search;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -90,14 +94,36 @@ public class SearchPubmedFragment extends Fragment {
 		if(k == end - start) return true;
 		return false;
 	}
-	
+	/*
 	private String recreateSearchQueryFromUserInput() {
 		StringBuilder sb = new StringBuilder();
 		String str = pubmedInput.getText().toString().replaceAll("\n", "");
-		str = str.replace(" ", "+");
 		
+		
+		try {
+			String asd = URLEncoder.encode(str, "UTF-8");
+			Log.d("SASODKAOSK", "STR: " + asd);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		//str = str.replace(" ", "+");
+		int leftBrackets = 0;
+		int rightBrackets = 0;
 		boolean bracketMatching = false;
 		for(int i = 0, j = 0; i < str.length(); i++) {
+			if(str.charAt(i) == '(') {
+				leftBrackets++;				
+				continue;
+			} else if(str.charAt(i) == ')') {
+				rightBrackets++;				
+				continue;
+			}
+			if(str.charAt(i) == ' ') {
+				sb.append("+");
+			}
 			if(str.charAt(i) == ']') {
 				
 				String subStr = str.substring(j, i + 1);
@@ -108,7 +134,8 @@ public class SearchPubmedFragment extends Fragment {
 				if(i == str.length() - 1) {
 					break;
 				}
-				sb.append("+");
+				
+				//sb.append("+");
 				bracketMatching = true;
 				
 				continue;
@@ -116,15 +143,15 @@ public class SearchPubmedFragment extends Fragment {
 			
 			if(bracketMatching) {				
 				if(str.substring(i, i +3).equals("AND")) {
-					sb.append("AND+");
+					sb.append("AND");
 					j = i + 3;
 					bracketMatching = false;
 				} else if(str.substring(i, i + 2).equals("OR")) {
-					sb.append("OR+");
+					sb.append("OR");
 					j = i + 2;
 					bracketMatching = false;
 				} else if(str.substring(i, i + 3).equals("NOT")) {
-					sb.append("NOT+");
+					sb.append("NOT");
 					j = i + 3;
 					bracketMatching = false;
 				}
@@ -133,19 +160,45 @@ public class SearchPubmedFragment extends Fragment {
 			
 		}
 		//TODO check for double ++ etc
-		
+		if(leftBrackets != rightBrackets) {
+			throw new MalformedParameterizedTypeException();
+		}
 		return sb.toString();
 	}
-	
-	private void substituteLowerCaseConnectives() {
-		String str = pubmedInput.getText().toString();
+	*/
+	private String substituteLowerCaseConnectives(String str) {		
 		str = str.replaceAll("or", "OR");
 		str = str.replaceAll("and", "AND");
 		str = str.replaceAll("not", "NOT");
-		pubmedInput.setText(str);
+		return str;
+	}
+	
+	private boolean matchingPerentheses(String str) {
+		int left = 0, right = 0;
+		
+		for(int i = 0; i < str.length(); i++) {
+			if(str.charAt(i) == '(') left++;
+			else if(str.charAt(i) ==')') right++;
+		}
+		return left == right;
 	}
 	
 	public void initExperimentList() {
+		String userPubmed = pubmedInput.getText().toString().replaceAll("\n", "");
+		userPubmed = substituteLowerCaseConnectives(userPubmed);
+		if(!matchingPerentheses(userPubmed)) {
+			Toast.makeText(getActivity(), "Malformed pubmed Query! Your perentheses seems to be unmatched.", Toast.LENGTH_LONG).show();
+			return;
+		}
+		String pubmedEncoded;
+		try {
+			pubmedEncoded = URLEncoder.encode(userPubmed, "UTF-8");			
+		} catch (UnsupportedEncodingException e) {
+			Toast.makeText(getActivity(), "Malformed pubmed Query!", Toast.LENGTH_LONG).show();
+			return;
+		}
+		
+		
 		
 		ArrayList<String> annotation = getActivity().getIntent().getExtras().getStringArrayList("Annotations");
 		@SuppressWarnings("unchecked")
@@ -153,22 +206,8 @@ public class SearchPubmedFragment extends Fragment {
 		Intent intent = new Intent(getActivity(),
 				ExperimentListActivity.class);
 		
-		substituteLowerCaseConnectives();
-		String editedPubstring = null;
-		try {
-		editedPubstring = recreateSearchQueryFromUserInput();
-		} catch(StringIndexOutOfBoundsException e) {
-			Toast.makeText(getActivity(), "Malformed pubmed Query! Did you remove logical connectives?", Toast.LENGTH_LONG).show();
-			return;
-		}
-		Log.d("SearchPubmedFragment", "Original pubstr: " + origionalPubquery);
-		Log.d("SearchPubmedFragment", "New pubstr: " + editedPubstring);
-		Log.d("SearchPubmedFragment", "New vs Original pubstr (str compare): " + origionalPubquery.compareTo(editedPubstring));
-		if(editedPubstring != null) {
-			intent.putExtra("PubmedQuery", editedPubstring);
-		} else {
-			intent.putExtra("PubmedQuery", origionalPubquery);
-		}
+		intent.putExtra("PubmedQuery", pubmedEncoded);
+
 		intent.putExtra("Annotations", annotation);
 		intent.putExtra("searchMap", searchResults);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -10,6 +10,10 @@ import android.support.v4.app.Fragment;
 public class ProcessActivity extends SingleFragmentActivity{
 
 	
+	/**
+	 * Called by the system, creates a new ProcessFragment.
+	 * 
+	 */
 	protected Fragment createFragment() {
 		return new ProcessFragment();
 	}

@@ -26,8 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * This fragment gets the status of a number of relevant processes from a server.
- * These processes will be listed for the user.
+ * This fragment gets the status of a number of relevant processes 
+ * from the server. These processes is visualized in a listView.
  * 
  * @author Rickard
  *
@@ -66,7 +66,7 @@ public class ProcessFragment extends Fragment {
 
 
 	/**
-	 * Is called when the acitivity of the fragment is created.
+	 * Is called when the Acitivity of the fragment is created.
 	 * The method starts a new ProcessTask which in turn will
 	 * get all relevant processes from a server. These processes
 	 * will be presented as a list.
@@ -80,7 +80,7 @@ public class ProcessFragment extends Fragment {
 
 
 	/**
-	 * Adapter used for listviews. Creates a list of Process objects.
+	 * Adapter used for listviews. Creates a list of ProcessStatus objects.
 	 *
 	 */
 	private class ProcessListAdapter extends ArrayAdapter<ProcessStatus> {
@@ -158,8 +158,8 @@ public class ProcessFragment extends Fragment {
 	private class ProcessTask extends AsyncTask<Void, Void, Void> {
 
 		private IOException exception;
+		
 
-		@Override
 		protected Void doInBackground(Void... params) {
 
 			try {				
@@ -171,7 +171,7 @@ public class ProcessFragment extends Fragment {
 			return null;
 		}
 
-		@Override
+		
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			loadScreen.dismiss();
@@ -192,7 +192,7 @@ public class ProcessFragment extends Fragment {
 	 * as a String.
 	 * 
 	 * @param seconds
-	 * @return
+	 * @return - Date as a String
 	 */
 	private String timeInterpreter(long seconds) {
 		if(seconds == 0) {

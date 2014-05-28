@@ -13,13 +13,13 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
 /**
- * This Fragment class is ment to be a view containing a number of file
+ * This Fragment class is meant to be a view containing a number of file
  * lists for the user. Each file list is to be visualized in a tab.
  * The class uses a TabHost with implemented swipe-functionality.
  * New tabs must be added in the method initializeTabs and in the
  * TabsPagerAdapter class.
  * 
- * @author Rickard
+ * @author Rickard dv12rhm
  *
  */
 public class SelectedFilesFragment extends Fragment implements OnTabChangeListener, OnPageChangeListener{

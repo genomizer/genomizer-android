@@ -3,9 +3,6 @@ package se.umu.cs.pvt151.login;
 import java.util.ArrayList;
 
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
-import se.umu.cs.pvt151.R.string;
 import se.umu.cs.pvt151.com.ComHandler;
 import android.app.AlertDialog;
 import android.content.Context;

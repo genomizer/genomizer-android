@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.search.SearchActivity;
 import android.app.ProgressDialog;
@@ -13,18 +11,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 /**
@@ -158,21 +152,28 @@ public class LogInFragment extends Fragment {
 	 *
 	 */
 	private class LoginTask extends AsyncTask<Void, Void, Boolean> {
-
+		
+		/**
+		 * Sends login request and dispatches the answer onPostExecute
+		 */
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			
 			return sendLoginRequest();
 		}
-
+		
+		/**
+		 * If the login-request was successful SearchFragment is started up.
+		 * Also re-enables the login button and dismiss the progress screen
+		 * that is shown during the login request.
+		 */
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result.booleanValue()) {
 				startSearchActivity();
 			}				
 			
-			button.setEnabled(true);
-					
+			button.setEnabled(true);		
 			progress.dismiss();
 		}
 	}

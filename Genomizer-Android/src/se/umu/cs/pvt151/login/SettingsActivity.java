@@ -103,8 +103,9 @@ public class SettingsActivity extends SingleFragmentActivity  {
 	}
 	
 	/**
-	 * onCreate: create intentfilter that listens for "kill command" which is used
-	 * when all activities should finish.
+	 * Register a new BroadCastReceiver to the activity that will listen for
+	 * LogOut calls from a sender. When LogOut call received it will finish 
+	 * this activity.
 	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

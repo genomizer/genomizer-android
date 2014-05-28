@@ -2,7 +2,6 @@ package se.umu.cs.pvt151.login;
 
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import se.umu.cs.pvt151.R.string;
 import se.umu.cs.pvt151.com.ComHandler;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -53,6 +52,9 @@ public class LogInActivity extends SingleFragmentActivity {
 		fragment.login(progress);
 	}
 	
+	/**
+	 * If onBackPressed in loginActivity, the activity is to be finished.
+	 */
 	@Override
 	public void onBackPressed() {
 		finish();

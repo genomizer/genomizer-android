@@ -8,6 +8,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+/**
+ * This Activitys pupose is to create and start a new
+ * SelectedFilesFragment.
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class SelectedFilesActivity extends SingleFragmentActivity {
 	
 	private SelectedFilesFragment selectedFilesFragment = null;

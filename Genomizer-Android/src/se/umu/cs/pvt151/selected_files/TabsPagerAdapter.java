@@ -4,6 +4,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+/**
+ * This class purpose is to work as an adapter for a TabHost.
+ * By adding more cases in the 'getItem' method and changing the
+ * number of tabs in the 'getCount' method additional tabs 
+ * may be added.
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	

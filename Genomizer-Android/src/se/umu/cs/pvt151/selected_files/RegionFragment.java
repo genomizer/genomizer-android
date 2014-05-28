@@ -21,6 +21,13 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * This fragment is visualizes a list of GeneFiles.
+ * The files may be marked and deleted by the user.
+ * 
+ * @author Rickard dv12rhm
+ *
+ */
 public class RegionFragment extends Fragment {
 
 	private ListView listRegion;

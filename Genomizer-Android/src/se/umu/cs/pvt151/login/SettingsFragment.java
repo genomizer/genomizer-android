@@ -213,8 +213,12 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 			setSelectionMode();
 			
 		} else if(multiUseButton.getText().equals(sButtonSaveEdit)) {
-			String newURL = urlEdit.getText().toString();
+			String newURL = urlEdit.getText().toString();			
 			String strToEdit = spinner.getSelectedItem().toString();
+			
+			if(!newURL.endsWith("/") ) {			
+				newURL += "/";
+			}
 			
 			if(newURL.equals(strToEdit)) {
 				setSelectionMode();

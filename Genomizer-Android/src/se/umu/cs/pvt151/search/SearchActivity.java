@@ -29,6 +29,7 @@ public class SearchActivity extends SingleFragmentActivity {
 	private static final String POSITIVE_RESPONSE = "Yes";
 	private static final String EXIT = "Exit";
 	private static final String EXIT_QUERY = "Are you sure you want to exit?";
+	private BroadcastReceiver broadcastReceiver = null;
 
 	@Override
 	protected Fragment createFragment() {	
@@ -82,13 +83,26 @@ public class SearchActivity extends SingleFragmentActivity {
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("com.package.ACTION_LOGOUT");
-		registerReceiver(new BroadcastReceiver() {
+		broadcastReceiver =
+		new BroadcastReceiver() {
 
 
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				finish();
 			}
-		}, intentFilter);
+		};
+		registerReceiver(broadcastReceiver, intentFilter);
+	}
+	
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		if(broadcastReceiver != null) {
+			unregisterReceiver(broadcastReceiver);
+		}
+		
+		finish();
 	}
 }

@@ -147,9 +147,7 @@ public class Communicator {
 			}
 
 			if (responseCode < 300 && responseCode >= 200) {
-//				if (out != null) {
-//					out.close();
-//				}
+
 				in = new BufferedReader(
 						new InputStreamReader(connection.getInputStream()));
 

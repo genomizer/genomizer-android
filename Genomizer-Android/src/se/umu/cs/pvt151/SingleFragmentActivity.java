@@ -180,6 +180,18 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		overridePendingTransition(0,0);
+		
+		closeBackstack();
+	}
+
+
+	/**
+	 * 
+	 */
+	public void closeBackstack() {
+		Intent broadcastIntent = new Intent();
+		broadcastIntent.setAction("com.package.ACTION_LOGOUT");
+		sendBroadcast(broadcastIntent);
 	}
 	
 	

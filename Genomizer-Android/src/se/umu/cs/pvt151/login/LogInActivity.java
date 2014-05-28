@@ -57,4 +57,6 @@ public class LogInActivity extends SingleFragmentActivity {
 	public void onBackPressed() {
 		finish();
 	}
+	
+	
 }

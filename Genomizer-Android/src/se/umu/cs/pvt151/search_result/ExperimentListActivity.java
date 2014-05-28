@@ -20,7 +20,10 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 /**
  * ExperimentListActivity
@@ -33,7 +36,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 	ExperimentListFragment fragment;
 	ArrayList<String> annotation = new ArrayList<String>();
 	HashMap<String, String> searchResults = new HashMap<String, String>();
-	
+
 	/**
 	 * Creates fragment that displays
 	 * search results to the user.
@@ -43,7 +46,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		fragment = new ExperimentListFragment();
 		return fragment;
 	}
-	
+
 	/**
 	 * onCreate
 	 * Gets the right values from
@@ -56,9 +59,20 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		super.onCreate(savedInstanceState);
 		annotation = getIntent().getExtras().getStringArrayList("Annotations");
 		searchResults = (HashMap<String, String>) getIntent().getExtras().getSerializable("searchMap");
-		
+
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("com.package.ACTION_LOGOUT");
+		registerReceiver(new BroadcastReceiver() {
+
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				finish();
+			}
+		}, intentFilter);
+
 	}
-	
+
 	/**
 	 * onCreateOptionsMenu
 	 * Inflates the menu
@@ -66,20 +80,20 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
+
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.file_list, menu);
-	
+
 		return true;
 	}
-	
+
 	/**
 	 * Handles the action bar options
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent i;
-		
+
 		switch (item.getItemId()) {
 		case R.id.btnsearch_main_menu:
 			i = new Intent(this, SearchActivity.class);
@@ -87,7 +101,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 			startActivity(i);
 			overridePendingTransition(0,0);
 			return true;
-		
+
 		case R.id.btnworkspace_main_menu:
 			Intent intent = new Intent(this,
 					SelectedFilesActivity.class);
@@ -95,14 +109,14 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 			startActivity(intent);
 			overridePendingTransition(0,0);
 			return true;
-			
+
 		case R.id.action_settings:
 			i = new Intent(this, SettingsActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);	
 			startActivity(i);
 			overridePendingTransition(0,0);
 			return true;
-			
+
 		case R.id.search_settings:
 			i = new Intent(this, SearchSettingsActivity.class);
 			i.putStringArrayListExtra("Annotations", annotation);
@@ -111,14 +125,14 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 			startActivity(i);
 			overridePendingTransition(0,0);
 			return true;
-			
+
 		default:
 			break;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	/**
 	 * Storing annotation information
 	 */
@@ -127,7 +141,7 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		super.onSaveInstanceState(outState);
 		outState.putStringArrayList("annotations", annotation);
 	}
-	
+
 	/**
 	 * Finish the activity when
 	 * back button is pressed
@@ -137,6 +151,6 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		finish();
 	}
 
-	
+
 
 }

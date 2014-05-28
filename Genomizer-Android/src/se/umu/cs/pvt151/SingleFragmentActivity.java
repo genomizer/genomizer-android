@@ -139,6 +139,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 		Intent i;
 		
 		switch (item.getItemId()) {
+		
 		case R.id.btnsearch_main_menu:
 			i = new Intent(this, SearchActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -160,8 +161,6 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 			startActivity(i);
 			overridePendingTransition(0,0);
 			return true;
-			
-		
 		
 		case R.id.btnprocesses_main_menu:
 			i = new Intent(this, ProcessActivity.class);
@@ -178,6 +177,10 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	}
 	
 	
+	/**
+	 * This method starts the loginFragment and closes the
+	 * backstack.
+	 */
 	public void relogin() {
 		Genomizer.makeToast(LOST_CONNECTION);
 		Intent i = new Intent(this, LogInActivity.class);
@@ -190,13 +193,11 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 
 
 	/**
-	 * 
+	 * Closes the backstack.
 	 */
 	public void closeBackstack() {
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(BROADCAST_ACTION);
 		sendBroadcast(broadcastIntent);
 	}
-	
-	
 }

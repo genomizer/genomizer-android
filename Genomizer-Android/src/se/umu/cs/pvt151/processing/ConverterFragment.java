@@ -381,6 +381,10 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
+	 * Visualizes a progress dialog which purpose is to
+	 * inform the user about the progress in sending the 
+	 * conversion requests to the server.
+	 * 
 	 * @param size 
 	 * 
 	 */
@@ -460,9 +464,8 @@ public class ConverterFragment extends Fragment{
 		private static final String BOWTIE_INCORRECT = " must be filled out";
 
 		/**
-		 * 
+		 * When button is clicked, send conversion requests to the server.
 		 */
-		@Override
 		public void onClick(View v) {
 			parameterList = new ArrayList<String>();
 			processList = setupProcessList(filesForProcess);
@@ -617,6 +620,8 @@ public class ConverterFragment extends Fragment{
 		private int index;
 		private ToggleButton tb;
 
+		
+		
 		public textListener(int index) {
 			this.index = index;
 		}
@@ -624,16 +629,15 @@ public class ConverterFragment extends Fragment{
 		/**
 		 * Unimplemented
 		 */
-		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
-
 		}
 
 		/**
-		 * 
+		 * Listens to changes in the textfields, if a textfield
+		 * contains no characters (the length is 0), the textfields
+		 * following the current textfield is to be disabled.
 		 */
-		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
 
@@ -667,6 +671,10 @@ public class ConverterFragment extends Fragment{
 	}
 
 	/**
+	 * Listener for edittexts. The purpose of this class is to
+	 * listen for clicks on edittexts, and based on if there are any
+	 * text in the textfield, click on the textfield following this
+	 * textfield.
 	 * 
 	 * @author Anders
 	 *
@@ -676,14 +684,23 @@ public class ConverterFragment extends Fragment{
 		private int index;
 		private EditText et;
 
+		
+		/**
+		 * Sets the index to specified value.
+		 * 
+		 * @param index - the position of the edittext in the
+		 * viewlist
+		 */
 		public textClickWatch(int index) {
 			this.index = index;
 		}
+		
 
 		/**
-		 * 
+		 * Listener for clicks on edittexts. 
+		 * If there is any text in the clicked textField, 
+		 * The following edittext will be clicked.
 		 */
-		@Override
 		public void onClick(View v) {
 			if (viewList.size() > (index + 1)) {
 				et = (EditText) viewList.get(index);
@@ -695,9 +712,6 @@ public class ConverterFragment extends Fragment{
 					viewList.get(index + 1).setEnabled(true);
 				}
 			}
-
 		}
-
 	}
-
 }

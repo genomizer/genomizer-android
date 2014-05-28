@@ -41,18 +41,26 @@ public class ProcessFragment extends Fragment {
 	private ProgressDialog loadScreen;
 
 
+	/**
+	 * Called when the fragment is created, initializes
+	 * the ArrayList with processes
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		processes = new ArrayList<ProcessStatus>();
 	}
 
 
+	/**
+	 * Inflates the fragments layout.
+	 * 
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_process, parent, false);
 		processList = (ListView) v.findViewById(R.id.processList);
 		refreshButton = (Button) v.findViewById(R.id.process_button);
-		
+
 		refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -85,21 +93,19 @@ public class ProcessFragment extends Fragment {
 	 */
 	private class ProcessListAdapter extends ArrayAdapter<ProcessStatus> {
 		ArrayList<ProcessStatus> forShow = new ArrayList<ProcessStatus>();
-		boolean[] selectedItem;
 
 		public ProcessListAdapter(ArrayList<ProcessStatus> processes) {
 			super(getActivity(), 0, processes);
 			forShow = processes;
-
-			if (processes != null) {
-				selectedItem = new boolean[processes.size()];
-				for(int i = 0; i<selectedItem.length; i++) {
-					selectedItem[i] = false;
-				}
-			}
 		}
 
 
+		/**
+		 * Returns the view of an ProcessStatus object on the specified
+		 * position in the listView. This method is called by the system to
+		 * inflate and visualize the view of the object in the listView.
+		 * 
+		 */
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
 			if (view == null) {
@@ -108,6 +114,7 @@ public class ProcessFragment extends Fragment {
 			}
 			ProcessStatus process = getItem(position);
 
+			//If process is not null, implement a new view with its values
 			if (process != null) {
 				TextView expNameView = (TextView) view.findViewById(R.id.expNameTextView);
 				TextView authorView = (TextView) view.findViewById(R.id.authorTextView);
@@ -121,7 +128,7 @@ public class ProcessFragment extends Fragment {
 				timeAddedView.setText(timeInterpreter(process.getTimeAdded()));
 				timeStartedView.setText(timeInterpreter(process.getTimeStarted()));
 				timeFinishedView.setText(timeInterpreter(process.getTimeFinnished()));
-				
+
 				statusView.setText(process.getStatus());
 				setStatusColor(statusView);
 
@@ -136,12 +143,18 @@ public class ProcessFragment extends Fragment {
 		}
 
 
-		@Override
+		/**
+		 * Returns true
+		 */
 		public boolean hasStableIds() {
 			return true;
 		}
 
 
+		/**
+		 * Returns the item at specified position.
+		 * 
+		 */
 		public ProcessStatus getItem(int position) {
 			return forShow.get(position);
 		}
@@ -152,26 +165,37 @@ public class ProcessFragment extends Fragment {
 	 * This class extends AsyncTask, its only purpose is to get the status of
 	 * any number of processes from a server and save it in an ArrayList.
 	 * 
-	 * @author Rickard
+	 * @author Rickard dv12rhm
 	 *
 	 */
 	private class ProcessTask extends AsyncTask<Void, Void, Void> {
 
 		private IOException exception;
-		
 
+
+		/**
+		 * This methods purpose is to, in a separate thread
+		 * get the status of a number of processes from the
+		 * server.
+		 * 
+		 */
 		protected Void doInBackground(Void... params) {
 
 			try {				
 				processes = ComHandler.getProcesses();
-
 			} catch (IOException e) {
 				exception = e;
 			}
 			return null;
 		}
 
-		
+
+		/**
+		 * When the method doInBackground is finished this method
+		 * will be called by the system.
+		 * Its purpose is to initialize the adapter of the listView.
+		 * 
+		 */
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			loadScreen.dismiss();
@@ -185,7 +209,7 @@ public class ProcessFragment extends Fragment {
 		}
 	}
 
-	
+
 	/**
 	 * Converts a long variable from seconds 
 	 * counted from 1 january 1970 to a date and returns it
@@ -198,13 +222,13 @@ public class ProcessFragment extends Fragment {
 		if(seconds == 0) {
 			return "Pending...";
 		}
-		
+
 		Date date = new Date(seconds);		
-        return SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, 
-        		SimpleDateFormat.SHORT, Locale.ENGLISH).format(date);
+		return SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, 
+				SimpleDateFormat.SHORT, Locale.ENGLISH).format(date);
 	}
-	
-	
+
+
 	/**
 	 * Sets the color of the current process status.
 	 * 
@@ -212,7 +236,7 @@ public class ProcessFragment extends Fragment {
 	 */
 	private void setStatusColor(TextView statusView) {
 		String status = (String) statusView.getText();
-		
+
 		if (((String)status).contains("Crashed")) {
 			statusView.setTextColor(Color.RED);
 		} else if (status.contains("Finished")) {
@@ -223,7 +247,8 @@ public class ProcessFragment extends Fragment {
 			statusView.setTextColor(Color.BLUE);
 		}
 	}
-	
+
+
 	/**
 	 * Displays a loading screen for the user, while downloading data from the
 	 * server. Must be manually dismissed when data transfer is done.

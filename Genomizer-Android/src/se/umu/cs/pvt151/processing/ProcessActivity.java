@@ -9,7 +9,8 @@ import android.support.v4.app.Fragment;
 
 
 /**
- * @author Rickard
+ * 
+ * @author Rickard dv12rhm
  *
  */
 public class ProcessActivity extends SingleFragmentActivity{
@@ -17,17 +18,25 @@ public class ProcessActivity extends SingleFragmentActivity{
 	
 	/**
 	 * Called by the system, creates a new ProcessFragment.
-	 * 
 	 */
 	protected Fragment createFragment() {
 		return new ProcessFragment();
 	}
 
 	
+	/**
+	 * When the back button is pressed, close the fragment.
+	 */
 	public void onBackPressed() {
 		finish();
 	}
 	
+	
+	/**
+	 * Register a new BroadCastReceiver to the activity that will listen for
+	 * LogOut calls from a sender. When LogOut call received it will finish 
+	 * this activity.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -35,8 +44,6 @@ public class ProcessActivity extends SingleFragmentActivity{
 		intentFilter.addAction("com.package.ACTION_LOGOUT");
 		registerReceiver(new BroadcastReceiver() {
 
-
-			@Override
 			public void onReceive(Context context, Intent intent) {
 				finish();
 			}

@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
  */
 public class ConverterActivity extends SingleFragmentActivity{
 
+	
 	/**
 	 * Returns a ConverterFragment fragment when called
 	 */
@@ -24,6 +25,7 @@ public class ConverterActivity extends SingleFragmentActivity{
 	protected Fragment createFragment() {
 		return new ConverterFragment();
 	}
+	
 	
 	/**
 	 * OnBackPressed will finish the activity.
@@ -33,6 +35,12 @@ public class ConverterActivity extends SingleFragmentActivity{
 		finish();
 	}
 	
+	
+	/**
+	 * Register a new BroadCastReceiver to the activity that will listen for
+	 * LogOut calls from a sender. When LogOut call received it will finish 
+	 * this activity.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

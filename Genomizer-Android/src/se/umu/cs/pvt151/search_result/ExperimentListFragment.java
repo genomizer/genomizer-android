@@ -65,13 +65,13 @@ public class ExperimentListFragment extends Fragment {
 	private String getAnnotations;
 	private ArrayList<String> storedAnnotations = new ArrayList<String>();
 	private ArrayList<String> annotation = new ArrayList<String>();
-	//Used to get pubmed string if used in search
+	//Used to get pub med string if used in search
 	private String searchString;
 	private ProgressDialog loadScreen;
 	
 	/**
 	 * onCreate
-	 * Retreives right values from 
+	 * Retrieves right values from 
 	 * previous activity
 	 */
 	@SuppressWarnings("unchecked")
@@ -91,7 +91,7 @@ public class ExperimentListFragment extends Fragment {
 	
 	/**
 	 * onActivityCreated
-	 * Handles receiving rearch results from 
+	 * Handles receiving search results from 
 	 * server.
 	 */
 	@Override
@@ -99,7 +99,7 @@ public class ExperimentListFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		
 		try {
-			/*Information sent to server and receiving a
+			/*Information is sent to the server and receives a
 			 * list with all experiments available*/
 			showLoadScreen(DOWNLOADING_SEARCH_RESULTS);
 			forExperiments = startSearch.execute((Void) null).get();
@@ -141,10 +141,11 @@ public class ExperimentListFragment extends Fragment {
 	}
 
 	/**
-	 * Method used to check text file
-	 * on internal storage if user has
-	 * chosen to use default settings or
-	 * not.
+	 * Method used to check the settings text file
+	 * in internal storage. If it has value true
+	 * then default settings are set, if it has 
+	 * value false default settings are set to
+	 * false. 
 	 */
 	private void getDefaultOrNot() {
 		String savedFile = "DefaultSettings.txt";
@@ -178,8 +179,8 @@ public class ExperimentListFragment extends Fragment {
 	}
 	
 	/**
-	 * Method to get all different data files in separate lists
-	 * used to pass to FileListActivity
+	 * Method used to get all different data files 
+	 * for a specific experiment in separate lists.
 	 * @param selectedExperiment position for experiment chosen
 	 */
 	private void getExperimentFiles(int selectedExperiment) {
@@ -206,10 +207,8 @@ public class ExperimentListFragment extends Fragment {
 	}
 	
 	/**
-	 * Method used to check text file
-	 * in internal storage if there are
-	 * some previous search result display
-	 * options chosen.
+	 * Method used to check if the search settings
+	 * text file in internal storage has any values
 	 */
 	private void getStoredAnnotations() {
 		getAnnotations = "";
@@ -290,7 +289,7 @@ public class ExperimentListFragment extends Fragment {
 	}
 
 	/**
-	 * Creates an android toast (small unintrusive text popup).
+	 * Creates an android toast (small unintrusive text pop up).
 	 * @param msg The message that should be displayed.
 	 * @param longToast True if the toast should be displayed for a long time 
 	 * (3.5 seconds) otherwise it is displayed for 2 seconds.
@@ -357,11 +356,10 @@ public class ExperimentListFragment extends Fragment {
 		protected ArrayList<Experiment> doInBackground(Void...arg0) {
 		
 		try {
-			/*If search string is null Sending HashMap with annotation, 
-			 * value for search to ComHandler, receiving a list with 
-			 * experiments matching the search. If search string
-			 * is valid that string is used for receiving search results
-			 * instead.*/
+			/*If search string is null the HashMap with annotation is
+			 * used to get search results from the server. Else if
+			 * the search string is valid that string is used for 
+			 * receiving search results instead.*/
 				if(searchString == null) {
 					forExperiments = ComHandler.search(searchInfo);
 				} else {

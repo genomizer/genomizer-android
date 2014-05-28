@@ -10,16 +10,34 @@ import android.widget.Toast;
 public class Genomizer extends Application {
 
 	private static Context context;
+	
 
+	/**
+	 * When this object is created get the applications context.
+	 * 
+	 */
     public void onCreate(){
         super.onCreate();
         Genomizer.context = getApplicationContext();
     }
+    
 
+    /**
+     * Returns the context of the application
+     * 
+     * @return context
+     */
     public static Context getAppContext() {
         return Genomizer.context;
     }
     
+    
+    /**
+     * Creates and visualizes a toast with the parameter 
+     * msg as text.
+     * 
+     * @param msg
+     */
     public static void makeToast(final String msg) {    	
     	Handler toastHandler = new Handler(context.getMainLooper());
     	Runnable toastRunnable = new Runnable() {
@@ -35,6 +53,7 @@ public class Genomizer extends Application {
     	toastHandler.post(toastRunnable);
     }
     
+    
     /**
 	 * Verify that the phone currently have an internet connection.
 	 * @return true if online false otherwise
@@ -45,6 +64,4 @@ public class Genomizer extends Application {
 	    return connectManager.getActiveNetworkInfo() != null && 
 	       connectManager.getActiveNetworkInfo().isConnected();
     }
-     
-    
 }

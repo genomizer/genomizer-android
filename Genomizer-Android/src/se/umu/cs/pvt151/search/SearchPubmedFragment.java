@@ -1,20 +1,15 @@
 package se.umu.cs.pvt151.search;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.MalformedParameterizedTypeException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import se.umu.cs.pvt151.R;
-import se.umu.cs.pvt151.R.id;
-import se.umu.cs.pvt151.R.layout;
 import se.umu.cs.pvt151.search_result.ExperimentListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

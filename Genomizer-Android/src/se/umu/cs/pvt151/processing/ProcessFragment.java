@@ -29,7 +29,7 @@ import android.widget.TextView;
  * This fragment gets the status of a number of relevant processes 
  * from the server. These processes is visualized in a listView.
  * 
- * @author Rickard
+ * @author Rickard dv12rhm
  *
  */
 public class ProcessFragment extends Fragment {

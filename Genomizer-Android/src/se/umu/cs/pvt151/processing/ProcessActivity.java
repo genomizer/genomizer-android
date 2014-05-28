@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 
 
 /**
+ * An activity which only purpose is to start
+ * a ProcessFragment.
  * 
  * @author Rickard dv12rhm
  *

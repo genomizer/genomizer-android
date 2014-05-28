@@ -22,18 +22,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class ProfileFragment extends Fragment {
-	
 
 	private ListView listProfile;
 
 	private ArrayList<GeneFile> profile;
 	private ArrayList<GeneFile> selectedProfile;
-	
-	private FileListAdapter adapter;
-	
-	private Button removeButton;
-	
 
+	private FileListAdapter adapter;
+
+	private Button removeButton;
+
+
+	/**
+	 * Called when the ProfileFragment is created.
+	 * Gets the profile files from DataStorage.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		profile = DataStorage.getFileList("profile");
@@ -46,25 +49,30 @@ public class ProfileFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_profile, parent, false);
 
 		listProfile = (ListView) v.findViewById(R.id.profile);
-		
+
 		adapter = new FileListAdapter(profile, "profile");
-		
+
 		listProfile.setAdapter(adapter);
-		
+
 		setRemoveButtonListener(v);
 
 		return v;
 	}
-	
-	
+
+
+	/**
+	 * This method is called when the fragments activity is created.
+	 * The selected files is loaded from DataStorage.
+	 * 
+	 */
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		selectedProfile = DataStorage.getFileList("profileSelected");
 		adapter.notifyDataSetChanged();
 		setButtonsStatus();
 	}
-	
-	
+
+
 	/**
 	 * Implements a buttonlistener for the remove button.
 	 * 
@@ -96,26 +104,22 @@ public class ProfileFragment extends Fragment {
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
+		
+		//The files to be visualized in the listview
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
-		boolean[] selectedItem;
+		
 
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
 			super(getActivity(), 0, files);
 			forShow = files;
-			if (files != null) {
-				selectedItem = new boolean[files.size()];
-				for(int i = 0; i<selectedItem.length; i++) {
-					selectedItem[i] = false;
-				}
-			}
 		}
 
 
 		public View getView(int position, View view, ViewGroup parent) {
 			Context cont = getActivity();
-			
+
 			final int pos = position;
-			
+
 			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.list_view_checkbox, null);
@@ -126,18 +130,18 @@ public class ProfileFragment extends Fragment {
 			if (file != null) {
 				TextView textView = (TextView) view.findViewById(R.id.textView1);
 				CheckBox checkBox = (CheckBox) view.findViewById(R.id.textForBox);
-				
+
 				checkBox.setTag(position);
 
 				textView.setText(file.getName());
-				
+
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-						
+
 						int position = (Integer) buttonView.getTag();
-						
+
 						if (isChecked) {
 							if (!selectedProfile.contains(forShow.get(position))) {
 								selectedProfile.add(forShow.get(position));
@@ -149,7 +153,7 @@ public class ProfileFragment extends Fragment {
 						setButtonsStatus();
 					}
 				});
-				
+
 				if (!selectedProfile.contains(file)) {
 					if (checkBox.isChecked()) {
 						checkBox.toggle();
@@ -159,32 +163,31 @@ public class ProfileFragment extends Fragment {
 						checkBox.toggle();
 					}
 				}
-				
+
 				view.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
 						displayExtraFileInfo(forShow.get(pos));
 					}
 				});
-				
+
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}
 			return view;
 		}
-		
-		
-		@Override
-        public boolean hasStableIds() {
-          return true;
-        }
+
+
+		public boolean hasStableIds() {
+			return true;
+		}
 
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Sets the status on the remove button based on
 	 * if there are any marked checkboxes or not.
@@ -197,8 +200,8 @@ public class ProfileFragment extends Fragment {
 			removeButton.setEnabled(false);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Method used to create a dialog window with
 	 * more information about a file.

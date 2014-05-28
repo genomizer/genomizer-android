@@ -36,6 +36,10 @@ public class RawFragment extends Fragment {
 	private Button removeRawButton;
 
 
+	/**
+	 * Called when the RawFragment is created.
+	 * Gets the raw files from DataStorage.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		raw = DataStorage.getFileList("raw");
@@ -58,6 +62,11 @@ public class RawFragment extends Fragment {
 	}
 
 
+	/**
+	 * This method is called when the fragments activity is created.
+	 * The selected files is loaded from DataStorage.
+	 * 
+	 */
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		selectedRaw = DataStorage.getFileList("rawSelected");
@@ -142,7 +151,9 @@ public class RawFragment extends Fragment {
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
 
+		//The files to be visualized in the listview
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
+		
 
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
 			super(getActivity(), 0, files);
@@ -205,10 +216,11 @@ public class RawFragment extends Fragment {
 			return view;
 		}
 
-		@Override
+		
 		public boolean hasStableIds() {
 			return true;
 		}
+		
 
 		public GeneFile getItem(int position) {
 			return forShow.get(position);

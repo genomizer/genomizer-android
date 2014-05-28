@@ -12,6 +12,16 @@ import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
+/**
+ * This Fragment class is ment to be a view containing a number of file
+ * lists for the user. Each file list is to be visualized in a tab.
+ * The class uses a TabHost with implemented swipe-functionality.
+ * New tabs must be added in the method initializeTabs and in the
+ * TabsPagerAdapter class.
+ * 
+ * @author Rickard
+ *
+ */
 public class SelectedFilesFragment extends Fragment implements OnTabChangeListener, OnPageChangeListener{
 
 	private TabHost tabHost;
@@ -35,9 +45,13 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 	}
 
 
+	/**
+	 * This method initializes the viewPager and the TabsPagerAdapter.
+	 * 
+	 * @return View
+	 */
 	private View initView() {
 		View v = inflater.inflate(R.layout.fragment_selected_files_swipe, parent, false);
-
 		TabsPagerAdapter adapter = new TabsPagerAdapter(getActivity().getSupportFragmentManager());
 
 		viewPager = (ViewPager) v.findViewById(R.id.viewpagerSwipe);
@@ -45,14 +59,18 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 		viewPager.setOnPageChangeListener(this);
 
 		tabHost = (TabHost) v.findViewById(R.id.tabhostSwipe);
-		
 		initializeTabs();
-		
 		tabHost.setCurrentTab(1);
+		
 		return v;
 	}
 	
 	
+	/**
+	 * When this fragments activity is created, set current tab
+	 * to the tab on index 0 so that the tabs view will be initialized.
+	 * 
+	 */
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		tabHost.setCurrentTab(0);	

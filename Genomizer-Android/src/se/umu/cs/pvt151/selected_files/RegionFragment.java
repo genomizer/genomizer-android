@@ -33,6 +33,10 @@ public class RegionFragment extends Fragment {
 	private Button removeButton;
 
 
+	/**
+	 * Called when the RegionFragment is created.
+	 * Gets the region files from DataStorage.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		region = DataStorage.getFileList("region");
@@ -56,6 +60,11 @@ public class RegionFragment extends Fragment {
 	}
 	
 	
+	/**
+	 * This method is called when the fragments activity is created.
+	 * The selected files is loaded from DataStorage.
+	 * 
+	 */
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		selectedRegion = DataStorage.getFileList("regionSelected");
@@ -95,18 +104,14 @@ public class RegionFragment extends Fragment {
 	 *
 	 */
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
+		
+		//The files to be visualized in the listview
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
-		boolean[] selectedItem;
+		
 
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
 			super(getActivity(), 0, files);
 			forShow = files;
-			if (files != null) {
-				selectedItem = new boolean[files.size()];
-				for(int i = 0; i<selectedItem.length; i++) {
-					selectedItem[i] = false;
-				}
-			}
 		}
 
 
@@ -172,7 +177,6 @@ public class RegionFragment extends Fragment {
 		}
 
 
-		@Override
 		public boolean hasStableIds() {
 			return true;
 		}

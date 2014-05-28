@@ -75,6 +75,7 @@ public class ConverterFragment extends Fragment{
 	private int convertedFiles;
 	private ProgressDialog loadScreen;
 	private Stack<GeneFile> processList;
+	private IOException convertException;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -559,6 +560,7 @@ public class ConverterFragment extends Fragment{
 			ProcessingParameters parameters = new ProcessingParameters();
 			boolean convertOk = false;
 			String meta = "";
+			convertException = null;
 			String release = parameterList.get(1);
 
 			for (int i = 0; i < parameterList.size(); i++) {
@@ -576,8 +578,7 @@ public class ConverterFragment extends Fragment{
 				map.put(convertOk, geneFile);
 			} catch (IOException e) {
 				e.printStackTrace();
-				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
-				act.relogin();
+				convertException = e;
 			}
 
 			return map;
@@ -595,9 +596,13 @@ public class ConverterFragment extends Fragment{
 			super.onPostExecute(result);
 			boolean convert = result.containsKey(true);
 			GeneFile geneFile = result.get(convert);
-			
-			incrementConverted(convert, geneFile);
-			conversionSummary();
+			if (convertException == null) {
+				incrementConverted(convert, geneFile);
+				conversionSummary();
+			} else {
+				SingleFragmentActivity act = (SingleFragmentActivity) getActivity();
+				act.relogin();
+			}
 		}
 	}
 

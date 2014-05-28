@@ -26,6 +26,7 @@ public class MsgDeconstructor {
 	public static ArrayList<Annotation> deconAnnotations(JSONArray json) throws JSONException {
 		ArrayList<Annotation> annotations = new ArrayList<Annotation>();
 
+		//for each annotation..
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			Annotation annotation = new Annotation();
@@ -64,10 +65,12 @@ public class MsgDeconstructor {
 	public static ArrayList<GeneFile> deconFiles(JSONArray json) throws JSONException {
 		ArrayList<GeneFile> files = new ArrayList<GeneFile>();
 
+		//for each file..
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			GeneFile file = new GeneFile();
 
+			//Sets the files values
 			file.setFileId(getStringFromJObj(obj, "id"));
 			file.setExpId(getStringFromJObj(obj, "expId"));
 			file.setType(getStringFromJObj(obj, "type"));
@@ -111,6 +114,7 @@ public class MsgDeconstructor {
 	public static ArrayList<Experiment> deconSearch(JSONArray json) throws JSONException {
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
 
+		//for each experiment..
 		for (int i = 0; i < json.length(); i++) {
 			Experiment experiment = new Experiment();
 			JSONObject jsonExperiment = (JSONObject) json.get(i);
@@ -138,6 +142,7 @@ public class MsgDeconstructor {
 	public static ArrayList<GenomeRelease> deconGenomeReleases(JSONArray json) throws JSONException {
 		ArrayList<GenomeRelease> genomeReleases = new ArrayList<GenomeRelease>();
 
+		//for each Genome release..
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			
@@ -164,6 +169,7 @@ public class MsgDeconstructor {
 	public static ArrayList<ProcessStatus> deconProcessPackage(JSONArray json) throws JSONException {
 		ArrayList<ProcessStatus> processes = new ArrayList<ProcessStatus>();
 
+		//For each process..
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			
@@ -183,7 +189,6 @@ public class MsgDeconstructor {
 			for (int j = 0; j < files.length; j++) {
 				files[j] = outputFiles.getString(j);
 			}
-			
 			process.setOutputFiles(files);
 			
 			processes.add(process);

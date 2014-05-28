@@ -58,22 +58,27 @@ public class ComHandler {
 			Genomizer.makeToast(requestType + ": Bad Request.");
 			break;
 		case 401:
-			Genomizer.makeToast(requestType + ": Unauthorized.");
+			Genomizer.makeToast(requestType + ": Access Denied.");
 			break;
 		case 403:
-			Genomizer.makeToast(requestType + ": Forbidden - access denied.");
+			Genomizer.makeToast(requestType + ": Forbidden - "
+					+ "access denied.");
 			break;
 		case 404:
-			Genomizer.makeToast(requestType + ": Not Found - resource was not found.");
+			Genomizer.makeToast(requestType + ": Not Found - "
+					+ "resource was not found.");
 			break;
 		case 405:
-			Genomizer.makeToast(requestType + ": Method Not Allowed - requested method is not supported for resource.");
+			Genomizer.makeToast(requestType + ": Method Not Allowed - "
+					+ "requested method is not supported for resource.");
 			break;
 		case 429:
-			Genomizer.makeToast(requestType + ": Too Many Requests - please try again later.");
+			Genomizer.makeToast(requestType + ": Too Many Requests - "
+					+ "please try again later.");
 			break;
 		case 503:
-			Genomizer.makeToast(requestType + ": Service Unavailable - service is temporarily unavailable.");
+			Genomizer.makeToast(requestType + ": Service Unavailable - "
+					+ "service is temporarily unavailable.");
 			break;
 		}
 		

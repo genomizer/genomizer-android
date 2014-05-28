@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import se.umu.cs.pvt151.model.Genomizer;
 import android.os.Build;
-import android.util.Log;
 
 public class Communicator {
 

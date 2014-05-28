@@ -77,6 +77,6 @@ public class SearchActivity extends SingleFragmentActivity {
 	 * Will call the receivers to close the backStack 
 	 */
 	private void finishSystem() {		
-		super.relogin();
+		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 }

@@ -12,7 +12,7 @@ import android.support.v4.app.Fragment;
  * FileListActivity
  * Activity used for handling 
  * all files of an experiment, displaying
- * it to the user organised by data type.
+ * it to the user organized by data type.
  * @author Cecilia Lindmark
  */
 public class FileListActivity extends SingleFragmentActivity {

@@ -28,9 +28,11 @@ import android.widget.Toast;
  * Fragment used to display available
  * annotations in a list with a
  * check box next to each annotation.
- * Used to check and store in internal storage.
- * Default settings is also possible, and then
- * the two first annotations is shown in the
+ * Gives a possibility for the user to select
+ * annotations displayed in the search result
+ * and use internal storage to store settings.
+ * Default settings are also possible, and then
+ * the two first annotations are shown in the
  * search result view.
  * @author Cecilia Lindmark
  */
@@ -51,7 +53,7 @@ public class SearchSettingsFragment extends Fragment {
 	/**
 	 * onCreate
 	 * Retrieves right values
-	 * from previous activity.
+	 * from the previous activity.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -66,7 +68,7 @@ public class SearchSettingsFragment extends Fragment {
 	/**
 	 * onCreateView
 	 * Inflates the view.
-	 * Sets listeners to button to
+	 * Sets listeners to the button used to
 	 * save set annotations and to the
 	 * button used to set default settings.
 	 */
@@ -158,7 +160,7 @@ public class SearchSettingsFragment extends Fragment {
 	}
 	
 	/**
-	 * Method used to save information
+	 * Method used to save information about
 	 * if default settings should be used or not
 	 * @param defaultOrNot true if defaults settings
 	 * is selected, else false
@@ -184,9 +186,9 @@ public class SearchSettingsFragment extends Fragment {
 		}
 	}
 	/**
-	 * Method used to set array with
+	 * Method used to set boolean array with
 	 * false values, used to handle check box
-	 * checks on scroll. 
+	 * checks when view is scrolled. 
 	 */
 	private void fillData() {
 		for(int i = 0; i < annotations.size(); i++) {
@@ -196,7 +198,8 @@ public class SearchSettingsFragment extends Fragment {
 	
 	/**
 	 * Used to create holder for
-	 * values used in get view
+	 * the values used in get view
+	 * method
 	 *
 	 */
 	static class listViewHolder {

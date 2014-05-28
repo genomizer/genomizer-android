@@ -30,6 +30,10 @@ import android.view.Window;
  */
 public abstract class SingleFragmentActivity extends FragmentActivity {
 	
+	private static final String BROADCAST_ACTION = "com.package.ACTION_LOGOUT";
+
+	private static final String LOST_CONNECTION = "Connection to server lost. Please login again.";
+
 	private static ArrayList<Activity> activityList = new ArrayList<Activity>();
 	
 	private boolean inflateMenu = false;
@@ -175,7 +179,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	
 	
 	public void relogin() {
-		Genomizer.makeToast("Connection to server lost. Please login again.");
+		Genomizer.makeToast(LOST_CONNECTION);
 		Intent i = new Intent(this, LogInActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
@@ -190,7 +194,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 */
 	public void closeBackstack() {
 		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction("com.package.ACTION_LOGOUT");
+		broadcastIntent.setAction(BROADCAST_ACTION);
 		sendBroadcast(broadcastIntent);
 	}
 	

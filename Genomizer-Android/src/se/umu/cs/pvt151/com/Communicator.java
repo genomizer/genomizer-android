@@ -140,11 +140,23 @@ public class Communicator {
 
 			int responseCode = -1;
 			//Android throws an exception when the response is 401.
-			try {
-				responseCode = connection.getResponseCode();
-			} catch(Exception e) {
-				return new GenomizerHttpPackage(404, "");
+			boolean success = false;
+			for(int i = 0; i < 5; i++) {
+				try {
+					responseCode = connection.getResponseCode();
+					System.err.println("LOOPING, i: " + i + " resp: " + responseCode);
+					if(responseCode != 1) {
+						success = true;
+						break;
+					}
+				} catch(Exception e) {
+					
+				}
 			}
+			if(!success) {
+				return new GenomizerHttpPackage(401, "Unauthorized");
+			}
+			
 
 			if (responseCode < 300 && responseCode >= 200) {
 

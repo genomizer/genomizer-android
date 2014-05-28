@@ -102,24 +102,6 @@ public class SettingsActivity extends SingleFragmentActivity  {
 		
 	}
 	
-	/**
-	 * Register a new BroadCastReceiver to the activity that will listen for
-	 * LogOut calls from a sender. When LogOut call received it will finish 
-	 * this activity.
-	 */
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("com.package.ACTION_LOGOUT");
-		registerReceiver(new BroadcastReceiver() {
-
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				finish();
-			}
-		}, intentFilter);
-	}
 
 }

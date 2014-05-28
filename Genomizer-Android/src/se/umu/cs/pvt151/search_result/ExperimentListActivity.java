@@ -9,6 +9,7 @@ package se.umu.cs.pvt151.search_result;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
 import se.umu.cs.pvt151.login.SettingsActivity;
@@ -20,10 +21,7 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 
 /**
  * ExperimentListActivity
@@ -59,18 +57,6 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 		super.onCreate(savedInstanceState);
 		annotation = getIntent().getExtras().getStringArrayList("Annotations");
 		searchResults = (HashMap<String, String>) getIntent().getExtras().getSerializable("searchMap");
-
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("com.package.ACTION_LOGOUT");
-		registerReceiver(new BroadcastReceiver() {
-
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				finish();
-			}
-		}, intentFilter);
-
 	}
 
 	/**
@@ -150,7 +136,6 @@ public class ExperimentListActivity extends SingleFragmentActivity {
 	public void onBackPressed() {
 		finish();
 	}
-
-
+	
 
 }

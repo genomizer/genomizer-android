@@ -10,6 +10,9 @@ import se.umu.cs.pvt151.processing.ProcessActivity;
 import se.umu.cs.pvt151.search.SearchActivity;
 import se.umu.cs.pvt151.selected_files.SelectedFilesActivity;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,7 +40,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	private static ArrayList<Activity> activityList = new ArrayList<Activity>();
 	
 	private boolean inflateMenu = false;
-	private String fragmentClassSimpleName = "";
+	private String fragmentClassSimpleName = "";	
 	
 	
 	/**
@@ -70,6 +73,7 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	}
 	
 	
+	
 	/**
 	 * Needs to be implemented to manage how the fragment is to be
 	 * created for the SingleFragmentActivity.
@@ -78,6 +82,10 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 */
 	protected abstract Fragment createFragment();
 	
+	
+	
+	
+
 	
 	@Override
 	public abstract void onBackPressed();
@@ -183,21 +191,15 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
 	 */
 	public void relogin() {
 		Genomizer.makeToast(LOST_CONNECTION);
-		Intent i = new Intent(this, LogInActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(i);
-		overridePendingTransition(0,0);
-		
-		closeBackstack();
+		Intent intent = getBaseContext().getPackageManager()
+	             .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+
+		int mPendingIntentId = 123456;
+		PendingIntent mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId,    intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager mgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+		System.exit(0); 
+
 	}
 
-
-	/**
-	 * Closes the backstack.
-	 */
-	public void closeBackstack() {
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(BROADCAST_ACTION);
-		sendBroadcast(broadcastIntent);
-	}
 }

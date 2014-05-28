@@ -3,12 +3,7 @@ package se.umu.cs.pvt151.search;
 import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.SingleFragmentActivity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,8 +23,7 @@ public class SearchActivity extends SingleFragmentActivity {
 	private static final String NEGATIVE_RESPONSE = "No";
 	private static final String POSITIVE_RESPONSE = "Yes";
 	private static final String EXIT = "Exit";
-	private static final String EXIT_QUERY = "Are you sure you want to exit?";
-	private BroadcastReceiver broadcastReceiver = null;
+	private static final String EXIT_QUERY = "Are you sure you want to exit?";	
 
 	/**
 	 * Returns new SearchListFragment
@@ -83,41 +77,6 @@ public class SearchActivity extends SingleFragmentActivity {
 	 * Will call the receivers to close the backStack 
 	 */
 	private void finishSystem() {		
-		((SingleFragmentActivity) this).closeBackstack();
-	}
-	
-	/**
-	 * Register a new BroadCastReceiver to the activity that will listen for
-	 * LogOut calls from a sender. When LogOut call received it will finish 
-	 * this activity.
-	 */
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("com.package.ACTION_LOGOUT");
-		broadcastReceiver =
-		new BroadcastReceiver() {
-
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				finish();
-			}
-		};
-		registerReceiver(broadcastReceiver, intentFilter);
-	}
-	
-	/**
-	 * When stopped unregisters the BroadCastReceiver before finish.
-	 */
-	@Override
-	protected void onStop() {
-		super.onStop();
-		if(broadcastReceiver != null) {
-			unregisterReceiver(broadcastReceiver);
-		}
-		
-		finish();
+		super.relogin();
 	}
 }

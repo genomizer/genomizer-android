@@ -25,7 +25,7 @@ public class LogInActivity extends SingleFragmentActivity {
 	 */
 	protected Fragment createFragment() {
 		fragment = new LogInFragment();
-		getSavedServerURL();
+		getSavedServerURL();		
 		return fragment;
 	}
 
@@ -59,6 +59,5 @@ public class LogInActivity extends SingleFragmentActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
 	
 }

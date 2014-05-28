@@ -19,6 +19,7 @@ import android.view.View;
 public class SearchPubmedActivity extends SingleFragmentActivity {
 
 	private SearchPubmedFragment searchPubmedFragment;
+	private BroadcastReceiver broadcastReceiver;
 	
 	/**
 	 * Returns a new SearchPubMedFragment
@@ -65,14 +66,28 @@ public class SearchPubmedActivity extends SingleFragmentActivity {
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("com.package.ACTION_LOGOUT");
-		registerReceiver(new BroadcastReceiver() {
+		broadcastReceiver =
+		new BroadcastReceiver() {
 
 
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				finish();
+				broadcastReceiver = null;
 			}
-		}, intentFilter);
+		};
+		registerReceiver(broadcastReceiver, intentFilter);
+	}
+	
+	/**
+	 * When stopped unregisters the BroadCastReceiver before finish.
+	 */
+	@Override
+	protected void onDestroy() {	
+		super.onDestroy();
+		if(broadcastReceiver != null) {
+			unregisterReceiver(broadcastReceiver);
+		}				
 	}
 
 }

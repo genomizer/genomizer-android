@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import se.umu.cs.pvt151.SingleFragmentActivity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -49,18 +46,6 @@ public class FileListActivity extends SingleFragmentActivity {
 		annotation = getIntent().getExtras().getStringArrayList("Annotations");
 		searchResults = (HashMap<String, String>) getIntent().getExtras().getSerializable("searchMap");
 
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("com.package.ACTION_LOGOUT");
-		registerReceiver(new BroadcastReceiver() {
-
-
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				finish();
-			}
-		}, intentFilter);
-
-
 	}
 	
 	/**
@@ -79,6 +64,5 @@ public class FileListActivity extends SingleFragmentActivity {
 		overridePendingTransition(0,0);
 		finish();
 	}
-	
-	
+		
 }

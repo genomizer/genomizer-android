@@ -153,7 +153,8 @@ public class Communicator {
 				}
 			}
 			if(!success) {
-				return new GenomizerHttpPackage(401, "Unauthorized");
+				//return new GenomizerHttpPackage(401, "Unauthorized");
+				throw new IOException("Server is not respondning.");
 			}
 			
 

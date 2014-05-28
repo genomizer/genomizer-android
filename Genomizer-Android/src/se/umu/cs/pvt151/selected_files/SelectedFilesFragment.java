@@ -30,11 +30,19 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 	private ViewGroup parent = null;
 
 
+	/**
+	 * Called by the system when this fragment is created.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
 
+	/**
+	 * Inflates the view of this fragment.
+	 * 
+	 * @return The inflated view of the layout
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {
 		this.inflater = inflater;
@@ -106,6 +114,9 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 	}
 
 
+	/**
+	 * Unimplemented
+	 */
 	public void onPageScrollStateChanged(int e) {
 
 	}
@@ -122,6 +133,9 @@ public class SelectedFilesFragment extends Fragment implements OnTabChangeListen
 	}
 
 
+	/**
+	 * Unimplemented
+	 */
 	public void onPageSelected(int e) {
 
 	}

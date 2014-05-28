@@ -278,6 +278,9 @@ public class GeneFile implements Parcelable {
 	}
 
 	
+	/**
+	 * Returns 0. This method is called by the system.
+	 */
 	public int describeContents() {
 		return 0;
 	}
@@ -302,6 +305,9 @@ public class GeneFile implements Parcelable {
 	}
 	
 
+	/**
+	 * This object is used to create arrays of GeneFiles.
+	 */
 	public static final Parcelable.Creator<GeneFile> CREATOR
 	= new Parcelable.Creator<GeneFile>() {
 		public GeneFile createFromParcel(Parcel in) {

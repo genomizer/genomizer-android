@@ -13,16 +13,31 @@ public class SelectedFilesActivity extends SingleFragmentActivity {
 	private SelectedFilesFragment selectedFilesFragment = null;
 	
 	
+	/**
+	 * Creates and returns a new SelectedFilesFragment.
+	 * 
+	 * @return Fragment
+	 */
 	public Fragment createFragment() {
 		selectedFilesFragment = new SelectedFilesFragment();
 		return selectedFilesFragment;
 	}
 
 
+	/**
+	 * When a user presses back, close this fragment.
+	 * 
+	 */
 	public void onBackPressed() {
 		finish();
 	}
 	
+	
+	/**
+	 * Register a new BroadCastReceiver to the activity that will listen for
+	 * LogOut calls from a sender. When LogOut call received it will finish 
+	 * this activity.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

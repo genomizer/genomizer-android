@@ -9,30 +9,57 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-
+/**
+ * Activity for starting the searchPubMedFragment, in the Genomizer android
+ * application.
+ * 
+ * @author Erik Åberg, c11ean
+ *
+ */
 public class SearchPubmedActivity extends SingleFragmentActivity {
 
 	private SearchPubmedFragment searchPubmedFragment;
-
+	
+	/**
+	 * Returns a new SearchPubMedFragment
+	 */
 	@Override
 	protected Fragment createFragment() {		
 		searchPubmedFragment = new SearchPubmedFragment();	
 		return searchPubmedFragment;
 	}
 	
+	/**
+	 * When clicked finish the activity.
+	 * 
+	 * @param v the view for the activity
+	 */
 	public void onClickCancel(View v) {
 		finish();
 	}
 	
+	/**
+	 * Starts the ExperimentListFragment
+	 * 
+	 * @param v the view for the activity
+	 */
 	public void onClickSearch(View v) {		
 		searchPubmedFragment.initExperimentList();		
 	}
 
+	/**
+	 * If back button is pressed, will finish the activity.
+	 */
 	@Override
 	public void onBackPressed() {
 		finish();
 	}
 	
+	/**
+	 * Register a new BroadCastReceiver to the activity that will listen for
+	 * LogOut calls from a sender. When LogOut call received it will finish 
+	 * this activity.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

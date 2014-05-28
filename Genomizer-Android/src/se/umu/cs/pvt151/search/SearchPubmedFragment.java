@@ -18,12 +18,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+/**
+ * Fragment that shows the user a view for editing the search string with 
+ * the PubMed annotation style.
+ * 
+ * @author Erik Åberg, c11ean
+ *
+ */
 public class SearchPubmedFragment extends Fragment {
 
 	private EditText pubmedInput;
 	private String origionalPubquery = "";
 
+	/**
+	 * Inflates the view and calls for setup of the different widgets in the
+	 * view.
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_search_pubmed, container, false);
@@ -31,6 +41,10 @@ public class SearchPubmedFragment extends Fragment {
 		return view;
 	}
 
+	/**
+	 * 
+	 * @param view
+	 */
 	private void initViewObjects(View view) {
 		pubmedInput = (EditText) view.findViewById(R.id.search_pubmed_input_field);
 		TextView pubmedText = (TextView) view.findViewById(R.id.search_pubmed_textview);

@@ -102,6 +102,10 @@ public class SettingsActivity extends SingleFragmentActivity  {
 		
 	}
 	
+	/**
+	 * onCreate: create intentfilter that listens for "kill command" which is used
+	 * when all activities should finish.
+	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

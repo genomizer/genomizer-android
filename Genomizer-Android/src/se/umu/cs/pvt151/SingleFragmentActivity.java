@@ -31,6 +31,7 @@ import android.view.Window;
  * @author Anders Lundberg, dv12alg   
  * 
  *
+ *
  */
 public abstract class SingleFragmentActivity extends FragmentActivity {
 

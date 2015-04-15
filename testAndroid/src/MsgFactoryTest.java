@@ -10,6 +10,9 @@ import junit.framework.TestCase;
 
 public class MsgFactoryTest extends TestCase {
 	
+	/**
+	 * Commentz
+	 */
 	public void testCreateLogin() {
 		try {
 			JSONObject msg = MsgFactory.createLogin("user", "pass");

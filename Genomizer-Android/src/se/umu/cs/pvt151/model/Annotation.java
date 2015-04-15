@@ -90,6 +90,7 @@ public class Annotation {
 	/**
 	 * Checks if the ValueList in the Annotation object is empty or not.
 	 * 
+	 * 
 	 * @return true if the list is empty, otherwise returns false.
 	 */
 	public boolean isFreeText() {

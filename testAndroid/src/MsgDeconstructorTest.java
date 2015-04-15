@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +14,6 @@ import se.umu.cs.pvt151.com.GenomizerHttpPackage;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
 import se.umu.cs.pvt151.com.MsgFactory;
 import se.umu.cs.pvt151.model.Experiment;
-import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessStatus;
 import junit.framework.TestCase;

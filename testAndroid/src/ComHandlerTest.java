@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.GenomizerHttpPackage;
 import se.umu.cs.pvt151.model.Annotation;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;

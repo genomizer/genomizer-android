@@ -5,13 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONObject;
 
-import se.umu.cs.pvt151.model.Genomizer;
 import android.os.Build;
 
 /**
@@ -24,7 +21,7 @@ import android.os.Build;
  *
  */
 public class Communicator {
-	
+
 	//The number of tries on getting response code
 	private static final int RESPONSE_TRIES = 3;
 
@@ -32,7 +29,7 @@ public class Communicator {
 	private static String urlString;
 	private static String token = "";
 	private static Communicator staticSelfReference = null;
-	
+
 
 	/**
 	 * Creates a new Communicator object.
@@ -91,7 +88,7 @@ public class Communicator {
 		return sendRequest(jsonPackage, urlPostfix);
 	}
 
-	
+
 	/**
 	 * Sets up a connection to a server.
 	 * 
@@ -103,7 +100,7 @@ public class Communicator {
 		if (Build.VERSION.SDK_INT <= 8) {
 			System.setProperty("http.keepAlive", "false");
 		}
-		
+
 		URL url = new URL(urlString + urlPostfix);
 		connection = (HttpURLConnection) url.openConnection();
 
@@ -134,36 +131,19 @@ public class Communicator {
 	 * @return GenomizerHttpPackage - The response code and body
 	 * @throws IOException
 	 */
-	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage, 
-			String urlPostfix) throws IOException {
-		GenomizerHttpPackage httpResponse = null;
-		BufferedReader in = null;
+	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage, String urlPostfix) throws IOException {
 		int responseCode = -1;
-		
-		try {
-			writePackage(jsonPackage);
-			
-			responseCode = recieveResponse(urlPostfix);
-			
-			httpResponse = validateCode(responseCode, in);
-			
-		} catch (ConnectTimeoutException e) {
-	       Genomizer.makeToast("Connection timed out. No response from server");
-	    } catch (SocketTimeoutException e) {
-	    	Genomizer.makeToast("Connection timed out. No response from server");
-	    } catch(IOException ioe) {
-			throw ioe;
-		} finally {
-			if(in != null) {
-				in.close();
-				
-				connection.disconnect();
-			}
-		}
-		return httpResponse;
+
+		writePackage(jsonPackage);
+
+		responseCode = recieveResponse(urlPostfix);
+
+		return validateCode(responseCode);
+
+
 	}
-	
-	
+
+
 	/**
 	 * Writes a package to the server. If no working
 	 * connection is established, an IOException will be thrown.
@@ -172,16 +152,15 @@ public class Communicator {
 	 * @throws IOException
 	 */
 	private static void writePackage(JSONObject jsonPackage) throws IOException {
-		DataOutputStream out = null;
 		if (connection.getDoOutput()) {
-			out = new DataOutputStream(connection.getOutputStream());						
+			DataOutputStream out = new DataOutputStream(connection.getOutputStream());						
 			byte[] pack = jsonPackage.toString().getBytes("UTF-8");							
 			out.write(pack);
 			out.flush();				
 		}
 	}
-	
-	
+
+
 	/**
 	 * Gets and returns a response code from the server.
 	 * If no working connection is established or if no 
@@ -193,13 +172,13 @@ public class Communicator {
 	 */
 	private static int recieveResponse(String urlPostfix) throws IOException {
 		int response = -1;
-		
+
 		//Android throws an exception when the response is 401.
 		boolean success = false;
 		for(int i = 0; i < RESPONSE_TRIES; i++) {
 			try {
 				response = connection.getResponseCode();
-				
+
 				if(response != -1) {
 					success = true;
 					break;
@@ -216,23 +195,22 @@ public class Communicator {
 		}
 		return response;
 	}
-	
-	
+
+
 	/**
 	 * Validates a response code and creates a GenomizerHttpPackage
 	 * included response body (if there are any), and returns it.
+	 * If the response code is outside of the range 200-299 the return package will
+	 * have an empty body.
 	 * 
 	 * @param responseCode
 	 * @param in
 	 * @return HttpPackage response from server
 	 * @throws IOException
 	 */
-	private static GenomizerHttpPackage validateCode(int responseCode, BufferedReader in) throws IOException {
-		GenomizerHttpPackage httpResponse = null;
-		BufferedReader inStream = in;
-		
+	private static GenomizerHttpPackage validateCode(int responseCode) throws IOException {
 		if (responseCode < 300 && responseCode >= 200) {
-			inStream = new BufferedReader(
+			BufferedReader inStream = new BufferedReader(
 					new InputStreamReader(connection.getInputStream()));
 
 			StringBuffer response = new StringBuffer();
@@ -242,10 +220,9 @@ public class Communicator {
 			while ((inputLine = inStream.readLine()) != null) {
 				response.append(inputLine);
 			}
-			httpResponse = new GenomizerHttpPackage(responseCode, response.toString());
+			return new GenomizerHttpPackage(responseCode, response.toString());
 		} else {
-			httpResponse = new GenomizerHttpPackage(responseCode, "");
+			return new GenomizerHttpPackage(responseCode, "");
 		}
-		return httpResponse;
 	}
 }

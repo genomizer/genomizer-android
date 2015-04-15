@@ -9,11 +9,8 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
 import junit.framework.TestCase;
 
 public class MsgFactoryTest extends TestCase {
-	
-	/**
-	 * Commentz
-	 */
-	public void testCreateLogin() {
+
+	public void testCreateLoginPackage() {
 		try {
 			JSONObject msg = MsgFactory.createLogin("user", "pass");
 			assertEquals("user", msg.get("username"));
@@ -22,17 +19,6 @@ public class MsgFactoryTest extends TestCase {
 			fail("JSON exception was thrown");
 		}
 	}
-	
-	
-	public void testCreateRegularPackage() {
-		try {
-			JSONObject msg = MsgFactory.createRegularPackage();
-			assertNotNull(msg);
-		} catch (JSONException e) {
-			fail("JSON exception was thrown");
-		}
-	}
-	
 	
 	public void testCreateConversionRequest() {
 		try {
@@ -44,6 +30,7 @@ public class MsgFactoryTest extends TestCase {
 			
 			JSONObject msg = MsgFactory.createConversionRequest(parameters, file, "meta", "release");
 			assertEquals("meta", msg.getString("metadata"));
+			assertEquals("release", msg.getString("genomeVersion"));
 		} catch (JSONException e) {
 			fail("JSON exception was thrown");
 		}

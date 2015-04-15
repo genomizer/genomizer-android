@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,23 +22,7 @@ import junit.framework.TestCase;
 
 public class MsgDeconstructorTest extends TestCase {
 
-
-	public void testCanCreateJSONFromString() {
-		JSONObject man = new JSONObject();
-		try {
-			man.put("head", "hat");
-		} catch (JSONException e) {
-			fail("Can't put field in JSON");
-		}
-		String jsonString = man.toString();
-		try {
-			assertEquals("hat", new JSONObject(jsonString).get("head"));
-		} catch (JSONException e) {
-			fail("Can't convert from and to JSON properly");
-		}
-	}
-
-
+	//TODO refactor remove?
 	public void testDeconstructSearchResults() {
 		try {
 			Communicator.initCommunicator("http://genomizer.apiary-mock.com/");
@@ -45,7 +30,7 @@ public class MsgDeconstructorTest extends TestCase {
 			HashMap<String, String> annotations = new HashMap<String, String>();
 			annotations.put("Species", "Human");
 
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage searchResponse;
 
 			searchResponse = Communicator.sendHTTPRequest
@@ -67,12 +52,66 @@ public class MsgDeconstructorTest extends TestCase {
 		}
 	}
 
+	public void testDeconstructSearchResults2() {
+		JSONArray packageArray = new JSONArray();
+		try {
+			JSONObject experiment = new JSONObject();
+			
+
+			//fake name
+			experiment.put("name", "expID");
+
+			//fake fileArray
+			JSONArray fileArray = new JSONArray();
+			JSONObject file = new JSONObject();
+			file.put("id", 10);
+			file.put("path", "path");
+			file.put("url", "url");
+			file.put("type", "type");
+			file.put("filename", "filename");
+			file.put("date", "date");
+			file.put("author", "author");
+			file.put("uploader", "uploader");
+			file.put("expId", "expId");
+			file.put("grVersion", "grVersion");
+			fileArray.put(file);
+			experiment.put("files", fileArray);
+
+			//fake AnnotationsArray
+			JSONArray annotationArray = new JSONArray();
+			JSONObject annotation = new JSONObject();
+			annotation.put("name", "name");
+			annotation.put("value", "value");
+			annotationArray.put(annotation);
+			experiment.put("annotations", annotationArray);
+			
+			
+			packageArray.put(experiment);
+			
+			
+		} catch (JSONException e){
+			fail("Failed because of JSONException in construction");
+		}
+		
+		
+		
+		
+		
+		try{
+			ArrayList<Experiment> experiments = MsgDeconstructor.deconSearch(packageArray);
+			assertEquals("expID", experiments.get(0).getName());
+		} catch (JSONException e) {
+			fail("Failed because of JSONException in deconstruction");
+			e.printStackTrace();
+		}
+	}
+
 
 	public void testDeconstructGenomeReleases() {
 		try {
 			Communicator.initCommunicator("http://genomizer.apiary-mock.com/");
 
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "genomeRelease");
 
 			String jsonString = genomeResponse.getBody();
@@ -92,13 +131,13 @@ public class MsgDeconstructorTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public void testDeconstructProcessPackage() {
 		try {
 			Communicator.initCommunicator("http://genomizer.apiary-mock.com/");
 
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");
 
 			String jsonString = genomeResponse.getBody();

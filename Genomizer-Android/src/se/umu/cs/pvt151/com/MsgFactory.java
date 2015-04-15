@@ -34,17 +34,6 @@ public class MsgFactory {
 
 	
 	/**
-	 * Creates a standard JSONObject used to communicate with a server.
-	 * 
-	 * @return JSONObject
-	 * @throws JSONException
-	 */
-	public static JSONObject createRegularPackage() throws JSONException {
-		return new JSONObject();		
-	}
-	
-	
-	/**
 	 * Creates a conversion JSONObject that contains information about a file, 
 	 * an arbitrary number of parameters, metadata, processtype and genomerelease.
 	 * 
@@ -62,7 +51,7 @@ public class MsgFactory {
 		
 		obj.put("expid", file.getExpId());
 		Log.d("smurf", "Before parameters to json");
-		obj.put("parameters", parametersToJson(param));
+		obj.put("parameters", parametersToJSON(param));
 		Log.d("smurf", "After parameters to json");
 		obj.put("metadata", metadata);
 		obj.put("genomeVersion", genomeRelease);
@@ -80,12 +69,11 @@ public class MsgFactory {
 	 * @return JSONArray
 	 * @throws JSONException
 	 */
-	private static JSONArray parametersToJson(ProcessingParameters param) throws JSONException {
-		JSONArray json = new JSONArray();
+	private static JSONArray parametersToJSON(ProcessingParameters param) throws JSONException {
+		JSONArray jsonArray = new JSONArray();
 		for (int i = 0; i < param.size(); i++) {
-
-			json.put(param.getParameter(i));
+			jsonArray.put(param.getParameter(i));
 		}
-		return json;
+		return jsonArray;
 	}
 }

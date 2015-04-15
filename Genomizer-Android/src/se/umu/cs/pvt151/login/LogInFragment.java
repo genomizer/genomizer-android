@@ -85,10 +85,11 @@ public class LogInFragment extends Fragment {
 	 * access, and is needed throughout the session.
 	 */
 	private boolean sendLoginRequest() {
-		String uname = userName.getText().toString();
-		String password = userPwd.getText().toString();
-		
-		if (uname.length() < 4 || password.length() < 4) {
+//		String uname = userName.getText().toString();
+//		String password = userPwd.getText().toString();
+		String uname = "adsasd";
+		String password = "baguette"; 
+		if (uname.length() < 0 || password.length() < 0) {
 			makeToast(INPUT_MALFORMED, false);
 			return false;
 		}		

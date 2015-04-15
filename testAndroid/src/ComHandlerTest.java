@@ -17,80 +17,76 @@ import android.util.Log;
 import junit.framework.TestCase;
 
 public class ComHandlerTest extends TestCase {
+	private String password = "baguette";
+	private String server = "http://scratchy.cs.umu.se:7000/";
+//	"http://genomizer.apiary-mock.com/"
+	
 	
 	public void setUp() {
-		ComHandler.setServerURL("http://genomizer.apiary-mock.com/");
-	}
-	
-	public void testLoginPackage() {
-		try {
-			boolean test = ComHandler.login("BobSaget", "Hemligt");
-			
-			if (test) {
-				Log.d("DEBUG", "connected");
-			}
-		} catch (IOException e) {
-			Log.d("DEBUG", "Could not communicate with the server");
-			fail("Could not communicate with the server.");
-		}
+		ComHandler.setServerURL(server);
+		System.out.println("hej");
 	}
 	
 	
-	public void testLogInToServer() {
+	public void testShouldLoginValidUser() {
 		try {
-			Log.d("LOGIN", "http://scratchy.cs.umu.se:7000/");
-			ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
-			
-			ComHandler.login("yo", "Hemligt");
-			
+			assertTrue(ComHandler.login("sdf", password));
 		} catch (IOException e) {
 			fail("Could not communicate with the server.");
 		}
 	}
 	
 	
+	public void testShouldRejectLoginWithWrongPassword() {
+		try {
+			assertFalse(ComHandler.login("yo", "wrongpassword"));
+		} catch (IOException e) {
+			fail("Could not communicate with the server.");
+		}
+	}
+	
+	//TODO är experimentName ett namn på ett experiment?
+	// fungerar inte utan databasen
 	public void testSearchPackage() {
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Species", "Human");
 		searchValues.put("Sex", "Male");
 		try {
-			ComHandler.login("John", "SearchTest");
+			ComHandler.login("John", password);
 			ArrayList<Experiment> experiments = ComHandler.search(searchValues);
 			assertEquals("experimentName", experiments.get(0).getName());
 		} catch (IOException e) {
-			fail("IOException!");
+			fail("Could not communicate with the server.");
 			e.printStackTrace();
 		} 
 	}
 	
 	
 	public void testSearchOnServer() {
-		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
-		
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Sex", "male");
 		searchValues.put("Specie", "human");
 		try {
-			ComHandler.login("liveSearchTest", "password");
+			ComHandler.login("liveSearchTest", password);
 			ArrayList<Experiment> experiments = ComHandler.search(searchValues);
-			assertNotNull(experiments);
+			assertFalse(experiments.isEmpty());
 		} catch (IOException e) {
 			Log.d("TestLog", e.getMessage());
 			e.printStackTrace();
-			fail("IOException!");
+			fail("Could not communicate with the server.");
 		} 
 	}
 	
 	
 	public void testAnnotationsPackage() {
 		try {
-			ComHandler.login("John", "password");
+			ComHandler.login("John", password);
 			ArrayList<Annotation> experiments = ComHandler.getServerAnnotations();
 			Log.d("DEBUG", "ANNOTATIONS");
 			Log.d("DEBUG", experiments.toString());
 			assertEquals("pubmedId", experiments.get(0).getName());
 		} catch (IOException e) {
-			fail("IOException!");
+			fail("Could not communicate with the server.");
 			e.printStackTrace();
 		}
 		
@@ -101,11 +97,11 @@ public class ComHandlerTest extends TestCase {
 		try {
 			ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
 			
-			ComHandler.login("annotationFromServer", "password");
+			ComHandler.login("annotationFromServer", password);
 			ArrayList<Annotation> experiments = ComHandler.getServerAnnotations();
 			assertNotNull(experiments);
 		} catch (IOException e) {
-			fail("IOException!");
+			fail("Could not communicate with the server.");
 			e.printStackTrace();
 		}
 		
@@ -114,11 +110,11 @@ public class ComHandlerTest extends TestCase {
 	
 	public void testAnnotationsDeconstruct() {
 		try {
-			ComHandler.login("John", "password");
+			ComHandler.login("John", "baguette");
 			
 			ComHandler.getServerAnnotations();
 		} catch (IOException e) {
-			fail("IOException!");
+			fail("Could not communicate with the server.");
 			e.printStackTrace();
 		}
 	}
@@ -158,12 +154,12 @@ public class ComHandlerTest extends TestCase {
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
 		
 		try {
-			ComHandler.login("liveSearchTest", "password");
+			ComHandler.login("liveSearchTest", password);
 			experiments = ComHandler.search(searchValues);
 		} catch (IOException e) {
 			Log.d("TestLog", e.getMessage());
 			e.printStackTrace();
-			fail("IOException!");
+			fail("Could not communicate with the server.");
 		} 
 		
 		List<GeneFile> files = experiments.get(0).getFiles();
@@ -192,7 +188,7 @@ public class ComHandlerTest extends TestCase {
 		ArrayList<GenomeRelease> gr = new ArrayList<GenomeRelease>();
 		
 		try {
-			ComHandler.login("liveSearchTest", "password");
+			ComHandler.login("liveSearchTest", password);
 			gr = ComHandler.getGenomeReleases();
 			
 			assertNotNull(gr);
@@ -211,7 +207,7 @@ public class ComHandlerTest extends TestCase {
 		ArrayList<ProcessStatus> processes = new ArrayList<ProcessStatus>();
 		
 		try {
-			ComHandler.login("liveSearchTest", "password");
+			ComHandler.login("liveSearchTest", password);
 			processes = ComHandler.getProcesses();
 			
 			assertNotNull(processes);

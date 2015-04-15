@@ -9,19 +9,25 @@ import android.os.Parcelable;
  * @author erik c11ean
  *
  */
+//TODO varför implementera parceable? för parcel? vad är en parcel?
 public class GeneFile implements Parcelable {
 	
-	private String fileId;
-	private String expId;
-	private String type;
-	private String name;
-	private String author;
-	private String uploadedBy;
-	private String isPrivate;
+	private String id;
 	private String path;
 	private String url;
+	private String type;
+	private String filename;
 	private String date;
-	private String grVersion;
+	private String author;
+	private String uploader;
+	private String expId;
+	private String grVersion;	
+	
+	private String isPrivate;
+	
+	
+	
+	
 	
 	
 	/**
@@ -40,12 +46,12 @@ public class GeneFile implements Parcelable {
 	 * @param in
 	 */
 	private GeneFile(Parcel in) {
-		fileId = in.readString();
+		id = in.readString();
 		expId = in.readString();
 		type = in.readString();
-		name = in.readString();
+		filename = in.readString();
 		author = in.readString();
-		uploadedBy = in.readString();
+		uploader = in.readString();
 		isPrivate = in.readString();
 		path = in.readString();
 		url = in.readString();
@@ -160,7 +166,7 @@ public class GeneFile implements Parcelable {
 	 * @return file id
 	 */
 	public String getFileId() {
-		return fileId;
+		return id;
 	}
 
 	
@@ -170,7 +176,7 @@ public class GeneFile implements Parcelable {
 	 * @param fileId
 	 */
 	public void setFileId(String fileId) {
-		this.fileId = fileId;
+		this.id = fileId;
 	}
 
 	
@@ -220,7 +226,7 @@ public class GeneFile implements Parcelable {
 	 * @return name
 	 */
 	public String getName() {
-		return name;
+		return filename;
 	}
 
 	
@@ -230,7 +236,7 @@ public class GeneFile implements Parcelable {
 	 * @param name
 	 */
 	public void setName(String name) {
-		this.name = name;
+		this.filename = name;
 	}
 
 	
@@ -260,7 +266,7 @@ public class GeneFile implements Parcelable {
 	 * @return user
 	 */
 	public String getUploadedBy() {
-		return uploadedBy;
+		return uploader;
 	}
 
 	
@@ -270,7 +276,7 @@ public class GeneFile implements Parcelable {
 	 * @param uploadedBy
 	 */
 	public void setUploadedBy(String uploadedBy) {
-		this.uploadedBy = uploadedBy;
+		this.uploader = uploadedBy;
 	}
 
 	
@@ -287,12 +293,12 @@ public class GeneFile implements Parcelable {
 	 * 
 	 */
 	public void writeToParcel(Parcel out, int flags) {
-		out.writeString(fileId);
+		out.writeString(id);
 		out.writeString(expId);
 		out.writeString(type);
-		out.writeString(name);
+		out.writeString(filename);
 		out.writeString(author);
-		out.writeString(uploadedBy);
+		out.writeString(uploader);
 		out.writeString(isPrivate);
 		out.writeString(path);
 		out.writeString(url);

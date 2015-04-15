@@ -27,7 +27,7 @@ import se.umu.cs.pvt151.model.ProcessingParameters;
  */
 public class ComHandler {
 
-	private static String serverURL = "http://itchy.cs.umu.se:7000/";
+	private static String serverURL = "http://scratchy.cs.umu.se:7000/";
 	
 	
 	/**
@@ -156,7 +156,7 @@ public class ComHandler {
 		}
 		
 		try {					
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest
 					(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
 			
@@ -187,7 +187,7 @@ public class ComHandler {
 			throw new IOException("Internet access unavailable.");
 		}
 		try {						
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest
 					(msg, "GET", "search/?annotations=" + pubmedQuery);
 
@@ -218,7 +218,7 @@ public class ComHandler {
 		}
 		
 		try {
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage annotationResponse = Communicator.sendHTTPRequest(msg, "GET", "annotation");
 
 			if (annotationResponse.getCode() == 200) {
@@ -282,7 +282,7 @@ public class ComHandler {
 			throw new IOException("Internet connection unavailable.");
 		}
 		try {
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "genomeRelease");
 
 			if (genomeResponse.getCode() == 200) {
@@ -315,7 +315,7 @@ public class ComHandler {
 		}
 		
 		try {
-			JSONObject msg = MsgFactory.createRegularPackage();
+			JSONObject msg = new JSONObject();
 			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");
 
 			if (genomeResponse.getCode() == 200) {

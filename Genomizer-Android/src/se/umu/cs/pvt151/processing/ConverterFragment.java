@@ -14,7 +14,6 @@ import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.Genomizer;
-import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -560,7 +559,7 @@ public class ConverterFragment extends Fragment{
 		protected HashMap<Boolean, GeneFile> doInBackground(GeneFile... params) {
 			GeneFile geneFile = params[0];
 			HashMap<Boolean, GeneFile> map = new HashMap<Boolean, GeneFile>();
-			ProcessingParameters parameters = new ProcessingParameters();
+			ArrayList<String> parameters = new ArrayList<String>();
 			boolean convertOk = false;
 			String meta = "";
 			convertException = null;
@@ -568,9 +567,9 @@ public class ConverterFragment extends Fragment{
 
 			for (int i = 0; i < parameterList.size(); i++) {
 				if (i == 1) {
-					parameters.addParameter("");
+					parameters.add("");
 				} else {
-					parameters.addParameter(parameterList.get(i));
+					parameters.add(parameterList.get(i));
 				}
 				meta += parameterList.get(i) + ", ";
 			}

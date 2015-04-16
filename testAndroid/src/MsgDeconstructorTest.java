@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,101 +22,122 @@ import junit.framework.TestCase;
 
 public class MsgDeconstructorTest extends TestCase {
 
-
-	public void testCanCreateJSONFromString() {
-		JSONObject man = new JSONObject();
-		try {
-			man.put("head", "hat");
-		} catch (JSONException e) {
-			fail("Can't put field in JSON");
-		}
-		String jsonString = man.toString();
-		try {
-			assertEquals("hat", new JSONObject(jsonString).get("head"));
-		} catch (JSONException e) {
-			fail("Can't convert from and to JSON properly");
-		}
-	}
-
-
 	public void testDeconstructSearchResults() {
+		JSONArray packageArray = new JSONArray();
 		try {
-			Communicator.initCommunicator("http://genomizer.apiary-mock.com/");
+			JSONObject experiment = new JSONObject();
+			
 
-			HashMap<String, String> annotations = new HashMap<String, String>();
-			annotations.put("Species", "Human");
+			//fake name
+			experiment.put("name", "expID");
 
-			JSONObject msg = MsgFactory.createRegularPackage();
-			GenomizerHttpPackage searchResponse;
+			//fake fileArray
+			JSONArray fileArray = new JSONArray();
+			JSONObject file = new JSONObject();
+			file.put("id", 10);
+			file.put("path", "path");
+			file.put("url", "url");
+			file.put("type", "type");
+			file.put("filename", "filename");
+			file.put("date", "date");
+			file.put("author", "author");
+			file.put("uploader", "uploader");
+			file.put("expId", "expId");
+			file.put("grVersion", "grVersion");
+			fileArray.put(file);
+			experiment.put("files", fileArray);
 
-			searchResponse = Communicator.sendHTTPRequest
-					(msg, "GET", "search/?annotations=" + ComHandler.generatePubmedQuery(annotations));
-
-			JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
-			ArrayList<Experiment> experiments = MsgDeconstructor.deconSearch(jsonPackage);
-
-			assertEquals("experimentId", experiments.get(0).getName());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			fail("Failed because of unsupported encoding");
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail("Failed because of IOException");
+			//fake AnnotationsArray
+			JSONArray annotationArray = new JSONArray();
+			JSONObject annotation = new JSONObject();
+			annotation.put("name", "name");
+			annotation.put("value", "value");
+			annotationArray.put(annotation);
+			experiment.put("annotations", annotationArray);
+			
+			
+			packageArray.put(experiment);
+			
+			
+		} catch (JSONException e){
+			fail("Failed because of JSONException in construction");
+		}		
+		
+		try{
+			ArrayList<Experiment> experiments = MsgDeconstructor.deconSearch(packageArray);
+			assertEquals("expID", experiments.get(0).getName());
+			assertFalse(experiments.get(0).getFiles().isEmpty());
+			assertEquals("10", experiments.get(0).getFiles().get(0).getFileId());
+			assertFalse(experiments.get(0).getAnnotations().isEmpty());
+			assertEquals("name", experiments.get(0).getAnnotations().get(0).getName());
 		} catch (JSONException e) {
-			fail("Failed because of JSONException");
+			fail("Failed because of JSONException in deconstruction");
 			e.printStackTrace();
 		}
 	}
 
 
-	public void testDeconstructGenomeReleases() {
-		try {
-			Communicator.initCommunicator("http://genomizer.apiary-mock.com/");
-
-			JSONObject msg = MsgFactory.createRegularPackage();
-			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "genomeRelease");
-
-			String jsonString = genomeResponse.getBody();
-			JSONArray jsonPackage = new JSONArray(jsonString);
-
-			ArrayList<GenomeRelease> genomeReleases = MsgDeconstructor.deconGenomeReleases(jsonPackage);
-
-			assertEquals("hy17", genomeReleases.get(0).getGenomeVersion());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			fail("Failed because of unsupported encoding");
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail("Failed because of IOException");
-		} catch (JSONException e) {
-			fail("Failed because of JSONException");
-			e.printStackTrace();
-		}
-	}
 	
+	
+	public void testDeconstructGenomeReleases() {
+		
+		
+		try {
+			JSONArray packageArray = new JSONArray();
+			JSONObject genome = new JSONObject();
+			genome.put("genomeVersion", "hy17");
+			genome.put("species", "fly");
+			genome.put("folderPath", "pathToVersion");
+			JSONArray fileArray = new JSONArray();
+			fileArray.put("filename1");
+			fileArray.put("filename2");
+			fileArray.put("filename3");
+			genome.put("files",fileArray);
+			packageArray.put(genome);
+			
+			ArrayList<GenomeRelease> genomeReleases = MsgDeconstructor.deconGenomeReleases(packageArray);
+			
+			assertFalse(genomeReleases.isEmpty());
+			assertEquals("hy17", genomeReleases.get(0).getGenomeVersion());
+			assertEquals("fly", genomeReleases.get(0).getSpecie());
+			assertEquals("pathToVersion", genomeReleases.get(0).getPath());
+		} catch (JSONException e) {
+			fail("Failed because of JSONException");
+			e.printStackTrace();
+		}
+		
+	}
+
+
 	
 	public void testDeconstructProcessPackage() {
 		try {
-			Communicator.initCommunicator("http://genomizer.apiary-mock.com/");
-
-			JSONObject msg = MsgFactory.createRegularPackage();
-			GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");
-
-			String jsonString = genomeResponse.getBody();
-			JSONArray jsonPackage = new JSONArray(jsonString);
-
-			ArrayList<ProcessStatus> processes = MsgDeconstructor.deconProcessPackage(jsonPackage);
-
+			JSONArray packageArray = new JSONArray();
+			JSONObject process = new JSONObject();
+			process.put("experimentName", "Exp1");
+			process.put("status", "Finished");
+			process.put("author", "yuri");
+			process.put("timeAdded", 1400245668744L);
+			process.put("timeStarted", 1400245668756L);
+			process.put("timeFinished", 1400245669756L);
+			JSONArray fileArray = new JSONArray();
+			fileArray.put("file1");
+			fileArray.put("file2");
+			process.put("outputFiles",fileArray);
+			packageArray.put(process);
+			
+			ArrayList<ProcessStatus> processes = MsgDeconstructor.deconProcessPackage(packageArray);
+			
+			assertFalse(processes.isEmpty());
 			assertEquals("Exp1", processes.get(0).getExperimentName());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			fail("Failed because of unsupported encoding");
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail("Failed because of IOException");
+			assertTrue(processes.get(0).getOutputFiles().length>0);
+			assertEquals("file1", processes.get(0).getOutputFiles()[0]);
+			assertEquals(1400245668744L, processes.get(0).getTimeAdded());
+			
 		} catch (JSONException e) {
 			fail("Failed because of JSONException");
 			e.printStackTrace();
 		}
 	}
+	
 }

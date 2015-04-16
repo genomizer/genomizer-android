@@ -12,7 +12,6 @@ import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessStatus;
-import se.umu.cs.pvt151.model.ProcessingParameters;
 import android.util.Log;
 import junit.framework.TestCase;
 
@@ -164,11 +163,11 @@ public class ComHandlerTest extends TestCase {
 		
 		List<GeneFile> files = experiments.get(0).getFiles();
 		
-		ProcessingParameters parameters = new ProcessingParameters();
-		parameters.addParameter("param1");
-		parameters.addParameter("param2");
-		parameters.addParameter("param3");
-		parameters.addParameter("param4");
+		ArrayList<String> parameters = new ArrayList<String>();
+		parameters.add("param1");
+		parameters.add("param2");
+		parameters.add("param3");
+		parameters.add("param4");
 		
 		try {
 			boolean result = ComHandler.rawToProfile(files.get(0), parameters, "meta", "randoom");

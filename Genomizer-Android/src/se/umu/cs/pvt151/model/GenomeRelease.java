@@ -1,5 +1,7 @@
 package se.umu.cs.pvt151.model;
 
+import java.util.ArrayList;
+
 
 /**
  * A model-class intended to store information about
@@ -13,6 +15,7 @@ public class GenomeRelease {
 	private String genomeVersion;
 	private String specie;
 	private String path;
+	//TODO private ArrayList<String> files; ??
 	
 	
 	/**

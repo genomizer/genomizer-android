@@ -10,9 +10,9 @@ package se.umu.cs.pvt151.com;
  */
 public class GenomizerHttpPackage {
 	
-	private int code;
+	private int code; // HTTP response code
 	
-	private String body;
+	private String body; //Formatted as a JSONString
 	
 	
 	/**

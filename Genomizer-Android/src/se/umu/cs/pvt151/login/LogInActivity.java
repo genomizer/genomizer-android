@@ -1,5 +1,6 @@
 package se.umu.cs.pvt151.login;
 
+
 import se.umu.cs.pvt151.SingleFragmentActivity;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -38,5 +39,5 @@ public class LogInActivity extends SingleFragmentActivity {
 	public void onBackPressed() {
 		finish();
 	}
-
+	
 }

@@ -1,5 +1,7 @@
 package se.umu.cs.pvt151.com;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,7 +9,6 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import se.umu.cs.pvt151.model.GeneFile;
-import se.umu.cs.pvt151.model.ProcessingParameters;
 
 /**
  * MsgFactory can be used to create a number of JSONObjects.
@@ -45,7 +46,7 @@ public class MsgFactory {
 	 * @return JSONObject
 	 * @throws JSONException
 	 */
-	public static JSONObject createConversionRequest(ProcessingParameters param, GeneFile file, 
+	public static JSONObject createConversionRequest(ArrayList<String> param, GeneFile file, 
 			String metadata, String genomeRelease) throws JSONException {
 		JSONObject obj = new JSONObject();
 		
@@ -69,10 +70,10 @@ public class MsgFactory {
 	 * @return JSONArray
 	 * @throws JSONException
 	 */
-	private static JSONArray parametersToJSON(ProcessingParameters param) throws JSONException {
+	private static JSONArray parametersToJSON(ArrayList<String> param) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
 		for (int i = 0; i < param.size(); i++) {
-			jsonArray.put(param.getParameter(i));
+			jsonArray.put(param.get(i));
 		}
 		return jsonArray;
 	}

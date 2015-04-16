@@ -17,7 +17,6 @@ import se.umu.cs.pvt151.model.GeneFile;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.Genomizer;
 import se.umu.cs.pvt151.model.ProcessStatus;
-import se.umu.cs.pvt151.model.ProcessingParameters;
 
 /**
  * This class takes care of the communication with the server.
@@ -247,7 +246,7 @@ public class ComHandler {
 	 * @return true if the task was recieved and validated by the server, false otherwise
 	 * @throws IOException
 	 */
-	public static boolean rawToProfile(GeneFile file, ProcessingParameters parameters, 
+	public static boolean rawToProfile(GeneFile file, ArrayList<String> parameters, 
 			String meta, String release) throws IOException {
 		if(!verifiyConnection()) {
 			throw new IOException("Internet connection unavailable.");

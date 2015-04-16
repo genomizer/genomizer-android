@@ -7,7 +7,9 @@ import se.umu.cs.pvt151.R;
 import se.umu.cs.pvt151.com.ComHandler;
 import se.umu.cs.pvt151.search.SearchActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,37 +29,56 @@ import android.widget.Toast;
  * "log into" the server.
  */
 public class LogInFragment extends Fragment {
-
-	private static final String CONNECTION_ERROR = "Error. Could not connect to the server.";
-	private static final String INPUT_MALFORMED = "Minimum length for username and password is 4 letters.";
-	private EditText userName;
-	private EditText userPwd;
-	private Button button;
-	private ProgressDialog progress;
-
 	
+	private static final String CONNECTION_ERROR = 
+			"Error. Could not connect to the server.";
+	
+	private static final String INPUT_MALFORMED = 
+			"Minimum length for username and password is 4 letters.";
+	
+	private EditText mUserNameTextField;
+	private EditText mPassWordTextField;
+	private Button mLoginButton;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initSavedServerURL();
 	}
 
 	/**
 	 * Inflates the LogInFragment view and preserves references to the 
 	 * edit text fields.
 	 */
-	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent, 
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);				
-		userName = (EditText) v.findViewById(R.id.editTextUser);		
-		userPwd = (EditText) v.findViewById(R.id.editTextPwd);
+		mUserNameTextField = (EditText) v.findViewById(R.id.editTextUser);		
+		mPassWordTextField = (EditText) v.findViewById(R.id.editTextPwd);
 		
-		if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
-		    userName.setHintTextColor(Color.GRAY);
-		    userPwd.setHintTextColor(Color.GRAY);
-		    userName.setTextColor(Color.BLACK);
-		    userPwd.setTextColor(Color.BLACK);
+		if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES
+				.GINGERBREAD_MR1) {
+		    mUserNameTextField.setHintTextColor(Color.GRAY);
+		    mPassWordTextField.setHintTextColor(Color.GRAY);
+		    mUserNameTextField.setTextColor(Color.BLACK);
+		    mPassWordTextField.setTextColor(Color.BLACK);
 		}
 		return v;
+	}
+	
+	/**
+	 * Fetch serverURL string from phone storage. Update ComHandler server with
+	 * url.
+	 */
+	private void initSavedServerURL() {
+		SharedPreferences settings = getActivity().getSharedPreferences(
+				getResources().getString(
+						R.string.settings_fileAnchor), Context.MODE_PRIVATE);
+
+		ComHandler.setServerURL(settings.getString(
+				getResources().getString(
+						R.string.settings_serverSelectedURLAnchor),
+				ComHandler.getServerURL()));
 	}
 	
 	
@@ -66,15 +87,12 @@ public class LogInFragment extends Fragment {
 	 * private attributes userName and userPwd are bound to.
 	 * 
 	 * Only called from the android layout files.
-	 * @param progress 
-	 * 
-	 * @param v
-	 *            The current view.
 	 */
-	protected void login(ProgressDialog progress) {
-		this.progress = progress;
-		button = (Button) getActivity().findViewById(R.id.logInButton);
-		button.setEnabled(false);
+	protected void login() {
+		
+		mLoginButton = (Button) getActivity().findViewById(R.id.logInButton);
+		mLoginButton.setEnabled(false);
+		
 		new LoginTask().execute();
 	}
 
@@ -87,15 +105,15 @@ public class LogInFragment extends Fragment {
 	private boolean sendLoginRequest() {
 //		String uname = userName.getText().toString();
 //		String password = userPwd.getText().toString();
-		String uname = "adsasd";
+		String userName = "adsasd";
 		String password = "baguette"; 
-		if (uname.length() < 0 || password.length() < 0) {
+		if (userName.length() < 0 || password.length() < 0) {
 			makeToast(INPUT_MALFORMED, false);
 			return false;
 		}		
 
 		try {
-			return ComHandler.login(uname, password);		
+			return ComHandler.login(userName, password);		
 			
 		} catch (IOException e) {
 			Log.d("login", "exception: " + Arrays.toString(e.getStackTrace()));
@@ -118,15 +136,17 @@ public class LogInFragment extends Fragment {
 		
 		getActivity().runOnUiThread(new Thread() {
 			public void run() {
-				Toast t = null;
+				Toast t;
+				
 				if (longToast) {
-					t = Toast.makeText(getActivity().getApplicationContext(), msg,
-							Toast.LENGTH_LONG);
+					t = Toast.makeText(getActivity().getApplicationContext(), 
+							msg, Toast.LENGTH_LONG);
 					
 				} else {
-					t = Toast.makeText(getActivity().getApplicationContext(), msg,
-							Toast.LENGTH_SHORT);
+					t = Toast.makeText(getActivity().getApplicationContext(),
+							msg, Toast.LENGTH_SHORT);
 				}
+				
 				t.setGravity( Gravity.CENTER_VERTICAL, 0, 0);
 				t.show();
 			}
@@ -145,21 +165,39 @@ public class LogInFragment extends Fragment {
 		getActivity().finish();
 	}
 
+	
 	/**
-	 * 
-	 * An AsyncTask class which is used to perform the login communication 
-	 * in a background thread. When the background activity is done the
-	 * focus is returned to the callee. 
+	 * A private class that handles the login request in a
+	 * background thread.
+	 * @author Petter Nilsson (ens11pnn)
 	 *
 	 */
 	private class LoginTask extends AsyncTask<Void, Void, Boolean> {
+		
+		
+		private static final String CONNECT_MESSAGE = 
+				"Connecting to Genomizer server: \n";
+		
+		private static final String CONNECT = "Connecting";
+		
+		private ProgressDialog mProgress;
+		
+		/**
+		 * Creates a new LoginTask. Builds a ProgressDialog that is displayed
+		 * during the background work.
+		 */
+		public LoginTask() {
+			mProgress = new ProgressDialog(getActivity());
+			mProgress.setTitle(CONNECT);
+			mProgress.setMessage(CONNECT_MESSAGE + ComHandler.getServerURL());
+			mProgress.show();
+		}
 		
 		/**
 		 * Sends login request and dispatches the answer onPostExecute
 		 */
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			
 			return sendLoginRequest();
 		}
 		
@@ -174,8 +212,9 @@ public class LogInFragment extends Fragment {
 				startSearchActivity();
 			}				
 			
-			button.setEnabled(true);		
-			progress.dismiss();
+			mLoginButton.setEnabled(true);		
+			mProgress.dismiss();
 		}
+		
 	}
 }

@@ -45,10 +45,10 @@ public class Genomizer extends Application {
      * 
      * @param msg
      */
-    public static void makeToast(final String msg) {    	
+    public static void makeToast(final String msg) {    
     	Handler toastHandler = new Handler(context.getMainLooper());
     	Runnable toastRunnable = new Runnable() {
-
+    	
 			@Override
 			public void run() {
 				Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
@@ -58,6 +58,8 @@ public class Genomizer extends Application {
     	};
     	toastHandler.post(toastRunnable);
     }
+    
+    
     
     
     /**

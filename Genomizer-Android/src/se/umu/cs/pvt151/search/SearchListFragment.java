@@ -34,7 +34,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 /**
- * Fragment which will display search options for the Genomizer app, retreives
+ * Fragment which will display search options for the Genomizer app, retrieves
  * the current annotations used by the Genomizer database and presents them to 
  * the user for searching.
  * 

@@ -1,4 +1,4 @@
-package se.umu.cs.pvt151.model;
+package se.umu.cs.pvt151.com;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 /**
  * This class main purpose is to anywhere in the
- * application be able to create and view new toasts.
+ * application be able to create and view new toasts and verify the connection.
  * 
  * @author erik c11ean
  *
@@ -18,7 +18,7 @@ public class Genomizer extends Application {
 
 	private static Context context;
 	
-
+	
 	/**
 	 * When this object is created get the applications context.
 	 * 
@@ -55,7 +55,6 @@ public class Genomizer extends Application {
 				toast.setGravity( Gravity.TOP | Gravity.CENTER_VERTICAL, 0, 180);
 				toast.show();				
 			}
-    		
     	};
     	toastHandler.post(toastRunnable);
     }

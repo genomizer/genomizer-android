@@ -19,7 +19,6 @@ public class ProcessStatus {
 
 	private String[] outputFiles;
 	
-
 	/**
 	 * Creates a new ProcessStatus object.
 	 */
@@ -27,16 +26,14 @@ public class ProcessStatus {
 
 	}
 
-
 	/**
 	 * Returns the experiments name.
 	 * 
-	 * @return experiment name
+	 * @return experimentName
 	 */
 	public String getExperimentName() {
 		return experimentName;
 	}
-
 
 	/**
 	 * Sets the experiments name
@@ -47,7 +44,6 @@ public class ProcessStatus {
 		this.experimentName = experimentName;
 	}
 
-
 	/**
 	 * Returns the process status.
 	 * 
@@ -56,7 +52,6 @@ public class ProcessStatus {
 	public String getStatus() {
 		return status;
 	}
-
 
 	/**
 	 * Sets the process status
@@ -67,7 +62,6 @@ public class ProcessStatus {
 		this.status = status;
 	}
 
-
 	/**
 	 * Returns the author.
 	 * 
@@ -76,7 +70,6 @@ public class ProcessStatus {
 	public String getAuthor() {
 		return author;
 	}
-
 
 	/**
 	 * Sets the author of the experiment.
@@ -87,17 +80,15 @@ public class ProcessStatus {
 		this.author = author;
 	}
 
-
 	/**
 	 * Returns the time when the process
 	 * was added.
 	 * 
-	 * @return Time when added
+	 * @return timeAdded
 	 */
 	public long getTimeAdded() {
 		return timeAdded;
 	}
-
 
 	/**
 	 * Sets the time when the process
@@ -109,17 +100,15 @@ public class ProcessStatus {
 		this.timeAdded = timeAdded;
 	}
 
-
 	/**
 	 * Returns the time when the process
 	 * was started.
 	 * 
-	 * @return
+	 * @return timeStarted
 	 */
 	public long getTimeStarted() {
 		return timeStarted;
 	}
-
 
 	/**
 	 * Sets the time when the process
@@ -131,7 +120,6 @@ public class ProcessStatus {
 		this.timeStarted = timeStarted;
 	}
 
-
 	/**
 	 * Returns the time when the process
 	 * was finished
@@ -141,7 +129,6 @@ public class ProcessStatus {
 	public long getTimeFinnished() {
 		return timeFinnished;
 	}
-
 
 	/**
 	 * Sets the time when the process
@@ -153,16 +140,14 @@ public class ProcessStatus {
 		this.timeFinnished = timeFinnished;
 	}
 
-
 	/**
 	 * Returns the output-files of the process.
 	 * 
-	 * @return output-files
+	 * @return outputFiles
 	 */
 	public String[] getOutputFiles() {
 		return outputFiles;
 	}
-
 
 	/**
 	 * Sets the output-files of the process.

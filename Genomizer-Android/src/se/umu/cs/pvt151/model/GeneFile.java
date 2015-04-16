@@ -25,11 +25,6 @@ public class GeneFile implements Parcelable {
 	
 	private String isPrivate;
 	
-	
-	
-	
-	
-	
 	/**
 	 * initializes a new GeneFile object.
 	 */
@@ -45,19 +40,19 @@ public class GeneFile implements Parcelable {
 	 * 
 	 * @param in
 	 */
-	private GeneFile(Parcel in) {
-		id = in.readString();
-		expId = in.readString();
-		type = in.readString();
-		filename = in.readString();
-		author = in.readString();
-		uploader = in.readString();
-		isPrivate = in.readString();
-		path = in.readString();
-		url = in.readString();
-		date = in.readString();
-		grVersion = in.readString();
-	}
+//	private GeneFile(Parcel in) {
+//		id = in.readString();
+//		expId = in.readString();
+//		type = in.readString();
+//		filename = in.readString();
+//		author = in.readString();
+//		uploader = in.readString();
+//		isPrivate = in.readString();
+//		path = in.readString();
+//		url = in.readString();
+//		date = in.readString();
+//		grVersion = in.readString();
+//	}
 
 	
 	/**
@@ -310,14 +305,14 @@ public class GeneFile implements Parcelable {
 	/**
 	 * This object is used to create arrays of GeneFiles.
 	 */
-	public static final Parcelable.Creator<GeneFile> CREATOR
-	= new Parcelable.Creator<GeneFile>() {
-		public GeneFile createFromParcel(Parcel in) {
-			return new GeneFile(in);
-		}
-
-		public GeneFile[] newArray(int size) {
-			return new GeneFile[size];
-		}
-	};
+//	public static final Parcelable.Creator<GeneFile> CREATOR
+//	= new Parcelable.Creator<GeneFile>() {
+//		public GeneFile createFromParcel(Parcel in) {
+//			return new GeneFile(in);
+//		}
+//
+//		public GeneFile[] newArray(int size) {
+//			return new GeneFile[size];
+//		}
+//	};
 }

@@ -1,19 +1,11 @@
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.umu.cs.pvt151.com.ComHandler;
-import se.umu.cs.pvt151.com.Communicator;
-import se.umu.cs.pvt151.com.GenomizerHttpPackage;
 import se.umu.cs.pvt151.com.MsgDeconstructor;
-import se.umu.cs.pvt151.com.MsgFactory;
 import se.umu.cs.pvt151.model.Experiment;
 import se.umu.cs.pvt151.model.GenomeRelease;
 import se.umu.cs.pvt151.model.ProcessStatus;

@@ -1,7 +1,5 @@
 package se.umu.cs.pvt151.model;
 
-import java.util.ArrayList;
-
 
 /**
  * A model-class intended to store information about

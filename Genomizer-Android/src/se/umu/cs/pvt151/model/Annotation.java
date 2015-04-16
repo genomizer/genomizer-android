@@ -93,6 +93,6 @@ public class Annotation {
 	 * @return true if the list is empty, otherwise returns false.
 	 */
 	public boolean isFreeText() {
-		return value.size() == 0;
+		return value.isEmpty();
 	}
 }

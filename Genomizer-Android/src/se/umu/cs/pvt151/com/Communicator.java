@@ -77,8 +77,8 @@ public class Communicator {
 	 * GenomizerHttpPackage object if the request succeeds. 
 	 * If the request fails a IOException will be thrown.
 	 * 
-	 * @param jsonPackage
-	 * @param requestType
+	 * @param jsonPackage 
+	 * @param requestType -HTTP methods {GET,POST,PUT,DELETE}
 	 * @param urlPostfix
 	 * @return Response code and body
 	 * @throws IOException
@@ -174,20 +174,20 @@ public class Communicator {
 		int response = -1;
 
 		//Android throws an exception when the response is 401.
-		boolean success = false;
+		boolean invalidResponseCode = true;
 		for(int i = 0; i < RESPONSE_TRIES; i++) {
 			try {
 				response = connection.getResponseCode();
 
 				if(response != -1) {
-					success = true;
+					invalidResponseCode = false;
 					break;
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		if(!success) {
+		if(invalidResponseCode) {
 			if (urlPostfix.equals("login")) {
 				return 401;
 			}

@@ -28,7 +28,9 @@ import android.view.Window;
  * fragment container (activity_fragment.xml). Manages a global menu for the
  * Activitys extending this class.
  *  
- * @author Anders Lundberg, dv12alg
+ * @author Anders Lundberg, dv12alg   
+ * 
+ *
  *
  */
 public abstract class SingleFragmentActivity extends FragmentActivity {

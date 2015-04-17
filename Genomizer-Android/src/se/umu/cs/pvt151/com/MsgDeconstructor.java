@@ -121,7 +121,7 @@ public class MsgDeconstructor {
 	public static ArrayList<Experiment> deconSearch(JSONArray json) throws JSONException {
 		ArrayList<Experiment> experiments = new ArrayList<Experiment>();
 
-		//for each experiment..
+		//For each experiment..
 		for (int i = 0; i < json.length(); i++) {
 			Experiment experiment = new Experiment();
 			JSONObject jsonExperiment = (JSONObject) json.get(i);
@@ -149,7 +149,7 @@ public class MsgDeconstructor {
 	public static ArrayList<GenomeRelease> deconGenomeReleases(JSONArray json) throws JSONException {
 		ArrayList<GenomeRelease> genomeReleases = new ArrayList<GenomeRelease>();
 
-		//for each Genome release..
+		//For each Genome release..
 		for (int i = 0; i < json.length(); i++) {
 			JSONObject obj = (JSONObject) json.get(i);
 			

@@ -25,7 +25,8 @@ import se.umu.cs.pvt151.model.ProcessStatus;
  */
 public class ComHandler {
 
-	private static String serverURL = "http://scratchy.cs.umu.se:7000/";
+	private static String serverURL = "dumbledore.cs.umu.se:7000/";
+
 
 
 	/**
@@ -106,8 +107,8 @@ public class ComHandler {
 			try {
 				JSONObject msg = MsgFactory.createLogin(username, password);			
 
-				GenomizerHttpPackage loginResponse = Communicator.sendHTTPRequest(msg, "POST", "login");	
-				if (loginResponse.getCode() == 200) {
+				GenomizerHttpPackage loginResponse = Communicator.sendHTTPRequest(msg, RESTMethod.POST, "login");	
+				if (loginResponse.getCode() == 200) { // OK - the request was successful
 					String jsonString = loginResponse.getBody();				
 					JSONObject jsonPackage = new JSONObject(jsonString);				
 					Communicator.setToken(jsonPackage.get("token").toString());
@@ -140,9 +141,9 @@ public class ComHandler {
 			try {					
 				JSONObject msg = new JSONObject();
 				GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest
-						(msg, "GET", "search/?annotations=" + generatePubmedQuery(annotations));
+						(msg, RESTMethod.GET, "search/?annotations=" + generatePubmedQuery(annotations));
 
-				if (searchResponse.getCode() == 200) {
+				if (searchResponse.getCode() == 200) { // OK - the request was successful
 					JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
 					return MsgDeconstructor.deconSearch(jsonPackage);
 
@@ -172,7 +173,7 @@ public class ComHandler {
 			try {						
 				JSONObject msg = new JSONObject();
 				GenomizerHttpPackage searchResponse = Communicator.sendHTTPRequest
-						(msg, "GET", "search/?annotations=" + pubmedQuery);
+						(msg, RESTMethod.GET, "search/?annotations=" + pubmedQuery);
 
 				if (searchResponse.getCode() >= 200 && searchResponse.getCode() < 300) {
 					JSONArray jsonPackage = new JSONArray(searchResponse.getBody());
@@ -202,7 +203,7 @@ public class ComHandler {
 		if(Genomizer.isOnline()) {
 			try {
 				JSONObject msg = new JSONObject();
-				GenomizerHttpPackage annotationResponse = Communicator.sendHTTPRequest(msg, "GET", "annotation");
+				GenomizerHttpPackage annotationResponse = Communicator.sendHTTPRequest(msg, RESTMethod.GET, "annotation");
 
 				if (annotationResponse.getCode() == 200) {
 					String jsonString = annotationResponse.getBody();
@@ -237,7 +238,7 @@ public class ComHandler {
 		if(Genomizer.isOnline()) {
 			try {			
 				JSONObject msg = MsgFactory.createConversionRequest(parameters, file, meta, release);
-				GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, "PUT", "process/rawtoprofile");
+				GenomizerHttpPackage response = Communicator.sendHTTPRequest(msg, RESTMethod.PUT, "process/rawtoprofile");
 
 				if(response.getCode() == 200) {
 					return true;
@@ -267,7 +268,7 @@ public class ComHandler {
 		if(Genomizer.isOnline()) {
 			try {
 				JSONObject msg = new JSONObject();
-				GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "genomeRelease");
+				GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, RESTMethod.GET, "genomeRelease");
 
 				if (genomeResponse.getCode() == 200) {
 					String jsonString = genomeResponse.getBody();
@@ -299,7 +300,7 @@ public class ComHandler {
 		if(Genomizer.isOnline()) {
 			try {
 				JSONObject msg = new JSONObject();
-				GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, "GET", "process");
+				GenomizerHttpPackage genomeResponse = Communicator.sendHTTPRequest(msg, RESTMethod.GET, "process");
 
 				if (genomeResponse.getCode() == 200) {
 					String jsonString = genomeResponse.getBody();

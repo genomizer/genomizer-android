@@ -77,13 +77,13 @@ public class Communicator {
 	 * GenomizerHttpPackage object if the request succeeds. 
 	 * If the request fails a IOException will be thrown.
 	 * 
-	 * @param jsonPackage
-	 * @param requestType
+	 * @param jsonPackage 
+	 * @param requestType -HTTP methods {GET,POST,PUT,DELETE}
 	 * @param urlPostfix
-	 * @return Response code and body
+	 * @return GenomizerHttpPackage - contains response code & body
 	 * @throws IOException
 	 */
-	public static GenomizerHttpPackage sendHTTPRequest(JSONObject jsonPackage, String requestType, String urlPostfix) throws IOException {
+	public static GenomizerHttpPackage sendHTTPRequest(JSONObject jsonPackage, RESTMethod requestType, String urlPostfix) throws IOException {
 		setupConnection(requestType, urlPostfix);
 		return sendRequest(jsonPackage, urlPostfix);
 	}
@@ -96,26 +96,28 @@ public class Communicator {
 	 * @param urlPostfix
 	 * @throws IOException
 	 */
-	private static void setupConnection(String requestType, String urlPostfix) throws IOException  {
+	private static void setupConnection(RESTMethod requestType, String urlPostfix) throws IOException  {
+
 		if (Build.VERSION.SDK_INT <= 8) {
 			System.setProperty("http.keepAlive", "false");
 		}
-
+		if(!urlString.startsWith("http://") && !urlString.startsWith("https://")){
+			urlString = "http://"+urlString;
+		}
 		URL url = new URL(urlString + urlPostfix);
 		connection = (HttpURLConnection) url.openConnection();
-
-		if (!requestType.equals("GET")) {
+		if (!requestType.equals(RESTMethod.GET)) {
 			connection.setDoOutput(true);
 		}
-
-		connection.setDoInput (true);
+		connection.setDoInput(true);
 		connection.setUseCaches(false);
-		connection.setRequestMethod(requestType);
+		connection.setRequestMethod(requestType.toString());
 		connection.setRequestProperty("Content-Type", "application/json");
 
 		if (!urlPostfix.equals("login")) {			
 			connection.setRequestProperty("Authorization", token);
 		}
+
 		connection.setChunkedStreamingMode(100);
 		connection.setConnectTimeout(4000);
 		connection.setReadTimeout(15000);
@@ -133,13 +135,10 @@ public class Communicator {
 	 */
 	private static GenomizerHttpPackage sendRequest(JSONObject jsonPackage, String urlPostfix) throws IOException {
 		int responseCode = -1;
-
-		writePackage(jsonPackage);
-
+		writePackage(jsonPackage);		
 		responseCode = recieveResponse(urlPostfix);
-
-		return validateCode(responseCode);
-
+		GenomizerHttpPackage hp =  validateCode(responseCode);
+		return hp;
 
 	}
 
@@ -174,20 +173,20 @@ public class Communicator {
 		int response = -1;
 
 		//Android throws an exception when the response is 401.
-		boolean success = false;
+		boolean invalidResponseCode = true;
 		for(int i = 0; i < RESPONSE_TRIES; i++) {
 			try {
 				response = connection.getResponseCode();
 
 				if(response != -1) {
-					success = true;
+					invalidResponseCode = false;
 					break;
 				}
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		if(!success) {
+		if(invalidResponseCode) {
 			if (urlPostfix.equals("login")) {
 				return 401;
 			}
@@ -209,7 +208,7 @@ public class Communicator {
 	 * @throws IOException
 	 */
 	private static GenomizerHttpPackage validateCode(int responseCode) throws IOException {
-		if (responseCode < 300 && responseCode >= 200) {
+		if (responseCode >= 200 && responseCode < 300) {
 			BufferedReader inStream = new BufferedReader(
 					new InputStreamReader(connection.getInputStream()));
 

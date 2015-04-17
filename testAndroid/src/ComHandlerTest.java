@@ -17,12 +17,12 @@ import junit.framework.TestCase;
 
 public class ComHandlerTest extends TestCase {
 	private String password = "baguette";
-	private String server = "http://scratchy.cs.umu.se:7000/";
+	private String serverURL = "http://dumbledore.cs.umu.se:7000/";
 //	"http://genomizer.apiary-mock.com/"
 	
 	
 	public void setUp() {
-		ComHandler.setServerURL(server);
+		ComHandler.setServerURL(serverURL);
 		System.out.println("hej");
 	}
 	
@@ -53,7 +53,7 @@ public class ComHandlerTest extends TestCase {
 		try {
 			ComHandler.login("John", password);
 			ArrayList<Experiment> experiments = ComHandler.search(searchValues);
-			assertEquals("experimentName", experiments.get(0).getName());
+			assertEquals("hesttest", experiments.get(0).getName());
 		} catch (IOException e) {
 			fail("Could not communicate with the server.");
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class ComHandlerTest extends TestCase {
 			ArrayList<Annotation> experiments = ComHandler.getServerAnnotations();
 			Log.d("DEBUG", "ANNOTATIONS");
 			Log.d("DEBUG", experiments.toString());
-			assertEquals("pubmedId", experiments.get(0).getName());
+			assertEquals("SplatterKatt", experiments.get(0).getName());
 		} catch (IOException e) {
 			fail("Could not communicate with the server.");
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public class ComHandlerTest extends TestCase {
 	
 	public void testAnnotationsPackageFromServer() {
 		try {
-			ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+			ComHandler.setServerURL(serverURL);
 			
 			ComHandler.login("annotationFromServer", password);
 			ArrayList<Annotation> experiments = ComHandler.getServerAnnotations();
@@ -145,7 +145,7 @@ public class ComHandlerTest extends TestCase {
 	
 	
 	public void testRawToProfile() {
-		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+		ComHandler.setServerURL(serverURL);
 		
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Species", "Human");
@@ -182,7 +182,7 @@ public class ComHandlerTest extends TestCase {
 	
 	
 	public void testGetGenomeReleases() {
-		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+		ComHandler.setServerURL(serverURL);
 		
 		ArrayList<GenomeRelease> gr = new ArrayList<GenomeRelease>();
 		
@@ -200,7 +200,7 @@ public class ComHandlerTest extends TestCase {
 	
 	
 	public void testGetProcesses() {
-		ComHandler.setServerURL("http://scratchy.cs.umu.se:7000/");
+		ComHandler.setServerURL(serverURL);
 		
 		
 		ArrayList<ProcessStatus> processes = new ArrayList<ProcessStatus>();

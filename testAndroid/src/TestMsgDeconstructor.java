@@ -12,7 +12,7 @@ import se.umu.cs.pvt151.model.ProcessStatus;
 import junit.framework.TestCase;
 
 
-public class MsgDeconstructorTest extends TestCase {
+public class TestMsgDeconstructor extends TestCase {
 
 	public void testDeconstructSearchResults() {
 		JSONArray packageArray = new JSONArray();

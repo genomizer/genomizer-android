@@ -15,7 +15,7 @@ import se.umu.cs.pvt151.model.ProcessStatus;
 import android.util.Log;
 import junit.framework.TestCase;
 
-public class ComHandlerTest extends TestCase {
+public class TestComHandler extends TestCase {
 	private String password = "baguette";
 	private String serverURL = "http://dumbledore.cs.umu.se:7000/";
 //	"http://genomizer.apiary-mock.com/"
@@ -44,6 +44,8 @@ public class ComHandlerTest extends TestCase {
 		}
 	}
 	
+	//TODO är experimentName ett namn på ett experiment?
+	// fungerar inte utan databasen
 	public void testSearchPackage() {
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Species", "Human");
@@ -51,6 +53,7 @@ public class ComHandlerTest extends TestCase {
 		try {
 			ComHandler.login("John", password);
 			ArrayList<Experiment> experiments = ComHandler.search(searchValues);
+			// "hesttest" is the first test on the server, for this search.
 			assertEquals("hesttest", experiments.get(0).getName());
 		} catch (IOException e) {
 			fail("Could not communicate with the server.");
@@ -62,7 +65,7 @@ public class ComHandlerTest extends TestCase {
 	public void testSearchOnServer() {
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Sex", "male");
-		searchValues.put("Specie", "human");
+		searchValues.put("Species", "human");
 		try {
 			ComHandler.login("liveSearchTest", password);
 			ArrayList<Experiment> experiments = ComHandler.search(searchValues);

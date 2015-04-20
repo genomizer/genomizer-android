@@ -25,23 +25,24 @@ public class TestCommunicator extends TestCase {
 		assertEquals(c1, c2);
 	}
 	
-	public void testSendHttpRequestLogin() {
-		
-		try {
-			JSONObject msg = MsgFactory.createLogin("username", "baguette");
-			GenomizerHttpPackage loginResponse = Communicator.sendHTTPRequest(msg, RESTMethod.POST, "login");
-			
-			assertEquals(200,loginResponse.getCode());
-			assertTrue(loginResponse.getBody().length() > 0);
-			
-		} catch (JSONException e) {
-			fail("failed due to JSONException");
-			e.printStackTrace();
-		} catch (IOException e) {
-			fail("failed due to connection error");
-			e.printStackTrace();
-		}			
-		
-	}
+//	//tested in TestComHandler loginTest
+//	public void testSendHttpRequestLogin() {
+//		
+//		try {
+//			JSONObject msg = MsgFactory.createLogin("username", "baguette");
+//			GenomizerHttpPackage loginResponse = Communicator.sendHTTPRequest(msg, RESTMethod.POST, "login");
+//			
+//			assertEquals(200,loginResponse.getCode());
+//			assertTrue(loginResponse.getBody().length() > 0);
+//			
+//		} catch (JSONException e) {
+//			fail("failed due to JSONException");
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			fail("failed due to connection error");
+//			e.printStackTrace();
+//		}			
+//		
+//	}
 	
 }

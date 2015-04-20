@@ -9,7 +9,7 @@ import se.umu.cs.pvt151.com.MsgFactory;
 import se.umu.cs.pvt151.model.GeneFile;
 import junit.framework.TestCase;
 
-public class MsgFactoryTest extends TestCase {
+public class TestMsgFactory extends TestCase {
 
 	public void testCreateLoginPackage() {
 		try {

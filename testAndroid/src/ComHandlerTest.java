@@ -44,8 +44,6 @@ public class ComHandlerTest extends TestCase {
 		}
 	}
 	
-	//TODO är experimentName ett namn på ett experiment?
-	// fungerar inte utan databasen
 	public void testSearchPackage() {
 		HashMap<String, String> searchValues = new HashMap<String, String>();
 		searchValues.put("Species", "Human");

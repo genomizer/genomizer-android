@@ -25,7 +25,6 @@ public class TestCommunicator extends TestCase {
 		assertEquals(c1, c2);
 	}
 	
-	//tested in TestComHandler loginTest
 	public void testSendHttpRequestLogin() {
 		
 		try {

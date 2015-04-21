@@ -105,7 +105,43 @@ public class RegionFragment extends Fragment {
 		setButtonsStatus();
 	}
 
+	/**
+	 * Sets the status of the remove button based on if
+	 * there are any marked checkboxes or not.
+	 * 
+	 */
+	private void setButtonsStatus() {
+		if (selectedRegion.size() > 0) {
+			removeButton.setEnabled(true);
+		} else {
+			removeButton.setEnabled(false);
+		}
+	}
+	
+	
+	/**
+	 * Method used to create a dialog window with
+	 * more information about a file when text view is
+	 * clicked
+	 * @param file that extra information will
+	 * be received from. 
+	 */
+	private void displayExtraFileInfo(GeneFile file) {
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
+		String moreInfo;
+		//Information to be displayed in dialogue about the file
+		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
+				+ file.getType() + "\n" + "Author: " + file.getAuthor()
+				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
+				+ "Date: " + file.getDate() + "\n" + "GR Version: "
+				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
 
+		build.setTitle(file.getName());
+		build.setMessage(moreInfo);
+		build.setNeutralButton("OK", null);
+		build.show();
+	}
+	
 	/**
 	 * Adapter used for listviews. Its purpose is to store and view
 	 * GeneFile objects graphically.
@@ -114,6 +150,7 @@ public class RegionFragment extends Fragment {
 	private class FileListAdapter extends ArrayAdapter<GeneFile> {
 		
 		//The files to be visualized in the listview
+		//TODO privat klass istället för onCheckedChangeListener?
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
 		
 
@@ -182,8 +219,6 @@ public class RegionFragment extends Fragment {
 						displayExtraFileInfo(forShow.get(pos));
 					}
 				});
-
-				//Set the view tags
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}
@@ -205,42 +240,5 @@ public class RegionFragment extends Fragment {
 			return forShow.get(position);
 		}
 	}
-
-
-	/**
-	 * Sets the status of the remove button based on if
-	 * there are any marked checkboxes or not.
-	 * 
-	 */
-	private void setButtonsStatus() {
-		if (selectedRegion.size() > 0) {
-			removeButton.setEnabled(true);
-		} else {
-			removeButton.setEnabled(false);
-		}
-	}
 	
-	
-	/**
-	 * Method used to create a dialog window with
-	 * more information about a file when text view is
-	 * clicked
-	 * @param file that extra information will
-	 * be received from. 
-	 */
-	private void displayExtraFileInfo(GeneFile file) {
-		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
-		String moreInfo;
-		//Information to be displayed in dialogue about the file
-		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
-				+ file.getType() + "\n" + "Author: " + file.getAuthor()
-				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
-				+ "Date: " + file.getDate() + "\n" + "GR Version: "
-				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
-
-		build.setTitle(file.getName());
-		build.setMessage(moreInfo);
-		build.setNeutralButton("OK", null);
-		build.show();
-	}
 }

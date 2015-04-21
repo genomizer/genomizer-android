@@ -97,7 +97,6 @@ public class RawFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-
 				if (selectedRaw.size() > 0) {
 					Intent intent = new Intent(getActivity(),
 							ConverterActivity.class);
@@ -106,7 +105,7 @@ public class RawFragment extends Fragment {
 					intent.putExtra("files", selectedRaw);
 
 					startActivity(intent);
-				} 
+				}
 			}
 		});
 	}

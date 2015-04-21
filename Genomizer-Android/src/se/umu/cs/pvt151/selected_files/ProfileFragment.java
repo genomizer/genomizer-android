@@ -22,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * This fragment is visualizes a list of GeneFiles.
+ * This fragment visualizes a list of GeneFiles.
  * The files may be marked and deleted by the user.
  * 
  * @author Rickard dv12rhm
@@ -107,6 +107,44 @@ public class ProfileFragment extends Fragment {
 
 
 	/**
+	 * Sets the status on the remove button based on
+	 * if there are any marked checkboxes or not.
+	 * 
+	 */
+	private void setButtonsStatus() {
+		if (selectedProfile.size() > 0) {
+			removeButton.setEnabled(true);
+		} else {
+			removeButton.setEnabled(false);
+		}
+	}
+
+	/**
+	 * Method used to create a dialog window with
+	 * more information about a file.
+	 * @param file that extra information will
+	 * be received from. 
+	 */
+	private void displayExtraFileInfo(GeneFile file) {
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
+		String moreInfo;
+		//Information to be displayed in dialogue about the file
+		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
+				+ file.getType() + "\n" + "Author: " + file.getAuthor()
+				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
+				+ "Date: " + file.getDate() + "\n" + "GR Version: "
+				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
+
+		build.setTitle(file.getName());
+		build.setMessage(moreInfo);
+		build.setNeutralButton("OK", null);
+		build.show();
+	}
+	
+	
+	
+	
+	/**
 	 * Adapter used for listviews. Its purpose is to store and view
 	 * GeneFile objects graphically.
 	 *
@@ -116,7 +154,7 @@ public class ProfileFragment extends Fragment {
 		//The files to be visualized in the listview
 		ArrayList<GeneFile> forShow = new ArrayList<GeneFile>();
 		
-
+		//TODO dataType används inte!
 		public FileListAdapter(ArrayList<GeneFile> files, String dataType) {
 			super(getActivity(), 0, files);
 			forShow = files;
@@ -148,6 +186,7 @@ public class ProfileFragment extends Fragment {
 				textView.setText(file.getName());
 
 				//When a checkbox is clicked
+				//TODO privat klass istället för onCheckedChangeListener?
 				checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 					@Override
@@ -167,12 +206,12 @@ public class ProfileFragment extends Fragment {
 					}
 				});
 
-				if (!selectedProfile.contains(file)) {
-					if (checkBox.isChecked()) {
+				if (selectedProfile.contains(file)) {
+					if (!checkBox.isChecked()) {
 						checkBox.toggle();
 					}
 				} else { 
-					if (!checkBox.isChecked()) {
+					if (checkBox.isChecked()) {
 						checkBox.toggle();
 					}
 				}
@@ -183,7 +222,6 @@ public class ProfileFragment extends Fragment {
 					}
 				});
 
-				//Set the view tags
 				view.setTag(textView);
 				view.setTag(checkBox);
 			}
@@ -205,41 +243,5 @@ public class ProfileFragment extends Fragment {
 			return forShow.get(position);
 		}
 	}
-
-
-	/**
-	 * Sets the status on the remove button based on
-	 * if there are any marked checkboxes or not.
-	 * 
-	 */
-	private void setButtonsStatus() {
-		if (selectedProfile.size() > 0) {
-			removeButton.setEnabled(true);
-		} else {
-			removeButton.setEnabled(false);
-		}
-	}
-
-
-	/**
-	 * Method used to create a dialog window with
-	 * more information about a file.
-	 * @param file that extra information will
-	 * be received from. 
-	 */
-	private void displayExtraFileInfo(GeneFile file) {
-		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
-		String moreInfo;
-		//Information to be displayed in dialogue about the file
-		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
-				+ file.getType() + "\n" + "Author: " + file.getAuthor()
-				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
-				+ "Date: " + file.getDate() + "\n" + "GR Version: "
-				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
-
-		build.setTitle(file.getName());
-		build.setMessage(moreInfo);
-		build.setNeutralButton("OK", null);
-		build.show();
-	}
+	
 }

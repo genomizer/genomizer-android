@@ -56,7 +56,7 @@ public class ConverterFragment extends Fragment{
 	private static final String FILES = "files";
 	private static final String TYPE = "type";
 
-	private final String[] headers = new String[] { "Bowtie", "Geneome version",
+	private final String[] headers = new String[] { "Bowtie", "Genome version",
 			"SAM to GFF", "GFF to SGR", "Smoothing", "Stepsize",
 			"Ratio calculation", "Ratio", "Smoothing" };
 	private final String[] hints = new String[] { "-a -m 1 --best -p 10 -v 2 -q -S",

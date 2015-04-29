@@ -103,17 +103,15 @@ public class LogInFragment extends Fragment {
 	 * access, and is needed throughout the session.
 	 */
 	private boolean sendLoginRequest() {
-//		String uname = userName.getText().toString();
-//		String password = userPwd.getText().toString();
-		String userName = "adsasd";
-		String password = "baguette"; 
-		if (userName.length() < 0 || password.length() < 0) {
+		String username = mUserNameTextField.getText().toString();
+		String password = mPassWordTextField.getText().toString();
+		if (mUserNameTextField.length() < 0 || password.length() < 0) {
 			makeToast(INPUT_MALFORMED, false);
 			return false;
 		}		
 
 		try {
-			return ComHandler.login(userName, password);		
+			return ComHandler.login(username, password);		
 			
 		} catch (IOException e) {
 			Log.d("login", "exception: " + Arrays.toString(e.getStackTrace()));

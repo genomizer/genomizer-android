@@ -1,12 +1,5 @@
 package se.umu.cs.pvt151.search_result;
 
-/**
- * ExmperimentListActivity
- * Used to present search results 
- * for the user, using a fragment with
- * a list view. 
- */
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

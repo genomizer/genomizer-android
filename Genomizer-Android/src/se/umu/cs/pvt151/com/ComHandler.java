@@ -65,7 +65,8 @@ public class ComHandler {
 			Genomizer.makeToast(requestType + ": Bad Request.");
 			break;
 		case 401:
-			Genomizer.makeToast(requestType + ": Access Denied.");
+			Genomizer.makeToast(requestType + ": Access Denied -" +
+					"Invalid username or password");
 			break;
 		case 403:
 			Genomizer.makeToast(requestType + ": Forbidden - "

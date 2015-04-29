@@ -9,7 +9,6 @@ import android.os.Parcelable;
  * @author erik c11ean
  *
  */
-//TODO varför implementera parceable? för parcel? vad är en parcel?
 public class GeneFile implements Parcelable {
 	
 	private String id;
@@ -22,6 +21,7 @@ public class GeneFile implements Parcelable {
 	private String uploader;
 	private String expId;
 	private String grVersion;	
+	private String fileSize;
 	
 	private String isPrivate;
 	
@@ -54,6 +54,25 @@ public class GeneFile implements Parcelable {
 		url = in.readString();
 		date = in.readString();
 		grVersion = in.readString();
+		fileSize = in.readString();
+	}
+	
+	/**
+	 * 
+	 * more information about a file when text view is
+	 * clicked
+	 * @param file that extra information will
+	 * be received from. 
+	 */
+	public String getFileInfo() {
+		return "Exp id: " + expId +"\n" +
+			   "Type: " + type + "\n" + 
+			   "GR Version: "+ grVersion + "\n" +
+			   "Author: " + author + "\n" + 
+			   "Uploaded by: " + uploader + "\n" +
+			   "Date: " + date + "\n" +
+			   "File size: " + fileSize + "\n" +
+			   "Path: " + path;
 	}
 
 	
@@ -74,6 +93,25 @@ public class GeneFile implements Parcelable {
 	 */
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	/**
+	 * Gets the fileSize.
+	 * 
+	 * @return fileSize
+	 */
+	public String getFileSize() {
+		return fileSize;
+	}
+
+	
+	/**
+	 * Sets the fileSize.
+	 * 
+	 * @param fileSize
+	 */
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
 	}
 
 	
@@ -301,6 +339,7 @@ public class GeneFile implements Parcelable {
 		out.writeString(url);
 		out.writeString(date);
 		out.writeString(grVersion);
+		out.writeString(fileSize);
 	}
 	
 

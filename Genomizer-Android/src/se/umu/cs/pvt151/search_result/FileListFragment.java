@@ -33,10 +33,13 @@ public class FileListFragment extends Fragment {
 	private ListView listRaw;
 	private ListView listProfile;
 	private ListView listRegion;
+	
 	//Array to handle check boxes on scroll
 	private ArrayList<Boolean> forChecks = new ArrayList<Boolean>();
+	
 	//Button to send files to selected files
 	private Button sendButton;
+	
 	//Used to store file names
 	private ArrayList<String> raw = new ArrayList<String>();
 	private ArrayList<String> profile = new ArrayList<String>();
@@ -175,17 +178,9 @@ public class FileListFragment extends Fragment {
 	 * be received from. 
 	 */
 	private void displayExtraFileInfo(GeneFile file) {
-		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
-		String moreInfo;
-		//Information to be displayed in dialogue about the file
-		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
-				+ file.getType() + "\n" + "Author: " + file.getAuthor()
-				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
-				+ "Date: " + file.getDate() + "\n" + "GR Version: "
-				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
-		
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());		
 		build.setTitle(file.getName());
-		build.setMessage(moreInfo);
+		build.setMessage(file.getFileInfo());
 		build.setNeutralButton("OK", null);
 		build.show();
 	}

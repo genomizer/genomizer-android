@@ -121,22 +121,15 @@ public class ProfileFragment extends Fragment {
 
 	/**
 	 * Method used to create a dialog window with
-	 * more information about a file.
+	 * more information about a file when text view is
+	 * clicked
 	 * @param file that extra information will
 	 * be received from. 
 	 */
 	private void displayExtraFileInfo(GeneFile file) {
-		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
-		String moreInfo;
-		//Information to be displayed in dialogue about the file
-		moreInfo = "Exp id: " + file.getExpId() + "\n" + "Type: " 
-				+ file.getType() + "\n" + "Author: " + file.getAuthor()
-				+ "\n" + "Uploaded by: " + file.getUploadedBy() + "\n" 
-				+ "Date: " + file.getDate() + "\n" + "GR Version: "
-				+ file.getGrVersion() + "\n" + "Path: " + file.getPath();
-
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());		
 		build.setTitle(file.getName());
-		build.setMessage(moreInfo);
+		build.setMessage(file.getFileInfo());
 		build.setNeutralButton("OK", null);
 		build.show();
 	}

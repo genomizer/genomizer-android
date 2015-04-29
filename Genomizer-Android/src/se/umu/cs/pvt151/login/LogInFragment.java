@@ -37,7 +37,7 @@ public class LogInFragment extends Fragment {
 			"Minimum length for username and password is 4 letters.";
 	
 	private EditText mUserNameTextField;
-	private EditText mPassWordTextField;
+	private EditText mPasswordTextField;
 	private Button mLoginButton;
 
 	@Override
@@ -54,14 +54,14 @@ public class LogInFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_log_in, parent, false);				
 		mUserNameTextField = (EditText) v.findViewById(R.id.editTextUser);		
-		mPassWordTextField = (EditText) v.findViewById(R.id.editTextPwd);
+		mPasswordTextField = (EditText) v.findViewById(R.id.editTextPwd);
 		
 		if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES
 				.GINGERBREAD_MR1) {
 		    mUserNameTextField.setHintTextColor(Color.GRAY);
-		    mPassWordTextField.setHintTextColor(Color.GRAY);
+		    mPasswordTextField.setHintTextColor(Color.GRAY);
 		    mUserNameTextField.setTextColor(Color.BLACK);
-		    mPassWordTextField.setTextColor(Color.BLACK);
+		    mPasswordTextField.setTextColor(Color.BLACK);
 		}
 		return v;
 	}
@@ -104,7 +104,7 @@ public class LogInFragment extends Fragment {
 	 */
 	private boolean sendLoginRequest() {
 		String username = mUserNameTextField.getText().toString();
-		String password = mPassWordTextField.getText().toString();
+		String password = mPasswordTextField.getText().toString();
 		if (mUserNameTextField.length() < 0 || password.length() < 0) {
 			makeToast(INPUT_MALFORMED, false);
 			return false;

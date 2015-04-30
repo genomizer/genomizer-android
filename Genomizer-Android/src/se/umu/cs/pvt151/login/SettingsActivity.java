@@ -61,6 +61,9 @@ public class SettingsActivity extends SingleFragmentActivity  {
 		settingsFragment.onAddNewURLButtonClick();
 	}
 		
+	public void onClickEditURL(View v) {
+		settingsFragment.setEditMode();
+	}
 	
 	/**
 	 * Provide the means of hiding menu items by setting them as invisible.

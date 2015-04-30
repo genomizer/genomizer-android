@@ -50,9 +50,17 @@
         android:textSize="12sp"  
         android:visibility="visible"      
          />
-       
-    
-    
-       
+
+       <Button
+           android:id="@+id/settings_btn_editURL"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignBaseline="@+id/settingsAddButton"
+           android:layout_marginRight="10dp"
+           android:layout_toLeftOf="@+id/settingsAddButton"
+           android:text="@string/settings_btn_editURL"
+           android:onClick="onClickEditURL"
+           android:textSize="12sp"
+           android:visibility="visible" />
 
 </RelativeLayout>

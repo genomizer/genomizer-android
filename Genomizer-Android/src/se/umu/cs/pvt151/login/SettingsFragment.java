@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,15 +26,16 @@ import android.widget.Toast;
 
 public class SettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-	private static final String sButtonSaveSettings = "Save settings";
+	private static final String sButtonSaveSettings = "Save URL";
 	private static final String sButtonAddUrl = "Add URL";
 	private static final String sButtonSaveEdit = "Save changes";
 	private static final String sTextViewAddServer = "Enter a new server URL";
-	private static final String sTextViewSelectServer = "Select a server url";
-	private static final String sTextViewEditURL = "Edit server url";
+	private static final String sTextViewSelectServer = "Select a server URL";
+	private static final String sTextViewEditURL = "Edit URL";
 	private Spinner spinner;
 	private ArrayList<String> mSavedURLsList = new ArrayList<String>();
 	private Button multiUseButton = null;
+	private Button editURLButton;
 	private EditText urlEdit = null;
 	private final static int visibilityHide = 4;
 	private final static int visibilityShow = 0;
@@ -63,6 +65,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	private void fetchViewItems() {
 		multiUseButton = (Button) view.findViewById(R.id.settingsAddButton);
 		urlEdit = (EditText) view.findViewById(R.id.settings_input_field);
+		editURLButton = (Button) view.findViewById(R.id.settings_btn_editURL);
 		spinner = (Spinner) view.findViewById(R.id.spinner1);
 		textView = ((TextView) view.findViewById(R.id.settings_textview));
 		inputMethod = (InputMethodManager) getActivity().getSystemService(
@@ -104,8 +107,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 		
 		if(menuString.equals("Add new URL")) {
 			setAddMode();
-		} else if(menuString.equals("Edit selected URL")) {						
-			setEditMode();										
 		} else if(menuString.equals("Remove selected URL")) {
 			if(mSavedURLsList.size() == 1) {
 				makeToast("You need atleast 1 server to use this application. Please add a new server url before deleting.");
@@ -143,8 +144,9 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	 * The software keyboard is triggered to SHOW.
 	 * The menu items are triggered to HIDE.
 	 */
-	private void setEditMode() {
+	public void setEditMode() {
 		multiUseButton.setText(sButtonSaveEdit);
+		editURLButton.setVisibility(View.INVISIBLE);
 		urlEdit.setVisibility(visibilityShow);
 		textView.setText(sTextViewEditURL);
 		spinner.setVisibility(visibilityHide);		
@@ -161,6 +163,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	 * The menu items are triggered to HIDE.
 	 */
 	private void setAddMode() {
+		editURLButton.setVisibility(View.INVISIBLE);
 		multiUseButton.setText(sButtonAddUrl);
 		urlEdit.setVisibility(visibilityShow);
 		textView.setText(sTextViewAddServer);
@@ -179,6 +182,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	 */
 	public void setSelectionMode() {
 		multiUseButton.setText(sButtonSaveSettings);
+		editURLButton.setVisibility(View.VISIBLE);
 		urlEdit.setVisibility(visibilityHide);
 		spinner.setVisibility(visibilityShow);		
 		textView.setText(sTextViewSelectServer);
@@ -199,7 +203,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 	 * The 'multiUseButton' action listener. Upon click the view context of the fragment may change.
 	 */
 	public void onAddNewURLButtonClick() {
-	
 		if(multiUseButton.getText().equals(sButtonAddUrl)) {			
 			String newURL = urlEdit.getText().toString();				
 			if(!newURL.endsWith("/") ) {			

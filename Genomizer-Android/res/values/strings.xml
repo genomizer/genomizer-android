@@ -53,7 +53,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_settings_add">Add new URL</string>
     <string name="action_settings_remove">Remove selected URL</string>
-    <string name="action_settings_edit">Edit selected URL</string>
+    <string name="settings_btn_editURL">Edit URL</string>
 	
 	
     <string-array name="server_list">
